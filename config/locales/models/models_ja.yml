@@ -1,0 +1,29 @@
+ja:
+  activerecord:
+    models:
+      category: カテゴリー
+      post: 投稿
+      user: ユーザー
+    attributes:
+      category:
+        id: ID
+        name: カテゴリー名
+        created_at: 作成日
+        updated_at: 更新日
+      post:
+        id: ID
+        title: タイトル
+        comment: コメント
+        created_at: 作成日
+        updated_at: 更新日
+      user:
+        name: 名前
+        nickname: ニックネーム
+        membership_number: メンバーID
+        email: Eメール
+        password: パスワード
+        phone_number: 電話番号
+        flying_distance: 飛距離
+        password_confirmation: パスワード確認
+        created_at: 作成日
+        updated_at: 更新日
