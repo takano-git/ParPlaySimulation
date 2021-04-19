@@ -13,6 +13,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.integer :flying_distance
       t.boolean :admin
       t.integer :payment_id
+      t.string :provider 
+      t.string :uid
 
 
       ## Recoverable

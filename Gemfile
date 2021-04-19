@@ -13,7 +13,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # ログイン機能
-gem 'devise'
+gem 'devise', git: "https://github.com/heartcombo/devise"
+gem 'omniauth-google-oauth2'
 
 # 日本語化
 gem 'rails-i18n', '~> 5.1'
