@@ -32,6 +32,9 @@ gem 'active_storage_validations', '~> 0.8.8'
 gem 'aws-sdk-s3', '~>1', require: false
 gem 'mini_magick'
 
+# Pay.jp
+gem 'payjp'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
