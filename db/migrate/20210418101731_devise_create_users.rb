@@ -11,8 +11,10 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :encrypted_password, null: false, default: ""
       t.string :phone_number
       t.integer :flying_distance
-      t.boolean :admin
+      t.boolean :admin, default: false
       t.integer :payment_id
+      t.string :provider 
+      t.string :uid
 
 
       ## Recoverable

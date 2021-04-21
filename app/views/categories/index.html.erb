@@ -1,0 +1,5 @@
+<% @categories.each do |category| %>
+  <p><%= category.id %>.
+  <%= category.name %>.
+  <%= link_to '削除', category_path(category), method: :delete %></p>
+<% end %>

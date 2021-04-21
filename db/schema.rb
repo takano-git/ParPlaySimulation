@@ -19,13 +19,15 @@ ActiveRecord::Schema.define(version: 2021_04_19_130300) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "category_id", null: false
     t.string "title", default: "", null: false
     t.string "comment", default: "", null: false
-    t.integer "golfclub_id", null: false
     t.integer "user_id"
+    t.integer "golfclub_id"
+    t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_posts_on_category_id"
+    t.index ["golfclub_id"], name: "index_posts_on_golfclub_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -37,8 +39,10 @@ ActiveRecord::Schema.define(version: 2021_04_19_130300) do
     t.string "encrypted_password", default: "", null: false
     t.string "phone_number"
     t.integer "flying_distance"
-    t.boolean "admin"
+    t.boolean "admin", default: false
     t.integer "payment_id"
+    t.string "provider"
+    t.string "uid"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
