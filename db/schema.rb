@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_130300) do
+ActiveRecord::Schema.define(version: 2021_04_22_141503) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "golfclubs", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "district", default: "", null: false
+    t.integer "prefecture", default: 0, null: false
+    t.string "home_page_url"
+    t.string "strategy_video"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
