@@ -1,4 +1,6 @@
 class Golfclub < ApplicationRecord
+  has_many :courses, dependent: :destroy
+  
   VALID_URL_REGEX = /https?:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+|\A\z/
   VALID_VIDEO_REGEX = /\A(https\:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)+[\S]{11}\z/
 

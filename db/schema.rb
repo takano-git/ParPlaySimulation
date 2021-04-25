@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_04_25_031412) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.string "name"
+    t.string "name", default: "", null: false
     t.integer "golfclub_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
