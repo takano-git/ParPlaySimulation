@@ -4,6 +4,7 @@ ja:
       category: カテゴリー
       course: コース
       golfclub: ゴルフ場
+      hole: ホール
       post: 投稿
       user: ユーザー
     attributes:
@@ -26,6 +27,9 @@ ja:
         strategy_video: 動画URL
         created_at: 作成日
         updated_at: 更新日
+      hole:
+        hole_number: ホール番号
+        number_of_pars: パー数
       post:
         id: ID
         title: タイトル

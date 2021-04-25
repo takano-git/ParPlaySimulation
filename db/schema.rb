@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_25_031412) do
+ActiveRecord::Schema.define(version: 2021_04_25_043045) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 2021_04_25_031412) do
     t.string "strategy_video"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "holes", force: :cascade do |t|
+    t.integer "hole_number", null: false
+    t.integer "number_of_pars", null: false
+    t.integer "golfclub_id"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_holes_on_course_id"
+    t.index ["golfclub_id"], name: "index_holes_on_golfclub_id"
   end
 
   create_table "posts", force: :cascade do |t|
