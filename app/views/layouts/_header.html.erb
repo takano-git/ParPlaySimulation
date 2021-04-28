@@ -1,8 +1,15 @@
-<header>
-  <nav class="navbar navbar-expand navbar-light">
-    <%= link_to "ParPlaySimulation", root_path, class: 'navbar-brand' %>
-    <div id="Navber">
-      <ul class="navbar-nav">
+<header class="navbar navbar-fixed-top navbar-default" id="header">
+  <div class="container">
+    <nav class="navbar navbar-expand navbar-light">
+
+      <div class="navbar-header">
+
+        <%= "パープレイでまわりたいゴルファーの攻略シュミレーションサイト" %><br>
+        <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand' %>
+
+      </div>
+
+      <ul id="navbar" class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
           <li class="nav-item active">
             <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
@@ -10,7 +17,7 @@
           <li class="nav-item active">
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
           </li>
-      <% else %>
+        <% else %>
           <li class="nav-item active">
             <%= link_to "新規登録", new_user_registration_path, class: 'nav-link' %>
           </li>
@@ -19,6 +26,26 @@
           </li>
         <% end %>
       </ul>
-    </div>
-  </nav>
+
+    </nav>
+
+    <!-- ハンバーガーメニュー -->
+    <!--
+    <div id="nav-area">
+
+      <%= render 'layouts/mobile_menu' %>
+
+      <div class="menu-icon">
+        <div class="toggle_btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div id="mask"></div>
+      -->
+
+  </div>
+
 </header>
