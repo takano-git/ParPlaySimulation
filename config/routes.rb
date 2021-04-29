@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :areas, except: %i(show)
+  resources :areas, only: %i(index adit_all update_all) do
+    collection do
+      get "edits", to: 'areas/edit', as: :edit
+      patch "updates", to: 'areas/update', as: :update
+    end
+  end
   resources :categories
   resources :posts
 
