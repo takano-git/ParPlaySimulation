@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
+  resources :areas, except: %i(show)
   resources :categories
   resources :posts
 
