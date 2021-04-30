@@ -20,7 +20,7 @@
             <tr>
               <td><%= area.id %></td>
               <td><%= area.prefecture %></td>
-              <td><%= area_fields.text_field :district, class: "form-control" %></td>
+              <td><%= area_fields.text_field :district, required: true, maxlength: "30", class: "form-control" %></td>
             </tr>
           </tbody>
         <% end %>

@@ -5,18 +5,20 @@ class AreasController < ApplicationController
     @areas = Area.all.order(:id).group_by(&:district)
   end
 
-  def edits
+  def edit
     @areas = Area.all.order(:id)
   end
 
-  def updates
-    @areas = areas_params.each do |id, area_param|
+  def update
+    areas_params.each do |id, area_param|
       area= Area.find(id)
-      area.update_attributes(area_param)
-      area
+      area.update_attributes!(area_param)
     end
     flash[:info] = "地域を更新しました。"
     redirect_to areas_url
+  rescue
+    flash[:danger] = "無効な入力があった為、更新がキャンセルされました。"
+    redirect_to edit_areas_url
   end
 
   private
