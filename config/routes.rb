@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       patch "update", to: 'areas/update', as: :update
     end
   end
+  
   resources :categories
   resources :posts
 
