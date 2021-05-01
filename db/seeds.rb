@@ -78,3 +78,24 @@ Area.create( prefecture: '鹿児島県', district: "九州・沖縄" )
 Area.create( prefecture: '沖縄県', district: "九州・沖縄" )
 
 puts "地域作成！"
+
+# ゴルフ場データ作成
+
+5.times do |i|
+  n = i + 1
+  Golfclub.create!(
+    name: "サンプルカントリー#{n}",
+    home_page_url: "https://www.google.com",
+    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    area_id: 13
+  )
+end
+
+puts "ゴルフ場作成！"
+
+# コースデータ作成
+
+golfclubs = Golfclub.order(:id)
+golfclubs.each {|golfclub| golfclub.courses.create!([ { name: "OUT" }, { name: "IN" } ]) }
+
+puts "コース作成！"
