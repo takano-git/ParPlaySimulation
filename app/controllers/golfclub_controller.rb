@@ -1,0 +1,2 @@
+class GolfclubController < ApplicationController
+end

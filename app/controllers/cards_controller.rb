@@ -1,4 +1,5 @@
 class CardsController < ApplicationController
+  require 'payjp'
   before_action :set_card, only: %i[ show edit update destroy ]
 
   # GET /cards or /cards.json
@@ -13,6 +14,7 @@ class CardsController < ApplicationController
   # GET /cards/new
   def new
     @card = Card.new
+    
   end
 
   # GET /cards/1/edit
@@ -22,8 +24,12 @@ class CardsController < ApplicationController
   # POST /cards or /cards.json
   def create
     Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+
+    debugger
     customer = Payjp::Customer.create(
       card: params[:card_token],
+      # card: params[:authenticity_token],
+      # card: params['payjp-token'],
       metadata: {user_id: current_user.id}
     )
     
@@ -32,7 +38,13 @@ class CardsController < ApplicationController
       customer_id: customer.id,
       user_id: current_user.id
     )
-    @card.save
+    if @card.save
+      flash[:success] = "会員情報の登録に成功しました。"
+      redirect_to golfclub_index_path
+    else
+      flash[:danger] = "会員情報の登録に失敗しました。"
+      render :new
+    end
   end
 
   # PATCH/PUT /cards/1 or /cards/1.json

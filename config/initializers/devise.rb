@@ -24,7 +24,10 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+
+  # パスワード変更用メール設定
+  # config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'ParPlaySimulation <noreply@example.com>'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -272,8 +275,7 @@ Devise.setup do |config|
   config.omniauth :google_oauth2,
                    Rails.application.credentials.google[:client_id], 
                    Rails.application.credentials.google[:secret_key], 
-                   skip_jwt: true,
-                   redirect_uri: "http://localhost:3000/users/auth/google_oauth2/callback"
+                   skip_jwt: true
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'

@@ -1,23 +1,32 @@
 <!--
-<script type="text/javascript" src="https://js.pay.jp/"></script>
-<script type="text/javascript">Payjp.setPublicKey("pk_test_e2b5e884b0680ac67ca97467");</script>
+< script type="text/javascript" src="https://js.pay.jp/"></script>
+< script type="text/javascript">Payjp.setPublicKey("pk_test_e2b5e884b0680ac67ca97467");</script>
 -->
-<%= form_with model: @card, id: "card_form" do |f| %>
 
-  <span class="charge-errors"></span>
+<div class="container">
 
-  <h4>支払い</h4>
-  <%= f.label :number, "カード番号"%>
-  <%= f.text_field :number, class: "number", maxlength: "16", placehplder: "カード番号"%>
+  <h2>クレジットカード情報入力</h2>
 
-  <%= f.label :cvc, "CVC"%>
-  <%= f.number_field :cvc, class: "cvc", maxlength: "3", placehplder: "CVC"%>
+  <!--< %= form_with model: @card, id: "card_form" do |f| %>-->
+  <%= form_with url: cards_path, id: "charge-form" do |f| %>
 
-  <%= f.label :exp_month, "有効期限"%>
-  <%= f.number_field :exp_month, class: "exp_month", maxlength: "2", placehplder: "月"%>
-  <%= f.number_field :exp_year, class: "exp_year", maxlength: "4", placehplder: "年"%>
+    <span class="charge-errors"></span>
 
-  <%= f.submit "送信" ,id: "regist_card"%>
-  <div id="card_token"></div>
+    <%= f.label :number, "カード番号"%>
+    <%= f.text_field :number, class: "number", id: "number_form", maxlength: "16", placehplder: "カード番号" %><br>
 
-<% end %>
+    <%= f.label :cvc, "CVC"%>
+    <%= f.number_field :cvc, class: "cvc", id: "cvc_form", maxlength: "3", placehplder: "CVC" %><br>
+
+    <%= f.label :exp_month, "有効期限"%>
+    <%= f.number_field :exp_month, class: "exp_month", id: "exp_month_form", maxlength: "2", placehplder: "月" %>
+    <%= f.number_field :exp_year, class: "exp_year", id: "exp_year_form", maxlength: "4", placehplder: "年" %><br>
+
+    <%= f.submit "送信" , id: "regist_card" %>
+    <div f.fiden_field id="card_token" ></div>
+
+    <%# < script type="text/javascript" src="https://checkout.pay.jp" class="payjp-button" data-key="公開鍵"></script> %>
+
+  <% end %>
+
+</div>

@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_135001) do
+ActiveRecord::Schema.define(version: 2021_04_25_043045) do
 
   create_table "cards", force: :cascade do |t|
     t.integer "card_id", null: false
     t.integer "customer_id", null: false
+    t.string "customer_token", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,6 +26,35 @@ ActiveRecord::Schema.define(version: 2021_04_22_135001) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.integer "golfclub_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golfclub_id"], name: "index_courses_on_golfclub_id"
+  end
+
+  create_table "golfclubs", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "district", default: "", null: false
+    t.integer "prefecture", default: 0, null: false
+    t.string "home_page_url"
+    t.string "strategy_video"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "holes", force: :cascade do |t|
+    t.integer "hole_number", null: false
+    t.integer "number_of_pars", null: false
+    t.integer "golfclub_id"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_holes_on_course_id"
+    t.index ["golfclub_id"], name: "index_holes_on_golfclub_id"
   end
 
   create_table "posts", force: :cascade do |t|
