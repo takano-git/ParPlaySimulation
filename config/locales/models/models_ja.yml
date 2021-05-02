@@ -1,6 +1,7 @@
 ja:
   activerecord:
     models:
+      area: 地域
       category: カテゴリー
       course: コース
       golfclub: ゴルフ場
@@ -8,6 +9,12 @@ ja:
       post: 投稿
       user: ユーザー
     attributes:
+      area:
+        id: ID
+        prefecture: 都道府県
+        district: 地区
+        created_at: 作成日
+        updated_at: 更新日
       category:
         id: ID
         name: カテゴリー名

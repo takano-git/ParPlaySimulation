@@ -1,0 +1,30 @@
+<h1>Areas#edit</h1>
+<p>Find me in app/views/areas/edit.html.erb</p>
+
+<%= submit_tag '更新', form: "area-form", class: "btn btn-primary" %>
+<%= link_to '戻る', areas_path, class: "btn btn-secondary" %>
+
+<%= form_with model: @areas, url: update_areas_path, id: "area-form", local:true, method: :patch do |f| %>
+  <div class="float-left">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>都道府県</th>
+          <th>地区</th>
+        </tr>
+      </thead>
+      <% @areas.each do |area| %>
+        <%= fields_for "areas[]", area do |area_fields| %>
+          <tbody>
+            <tr>
+              <td><%= area.id %></td>
+              <td><%= area.prefecture %></td>
+              <td><%= area_fields.text_field :district, required: true, maxlength: "30", class: "form-control" %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+<% end %>
