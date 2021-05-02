@@ -87,7 +87,7 @@ puts "地域作成！"
     name: "サンプルカントリー#{n}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
-    area_id: 13
+    area_id: rand(1..47)
   )
 end
 
@@ -96,6 +96,29 @@ puts "ゴルフ場作成！"
 # コースデータ作成
 
 golfclubs = Golfclub.order(:id)
-golfclubs.each {|golfclub| golfclub.courses.create!([ { name: "OUT" }, { name: "IN" } ]) }
+golfclubs.each { |golfclub| golfclub.courses.create!([ { name: "OUT" }, { name: "IN" } ]) }
 
 puts "コース作成！"
+
+# ホールデータ作成
+courses = Course.order(:id)
+
+courses.each do |course|
+  n = 0
+  n = 9 if course.name == "IN"
+  course.holes.create!(
+    [
+      { hole_number: 1 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 2 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 3 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 4 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 5 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 6 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 7 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 8 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id },
+      { hole_number: 9 + n, number_of_pars: rand(3..7), golfclub_id: course.golfclub_id }
+    ]
+  )
+end
+
+puts "ホール作成！"
