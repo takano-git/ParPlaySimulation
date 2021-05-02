@@ -15,6 +15,12 @@ Rails.application.routes.draw do
   resources :admin_pages, only: :index 
 
   resources :golfclub
+  resources :areas, only: %i(index) do
+    collection do
+      get "edit", to: 'areas/edit', as: :edit
+      patch "update", to: 'areas/update', as: :update
+    end
+  end
   resources :categories
   resources :posts
 

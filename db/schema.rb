@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_25_043045) do
+ActiveRecord::Schema.define(version: 2021_04_26_131119) do
+
+  create_table "areas", force: :cascade do |t|
+    t.string "prefecture", null: false
+    t.string "district", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cards", force: :cascade do |t|
     t.integer "card_id", null: false
