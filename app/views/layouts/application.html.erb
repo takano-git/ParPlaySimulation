@@ -5,16 +5,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <!-- Pay.jp -->
-    <script type="text/javascript" src="https://checkout.pay.jp" class="payjp-button" data-key="公開鍵"></script>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="https://js.pay.jp/"></script>
   </head>
 
   <body>
     <%= render 'layouts/header' %>
-    <%# <%= render 'layouts/flash_messages' %>
     <%= yield %>
+    <%= debug(params) if Rails.env.development? %>
   </body>
 </html>

@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 2021_04_26_131119) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cards", force: :cascade do |t|
+    t.integer "card_id", null: false
+    t.integer "customer_id", null: false
+    t.string "customer_token", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_cards_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false

@@ -17,3 +17,8 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+// flashメッセージをフェードアウトで消す。
+$(function(){
+  setTimeout("$('.alert').fadeOut('slow')", 10000);
+});
