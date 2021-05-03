@@ -1,0 +1,14 @@
+<%= render 'layouts/flash_messages' %>
+<div class="container-golfclub">
+  <h1>ゴルフ場一覧</h1>
+    <% @golfclubs.each do |golfclub| %>
+      <div style="float: left; margin-right: 10px">
+        <div>画像</div>
+        <p><%= golfclub.name %></p>
+        <p><%= link_to golfclub.home_page_url, golfclub.home_page_url, target: :_blank, rel: "noopener noreferrer" %></p>
+        <p><%= link_to golfclub.strategy_video, golfclub.strategy_video, target: :_blank, rel: "noopener noreferrer" %></p>
+      </div>
+    <% end %>
+<div>
+
+<%= link_to '新規', new_golfclub_path %>

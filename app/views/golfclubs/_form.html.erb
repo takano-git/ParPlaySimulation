@@ -1,0 +1,32 @@
+<%= form_with model: @golfclub, local: true do |golfclub| %>
+  <div class="form-group">
+    <%= golfclub.label :name %>
+    <%= golfclub.text_field :name, placeholder: "20文字以内", required: true, maxlength: "20", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= golfclub.label :home_page_url %>
+    <%= golfclub.text_field :home_page_url, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= golfclub.label :strategy_video %>
+    <%= golfclub.text_field :strategy_video, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= golfclub.fields_for :courses do |course| %>
+      <%= course.label :name %>
+      <%= course.text_field :name, class: "form-control" %>
+
+      <%= course.fields_for :holes do |hole| %>
+        <%= hole.label :hole_number %>
+        <%= hole.text_field :hole_number, class: "form-control" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= golfclub.submit '新規登録', class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>

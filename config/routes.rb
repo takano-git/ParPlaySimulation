@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :admin_pages, only: :index 
 
-  resources :golfclub
+  resources :golfclubs
   resources :areas, only: %i(index) do
     collection do
       get "edit", to: 'areas/edit', as: :edit

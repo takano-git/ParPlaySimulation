@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  # before_action 管理者のみアクセス可能にする(あとで設定)
   before_action :set_category, only: %i(edit update destroy)
 
   def index
