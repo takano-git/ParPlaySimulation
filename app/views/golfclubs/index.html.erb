@@ -7,6 +7,7 @@
         <p><%= golfclub.name %></p>
         <p><%= link_to golfclub.home_page_url, golfclub.home_page_url, target: :_blank, rel: "noopener noreferrer" %></p>
         <p><%= link_to golfclub.strategy_video, golfclub.strategy_video, target: :_blank, rel: "noopener noreferrer" %></p>
+        <p><%= link_to '削除', golfclub_path(golfclub), method: :delete %></p>
       </div>
     <% end %>
 <div>

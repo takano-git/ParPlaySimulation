@@ -1,0 +1,31 @@
+<div class="nested-fields">
+  <div class="col-md-11 px-0 nested-fields-course">
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="nested-fields-course">
+    <%= link_to_remove_association "×", f, id: "remove-btn", class: "link_to_remove_association" %>
+  </div>
+
+  <%# <%= course.fields_for :holes do |hole| %>
+      <%# <%= render "holes_fields", course: hole %>
+  <%# <%end%>
+
+  <%# <%= link_to_add_association "孫を追加", course, :holes %>
+</div>
+
+<style>
+.nested-fields-course {
+  margin: 0 5px 10px 0;
+  display: inline-block;
+}
+
+.link_to_add_association, .link_to_add_association:hover {
+  font-size: x-large;
+  text-decoration: none;
+}
+
+.link_to_remove_association, .link_to_remove_association:hover {
+  font-size: x-large;
+  text-decoration: none;
+}
+</style>

@@ -17,12 +17,16 @@
   <div class="form-group">
     <%= golfclub.fields_for :courses do |course| %>
       <%= course.label :name %>
-      <%= course.text_field :name, class: "form-control" %>
+      <%# <%= course.text_field :name, class: "form-control" %>
+      <%= render "course_fields", f: course %>
 
-      <%= course.fields_for :holes do |hole| %>
-        <%= hole.label :hole_number %>
-        <%= hole.text_field :hole_number, class: "form-control" %>
-      <% end %>
+      <%# <%= course.fields_for :holes do |hole| %> 
+        <%# <%= hole.label :hole_number %>
+        <%# <%= hole.text_field :hole_number, class: "form-control" %>
+      <%# <% end %>
+      <div class="links">
+        <%= link_to_add_association "+", golfclub, :courses, class: "link_to_add_association" %>
+      </div>
     <% end %>
   </div>
 
@@ -30,3 +34,11 @@
     <%= golfclub.submit '新規登録', class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
   </div>
 <% end %>
+
+<script>
+$(document).on('turbolinks:load', function() {
+　if ($('.nested-fields').length == 1) {
+　$('#remove-btn').hide();
+　}
+});
+</script>
