@@ -6,26 +6,19 @@
 
   <div class="form-group">
     <%= golfclub.label :home_page_url %>
-    <%= golfclub.text_field :home_page_url, class: "form-control" %>
+    <%= golfclub.text_field :home_page_url, pattern: "^https?://[a-zA-Z0-9/:%#&~=_!'\\$\\?\\(\\)\\.\\+\\*\\-]+$", class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= golfclub.label :strategy_video %>
-    <%= golfclub.text_field :strategy_video, class: "form-control" %>
+    <%= golfclub.text_field :strategy_video, pattern: "^(https?\:\/\/)?(www\.)?(youtu\.?be)\/.+$", class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= golfclub.fields_for :courses do |course| %>
-      <%= course.label :name %>
-      <%# <%= course.text_field :name, class: "form-control" %>
       <%= render "course_fields", f: course %>
-
-      <%# <%= course.fields_for :holes do |hole| %> 
-        <%# <%= hole.label :hole_number %>
-        <%# <%= hole.text_field :hole_number, class: "form-control" %>
-      <%# <% end %>
       <div class="links">
-        <%= link_to_add_association "+", golfclub, :courses, class: "link_to_add_association" %>
+        <%= link_to_add_association "+ コース追加", golfclub, :courses, class: "link_to_add_association" %>
       </div>
     <% end %>
   </div>
