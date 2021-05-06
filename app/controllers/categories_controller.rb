@@ -13,8 +13,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      flash[:success] = "カテゴリー【#{@category.name}】を登録しました。"
-      redirect_to categories_url
+      redirect_to categories_url, flash: { success: "カテゴリー【#{@category.name}】を登録しました。" }
     else
       flash[:danger] = @category.errors.full_messages.join
       render :new
@@ -25,14 +24,8 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @category_updated_at = @category.updated_at
     if @category.update(category_params)
-      if @category_updated_at != @category.updated_at
-        flash[:success] = "カテゴリー【#{@category.name}】を更新しました。"
-      else
-        flash[:info] = "変更はありません。"
-      end
-      redirect_to categories_url
+      redirect_to categories_url, flash: { success: "カテゴリー【#{@category.name}】を更新しました。" }
     else
       flash[:danger] = @category.errors.full_messages.join
       render :edit
@@ -41,8 +34,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-    flash[:danger] = "カテゴリー【#{@category.name}】を削除しました。"
-    redirect_to categories_path
+    redirect_to categories_path, flash: { danger: "カテゴリー【#{@category.name}】を削除しました。" }
   end
 
   private
