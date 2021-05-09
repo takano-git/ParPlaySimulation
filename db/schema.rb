@@ -45,12 +45,12 @@ ActiveRecord::Schema.define(version: 2021_04_26_131119) do
 
   create_table "golfclubs", force: :cascade do |t|
     t.string "name", default: "", null: false
-    t.string "district", default: "", null: false
-    t.integer "prefecture", default: 0, null: false
     t.string "home_page_url"
     t.string "strategy_video"
+    t.integer "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["area_id"], name: "index_golfclubs_on_area_id"
   end
 
   create_table "holes", force: :cascade do |t|

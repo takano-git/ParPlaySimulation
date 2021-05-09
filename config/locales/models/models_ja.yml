@@ -31,12 +31,12 @@ ja:
         district: 地区
         prefecture: 県名
         home_page_url: サイトURL
-        strategy_video: 動画URL
+        strategy_video: YouTube動画URL
         created_at: 作成日
         updated_at: 更新日
       hole:
-        hole_number: ホール番号
-        number_of_pars: パー数
+        hole_number: ホール
+        number_of_pars: パー
       post:
         id: ID
         title: タイトル

@@ -1,0 +1,26 @@
+<!-- 確認後削除 -->
+<%= render 'layouts/flash_messages' %>
+<div class="container-hole">
+  <h1>ホール登録</h1>
+  <%# <%= render 'form' %>
+  <%= form_with model: @hole, local: true do |f| %>
+    <% 9.times do %>
+      <%= f.fields_for :holes do |hole| %>
+        <div class="form-group">
+          <%= f.label :hole_number %>
+          <%= hole.number_field :hole_number, value: 1, required: true, maxlength: "2", class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :number_of_pars %>
+          <%= hole.number_field :number_of_pars, value: 1, required: true, maxlength: "2", class: "form-control" %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
+    </div>
+  <% end %>
+
+<div>
