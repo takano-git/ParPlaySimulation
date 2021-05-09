@@ -1,9 +1,13 @@
 class GolfclubsController < ApplicationController
   # before_action 管理者のみアクセス可能にする(あとで設定)
-  before_action :set_golfclub, only: %i(edit update destroy)
+  before_action :set_golfclub, only: %i(show edit update destroy)
 
   def index
     @golfclubs = Golfclub.all
+  end
+
+  def show
+    @courses = @golfclub.courses
   end
 
   def new
@@ -15,7 +19,7 @@ class GolfclubsController < ApplicationController
   def create
     @golfclub = Golfclub.new(golfclub_course_params)
     if @golfclub.save
-      redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を登録しました。" }
+      redirect_to golfclub_url(@golfclub), flash: { success: "#{@golfclub.name}を登録しました。" }
     else
       flash[:danger] = @golfclub.errors.full_messages.join
       render :new

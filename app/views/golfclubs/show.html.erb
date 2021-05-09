@@ -1,0 +1,72 @@
+<%= render 'layouts/flash_messages' %>
+<div class="container-golfclub">
+  <h2>コース編集・ホール登録</h2>
+
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th><%= Golfclub.human_attribute_name :name %></th>
+        <td><%= @golfclub.name %></td>
+      </tr>
+      <tr>
+        <th>
+          <%= Area.human_attribute_name :district %> / 
+          <%= Area.human_attribute_name :prefecture %>
+        </th>
+        <td>
+          <%= Area.find(@golfclub.area_id).district %> / 
+          <%= Area.find(@golfclub.area_id).prefecture %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= Golfclub.human_attribute_name :home_page_url %></th>
+        <td><%= @golfclub.home_page_url %></td>
+      </tr>
+      <tr>
+        <th><%= Golfclub.human_attribute_name :strategy_video %></th>
+        <td><%= @golfclub.strategy_video %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered">
+    <tbody>
+      <% @courses.each do |course| %>
+        <tr>
+          <th colspan="10">
+            <%= course.name %>
+            <%= link_to '編集', '#', class: "badge badge-pill badge-info" %>
+          </th>
+        </tr>
+
+        <% if course.holes.present? %>
+
+        <tr>
+          <th><%= Hole.human_attribute_name :hole_number %></th>
+          <% course.holes.each do |hole| %>
+            <td><%= hole.hole_number %></td>
+          <% end %>
+        </tr>
+
+        <tr>
+          <th><%= Hole.human_attribute_name :number_of_pars %></th>
+          <% course.holes.each do |hole| %>
+            <td><%= hole.number_of_pars %></td>
+          <% end %>
+        </tr>
+
+        <% else %>
+          <tr>
+            <th style="width: 15%"><%= Hole.human_attribute_name :hole_number %></th>
+            <td class="course-table" rowspan="2"><%= link_to 'ホール情報登録', "#", class: "badge badge-pill badge-primary" %></td>
+          </tr>
+          <tr>
+            <th><%= Hole.human_attribute_name :number_of_pars %></th>
+          </tr>
+        <% end %>
+
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
