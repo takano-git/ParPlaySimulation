@@ -1,26 +1,24 @@
-<!-- 確認後削除 -->
 <%= render 'layouts/flash_messages' %>
 <div class="container-hole">
   <h1>ホール登録</h1>
-  <%# <%= render 'form' %>
-  <%= form_with model: @hole, local: true do |f| %>
-    <% 9.times do %>
-      <%= f.fields_for :holes do |hole| %>
-        <div class="form-group">
-          <%= f.label :hole_number %>
-          <%= hole.number_field :hole_number, value: 1, required: true, maxlength: "2", class: "form-control" %>
+    <%= form_with model: @form, url: golfclub_course_holes_path, local: true, method: :post do |hole| %>
+      <%= hole.fields_for :holes do |h| %>
+        <%# <%= hole.label :hole_number %>
+        
+        <div class="form-group col-md-4">
+          <%= h.number_field :hole_number, class: "form-control" %>
         </div>
 
         <div class="form-group">
-          <%= f.label :number_of_pars %>
-          <%= hole.number_field :number_of_pars, value: 1, required: true, maxlength: "2", class: "form-control" %>
+          <% pars = [3, 4, 5, 6, 7] %>
+          <% pars.each do |par| %>
+            <%= h.label :pars, par %>
+            <%= h.radio_button :number_of_pars , par %>
+            &nbsp;
+          <% end %>
         </div>
       <% end %>
+      <%= hole.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
     <% end %>
+  <div>
 
-    <div class="form-group">
-      <%= f.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
-    </div>
-  <% end %>
-
-<div>

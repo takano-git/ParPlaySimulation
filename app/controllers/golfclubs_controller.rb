@@ -40,7 +40,7 @@ class GolfclubsController < ApplicationController
 
   def destroy
     @golfclub.destroy
-    redirect_to golfclubs_url, flash: { danger: "#{@golfclub.name}を削除しました。" }
+    redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を削除しました。" }
   end
 
   private
