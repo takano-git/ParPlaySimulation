@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_131119) do
+ActiveRecord::Schema.define(version: 2021_05_09_060157) do
 
   create_table "areas", force: :cascade do |t|
     t.string "prefecture", null: false
@@ -75,6 +75,24 @@ ActiveRecord::Schema.define(version: 2021_04_26_131119) do
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["golfclub_id"], name: "index_posts_on_golfclub_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "strategy_infos", force: :cascade do |t|
+    t.integer "golfclub_id", null: false
+    t.integer "course_id", null: false
+    t.integer "hole_id", null: false
+    t.integer "shot_id", null: false
+    t.integer "user_id", null: false
+    t.integer "location_name"
+    t.integer "photo"
+    t.string "hole_map"
+    t.text "comment"
+    t.integer "pin_x"
+    t.integer "pin_y"
+    t.integer "map_size_x"
+    t.integer "map_size_y"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
