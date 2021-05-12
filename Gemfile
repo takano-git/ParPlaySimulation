@@ -37,6 +37,9 @@ gem 'mini_magick'
 # Pay.jp
 gem 'payjp'
 
+# 複数モデルのレコード作成,子モデルのレコードを複数挿入
+gem 'cocoon'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
