@@ -38,7 +38,7 @@ class CardsController < ApplicationController
     # )
     # if @card.save
     #   flash[:success] = "会員情報の登録に成功しました。"
-    #   redirect_to golfclub_index_path
+    #   redirect_to golfclubs_path
     # else
     #   flash[:danger] = "会員情報の登録に失敗しました。"
     #   render :new
@@ -58,7 +58,7 @@ class CardsController < ApplicationController
       if @card.save
         pay # カード情報を保存できたらpayアクションを呼び出す。
         # flash[:success] = 'カード情報を登録しました'
-        # redirect_to golfclub_index_path and return
+        # redirect_to golfclubs_path and return
       else
         flash[:danger] = 'カード情報を登録できませんでした'
         redirect_to action: "new"
@@ -99,7 +99,7 @@ class CardsController < ApplicationController
     # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
     current_user.update(subscription_id: subscription.id, premium: true)
     flash[:danger] = '定期課金に登録できました'
-    redirect_to golfclub_index_path
+    redirect_to golfclubs_path
   end
 
   # 定期課金プラン
