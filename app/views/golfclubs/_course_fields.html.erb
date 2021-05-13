@@ -1,0 +1,8 @@
+<div class="nested-fields">
+  <div class="col-md-11 px-0 nested-fields-course">
+    <%= f.text_field :name, placeholder: "コース名", placeholder: "50文字以内", required: true, class: "form-control" %>
+  </div>
+  <div class="nested-fields-course">
+    <%= link_to_remove_association "×", f, id: "remove-btn", class: "link_to_remove_association" %>
+  </div>
+</div>

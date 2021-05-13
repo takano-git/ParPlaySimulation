@@ -42,6 +42,9 @@ gem 'haml-rails'
 # 環境変数をenvファイルに定義できる様にする
 gem 'dotenv-rails'
 
+# 複数モデルのレコード作成,子モデルのレコードを複数挿入
+gem 'cocoon'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
