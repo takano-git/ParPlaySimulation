@@ -1,24 +1,47 @@
 <%= render 'layouts/flash_messages' %>
-<div class="container-hole">
+<div class="container-hole col col-xs-10">
   <h1>ホール登録</h1>
+    <div class="form-group-hole col col-md-3">
+      <%= Hole.human_attribute_name :hole_number %>
+    </div>
+
+    <div class="form-group-hole col col-md-8 px-0">
+      <%= Hole.human_attribute_name :number_of_pars %>
+    </div>
+
     <%= form_with model: @form, url: golfclub_course_holes_path, local: true, method: :post do |hole| %>
       <%= hole.fields_for :holes do |h| %>
         <%# <%= hole.label :hole_number %>
-        
-        <div class="form-group col-md-4">
+        <div class="form-group-hole col col-md-3">
           <%= h.number_field :hole_number, class: "form-control" %>
         </div>
 
-        <div class="form-group">
-          <% pars = [3, 4, 5, 6, 7] %>
-          <% pars.each do |par| %>
+        <div class="form-group-hole col-md-8 form-control">
+        &emsp;
+          <% @pars.each do |par| %>
+            &emsp;
             <%= h.label :pars, par %>
-            <%= h.radio_button :number_of_pars , par %>
-            &nbsp;
+            <%= h.radio_button :number_of_pars , par, value: "ball_blue.jpeg" %>
+            <label for=<%= "form_hole_collection_holes_attributes_#{h.index}_number_of_pars_#{par}" %>>
+              <img src="/ball_blue.jpeg" with="20" height="20">
+            </label>
           <% end %>
         </div>
       <% end %>
-      <%= hole.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
+      <%= hole.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary" %>
     <% end %>
   <div>
 
+
+<style>
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + label img {
+  opacity:0.2;
+}
+input[type="radio"]:checked + label img {
+  opacity:1;
+}
+</style>
