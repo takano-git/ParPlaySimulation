@@ -21,8 +21,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_131119) do
 
   create_table "cards", force: :cascade do |t|
     t.integer "card_id", null: false
-    t.integer "customer_id", null: false
-    t.string "customer_token", null: false
+    t.string "customer_id", default: "", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,6 +91,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_131119) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "subscription_id"
+    t.boolean "premium", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
