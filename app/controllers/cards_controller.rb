@@ -13,8 +13,8 @@ class CardsController < ApplicationController
 
   # GET /cards/new
   def new
+    Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
     @card = Card.new
-    
   end
 
   # GET /cards/1/edit
@@ -44,9 +44,10 @@ class CardsController < ApplicationController
     #   render :new
     # end
     if params['payjp-token'].blank?
-      flash[:danger] = 'カード情報を登録できませんでした'
-      redirect_to action: "new"
       # トークンが取得出来てなければループ
+      # debugger
+      flash[:danger] = 'カード情報を登録できませんでした。'
+      redirect_to action: "new"
     else
       user_id = current_user.id
       # params['payjp-token']（response.id）からcustomerを作成
@@ -60,7 +61,7 @@ class CardsController < ApplicationController
         # flash[:success] = 'カード情報を登録しました'
         # redirect_to golfclubs_path and return
       else
-        flash[:danger] = 'カード情報を登録できませんでした'
+        flash[:danger] = 'カード情報を登録できませんでした。'
         redirect_to action: "new"
       end
     end
