@@ -1,0 +1,31 @@
+-# = javascript_include_tag 'payjp'
+
+= render 'layouts/flash_messages'
+
+.container
+
+  = form_with model: @card, url:cards_path, local: true, html: { name: "inputForm" }, class:"form" do |f|
+    .form__upper
+      .form__upper__group
+        = f.label :カード番号
+        %span.form-require 必須
+        = f.text_field :card_number, name: "card_number", id:"card_number", type: "text", placeholder: '半角数字のみ', class: 'input-default', maxlength: "16"
+      .form__upper__group.exp
+        .name
+          = f.label :有効期限
+          %span.form-require 必須
+        = f.select :exp_year, [["22",2022],["23",2023],["24",2024],["25",2025],["26",2026],["27",2027],["28",2028],["29",2029],["30",2030],["31",2031],["32",2032]], {}, class: 'input-default harf', name: "exp_year", id:"exp_year"
+        %span 年
+        = f.select :exp_month, [["01",1],["02",2],["03",3],["04",4],["05",5],["06",6],["07",7],["08",8],["09",9],["10",10],["11",11],["12",12]],{}, class: 'input-default harf', name: "exp_month", id:"exp_month"
+        %span 月
+      .form__upper__group
+        = f.label :セキュリティーコード
+        %span.form-require 必須
+        = f.text_field :cvc, name: "cvc", id:"cvc", type: "text", placeholder: 'カード背面の4桁もしくは3桁の番号', class: 'input-default', maxlength: "4"
+      .form__upper__group
+        %p.about
+      .form__upper__group
+        #card_token
+        = f.submit 'サブスクリプションを購入', class: 'btn-default', id: "token_submit"
+
+-# = javascript_include_tag 'payjp', media: 'all', 'data-turbolinks-track': 'reload'
