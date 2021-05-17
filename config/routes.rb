@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   }
 
   resources :cards
+  # resources :card, only: [:new, :create] do
+  #   collection do
+  #     post 'show', to: 'card/show',
+  #     post 'pay', to: 'card/pay',
+  #     post 'delete', to: 'card/delete'
+  #   end
+  # end
 
   resources :admin_pages, only: :index 
 

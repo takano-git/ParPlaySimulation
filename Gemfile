@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.4'
-gem 'sqlite3'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -37,10 +36,17 @@ gem 'mini_magick'
 # Pay.jp
 gem 'payjp'
 
+# hamlを使える様にする
+gem 'haml-rails'
+
+# 環境変数をenvファイルに定義できる様にする
+gem 'dotenv-rails'
+
 # 複数モデルのレコード作成,子モデルのレコードを複数挿入
 gem 'cocoon'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
 end

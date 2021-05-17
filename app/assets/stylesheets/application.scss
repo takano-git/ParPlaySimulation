@@ -39,7 +39,17 @@
 /* ヘッダー */
 
 #header {
- background-color: rgb(0, 253, 200);
+ background-color: #224444;
+}
+
+.header-logo {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 5px;
+}
+
+img {
+  vertical-align: middle;
 }
 
 /* デバッグウインドウ */
