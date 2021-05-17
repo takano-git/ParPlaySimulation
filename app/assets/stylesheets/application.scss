@@ -42,6 +42,17 @@
  background-color: #224444;
 }
 
+.header-logo {
+  height: 50px;
+  width: 50px;
+  // padding: 2px 0;
+  // margin-bottom: 4px;
+}
+
+img {
+  vertical-align: middle;
+}
+
 /* デバッグウインドウ */
 
 .debug_dump {
