@@ -1,0 +1,50 @@
+    <div id="subtitle" style="font-family: serif; color: white">
+      <b><%= "　パープレイでまわりたいゴルファーの攻略シュミレーションサイト" %></b>
+    </div>
+
+    <nav class="navbar navbar-expand" style="padding: 0;">
+
+      <div id="title" class="navbar-header collapse navbar-collapse justify-content-center">
+        <img class="header-logo" src="/assets/pps.png">
+        <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand justify-content-cente', style: "margin-left: 180px; font-family: Georgia; color: white; font-size: xx-large;" %>
+      </div>
+
+      <ul id="navbar" class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <% unless current_user.admin?%>
+            <li class="nav-item active">
+              <%= link_to '会員登録', new_card_path, class: 'nav-link', style: 'color: white;', data: {"turbolinks" => false} %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link', style: 'color: white;' %>
+            </li>
+          <% end %>
+          <li class="nav-item active">
+            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', style: 'color: white;' %>
+          </li>
+        <% else %>
+          <li class="nav-item active">
+            <%= link_to "新規登録", new_user_registration_path, class: 'nav-link', style: 'color: white;' %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to "ログイン", new_user_session_path, class: 'nav-link', style: 'color: white;' %>
+          </li>
+        <% end %>
+      </ul>
+
+    </nav>
+
+    <!-- ハンバーガーメニュー -->
+    <div id="nav-area">
+
+      <%= render 'layouts/mobile_menu' %>
+
+      <div class="menu-icon">
+        <div class="toggle_btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div id="mask"></div>
