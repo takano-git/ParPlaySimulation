@@ -1,11 +1,8 @@
-<!--<header class="navbar navbar-fixed-top navbar-default" id="header">-->
 <header id="header">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-brand">
-  <a class="navbar-brand-custom" href="#">
-  <img src="/assets/pps.png" width="36" height="36" class="d-inline-block align-top" alt="">
-  Par Play Simulation
-  </a>
+  <%= link_to image_tag("/assets/pps.png", width: 46, height: 46, class:"d-inline-block align-top"), root_path %>
+  <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand-custom' %>              
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
