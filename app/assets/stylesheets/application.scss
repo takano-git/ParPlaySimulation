@@ -3,12 +3,6 @@
 @import "golfclubs";
 @import "holes";
 
-.container-login {
-  @extend .container-fluid;
-  max-width: 576px;
-  padding: 2rem;
-}
-
 // 「ログインしました」などのフラッシュ用スタイル
 
 .alert-notice {
