@@ -24,6 +24,9 @@
             </li>
           <% end %>
           <li class="nav-item active">
+            <%= link_to '会員一覧', cards_path, class: 'nav-link', style: 'color: white;' %>
+          </li>
+          <li class="nav-item active">
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', style: 'color: white;' %>
           </li>
         <% else %>

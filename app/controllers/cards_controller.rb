@@ -1,6 +1,7 @@
 class CardsController < ApplicationController
   require 'payjp'
   before_action :set_card, only: %i[ show edit update destroy ]
+  # before_action :
 
   # GET /cards or /cards.json
   def index
@@ -45,21 +46,20 @@ class CardsController < ApplicationController
     # end
     if params['payjp-token'].blank?
       # トークンが取得出来てなければループ
-      # debugger
       flash[:danger] = 'カード情報を登録できませんでした。'
       redirect_to action: "new"
     else
       user_id = current_user.id
       # params['payjp-token']（response.id）からcustomerを作成
+      debugger
       customer = Payjp::Customer.create(
       card: params['payjp-token']
       # metadata: {user_id: current_user.id}
       )
       @card = Card.new(user_id: user_id, customer_id: customer.id, card_id: customer.default_card)
       if @card.save
-        pay # カード情報を保存できたらpayアクションを呼び出す。
-        # flash[:success] = 'カード情報を登録しました'
-        # redirect_to golfclubs_path and return
+         # カード情報を保存できたらpayアクションを呼び出す。
+        pay
       else
         flash[:danger] = 'カード情報を登録できませんでした。'
         redirect_to action: "new"
@@ -89,31 +89,6 @@ class CardsController < ApplicationController
     end
   end
 
-  def pay
-    card = Card.where(user_id: current_user.id).last
-    Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
-    subscription = Payjp::Subscription.create(
-    :customer => card.customer_id,
-    :plan => plan, # planアクションで定義した情報を呼び出す
-    metadata: {current_id: current_user.id}
-    )
-    # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
-    current_user.update(subscription_id: subscription.id, premium: true)
-    flash[:danger] = '定期課金に登録できました'
-    redirect_to golfclubs_path
-  end
-
-  # 定期課金プラン
-  def plan
-    Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
-    Payjp::Plan.create(
-      :name => "Par Play Simulation",
-      :amount => 980,
-      :interval => 'month',
-      :currency => 'jpy',
-    )
-  end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -124,6 +99,31 @@ class CardsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def card_params
       params.fetch(:card, {})
+    end
+
+    def pay
+      card = Card.where(user_id: current_user.id).last
+      # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+      subscription = Payjp::Subscription.create(
+      :customer => card.customer_id,
+      :plan => plan, # planアクションで定義した情報を呼び出す
+      metadata: {current_id: current_user.id}
+      )
+      # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
+      current_user.update(subscription_id: subscription.id, premium: true)
+      flash[:danger] = '定期課金に登録できました'
+      redirect_to golfclubs_path
+    end
+  
+    # 定期課金プラン
+    def plan
+      Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+      Payjp::Plan.create(
+        :name => "Par Play Simulation",
+        :amount => 980,
+        :interval => 'month',
+        :currency => 'jpy',
+      )
     end
 
 end
