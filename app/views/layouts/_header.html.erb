@@ -1,61 +1,48 @@
-<!--<header class="navbar navbar-fixed-top navbar-default" id="header">-->
 <header id="header">
-  <%# <div class="container"> %>
 
-    <div id="subtitle" style="font-family: serif; color: white">
-      <b><%= "　パープレイでまわりたいゴルファーの攻略シュミレーションサイト" %></b>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
+  <%= link_to image_tag("/assets/pps.png", width: 46, height: 46, class:"d-inline-block align-top"), root_path %>
+  <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand-custom' %>              
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <nav class="navbar navbar-expand" style="padding: 0;">
-
-      <div id="title" class="navbar-header collapse navbar-collapse justify-content-center">
-        <img class="header-logo" src="/assets/pps.png">
-        <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand justify-content-cente', style: "margin-left: 180px; font-family: Georgia; color: white; font-size: xx-large;" %>
-      </div>
-
-      <ul id="navbar" class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <% unless current_user.admin?%>
-            <li class="nav-item active">
-              <%= link_to '会員登録', new_card_path, class: 'nav-link', style: 'color: white;', data: {"turbolinks" => false} %>
-            </li>
-            <li class="nav-item active">
-              <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link', style: 'color: white;' %>
-            </li>
-          <% end %>
-          <li class="nav-item active">
-            <%= link_to '会員一覧', cards_path, class: 'nav-link', style: 'color: white;' %>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto"></ul>
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
+        <% unless current_user.admin?%>
+          <li class="nav-item">
+            <%= link_to '会員登録', new_card_path, class: 'nav-link',  data: {"turbolinks" => false} %>
           </li>
-          <li class="nav-item active">
-            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', style: 'color: white;' %>
-          </li>
-        <% else %>
-          <li class="nav-item active">
-            <%= link_to "新規登録", new_user_registration_path, class: 'nav-link', style: 'color: white;' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to "ログイン", new_user_session_path, class: 'nav-link', style: 'color: white;' %>
+          <li class="nav-item">
+            <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
           </li>
         <% end %>
-      </ul>
-
-    </nav>
-
-    <!-- ハンバーガーメニュー -->
-    <div id="nav-area">
-
-      <%= render 'layouts/mobile_menu' %>
-
-      <div class="menu-icon">
-        <div class="toggle_btn">
-          <span></span>
-          <span></span>
-          <span></span>
+        <li class="nav-item">
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "新規登録", new_user_registration_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "ログイン", new_user_session_path, class: 'nav-link' %>
+        </li>
+      <% end %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
         </div>
-      </div>
-
-      <div id="mask"></div>
-
-  <%# </div> %>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 </header>
