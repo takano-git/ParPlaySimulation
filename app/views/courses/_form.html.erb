@@ -3,7 +3,7 @@
   <%= course.text_field :name, class: "col col-md-12 form-control" %>
 </div>
 
-<div class="form-group-course col col-md-2 px-0">
+<div class="form-group-course col col-md-3 px-0">
   <%= Hole.human_attribute_name :hole_number %>
 </div>
 
@@ -12,7 +12,7 @@
 </div>
 
 <%= course.fields_for :holes do |hole_fields| %>
-  <div class="form-group-course col col-md-2 pl-0">
+  <div class="form-group-course col col-md-3 pl-0">
     <%= hole_fields.number_field :hole_number, class: "form-control" %>
   </div>
   

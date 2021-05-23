@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
   def create
     @course = @golfclub.courses.build(course_params)
     if @course.save
-      redirect_to golfclubs_url(@golfclub), flash: { success: "コース【#{@course.name}】を登録しました。" }
+      redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を登録しました。" }
     else
       render :new
     end
