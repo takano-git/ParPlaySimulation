@@ -4,9 +4,9 @@ class CardsController < ApplicationController
   # before_action :
 
   # GET /cards or /cards.json
-  def index
-    @cards = Card.all
-  end
+  # def index
+  #   @cards = Card.all
+  # end
 
   # GET /cards/1 or /cards/1.json
   def show
@@ -25,25 +25,6 @@ class CardsController < ApplicationController
   # POST /cards or /cards.json
   def create
     Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
-    # customer = Payjp::Customer.create(
-    #   card: params[:card_token],
-    #   # card: params[:authenticity_token],
-    #   # card: params['payjp-token'],
-    #   metadata: {user_id: current_user.id}
-    # )
-    
-    # @card = Card.new(
-    #   card_id: customer.default_card,
-    #   customer_id: customer.id,
-    #   user_id: current_user.id
-    # )
-    # if @card.save
-    #   flash[:success] = "会員情報の登録に成功しました。"
-    #   redirect_to golfclubs_path
-    # else
-    #   flash[:danger] = "会員情報の登録に失敗しました。"
-    #   render :new
-    # end
     if params['payjp-token'].blank?
       # トークンが取得出来てなければループ
       flash[:danger] = 'カード情報を登録できませんでした。'
@@ -51,12 +32,15 @@ class CardsController < ApplicationController
     else
       user_id = current_user.id
       # params['payjp-token']（response.id）からcustomerを作成
-      debugger
       customer = Payjp::Customer.create(
       card: params['payjp-token']
       # metadata: {user_id: current_user.id}
       )
-      @card = Card.new(user_id: user_id, customer_id: customer.id, card_id: customer.default_card)
+      @card = Card.new(
+        user_id: user_id,
+        customer_id: customer.id,
+        card_id: customer.default_card
+      )
       if @card.save
          # カード情報を保存できたらpayアクションを呼び出す。
         pay
