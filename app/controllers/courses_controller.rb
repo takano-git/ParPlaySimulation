@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_golfclub, only: %i(create edit update)
+  before_action :set_golfclub, only: %i(new create edit update)
   before_action :set_course, only: %i(edit update)
 
   def new
