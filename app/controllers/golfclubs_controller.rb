@@ -13,7 +13,6 @@ class GolfclubsController < ApplicationController
   def new
     @golfclub = Golfclub.new
     @courses = @golfclub.courses.build
-    # @holes = @courses.holes.build
   end
 
   def create
@@ -50,10 +49,6 @@ class GolfclubsController < ApplicationController
     end
 
     def golfclub_course_params
-      # params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id,
-      #                                  courses_attributes:[:name, :golfclub_id,
-      #                                  holes_attributes: [:hole_number, :number_of_pars, :golfclub_id, :course_id]]
-      #                                 )
       params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, courses_attributes:[:name, :golfclub_id,])
     end
 
