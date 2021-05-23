@@ -35,7 +35,7 @@
         <tr>
           <th colspan="10">
             <%= course.name %>
-            <%= link_to '編集', '#', class: "badge badge-pill badge-info" %>
+            <%= link_to 'コース名編集', edit_golfclub_course_path(@golfclub, course), class: "badge badge-pill badge-info" %>
           </th>
         </tr>
 
@@ -68,5 +68,5 @@
       <% end %>
     </tbody>
   </table>
-
+<%= link_to 'コース追加', new_golfclub_course_path(@golfclub), class: "badge badge-pill badge-primary" %>
 </div>

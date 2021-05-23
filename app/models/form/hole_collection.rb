@@ -16,7 +16,7 @@ class Form::HoleCollection < Form::Base
     # 実際にやりたいことはこれだけ
     # self.holes.map(&:save!)
 
-    # 複数件全て保存できた場合のみ実行したいので、transactionを使用する
+    # 複数件全て保存できた場合のみ実行したいので、transactionを使用
     Hole.transaction do
       self.holes.map(&:save!)
     end

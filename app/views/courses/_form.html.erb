@@ -1,0 +1,33 @@
+<div class="form-group">
+  <%= course.label :name %>
+  <%= course.text_field :name, class: "form-control" %>
+</div>
+
+<div class="form-group-hole col col-md-3 px-0">
+  <%= Hole.human_attribute_name :hole_number %>
+</div>
+
+<div class="form-group-hole col col-md-8 px-0">
+  <%= Hole.human_attribute_name :number_of_pars %>
+</div>
+
+<%= course.fields_for :holes do |hole_fields| %>
+  <div class="form-group-hole col col-md-3 pl-0">
+    <%= hole_fields.number_field :hole_number, class: "form-control" %>
+  </div>
+  
+  <div class="form-group-hole col-md-8 form-control">
+    <% @pars.each do |par| %>
+      &emsp;
+      <%= hole_fields.label :pars, par %>
+      <%= hole_fields.radio_button :number_of_pars, par, value: "ball_blue.jpeg" %>
+      <label for=<%= "course_holes_attributes_#{hole_fields.index}_number_of_pars_#{par}" %>>
+        <img src="/ball_blue.jpeg" with="20" height="20">
+      </label>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="form-group">
+  <%= course.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
+</div>
