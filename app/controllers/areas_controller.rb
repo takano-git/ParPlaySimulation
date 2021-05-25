@@ -16,9 +16,10 @@ class AreasController < ApplicationController
     end
   
     area_ids.each do|area_id|
-      golfclubs = golfclubs.push(Golfclub.find(area_id))
+      golfclubs = golfclubs.push(Golfclub.find_by(id: area_id))
     end
-    @golfclubs = golfclubs
+    @golfclubs = golfclubs.compact
+  
     
 
 

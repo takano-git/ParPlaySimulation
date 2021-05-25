@@ -98,163 +98,159 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*------------------------------------
-- COLOR success ここから
+- COLOR brand
 ------------------------------------*/
 
-$success_t1: #224444;
-$success_t2: #112222;
-$success_t3: #58abab;
-$success_t4: #69b4b4;
-$success_t5: #000000;
-$success_t6: #0b1717;
-$success_t7: #162c2c;
-$success_t8: #000000;
-$success_t9: #77bbbb;
+$brand_t1: #224444;
+$brand_t2: #112222;
+$brand_t3: #58abab;
+$brand_t4: #69b4b4;
+$brand_t5: #000000;
+$brand_t6: #0b1717;
+$brand_t7: #162c2c;
+$brand_t8: #000000;
+$brand_t9: #77bbbb;
 
-$success_shadow: rgba(34, 68, 68, 0.5);
-$success_text_color_dark_bright: #fff;
+$brand_shadow: rgba(34, 68, 68, 0.5);
+$brand_text_color_dark_bright: #fff;
 
 
-.alert-success {
-  color: $success_t5;
-  background-color: $success_t9;
-  border-color: $success_t4;
+.alert-brand {
+  color: $brand_t5;
+  background-color: $brand_t9;
+  border-color: $brand_t4;
 }
 
-.alert-success hr {
-  border-top-color: $success_t3;
+.alert-brand hr {
+  border-top-color: $brand_t3;
 }
 
-.alert-success .alert-link {
-  color: $success_t8;
+.alert-brand .alert-link {
+  color: $brand_t8;
 }
 
-.badge-success {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t1;
+.badge-brand {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t1;
 }
 
-.badge-success[href]:hover, .badge-success[href]:focus {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t2;
+.badge-brand[href]:hover, .badge-brand[href]:focus {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t2;
 }
 
-.bg-success {
-  background-color: $success_t1 !important;
+.bg-brand {
+  background-color: $brand_t1 !important;
 }
 
-a.bg-success:hover, a.bg-success:focus,
-button.bg-success:hover,
-button.bg-success:focus {
-  background-color: $success_t2 !important;
+a.bg-brand:hover, a.bg-brand:focus,
+button.bg-brand:hover,
+button.bg-brand:focus {
+  background-color: $brand_t2 !important;
 }
 
-.border-success {
-  border-color: $success_t1 !important;
+.border-brand {
+  border-color: $brand_t1 !important;
 }
 
-.btn-success {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t1;
-  border-color: $success_t1;
+.btn-brand {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t1;
+  border-color: $brand_t1;
 }
 
-.btn-success:hover {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t7;
-  border-color: $success_t2;
+.btn-brand:hover {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t7;
+  border-color: $brand_t2;
 }
 
-.btn-success:focus, .btn-success.focus {
-  box-shadow: 0 0 0 0.2rem $success_shadow;
+.btn-brand:focus, .btn-brand.focus {
+  box-shadow: 0 0 0 0.2rem $brand_shadow;
 }
 
-.btn-success.disabled, .btn-success:disabled {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t1;
-  border-color: $success_t1;
+.btn-brand.disabled, .btn-brand:disabled {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t1;
+  border-color: $brand_t1;
 }
 
-.btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active, .show > .btn-success.dropdown-toggle {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t2;
-  border-color: $success_t6;
+.btn-brand:not(:disabled):not(.disabled):active, .btn-brand:not(:disabled):not(.disabled).active, .show > .btn-brand.dropdown-toggle {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t2;
+  border-color: $brand_t6;
 }
 
-.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus, .show > .btn-success.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem $success_shadow;
+.btn-brand:not(:disabled):not(.disabled):active:focus, .btn-brand:not(:disabled):not(.disabled).active:focus, .show > .btn-brand.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem $brand_shadow;
 }
 
-.btn-outline-success {
-  color: $success_t1;
+.btn-outline-brand {
+  color: $brand_t1;
   background-color: transparent;
-  border-color: $success_t1;
+  border-color: $brand_t1;
 }
 
-.btn-outline-success:hover {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t1;
-  border-color: $success_t1;
+.btn-outline-brand:hover {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t1;
+  border-color: $brand_t1;
 }
 
-.btn-outline-success:focus, .btn-outline-success.focus {
-  box-shadow: 0 0 0 0.2rem $success_shadow;
+.btn-outline-brand:focus, .btn-outline-brand.focus {
+  box-shadow: 0 0 0 0.2rem $brand_shadow;
 }
 
-.btn-outline-success.disabled, .btn-outline-success:disabled {
-  color: $success_t1;
+.btn-outline-brand.disabled, .btn-outline-brand:disabled {
+  color: $brand_t1;
   background-color: transparent;
 }
 
-.btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t1;
-  border-color: $success_t1;
+.btn-outline-brand:not(:disabled):not(.disabled):active, .btn-outline-brand:not(:disabled):not(.disabled).active, .show > .btn-outline-brand.dropdown-toggle {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t1;
+  border-color: $brand_t1;
 }
 
-.btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-success.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem $success_shadow;
+.btn-outline-brand:not(:disabled):not(.disabled):active:focus, .btn-outline-brand:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-brand.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem $brand_shadow;
 }
 
-.list-group-item-success {
-  color: $success_t5;
-  background-color: $success_t4;
+.list-group-item-brand {
+  color: $brand_t5;
+  background-color: $brand_t4;
 }
 
-.list-group-item-success.list-group-item-action:hover, .list-group-item-success.list-group-item-action:focus {
-  color: $success_t5;
-  background-color: $success_t3;
+.list-group-item-brand.list-group-item-action:hover, .list-group-item-brand.list-group-item-action:focus {
+  color: $brand_t5;
+  background-color: $brand_t3;
 }
 
-.list-group-item-success.list-group-item-action.active {
-  color: $success_text_color_dark_bright;
-  background-color: $success_t5;
-  border-color: $success_t5;
+.list-group-item-brand.list-group-item-action.active {
+  color: $brand_text_color_dark_bright;
+  background-color: $brand_t5;
+  border-color: $brand_t5;
 }
 
-.table-success,
-.table-success > th,
-.table-success > td {
-  background-color: $success_t4;
+.table-brand,
+.table-brand > th,
+.table-brand > td {
+  background-color: $brand_t4;
 }
 
-.table-hover .table-success:hover {
-  background-color: $success_t3;
+.table-hover .table-brand:hover {
+  background-color: $brand_t3;
 }
 
-.table-hover .table-success:hover > td,
-.table-hover .table-success:hover > th {
-  background-color: $success_t3;
+.table-hover .table-brand:hover > td,
+.table-hover .table-brand:hover > th {
+  background-color: $brand_t3;
 }
 
-.text-success {
-  color: $success_t1 !important;
+.text-brand {
+  color: $brand_t1 !important;
 }
 
-a.text-success:hover, a.text-success:focus {
-  color: $success_t2 !important;
+a.text-brand:hover, a.text-brand:focus {
+  color: $brand_t2 !important;
 }
-
-/*------------------------------------
-- COLOR success ここまで
-------------------------------------*/
