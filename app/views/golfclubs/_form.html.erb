@@ -23,27 +23,7 @@
                                              class: "form-control" %>
   </div>
 
-  <!-- <% if controller.action_name == "new" %>
-    <div class="form-group">
-      <%= golfclub.fields_for :courses do |course| %>
-        <%= course.label :name %>
-        <%= render "course_fields", f: course %>
-        <div class="links">
-          <%= link_to_add_association "+ コース追加", golfclub, :courses, class: "link_to_add_association" %>
-        </div>
-      <% end %>
-    </div>
-  <% end %> -->
-
   <div class="form-group">
     <%= golfclub.submit submit_name, data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
   </div>
 <% end %>
-
-<script>
-$(document).on('turbolinks:load', function() {
-　if ($('.nested-fields').length == 1) {
-　$('#remove-btn').hide();
-　}
-});
-</script>

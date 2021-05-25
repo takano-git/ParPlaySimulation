@@ -1,11 +1,16 @@
 class CoursesController < ApplicationController
   before_action :set_golfclub, only: %i(new create edit update)
   before_action :set_course, only: %i(edit update)
+  before_action :set_pars, only: %i(new create edit update)
+
+  # 入力フォームのパー数(名前空間を切ってmoduleをfreezeして定数の書き換えを防ぐ)
+  module ParConstant
+    PARS = [3, 4, 5, 6, 7].map(&:freeze).freeze
+  end
+  ParConstant.freeze
 
   def new
     @course = Course.new
-
-    @pars = [3, 4, 5, 6, 7]
     9.times {|n| @course.holes.build(hole_number: n + 1, number_of_pars: 3 ) }
   end
 
@@ -19,7 +24,6 @@ class CoursesController < ApplicationController
   end
 
   def edit
-    @pars = [3, 4, 5, 6, 7]
   end
 
   def update
@@ -48,5 +52,9 @@ class CoursesController < ApplicationController
     # holes_attributes: [:id ...] ここに:idを渡してないとupdateした時、ホール情報が新たに重複登録されてしまう。
     def course_params
       params.require(:course).permit(:name, holes_attributes: [:id, :hole_number, :number_of_pars, :golfclub_id, :course_id])
+    end
+
+    def set_pars
+      @pars = ParConstant::PARS
     end
 end

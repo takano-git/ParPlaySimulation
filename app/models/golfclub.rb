@@ -1,8 +1,7 @@
 class Golfclub < ApplicationRecord
   has_many :courses, dependent: :destroy
   has_many :holes, through: :courses, dependent: :destroy
-
-  accepts_nested_attributes_for :courses, allow_destroy: true
+  # accepts_nested_attributes_for :courses, allow_destroy: true
   
   VALID_URL_REGEX = /https?:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+|\A\z/
   VALID_VIDEO_REGEX = /\A(https\:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)+[\S]{11}\z/
