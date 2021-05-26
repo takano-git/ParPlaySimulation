@@ -17,6 +17,13 @@ Rails.application.routes.draw do
   resources :golfclubs do
     resources :courses do
       resources :holes
+      resources :strategy_infos do
+        # collection do
+        # end
+        member do
+          get :main
+        end
+      end
     end
   end
   # resources :courses
@@ -30,6 +37,5 @@ Rails.application.routes.draw do
   
   resources :categories
   resources :posts
-  resources :strategy_infos
 
 end

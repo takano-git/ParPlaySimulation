@@ -120,5 +120,84 @@ courses.each do |course|
     ]
   )
 end
+hamano_map = [["hamano_h1_map.png", "hm1"], ["hamano_h2_map.png", "hm2"]]
+hamano_map_b = ["hamano_h1_map_b.png", "hm1b"]
+hamano_map_l = ["hamano_h1_map_l.png", "hm1l"]
+susono_map = [["susono_h1_map.png", "sm1"], ["susono_h2_map.png", "sm2"]]
+
+hole = Hole.where(golfclub_id: 1).first
+hole.map_r.attach(io: File.open("./public/hole_maps/hamano_h1_map.png"), filename: "hamano_h1_map.png")
+hole.map_b.attach(io: File.open("./public/hole_maps/hamano_h1_map_b.png"), filename: "hamano_h1_map_b.png")
+hole.map_l.attach(io: File.open("./public/hole_maps/hamano_h1_map_l.png"), filename: "hamano_h1_map_l.png")
+hole.save
+hole = Hole.where(golfclub_id: 1).where(id: 2)[0]
+hole.map_r.attach(io: File.open("./public/hole_maps/hamano_h2_map.png"), filename: "hamano_h2_map.png")
+hole.save
+
+hole = Hole.where(golfclub_id: 2).first
+hole.map_r.attach(io: File.open("./public/hole_maps/susono_h2_map.png"), filename: "susono_h2_map.png")
+hole.save
 
 puts "ホール作成！"
+
+# 攻略情報データ作成
+hamano_array = []
+3.times do |i|
+  n = i + 1
+  hamano_array.push(
+                   ["hamano_h#{n}_tee.jpg",  "h_h#{n}_s1"],
+                   ["hamano_h#{n}_2nd.jpg",   "h_h#{n}_s2"], 
+                   ["hamano_h#{n}_3rd.jpg",   "h_h#{n}_s3"], 
+                   ["hamano_h#{n}_green.jpg", "h_h#{n}_sg"]
+                    )
+end
+susono_array = [
+                 ["susono_h1_tee.jpg", "s_h1_s1"], 
+                 ["susono_h1_2nd.jpg", "s_h1_s2"],
+                 ["susono_h1_green_1.jpg", "s_h1_sg_1"],
+                 ["susono_h1_green_2.jpg", "s_h1_sg_2"],
+                 ["susono_h2_tee.jpg", "s_h2_s1"], 
+                 ["susono_h2_2nd.jpg", "s_h2_s2"],
+                 ["susono_h2_3rd.jpg", "s_h2_s3"],
+                 ["susono_h2_green.jpg", "s_h2_sg"]
+               ]
+
+2.times do |i|
+  array = hamano_array
+  n = i + 1
+  4.times do |l|
+    h = l + 1
+    strategy_info = StrategyInfo.new
+    strategy_info.golfclub_id = 1
+    strategy_info.course_id = 1
+    strategy_info.hole_id = n
+    strategy_info.shot_id = h
+    strategy_info.user_id = 1
+    strategy_info.location_name = "R"
+    strategy_info.photo.attach(
+      io: File.open("./public/strategy_infos/#{array[l][0]}"),
+      filename: "#{array[l][1]}")
+    strategy_info.comment = "コメント#{h}"
+    strategy_info.save
+  end
+
+end
+
+susono_array.each_with_index do |array, i|
+  n = i + 1
+  strategy_info = StrategyInfo.new
+  strategy_info.golfclub_id = 2
+  strategy_info.course_id = 2
+  strategy_info.hole_id = 1 if i < 5
+  strategy_info.hole_id = 2 if i >= 5
+  strategy_info.shot_id = n
+  strategy_info.user_id = 1
+  strategy_info.location_name = "R"
+  strategy_info.photo.attach(
+    io: File.open("./public/strategy_infos/#{array[0]}"),
+    filename: "#{array[1]}")
+  strategy_info.comment = "susonoコメント#{n}"
+  strategy_info.save
+end
+
+puts "攻略情報作成！"
