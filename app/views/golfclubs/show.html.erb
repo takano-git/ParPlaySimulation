@@ -1,7 +1,7 @@
 <%= render 'layouts/flash_messages' %>
 <div class="container-golfclub">
   <h2>コース編集・ホール登録</h2>
-
+  
   <table class="table table-bordered">
     <tbody>
       <tr>
@@ -35,30 +35,42 @@
         <tr>
           <th colspan="10">
             <%= course.name %>
-            <%= link_to '編集', '#', class: "badge badge-pill badge-info" %>
+            <%= link_to 'コース情報修正', edit_golfclub_course_path(@golfclub, course), class: "badge badge-pill badge-info" %>
           </th>
         </tr>
 
         <% if course.holes.present? %>
 
         <tr>
-          <th><%= Hole.human_attribute_name :hole_number %></th>
+          <th>
+            <%= Hole.human_attribute_name :hole_number %>
+          </th>
           <% course.holes.each do |hole| %>
-            <td><%= hole.hole_number %></td>
+            <td>
+              <%= hole.hole_number %>
+            </td>
           <% end %>
         </tr>
 
         <tr>
-          <th><%= Hole.human_attribute_name :number_of_pars %></th>
+          <th>
+            <%= Hole.human_attribute_name :number_of_pars %>
+          </th>
           <% course.holes.each do |hole| %>
-            <td><%= hole.number_of_pars %></td>
+            <td>
+              <%= hole.number_of_pars %>
+            </td>
           <% end %>
         </tr>
 
         <% else %>
           <tr>
-            <th style="width: 15%"><%= Hole.human_attribute_name :hole_number %></th>
-            <td class="course-table" rowspan="2"><%= link_to 'ホール情報登録', "#", class: "badge badge-pill badge-primary" %></td>
+            <th style="width: 15%">
+              <%= Hole.human_attribute_name :hole_number %>
+            </th>
+            <td class="course-table" rowspan="2">
+              <%= link_to 'ホール情報登録', new_golfclub_course_hole_path(@golfclub, course), class: "badge badge-pill badge-primary" %>
+            </td>
           </tr>
           <tr>
             <th><%= Hole.human_attribute_name :number_of_pars %></th>
@@ -68,5 +80,5 @@
       <% end %>
     </tbody>
   </table>
-
+<%= link_to 'コース追加', new_golfclub_course_path(@golfclub), class: "badge badge-pill badge-primary" %>
 </div>

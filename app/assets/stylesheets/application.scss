@@ -1,13 +1,11 @@
 @import "bootstrap";
 @import "categories";
 @import "golfclubs";
+@import "courses";
 @import "holes";
-
-.container-login {
-  @extend .container-fluid;
-  max-width: 576px;
-  padding: 2rem;
-}
+@import "cards";
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
 
 // 「ログインしました」などのフラッシュ用スタイル
 
@@ -39,9 +37,29 @@
 /* ヘッダー */
 
 #header {
- background-color: rgb(0, 253, 200);
+ background-color: #224444;
 }
 
+.header-logo {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 5px;
+}
+
+img {
+  vertical-align: middle;
+}
+
+.navbar-brand-custom {
+  font-family: Georgia !important;
+  font-size: 26px;
+  color: white;
+}
+
+.navbar-brand-custom:link, a:visited, a:hover, a:active {
+  color: white;
+  text-decoration: none;
+}
 /* デバッグウインドウ */
 
 .debug_dump {
@@ -75,4 +93,9 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 30px;
+}
+
+/* brand-background-color */
+.bg-brand {
+  background-color: #224444 !important;
 }
