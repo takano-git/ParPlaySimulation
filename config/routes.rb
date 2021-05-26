@@ -22,8 +22,15 @@ Rails.application.routes.draw do
   resources :admin_pages, only: :index 
 
   resources :golfclubs do
-    resources :courses do
+    resources :courses, except: %i(index show) do
       resources :holes
+      resources :strategy_infos do
+        # collection do
+        # end
+        member do
+          get :main
+        end
+      end
     end
   end
   # resources :courses
