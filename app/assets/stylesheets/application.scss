@@ -20,6 +20,16 @@
   height: auto;  /* 高さは自動指定 */
 }
 
+.box {  
+  position: relative;
+}
+
+.box p {
+  position: absolute;
+  top: 8%;
+  left: 10%;
+}
+
 // ログイン画面
  
 .container-login {
@@ -49,7 +59,7 @@ img {
 
 .navbar-brand-custom {
   font-family: Georgia !important;
-  font-size: 26px;
+  // font-size: 26px;
   color: white;
 }
 
@@ -90,11 +100,6 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 30px;
-}
-
-/* brand-background-color */
-.bg-brand {
-  background-color: #224444 !important;
 }
 
 /*------------------------------------

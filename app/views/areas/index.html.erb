@@ -1,14 +1,17 @@
 <div class="container">
-
-  <div>
-    <%= link_to '編集画面へ', edit_areas_path, class: "btn btn-primary" %>
-  </div>
+  <% if user_signed_in? %>
+    <% if current_user.admin?%>
+      <div>
+        <%= link_to '編集画面へ', edit_areas_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="green-box">
-    <h1>ゴルフ場一覧</h1>
+    <h1>ゴルフ場検索</h1>
     <% @areas.each do |district, areas| %>
       <div class="btn-group">
-        <button type="button" class="btn btn-lg btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-lg btn-outline-brand dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= district %>
         </button>
         <div class="dropdown-menu">

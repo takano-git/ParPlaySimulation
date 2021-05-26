@@ -21,6 +21,7 @@
                     <div class="col-6"><%= link_to '攻略動画', "#{golfclub.strategy_video}" if golfclub.present? %></div>
                     <div  class="col-6"><div style="width:160px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
                   </div>
+                  <p><%= link_to "#{golfclub.home_page_url}", "#{golfclub.home_page_url}" if golfclub.present? %></p>
                 </div>
               </div>
             </div>
