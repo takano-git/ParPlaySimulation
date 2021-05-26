@@ -39,11 +39,11 @@ gem 'payjp'
 # hamlを使える様にする
 gem 'haml-rails'
 
-# 環境変数をenvファイルに定義できる様にする
-gem 'dotenv-rails'
-
 # 複数モデルのレコード作成,子モデルのレコードを複数挿入
 gem 'cocoon'
+
+# iconタグを使える様にする
+gem 'font-awesome-sass'
 
 group :development, :test do
   gem 'sqlite3'

@@ -4,7 +4,7 @@
     "DOMContentLoaded", e => {
       // "token_submit"というidをもつhtmlがあるページか？つまりカード作成ページかを判定
       if (document.getElementById("token_submit") != null) {
-        Payjp.setPublicKey("pk_test_91c2a9b5f4d2d2ba4b24e7b6");
+        Payjp.setPublicKey("pk_test_e2b5e884b0680ac67ca97467");
         // 送信ボタンをbtnに格納
         let btn = document.getElementById("token_submit");
         // 送信ボタンがクリックされたとき
