@@ -1,29 +1,13 @@
 class AreasController < ApplicationController
   # before_action 管理者のみアクセス可能にする(あとで設定)
-  before_action :set_area, only: :show
 
   def index
     @areas = Area.all.order(:id).group_by(&:district)
   end
 
   def show
-    area_ids = []
-    golfclubs = []
-
-    areas = Area.where(district: @area.district)
-    areas.each do|area|
-      area_ids = area_ids.push(area.id)
-    end
-  
-    area_ids.each do|area_id|
-      golfclubs = golfclubs.push(Golfclub.find_by(id: area_id))
-    end
-    @golfclubs = golfclubs.compact
-  
-    
-
-
-    # Golfclub.where(area_id: 2)
+    @area = Area.find(params[:id])
+    @golfclubs = Golfclub.where(area_id: @area.id)
   end
 
   def edit
@@ -43,10 +27,6 @@ class AreasController < ApplicationController
   end
 
   private
-
-    def set_area
-      @area = Area.find(params[:id])
-    end
 
     def areas_params
       params.permit(areas: [:district])[:areas]
