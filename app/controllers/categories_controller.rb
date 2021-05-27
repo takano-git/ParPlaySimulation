@@ -34,7 +34,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-    redirect_to categories_path, flash: { danger: "カテゴリー【#{@category.name}】を削除しました。" }
+    redirect_to categories_path, flash: { success: "カテゴリー【#{@category.name}】を削除しました。" }
   end
 
   private

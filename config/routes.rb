@@ -24,6 +24,13 @@ Rails.application.routes.draw do
   resources :golfclubs do
     resources :courses, except: %i(index show) do
       resources :holes
+      resources :strategy_infos do
+        # collection do
+        # end
+        member do
+          get :main
+        end
+      end
     end
   end
   # resources :courses
@@ -34,7 +41,8 @@ Rails.application.routes.draw do
       patch "update", to: 'areas/update', as: :update
     end
   end
-  
+  resources :areas, only: :show
+
   resources :categories
   resources :posts
 

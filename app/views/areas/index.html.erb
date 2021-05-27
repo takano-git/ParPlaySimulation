@@ -1,28 +1,25 @@
-<div>
-  <%= link_to '編集画面へ', edit_areas_path, class: "btn btn-primary" %>
-</div>
-
-<div class="float-left">
-  <% @areas.each do |district, areas| %>
-    <h3><%= district %></h3>
-    <table class="table table-sm">
-      <thead class="thead-dark">
-        <tr>
-          <th>ID</th>
-          <th>都道府県</th>
-          <th>地区</th>
-        </tr>
-      </thead>
-      
-      <% areas.each do |area| %>
-        <tbody>
-          <tr>
-            <td><%= area.id %></td>
-            <td><%= area.prefecture %></td>
-            <td><%= area.district %></td>
-          </tr>
-        </tbody>
-      <% end %>
-    </table><br>
+<div class="container">
+  <% if user_signed_in? %>
+    <% if current_user.admin?%>
+      <div>
+        <%= link_to '編集画面へ', edit_areas_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
   <% end %>
+
+  <div class="green-box">
+    <h1>ゴルフ場検索</h1>
+    <% @areas.each do |district, areas| %>
+      <div class="btn-group">
+        <button type="button" class="btn btn-lg btn-outline-brand dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= district %>
+        </button>
+        <div class="dropdown-menu">
+          <% areas.each do |area| %>
+            <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

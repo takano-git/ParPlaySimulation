@@ -1,0 +1,33 @@
+<div class="container">
+  <h3 class="text-left"><span class="badge badge-brand"><%= @area.prefecture %></span></h3>
+
+  <% if @golfclubs == [] %>
+    <h5 class="my-5"><%= @area.prefecture %>のゴルフ場登録はまだありません。</h5>
+  <% else %>
+
+    <% @golfclubs.each do |golfclub| %>
+      <div class="card mb-3" style="max-width: 1140px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">No Image</text></svg>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="row">
+
+                <div class="col-md-6">
+                  <h5 class="text-left"><%= link_to "#{golfclub.name}", golfclub_path(golfclub.id) if golfclub.present? %></h5>
+                  <div class="row">
+                    <div class="col-6"><%= link_to '攻略動画', "#{golfclub.strategy_video}" if golfclub.present? %></div>
+                    <div  class="col-6"><div style="width:160px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
+                  </div>
+                  <p><%= link_to "#{golfclub.home_page_url}", "#{golfclub.home_page_url}" if golfclub.present? %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
