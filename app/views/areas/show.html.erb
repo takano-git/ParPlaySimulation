@@ -1,4 +1,21 @@
 <div class="container">
+
+  <div class="green-box">
+    <h1>ゴルフ場検索</h1>
+    <% @areas.each do |district, areas| %>
+      <div class="btn-group">
+        <button type="button" class="btn btn-lg btn-outline-brand dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= district %>
+        </button>
+        <div class="dropdown-menu">
+          <% areas.each do |area| %>
+            <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
   <h3 class="text-left"><span class="badge badge-brand"><%= @area.prefecture %></span></h3>
 
   <% if @golfclubs == [] %>
