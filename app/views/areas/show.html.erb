@@ -2,26 +2,31 @@
 
   <div class="green-box">
     <h1>ゴルフ場検索</h1>
-    <% @areas.each do |district, areas| %>
+    <% @areas.each do |district, areas| %> <%# 地区 ,県 %>
       <div class="btn-group">
         <button type="button" class="btn btn-lg btn-outline-brand dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= district %>
+          <%= district %> <%# 地区 %>
         </button>
         <div class="dropdown-menu">
-          <% areas.each do |area| %>
-            <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item" %>
+          <% areas.each do |area| %> <%# 県 %>
+            <% if Golfclub.find_by(area_id: area.id) == nil %>
+              <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item  disabled" %>
+            <% else %>
+              <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item" %>
+            <% end %>
           <% end %>
         </div>
       </div>
     <% end %>
   </div>
 
+
+
   <h3 class="text-left"><span class="badge badge-brand"><%= @area.prefecture %></span></h3>
 
   <% if @golfclubs == [] %>
     <h5 class="my-5"><%= @area.prefecture %>のゴルフ場登録はまだありません。</h5>
   <% else %>
-
     <% @golfclubs.each do |golfclub| %>
       <div class="card mb-3" style="max-width: 1140px;">
         <div class="row no-gutters">
