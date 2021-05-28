@@ -81,10 +81,30 @@ puts "地域作成！"
 
 # ゴルフ場データ作成
 
-5.times do |i|
+30.times do |i|
   n = i + 1
   Golfclub.create!(
     name: "サンプルカントリー#{n}",
+    home_page_url: "https://www.google.com",
+    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    area_id: rand(1..47)
+  )
+end
+
+30.times do |i|
+  n = i + 1
+  Golfclub.create!(
+    name: "サンプルカントリー#{n +30}",
+    home_page_url: "https://www.google.com",
+    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    area_id: rand(1..47)
+  )
+end
+
+30.times do |i|
+  n = i + 1
+  Golfclub.create!(
+    name: "サンプルカントリー#{n + 60}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
