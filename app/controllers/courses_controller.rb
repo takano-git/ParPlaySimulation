@@ -36,7 +36,7 @@ class CoursesController < ApplicationController
 
   # def destroy
   #   @course.destroy
-  #   redirect_to golfclub_url(@golfclub), flash: { ganger: "コース【#{@course.name}】を削除しました。" }
+  #   redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を削除しました。" }
   # end
 
   private

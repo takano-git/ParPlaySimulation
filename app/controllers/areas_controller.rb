@@ -33,7 +33,7 @@ class AreasController < ApplicationController
       area= Area.find(id)
       area.update_attributes!(area_param)
     end
-    flash[:info] = "地域を更新しました。"
+    flash[:success] = "地域を更新しました。"
     redirect_to areas_url
   rescue
     flash[:danger] = "無効な入力があった為、更新がキャンセルされました。"
@@ -45,4 +45,5 @@ class AreasController < ApplicationController
     def areas_params
       params.permit(areas: [:district])[:areas]
     end
+
 end
