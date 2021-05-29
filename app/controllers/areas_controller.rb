@@ -1,8 +1,9 @@
 class AreasController < ApplicationController
+  before_action :set_areas_group_by_district, only: %i[ index show ]
   # before_action 管理者のみアクセス可能にする(あとで設定)
 
   def index
-    @areas = Area.all.order(:id).group_by(&:district) # 13地区でグループ化された47都道府県
+    # @areas = Area.all.order(:id).group_by(&:district) # 13地区でグループ化された47都道府県
 
     @golfclub = Golfclub.first
     # @prefectures = Area.all # 47都道府県のインスタンス
@@ -19,9 +20,9 @@ class AreasController < ApplicationController
   end
 
   def show
-    @areas = Area.all.order(:id).group_by(&:district)
+    # @areas = Area.all.order(:id).group_by(&:district)
     @area = Area.find(params[:id])
-    @golfclubs = Golfclub.where(area_id: @area.id)
+    @golfclubs = Golfclub.where(area_id: @area.id).order(:id)
   end
 
   def edit
@@ -41,6 +42,10 @@ class AreasController < ApplicationController
   end
 
   private
+
+    def set_areas_group_by_district
+      @areas = Area.all.order(:id).group_by(&:district)
+    end
 
     def areas_params
       params.permit(areas: [:district])[:areas]
