@@ -1,33 +1,35 @@
 <%= render 'layouts/flash_messages' %>
-<div class="container-golfclub-index">
+<div class="container-golfclub">
   <h1>ゴルフ場一覧</h1>
   <table class="table">
     <tr>
       <th><%= Golfclub.human_attribute_name :name %></th>
-      <th><%= Area.human_attribute_name :district %></th>
-      <th><%= Area.human_attribute_name :prefecture %></th>
-      <th>コース数</th>
-      <th><%= Golfclub.human_attribute_name :home_page_url %></th>
-      <th><%= Golfclub.human_attribute_name :strategy_video %></th>
+      <th>地域</th>
       <th></th>
+      <!-- <th><%= Golfclub.human_attribute_name :home_page_url %></th>
+      <th><%= Golfclub.human_attribute_name :strategy_video %></th> -->
+      <!--<th></th> -->
       <th></th>
     </tr>
 
     <% @golfclubs.each do |golfclub| %>
       <tr>
-        <td><%= link_to golfclub.name, edit_golfclub_path(golfclub) %></td>
-        <td><%= Area.find(golfclub.area_id).district %></td>
-        <td><%= Area.find(golfclub.area_id).prefecture %></td>
+        <td><%= link_to golfclub.name, golfclub_path(golfclub) %></td>
         <td>
-          <%= course_count(golfclub) %>
+          <%= Area.find(golfclub.area_id).district %> / 
+          <%= Area.find(golfclub.area_id).prefecture %>
         </td>
-        <td><%= link_to 'URL', golfclub.home_page_url if golfclub.home_page_url.present? %></td>
-        <td><%= link_to 'YOUTUBE', golfclub.strategy_video if golfclub.strategy_video.present? %></td>
-        <td>
+        <!-- <td>
+          <%= course_count(golfclub) %>
+        </td> -->
+        <!-- <td><%= link_to 'URL', golfclub.home_page_url if golfclub.home_page_url.present? %></td>
+        <td><%= link_to 'YOUTUBE', golfclub.strategy_video if golfclub.strategy_video.present? %></td> -->
+        <!-- <td>
           <% if golfclub.photo.attached? %>
             <%= image_tag golfclub.photo.variant(resize:'150x150') %>
           <% end %>
-        </td>
+        </td> -->
+        <td><%= link_to '編集', edit_golfclub_path(golfclub), class: "btn btn-sm btn-success" %></td>
         <td>
           <%= link_to '削除', golfclub_path(golfclub), 
                     class: "btn btn-sm btn-danger",

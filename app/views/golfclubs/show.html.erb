@@ -26,6 +26,15 @@
         <th><%= Golfclub.human_attribute_name :strategy_video %></th>
         <td><%= @golfclub.strategy_video %></td>
       </tr>
+      <tr>
+        <td colspan="2">
+          <% if @golfclub.photo.attached? %>
+            <%= image_tag @golfclub.photo.variant(resize:'500x500') %>
+          <% else %>
+            画像登録無し
+          <% end %>
+        </td>
+      </tr>
     </tbody>
   </table>
 
@@ -81,4 +90,5 @@
     </tbody>
   </table>
 <%= link_to 'コース追加', new_golfclub_course_path(@golfclub), class: "badge badge-pill badge-primary" %>
+<%= link_to '一覧に戻る', golfclubs_path, class: "badge badge-pill badge-secondary" %>
 </div>
