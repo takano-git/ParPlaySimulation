@@ -1,21 +1,45 @@
 <%= render 'layouts/flash_messages' %>
 <div class="container-golfclub-index">
   <h1>ゴルフ場一覧</h1>
-  <% @golfclubs.each do |golfclub| %>
-    <div style="float: left; margin-right: 10px">
-      <div>画像</div>
-      <p><%= golfclub.name %></p>
+  <table class="table">
+    <tr>
+      <th><%= Golfclub.human_attribute_name :name %></th>
+      <th><%= Area.human_attribute_name :district %></th>
+      <th><%= Area.human_attribute_name :prefecture %></th>
+      <th>コース数</th>
+      <th><%= Golfclub.human_attribute_name :home_page_url %></th>
+      <th><%= Golfclub.human_attribute_name :strategy_video %></th>
+      <th></th>
+      <th></th>
+    </tr>
 
-      <% golfclub.courses.each do |course| %>
-        <p><%= course.name %></p>
-      <% end %>
-
-      <p><%= link_to golfclub.home_page_url, golfclub.home_page_url, target: :_blank, rel: "noopener noreferrer" %></p>
-      <p><%= link_to golfclub.strategy_video, golfclub.strategy_video, target: :_blank, rel: "noopener noreferrer" %></p>
-      <p><%= link_to '編集', golfclub_path(golfclub) %></p>
-      <p><%= link_to '削除', golfclub_path(golfclub), method: :delete %></p>
-    </div>
-  <% end %>
-<div>
+    <% @golfclubs.each do |golfclub| %>
+      <tr>
+        <td><%= link_to golfclub.name, edit_golfclub_path(golfclub) %></td>
+        <td><%= Area.find(golfclub.area_id).district %></td>
+        <td><%= Area.find(golfclub.area_id).prefecture %></td>
+        <td>
+          <%= course_count(golfclub) %>
+        </td>
+        <td><%= link_to 'URL', golfclub.home_page_url if golfclub.home_page_url.present? %></td>
+        <td><%= link_to 'YOUTUBE', golfclub.strategy_video if golfclub.strategy_video.present? %></td>
+        <td>
+          <% if golfclub.photo.attached? %>
+            <%= image_tag golfclub.photo.variant(resize:'150x150') %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '削除', golfclub_path(golfclub), 
+                    class: "btn btn-sm btn-danger",
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "#{golfclub.name}を削除してよろしいですか？",
+                            cancel: 'キャンセル',
+                            commit: '削除する'
+                          }, title: '削除確認' %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 
 <%= link_to '新規', new_golfclub_path %>
