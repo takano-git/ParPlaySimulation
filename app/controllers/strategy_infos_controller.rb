@@ -1,35 +1,39 @@
 class StrategyInfosController < ApplicationController
 
   def index
-    # @strategy_infos = StrategyInfo.where(course_id: 1)
-    # (仮の変数)
-    @strategy_info = StrategyInfo.find(1)
-    @hole = Hole.where(course_id: 1).first
-
-    # 選択中コースの攻略情報一覧
-    # ユーザーごとにグループを分ける？
-    # @strategy_infos = StrategyInfo.where(course_id: params[:course_id]).group_by
-
-    # @hole = Hole.where(golfclub_id: 1)
-    # @hole = Hole.where(golfclub_id: 1).first
-    # @hole = holes[0]
-    # holes.each do |hole, l|
-    #   break if l = 1
-
-    # end
+    @golfclub = Golfclub.find(params[:golfclub_id])
+    @courses = Course.where(golfclub_id: params[:golfclub_id])
+    @holes = Hole.where(
+      golfclub_id: params[:golfclub_id], course_id: @courses.first.id
+    )
+    @hole = Hole.where(golfclub_id: params[:golfclub_id]).first
+    @strategy_info = StrategyInfo.where(golfclub_id: params[:golfclub_id]).first
+    # byebug
   end
 
-  def show 
-    # @courses = Course.find(params[:id])
-    # @strategy_infos = StrategyInfo.fiind(params[:id])
-    # (仮の変数)
-    @strategy_info = StrategyInfo.find(1)
-    @hole = Hole.where(course_id: 1).first
+  def hole
+    # byebug
+    @holes = Hole.where(
+      golfclub_id: params[:golfclub_id], course_id: params[:course_id]
+    )
+    @strategy_info = StrategyInfo.where(
+      golfclub_id: params[:golfclub_id], course_id: params[:course_id]
+    ).first
+    # byebug
   end
-
+  
   def main 
-    @strategy_info = StrategyInfo.find(1)
+    @holes = Hole.where(
+      golfclub_id: params[:golfclub_id], course_id: params[:course_id]
+    )
+    @strategy_info = StrategyInfo.where(
+      golfclub_id: params[:golfclub_id]
+    ).first
   end
+
+  def show
+  end
+
 
   def new
     @strategy_info = StrategyInfo.new

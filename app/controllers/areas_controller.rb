@@ -51,6 +51,6 @@ class AreasController < ApplicationController
     def areas_params
       params.permit(areas: [:district])[:areas]
     end
-@toshihiro-mabuchi
+# @toshihiro-mabuchi
 
 end

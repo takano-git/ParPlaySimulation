@@ -24,12 +24,11 @@ Rails.application.routes.draw do
   resources :golfclubs do
     resources :courses, except: %i(index show) do
       resources :holes
-      resources :strategy_infos do
-        # collection do
-        # end
-        member do
-          get :main
-        end
+    end
+    resources :strategy_infos do
+      collection do
+        get :hole
+        get :main
       end
     end
   end
