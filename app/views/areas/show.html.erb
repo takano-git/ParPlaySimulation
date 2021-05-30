@@ -38,7 +38,7 @@
               <div class="row">
 
                 <div class="col-md-6">
-                  <h5 class="text-left"><%= link_to "#{golfclub.name}", golfclub_path(golfclub.id) if golfclub.present? %></h5>
+                  <h5 class="text-left"><%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub.id) if golfclub.present? %></h5>
                   <div class="row">
                     <div class="col-6"><%= link_to '攻略動画', "#{golfclub.strategy_video}" if golfclub.present? %></div>
                     <div  class="col-6"><div style="width:160px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>

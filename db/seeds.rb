@@ -30,19 +30,19 @@ puts "会員作成！"
 # 地域データ作成
 
 Area.create( prefecture: '北海道', district: "北海道" )
-Area.create( prefecture: '青森県', district: "北東北" )
-Area.create( prefecture: '岩手県', district: "北東北" )
-Area.create( prefecture: '秋田県', district: "北東北" )
-Area.create( prefecture: '宮城県', district: "南東北" )
-Area.create( prefecture: '山形県', district: "南東北" )
-Area.create( prefecture: '福島県', district: "南東北" )
-Area.create( prefecture: '茨城県', district: "北関東" )
-Area.create( prefecture: '栃木県', district: "北関東" )
-Area.create( prefecture: '群馬県', district: "北関東" )
-Area.create( prefecture: '埼玉県', district: "南関東" )
-Area.create( prefecture: '千葉県', district: "南関東" )
-Area.create( prefecture: '東京都', district: "南関東" )
-Area.create( prefecture: '神奈川県', district: "南関東" )
+Area.create( prefecture: '青森県', district: "東北（北）" )
+Area.create( prefecture: '岩手県', district: "東北（北）" )
+Area.create( prefecture: '秋田県', district: "東北（北）" )
+Area.create( prefecture: '宮城県', district: "東北（南）" )
+Area.create( prefecture: '山形県', district: "東北（南）" )
+Area.create( prefecture: '福島県', district: "東北（南）" )
+Area.create( prefecture: '茨城県', district: "関東（北）" )
+Area.create( prefecture: '栃木県', district: "関東（北）" )
+Area.create( prefecture: '群馬県', district: "関東（北）" )
+Area.create( prefecture: '埼玉県', district: "関東（北）" )
+Area.create( prefecture: '千葉県', district: "関東（南）" )
+Area.create( prefecture: '東京都', district: "関東（南）" )
+Area.create( prefecture: '神奈川県', district: "関東（南）" )
 Area.create( prefecture: '山梨県', district: "甲信越" )
 Area.create( prefecture: '長野県', district: "甲信越" )
 Area.create( prefecture: '新潟県', district: "甲信越" )
@@ -81,10 +81,30 @@ puts "地域作成！"
 
 # ゴルフ場データ作成
 
-5.times do |i|
+30.times do |i|
   n = i + 1
   Golfclub.create!(
-    name: "サンプルカントリー#{n}",
+    name: "サンプルカントリー#{n + 30}",
+    home_page_url: "https://www.google.com",
+    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    area_id: rand(1..47)
+  )
+end
+
+30.times do |i|
+  n = i + 1
+  Golfclub.create!(
+    name: "サンプルカントリー#{n + 60}",
+    home_page_url: "https://www.google.com",
+    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    area_id: rand(1..47)
+  )
+end
+
+30.times do |i|
+  n = i + 1
+  Golfclub.create!(
+    name: "サンプルカントリー#{n + 90}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
