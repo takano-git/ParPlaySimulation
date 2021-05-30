@@ -7,20 +7,20 @@ class AreasController < ApplicationController
   end
 
   def show
-    # area_ids = []
-    # golfclubs = []
+    area_ids = []
+    golfclubs = []
 
-    # areas = Area.where(district: @area.district)
-    # areas.each do|area|
-    #   area_ids = area_ids.push(area.id)
-    # end
+    areas = Area.where(district: @area.district)
+    areas.each do|area|
+      area_ids = area_ids.push(area.id)
+    end
   
-    # area_ids.each do|area_id|
-    #   golfclubs = golfclubs.push(Golfclub.find_by(id: area_id))
-    # end
-    # @golfclubs = golfclubs.compact
+    area_ids.each do|area_id|
+      golfclubs = golfclubs.push(Golfclub.find_by(id: area_id))
+    end
+    @golfclubs = golfclubs.compact
   
-    @golfclubs = Golfclub.where(area_id: params[:id]).order(:id)
+    # @golfclubs = Golfclub.where(area_id: params[:id]).order(:id)
 
     # Golfclub.where(area_id: 2)
   end
