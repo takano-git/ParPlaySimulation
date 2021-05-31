@@ -48,10 +48,6 @@ class GolfclubsController < ApplicationController
       @golfclub = Golfclub.find(params[:id])
     end
 
-    # def golfclub_course_params
-    #   params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, courses_attributes:[:name, :golfclub_id,])
-    # end
-
     def golfclub_params
       params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, :photo)
     end
