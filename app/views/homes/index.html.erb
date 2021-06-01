@@ -4,11 +4,3 @@
     <img src="/assets/toppage.png" alt="">
     <p>パープレイでまわりたいゴルファーのコース攻略シュミレーションサイト</p>
 </div>
-
-<div class="strategy_main_map">
-<% @course_id = Course.where(golfclub_id: 2).first.id %>
-<% @hole = Hole.where(golfclub_id: 2, course_id: @course_id).first %>
-<%= image_tag @hole.map_r.variant(resize:'152x450'), class: "img-fluid" %>
-<%= image_tag @hole.map_b.variant(resize:'142x442'), class: "img-fluid" %>
-<%= image_tag @hole.map_l.variant(resize:'152x450'), class: "img-fluid" %>
-</div>
