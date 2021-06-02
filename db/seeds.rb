@@ -121,19 +121,7 @@ courses.each do |course|
     ]
   )
 end
-# hamano_map = [["hamano_h1_map.png", "hm1"], ["hamano_h2_map.png", "hm2"]]
-# hamano_map_b = ["hamano_h1_map_b.png", "hm1b"]
-# hamano_map_l = ["hamano_h1_map_l.png", "hm1l"]
-# susono_map = [["susono_h1_map.png", "sm1"], ["susono_h2_map.png", "sm2"]]
 
-
-# 前回まで保存していたマップ画像をstrageから削除
-@holes = Hole.all
-@holes.each do |hole|
-  hole.map_r.purge
-  hole.map_b.purge
-  hole.map_l.purge
-end
 # hamano,course,out,hole_map
 @course_id = Course.where(golfclub_id: 1).first.id
 hole = Hole.where(golfclub_id: 1, course_id: @course_id).first
@@ -165,125 +153,95 @@ hole.map_l.attach(io: File.open("./public/hole_maps/hamano/in/hamano_h12_map_l.p
 hole.save
 
 # # susono,course,out,hole_map
-@course_id = Course.where(golfclub_id: 2).first.id
-hole = Hole.where(golfclub_id: 2, course_id: @course_id).first
-hole.map_r.attach(io: File.open("./public/hole_maps/susono/out/susono_h1_map_r.png"), filename: "susono_h1_map_r.png")
-hole.map_b.attach(io: File.open("./public/hole_maps/susono/out/susono_h1_map_b.png"), filename: "susono_h1_map_b.png")
-hole.map_l.attach(io: File.open("./public/hole_maps/susono/out/susono_h1_map_l.png"), filename: "susono_h1_map_l.png")
-hole.save
-@course_id = Course.where(golfclub_id: 2).first.id
-hole = Hole.where(golfclub_id: 2, course_id: @course_id).second
-hole.map_r.attach(io: File.open("./public/hole_maps/susono/out/susono_h2_map_r.png"), filename: "susono_h2_map_r.png")
-hole.map_b.attach(io: File.open("./public/hole_maps/susono/out/susono_h2_map_b.png"), filename: "susono_h2_map_b.png")
-hole.map_l.attach(io: File.open("./public/hole_maps/susono/out/susono_h2_map_l.png"), filename: "susono_h2_map_l.png")
-hole.save
+# @course_id = Course.where(golfclub_id: 2).first.id
+# hole = Hole.where(golfclub_id: 2, course_id: @course_id).first
+# hole.map_r.attach(io: File.open("./public/hole_maps/susono/out/susono_h1_map_r.png"), filename: "susono_h1_map_r.png")
+# hole.map_b.attach(io: File.open("./public/hole_maps/susono/out/susono_h1_map_b.png"), filename: "susono_h1_map_b.png")
+# hole.map_l.attach(io: File.open("./public/hole_maps/susono/out/susono_h1_map_l.png"), filename: "susono_h1_map_l.png")
+# hole.save
+# @course_id = Course.where(golfclub_id: 2).first.id
+# hole = Hole.where(golfclub_id: 2, course_id: @course_id).second
+# hole.map_r.attach(io: File.open("./public/hole_maps/susono/out/susono_h2_map_r.png"), filename: "susono_h2_map_r.png")
+# hole.map_b.attach(io: File.open("./public/hole_maps/susono/out/susono_h2_map_b.png"), filename: "susono_h2_map_b.png")
+# hole.map_l.attach(io: File.open("./public/hole_maps/susono/out/susono_h2_map_l.png"), filename: "susono_h2_map_l.png")
+# hole.save
 
 puts "ホール作成！"
+
 
 # 攻略情報データ作成
 # # hamano,out
 hamano_out = []
 2.times do |i|
   n = i + 1
-  hamano_out.push(
-                   ["hamano_h#{n}_tee.jpg",  "h_h#{n}_s1"],
-                   ["hamano_h#{n}_2nd.jpg",   "h_h#{n}_s2"], 
-                   ["hamano_h#{n}_3rd.jpg",   "h_h#{n}_s3"], 
-                   ["hamano_h#{n}_green.jpg", "h_h#{n}_sg"]
-                    )
+  hamano_out.push( [
+    ["hamano_h#{n}_tee.jpg"], ["hamano_h#{n}_2nd.jpg"], 
+    ["hamano_h#{n}_3rd.jpg"], ["hamano_h#{n}_green.jpg"]
+  ])
 end
-
 # hamanoのcourseがoutのデータ
 # (golfclub_idが１をhamanoとする。)
 @course_id = Course.where(golfclub_id: 1).first.id
 @hole_first_id = Hole.where(golfclub_id: 1, course_id: @course_id).first.id
 2.times do |i|
-  array = hamano_out
+  array = hamano_out[i]
   n = i + 1
-  4.times do |l|
+  array.each_with_index do |item, l|
+    file = item[0]
     h = l + 1
     strategy_info = StrategyInfo.new
     strategy_info.golfclub_id = 1
     strategy_info.course_id = @course_id
-    strategy_info.hole_id = @hole_first_id + n
+    strategy_info.hole_id = @hole_first_id + i
     strategy_info.shot_id = h
     strategy_info.user_id = 1
     strategy_info.location_name = "R"
     strategy_info.photo.attach(
-      io: File.open("./public/strategy_infos/hamano/out/#{array[l][0]}"),
-      filename: "#{array[l][1]}")
+      io: File.open("./public/strategy_infos/hamano/out/#{item[0]}"),
+      filename: "#{item[0]}")
     strategy_info.comment = "コメント#{h}"
     strategy_info.save
   end
 end
 
+# hamano,in
+hamano_in = []
+2.times do |i|
+  hamano_in.push( [
+    ["hamano_h1#{i}_tee.jpg"], ["hamano_h1#{i}_2nd.jpg"], 
+    ["hamano_h1#{i}_green.jpg"]
+  ])
+end
 
-
-# # hamanoのcourseがinのデータ
-# @course_id = Course.where(golfclub_id: 1).second.id
-# @hole_first_id = Hole.where(golfclub_id: 1, course_id: @course_id).first.id
-# 2.times do |i|
-#   array = hamano_in
-#   n = i + 1
-#   3.times do |l|
-#     h = l + 1
-#     strategy_info = StrategyInfo.new
-#     strategy_info.golfclub_id = 1
-#     strategy_info.course_id = @course_id
-#     strategy_info.hole_id = @hole_first_id + n
-#     strategy_info.shot_id = h
-#     strategy_info.user_id = 1
-#     strategy_info.location_name = "R"
-#     strategy_info.photo.attach(
-#       io: File.open("./public/strategy_infos/hamano/in/#{array[l][0]}"),
-#       filename: "#{array[l][1]}")
-#     strategy_info.comment = "コメント#{h}"
-#     strategy_info.save
-#   end
-# end
-
+hamano_in.push ([
+  ["hamano_h12_tee.jpg"], ["hamano_h12_2nd.jpg"], 
+  ["hamano_h12_3rd.jpg"], ["hamano_h12_green.jpg"]
+])
+# hamanoのcourseがinのデータ
+@course_id = Course.where(golfclub_id: 1).second.id
+@hole_first_id = Hole.where(golfclub_id: 1, course_id: @course_id).first.id
+3.times do |i|
+  array = hamano_in[i]
+  n = i + 1
+  array.each_with_index do |item, l|
+    h = l + 1
+    strategy_info = StrategyInfo.new
+    strategy_info.golfclub_id = 1
+    strategy_info.course_id = @course_id
+    strategy_info.hole_id = @hole_first_id + i
+    strategy_info.shot_id = h
+    strategy_info.user_id = 1
+    strategy_info.location_name = "R"
+    strategy_info.photo.attach(
+      io: File.open("./public/strategy_infos/hamano/in/#{item[0]}"),
+      filename: "#{item[0]}")
+    strategy_info.comment = "コメント#{h}"
+    strategy_info.save
+  end
+end
 
 # -----------------------------------------------------------------
 
-
-# # hamano,out
-# hamano_in = []
-# 2.times do |i|
-#   n = i + 1
-#   hamano_in.push(
-#                    ["hamano_h#{n}_tee.jpg",  "h_h#{n}_s1"],
-#                    ["hamano_h#{n}_2nd.jpg",   "h_h#{n}_s2"], 
-#                    ["hamano_h#{n}_3rd.jpg",   "h_h#{n}_s3"], 
-#                    ["hamano_h#{n}_green.jpg", "h_h#{n}_sg"]
-#                     )
-# end
-
-# susono_array = [
-#   ["susono_h1_tee.jpg", "s_h1_s1"], 
-#   ["susono_h1_2nd.jpg", "s_h1_s2"],
-#   ["susono_h1_green_1.jpg", "s_h1_sg_1"],
-#   ["susono_h1_green_2.jpg", "s_h1_sg_2"],
-#   ["susono_h2_tee.jpg", "s_h2_s1"], 
-#   ["susono_h2_2nd.jpg", "s_h2_s2"],
-#   ["susono_h2_3rd.jpg", "s_h2_s3"],
-#   ["susono_h2_green.jpg", "s_h2_sg"]
-# ]
-
-# susono_array.each_with_index do |array, i|
-#   n = i + 1
-#   strategy_info = StrategyInfo.new
-#   strategy_info.golfclub_id = 2
-#   strategy_info.course_id = 2
-#   strategy_info.hole_id = 1 if i < 5
-#   strategy_info.hole_id = 2 if i >= 5
-#   strategy_info.shot_id = n
-#   strategy_info.user_id = 1
-#   strategy_info.location_name = "R"
-#   strategy_info.photo.attach(
-#     io: File.open("./public/strategy_infos/#{array[0]}"),
-#     filename: "#{array[1]}")
-#   strategy_info.comment = "susonoコメント#{n}"
-#   strategy_info.save
-# end
+# susono
 
 puts "攻略情報作成！"
