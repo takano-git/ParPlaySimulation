@@ -1,29 +1,28 @@
 class AreasController < ApplicationController
+  before_action :set_areas_group_by_district, only: %i[ index show ]
   # before_action 管理者のみアクセス可能にする(あとで設定)
-  before_action :set_area, only: :show
 
   def index
-    @areas = Area.all.order(:id).group_by(&:district)
+    # @areas = Area.all.order(:id).group_by(&:district) # 13地区でグループ化された47都道府県
+
+    @golfclub = Golfclub.first
+    # @prefectures = Area.all # 47都道府県のインスタンス
+    # # golfclub_of_prefecture = [[prefecture, ゴルフ場の数],[prefecture, ゴルフ場の数],[prefecture, ゴルフ場の数]]
+    # golfclubs_per_prefecture = [] #[[prefecture, golfclubs],[prefecture, golfclubs], ...]
+
+    # @prefectures.values.each do |prefecture|
+    #   golfclubs = Golfclub.where(area_id: id) #その件に登録されているゴルフ場のインスタンスを取得 []
+    #   golfclubs_per_prefecture = [].push([prefecture, golfclubs]) #["北海道" ,[]]
+    # end
+
+    # @golfclubs_per_prefecture = golfclubs_per_prefecture
+
   end
 
   def show
-    area_ids = []
-    golfclubs = []
-
-    areas = Area.where(district: @area.district)
-    areas.each do|area|
-      area_ids = area_ids.push(area.id)
-    end
-  
-    area_ids.each do|area_id|
-      golfclubs = golfclubs.push(Golfclub.find_by(id: area_id))
-    end
-    @golfclubs = golfclubs.compact
-  
-    
-
-
-    # Golfclub.where(area_id: 2)
+    # @areas = Area.all.order(:id).group_by(&:district)
+    @area = Area.find(params[:id])
+    @golfclubs = Golfclub.where(area_id: @area.id).order(:id)
   end
 
   def edit
@@ -44,13 +43,12 @@ class AreasController < ApplicationController
 
   private
 
-    def set_area
-      @area = Area.find(params[:id])
+    def set_areas_group_by_district
+      @areas = Area.all.order(:id).group_by(&:district)
     end
 
     def areas_params
       params.permit(areas: [:district])[:areas]
     end
-# @toshihiro-mabuchi
 
 end

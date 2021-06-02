@@ -1,22 +1,44 @@
 <div class="container">
+
+  <div class="green-box">
+    <h1>ゴルフ場検索</h1>
+    <% @areas.each do |district, areas| %> <%# 地区 ,県 %>
+      <div class="btn-group">
+        <button type="button" class="btn btn-lg btn-outline-brand dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= district %> <%# 地区 %>
+        </button>
+        <div class="dropdown-menu">
+          <% areas.each do |area| %> <%# 県 %>
+            <% if Golfclub.find_by(area_id: area.id) == nil %>
+              <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item  disabled" %>
+            <% else %>
+              <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+
   <h3 class="text-left"><span class="badge badge-brand"><%= @area.prefecture %></span></h3>
 
   <% if @golfclubs == [] %>
     <h5 class="my-5"><%= @area.prefecture %>のゴルフ場登録はまだありません。</h5>
   <% else %>
-
     <% @golfclubs.each do |golfclub| %>
       <div class="card mb-3" style="max-width: 1140px;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">No Image</text></svg>
+            <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text></svg>
           </div>
           <div class="col-md-8">
             <div class="card-body">
               <div class="row">
 
                 <div class="col-md-6">
-                  <h5 class="text-left"><%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub_id: golfclub.id) if golfclub.present? %></h5>
+                  <h5 class="text-left"><%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub.id) if golfclub.present? %></h5>
                   <div class="row">
                     <div class="col-6"><%= link_to '攻略動画', "#{golfclub.strategy_video}" if golfclub.present? %></div>
                     <div  class="col-6"><div style="width:160px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
