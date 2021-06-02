@@ -3,7 +3,9 @@ class GolfclubsController < ApplicationController
   before_action :set_golfclub, only: %i(show edit update destroy)
 
   def index
-    @golfclubs = Golfclub.all
+    @q = Golfclub.ransack(params[:q])
+    @golfclubs = @q.result(distinct: true)
+    # @golfclubs = Golfclub.all
   end
 
   def show
@@ -30,7 +32,7 @@ class GolfclubsController < ApplicationController
 
   def update
     if @golfclub.update(golfclub_params)
-      redirect_to golfclubs_url, flash: { success: "カテゴリー【#{@golfclub.name}】を更新しました。" }
+      redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を更新しました。" }
     else
       flash[:danger] = @golfclub.errors.full_messages.join
       render :edit

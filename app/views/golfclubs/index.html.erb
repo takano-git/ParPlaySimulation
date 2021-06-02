@@ -1,38 +1,61 @@
 <%= render 'layouts/flash_messages' %>
-<div class="container-golfclub">
-  <h1>ゴルフ場一覧</h1>
-  <table class="table">
-    <tr>
+<div class="container-golfclub-index">
+  <h5>ゴルフ場一覧</h5>
+
+  <div class="golfclub-search-form">
+    <%= search_form_for @q, url: golfclubs_path do |f| %>
+      <div class="row">
+        <div class="input-group col-8">
+          <%= f.search_field :name_cont, placeholder: "ゴルフ場検索", class: "form-control form-control-sm" %>
+          <span class="input-group-append">
+            <%= button_tag type: 'submit', class: "btn btn-brand btn-sm" do %>
+              <i class="fas fa-search"></i>
+            <% end %>
+          </span>
+        </div>
+
+        <div class="col-4 ml-auto text-right">
+          <%= link_to '新規登録', new_golfclub_path, class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<style>
+  .aaa {
+    display: inline-block;
+  }
+</style>
+  <table class="table table-bordered border-danger table-sm">
+    <tr class="text-center bg-brand" style="color: white;">
       <th><%= Golfclub.human_attribute_name :name %></th>
       <th>地域</th>
-      <th></th>
-      <!-- <th><%= Golfclub.human_attribute_name :home_page_url %></th>
-      <th><%= Golfclub.human_attribute_name :strategy_video %></th> -->
-      <!--<th></th> -->
+      <th>コース数</th>
       <th></th>
     </tr>
 
-    <% @golfclubs.each do |golfclub| %>
+    <% @golfclubs.each do |golfclub| %> 
       <tr>
-        <td><%= link_to golfclub.name, golfclub_path(golfclub) %></td>
+        <td>
+          <%= golfclub.name %>
+          &nbsp;
+          <%= link_to "", edit_golfclub_path(golfclub), class: "fas fa-edit", style: "color: #224444;" %>
+        </td>
+
         <td>
           <%= Area.find(golfclub.area_id).district %> / 
           <%= Area.find(golfclub.area_id).prefecture %>
         </td>
-        <!-- <td>
+
+        <td class="text-center">
           <%= course_count(golfclub) %>
-        </td> -->
-        <!-- <td><%= link_to 'URL', golfclub.home_page_url if golfclub.home_page_url.present? %></td>
-        <td><%= link_to 'YOUTUBE', golfclub.strategy_video if golfclub.strategy_video.present? %></td> -->
-        <!-- <td>
-          <% if golfclub.photo.attached? %>
-            <%= image_tag golfclub.photo.variant(resize:'150x150') %>
-          <% end %>
-        </td> -->
-        <td><%= link_to '編集', edit_golfclub_path(golfclub), class: "btn btn-sm btn-success" %></td>
-        <td>
-          <%= link_to '削除', golfclub_path(golfclub), 
-                    class: "btn btn-sm btn-danger",
+          &nbsp;
+          <%= link_to "", golfclub_path(golfclub), class: "fas fa-edit" %>
+        </td>
+
+        <td class="text-center">
+          <%= link_to "", golfclub_path(golfclub), 
+                    class: "fas fa-times-circle",
                     method: :delete,
                     remote: true,
                     data: { confirm: "#{golfclub.name}を削除してよろしいですか？",
@@ -43,5 +66,3 @@
       </tr>
     <% end %>
   </table>
-
-<%= link_to '新規', new_golfclub_path %>
