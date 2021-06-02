@@ -1,0 +1,18 @@
+<h1>(view/strategy_infos/)hole.html.erb</h1>
+<div class="strategy_hole_bar">
+
+  <div class="hole_btns">
+    <% @holes.each do |hole| %>
+      <%= link_to "#{hole.hole_number}", "#", remote: :true, class: "btn btn-default" %>
+    <% end %>
+  </div>
+
+  <div class="rbl_btns">
+    <%= link_to "R", "#", class: "btn btn-default" %>
+    <%= link_to "B", "#", class: "btn btn-default" %>
+    <%= link_to "L", "#", class: "btn btn-default" %>
+  </div>
+
+</div>
+
+<%= render 'main', id: @strategy_info.id %> 

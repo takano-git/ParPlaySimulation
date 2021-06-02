@@ -1,3 +1,5 @@
+<h1>main.html.erb</h1>
+
 <div class="strategy_main">
 
   <%# ホール、ショット状態 %>
@@ -8,24 +10,24 @@
   <%#  %>
   <div id="strategy_main_center column">
     <div class="strategy_main_center_photo">
-    <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
-    <img src="strage/photo_1.png" id="pin" width="26px"> %>
-    <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid"  %>
-    <%# <%= image_tag @strategy_info.photo.variant(resize:'550x800'), class: "img-fluid"  %> %>
+      <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
+      <img src="strage/photo_1.png" id="pin" width="26px"> %>
+      <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid"  %>
+      <%# <%= image_tag @strategy_info.photo.variant(resize:'550x800'), class: "img-fluid"  %> %>
     </div>
     <div class="strategy_main_center_comment">
-    <h6 class="">あの辺りを打つ。</h6>
+      <h6 class="">あの辺りを打つ。</h6>
     </div>
     <div class="strategy_main_center_shot_bar">
-    <%= link_to "Tee", "#", class: "btn btn-default" %>
-    <%= link_to "2nd", "#", class: "btn btn-default" %>
-    <%= link_to "3rd", "#", class: "btn btn-default" %>
-    <%= link_to "Green", "#", class: "btn btn-default" %>
+      <%= link_to "Tee", "#", class: "btn btn-default" %>
+      <%= link_to "2nd", "#", class: "btn btn-default" %>
+      <%= link_to "3rd", "#", class: "btn btn-default" %>
+      <%= link_to "Green", "#", class: "btn btn-default" %>
     </div>
   </div>
 
   <div class="strategy_main_map">
-    <%= image_tag @hile.map_r.variant(resize:'152x450'), id: "map", class: "img-fluid" %>
+    <%= image_tag @hole.map_r.variant(resize:'152x450'), id: "map", class: "img-fluid" %>
   </div>
 
 </div>
