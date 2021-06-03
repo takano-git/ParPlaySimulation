@@ -1,0 +1,29 @@
+
+= render 'layouts/flash_messages'
+
+.container
+
+  %br
+  %h2 支払い方法
+
+  .mypage-main.col-12
+    .single-container
+      %section.creditcard_section
+        %h4 クレジットカード一覧
+        - if @card.present?
+          .container
+            .creditcard-info.col-8.offset-2
+              = "カード会社："
+              = image_tag "creditcards/#{@card_image}",width:'34',height:'20', alt:'master-card'
+              %p.creditcard-info__number
+                = "カード番号："
+                = "**** **** **** " + @card_info.last4 #クレジットカードの下４桁を表示
+              %p.creditcard-info__period
+                = "有効期限：" 
+                = @exp_month + " / " + @exp_year
+                = button_to "削除する", card_path(@card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
+        - else
+          .new-card.col-6.offset-4
+            = link_to new_card_path, data: {"turbolinks" => false}, class:"new-card-btn" do
+              %i.far.fa-credit-card 
+              クレジットカードを登録する
