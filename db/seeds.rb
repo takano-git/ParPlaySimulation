@@ -82,34 +82,37 @@ puts "地域作成！"
 
 # ゴルフ場データ作成
 
-30.times do |i|
+10.times do |i|
   n = i + 1
-  Golfclub.create!(
+  golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 30}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
   )
+  golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_1.jpeg"), filename: "golfclub_sample_1.jpeg")
 end
 
-30.times do |i|
+10.times do |i|
   n = i + 1
-  Golfclub.create!(
+  golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 60}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
   )
+  golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_2.jpeg"), filename: "golfclub_sample_2.jpeg")
 end
 
-30.times do |i|
+10.times do |i|
   n = i + 1
-  Golfclub.create!(
+  golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 90}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
   )
+  golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_3.jpeg"), filename: "golfclub_sample_3.jpeg")
 end
 
 puts "ゴルフ場作成！"
