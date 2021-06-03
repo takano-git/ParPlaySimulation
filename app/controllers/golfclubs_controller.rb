@@ -3,7 +3,9 @@ class GolfclubsController < ApplicationController
   before_action :set_golfclub, only: %i(show edit update destroy)
 
   def index
-    @golfclubs = Golfclub.all
+    @q = Golfclub.ransack(params[:q])
+    @golfclubs = @q.result(distinct: true)
+    # @golfclubs = Golfclub.all
   end
 
   def show
@@ -16,7 +18,7 @@ class GolfclubsController < ApplicationController
   end
 
   def create
-    @golfclub = Golfclub.new(golfclub_course_params)
+    @golfclub = Golfclub.new(golfclub_params)
     if @golfclub.save
       redirect_to golfclub_url(@golfclub), flash: { success: "#{@golfclub.name}を登録しました。" }
     else
@@ -30,7 +32,7 @@ class GolfclubsController < ApplicationController
 
   def update
     if @golfclub.update(golfclub_params)
-      redirect_to golfclubs_url, flash: { success: "カテゴリー【#{@golfclub.name}】を更新しました。" }
+      redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を更新しました。" }
     else
       flash[:danger] = @golfclub.errors.full_messages.join
       render :edit
@@ -48,11 +50,7 @@ class GolfclubsController < ApplicationController
       @golfclub = Golfclub.find(params[:id])
     end
 
-    def golfclub_course_params
-      params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, courses_attributes:[:name, :golfclub_id,])
-    end
-
     def golfclub_params
-      params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id)
+      params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, :photo)
     end
 end

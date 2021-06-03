@@ -26,11 +26,10 @@ Rails.application.routes.draw do
       resources :holes
     end
     resources :strategy_infos do
-      # collection do
-      # end
-      # main do
-      #   get :main
-      # end
+      collection do
+        get :hole
+        get :main
+      end
     end
   end
   # resources :courses

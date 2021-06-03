@@ -1,0 +1,108 @@
+
+
+    <p>
+      container's mouse event pageX: <span id="pagex"></span>  
+                              pageY: <span id="pagey"></span>
+    </p>
+    ----------------------------------------------------------------
+    <p>
+      container's mouse event offsetX: <span id="offsetx"></span>  
+                              offsetY: <span id="offsety"></span>
+    </p>
+    ----------------------------------------------------------------
+    
+<style>
+.strategy_main {
+  display: flex;
+}
+</style>
+
+<script>
+  let map = document.getElementById("map");
+  map.style.zIndex = "1";
+  let pin = document.getElementById("pin");
+  pin.style.position = "absolute";
+  pin.style.cursor = "pointer";
+  pin.style.zIndex = "2";
+  pin.ondragstart = function(e){
+    return false;
+  }
+
+  window.onload = function(){
+    let el = document.getElementById("container");
+    console.log(el);
+    el.onmousemove = function(e){
+      document.getElementById("pagex").innerHTML = e.pageX;
+      document.getElementById("pagey").innerHTML = e.pageY;
+      document.getElementById("offsetx").innerHTML = e.offsetX;
+      document.getElementById("offsety").innerHTML = e.offsetY;
+    }
+  }
+
+  // ピンのクリック
+  document.getElementById("pin").addEventListener('click', function(){
+    // const div = document.getElementById('pin');
+    // div.classList.toggle('clicked');
+    const elem = document.querySelector("#pin");
+    elem.classList.toggle('clicked');
+  });
+
+  // マップのクリック
+  document.getElementById("map").addEventListener('click', function(el){
+    var el = document.getElementById("map");
+
+    let pin_x = event.offsetX;
+    let pin_y = event.offsetY;
+    let client_w = el.clientWidth;
+    let client_h = el.clientHeight;
+
+    // ピンの位置情報、mapサイズ
+    location_data = { 
+      location: {
+        // idとピンの位置情報
+        // id: strategy_info.id,
+        pin_x: pin_x,
+        pin_y: pin_y,
+        map_x: client_w,
+        map_y: client_h,
+      }
+    };
+    
+    $.ajax({
+        url: 'strategy_infos/ ',
+        data: location_data,
+        type: 'PATCH'
+    });
+    
+  });
+    
+    // window.addEventListener("click", function(){
+    //   let px = event.pageX;  //クリックX
+    //   let py = event.pageY;  //クリックY
+    
+    //   let ox = window.pageXOffset;  //スクロールX
+    //   let oy = window.pageYOffset;  //スクロールY
+    
+    //   let obj = document.elementFromPoint(px - ox, py - oy);  //object
+    
+    //   let objX = obj.getBoundingClientRect().left;  //objectのX
+    //   let objY = obj.getBoundingClientRect().top;   //objectのY
+
+    //   let pxin = event.offsetX;  //クリックX
+    //   let pyin = event.offsetY;  //クリックY
+    
+    //   console.log("クリックした位置のX座標　x:" + (px-ox));
+    //   console.log("クリックした位置のY座標　y:" + (py-oy));
+    //   console.log("クリックした要素のX座標　x:" + objX);
+    //   console.log("クリックした要素のY座標　y:" + objY);
+    //   console.log("クリックした要素内のX座標　x:" + pxin);
+    //   console.log("クリックした要素内のY座標　y:" + pyin);
+    // });
+
+</script>
+
+<style>
+.clicked {
+  background-Color: yellow;
+}
+</style>

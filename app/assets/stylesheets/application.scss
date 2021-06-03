@@ -44,6 +44,13 @@
 
 /* 共通 */
 
+.fa-edit {
+  color: #224444;
+}
+
+.fa-times-circle {
+  color: #dc3545;
+}
 
 /* ヘッダー */
 
@@ -104,6 +111,45 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 30px;
+}
+
+/* footer */
+
+.footerFixed {
+  min-height: 100vh; /* ←コンテンツの高さの最小値＝ブラウザの高さに指定 */
+  position: relative;/* ←相対位置 */
+  padding-bottom: 100px; /* ←フッターの高さを指定 */
+  box-sizing: border-box;
+  /* ↑ヘッダーやフッターを含むすべての要素の高さ＝min-height:100vhになるように指定 */
+}
+
+footer {
+  position: absolute;/* ←絶対位置 */
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  // padding-bottom: 20px; /* ←フッターの高さを指定 */
+  // padding-right: 20px;
+  // padding-left: 20px;
+
+
+  
+  /* 以下 背景色やテキストカラーなど */
+  background: #224444;
+  color: #fff;
+  text-align: center;
+}
+
+ /* footerとコンテンツの重なりを防ぐスペース */
+.padding-box {
+  padding-bottom: 260px;
+}
+
+.copy-right {
+  font-size: 14px;
+  // margin-top: 16px;
+  text-align: center;
+  line-height: 21px;
 }
 
 /*------------------------------------
