@@ -3,185 +3,19 @@
   <%# 攻略ホールボタン %>
   <div class="strategy_cource_bar">
 
-    <div class="strategy_holebar_club_name">
+    <div id="<%= @golfclub.id %>" class="strategy_holebar_club_name">
       <h5>サンプルカントリークラブ</h5>
     </div>
 
     <div class="cource_btns">
-      <%= link_to "out", "#", class: "btn btn-danger" %>
-      <%= link_to "in", "#", class: "btn btn-default" %>
-      <%= link_to "new", "#", class: "btn btn-default" %>
+      <% @courses.each do |course| %>
+        <%= link_to "#{course.name}", 
+          hole_golfclub_strategy_infos_path(golfclub_id: @golfclub.id, course_id: course.id),
+          remote: :true, class: "btn btn-danger" %>
+        <%# (course_id: course.id) %>
+      <% end %>
     </div>
 
   </div>
-
-  <div class="strategy_hole_bar">
-
-    <div class="cource_btns">
-      <%= link_to "1", "#", class: "btn btn-default" %>
-      <%= link_to "2", "#", class: "btn btn-default" %>
-      <%= link_to "3", "#", class: "btn btn-default" %>
-      <%= link_to "4", "#", class: "btn btn-default" %>
-      <%= link_to "5", "#", class: "btn btn-default" %>
-      <%= link_to "6", "#", class: "btn btn-default" %>
-      <%= link_to "7", "#", class: "btn btn-default" %>
-      <%= link_to "8", "#", class: "btn btn-default" %>
-      <%= link_to "9", "#", class: "btn btn-default" %>
-    </div>
-
-    <div class="rbl_btns">
-      <%= link_to "R", "#", class: "btn btn-default" %>
-      <%= link_to "B", "#", class: "btn btn-default" %>
-      <%= link_to "L", "#", class: "btn btn-default" %>
-    </div>
-
-  </div>
-
-  <%# < %= render 'main', id: @strategy_info.id %> 
-  <div class="strategy_main">
-
-    <%# ホール、ショット状態 %>
-    <div class="strategy_main_status">
-      <h1>hole〇<br>Par△</h1>
-    </div>
-  
-    <%#  %>
-    <div id="strategy_main_center column">
-
-      <div class="strategy_main_center_photo">
-        <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
-        <img src="strage/photo_1.png" id="pin" width="26px"> %>
-        <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
-        <%# <%= image_tag @strategy_info.photo.variant(resize:'550x800'), class: "img-fluid"  %> 
-      </div>
-
-      <div class="strategy_main_center_comment">
-        <h6 class="">あの辺りを打つ</h6>
-      </div>
-
-      <div class="strategy_main_center_shot_bar">
-        <%= link_to "Tee", "#", class: "btn btn-default" %>
-        <%= link_to "2nd", "#", class: "btn btn-default" %>
-        <%= link_to "3rd", "#", class: "btn btn-default" %>
-        <%= link_to "Green", "#", class: "btn btn-default" %>
-      </div>
-
-    </div>
-
-    <div class="strategy_main_map">
-      <%= image_tag @hole.map_r.variant(resize:'144x442'), id: "map", class: "img-fluid" %>
-      <img src="strategy_infos/red_pin.png" id="pin" width="26px">
-    </div>
-
-  </div>
-    
-
-    <p>
-      container's mouse event pageX: <span id="pagex"></span>  
-                              pageY: <span id="pagey"></span>
-    </p>
-    ----------------------------------------------------------------
-    <p>
-      container's mouse event offsetX: <span id="offsetx"></span>  
-                              offsetY: <span id="offsety"></span>
-    </p>
-    ----------------------------------------------------------------
-    
+  <div id="hole"><%= render 'strategy_infos/hole' %></div>
 </div>
-
-
-<style>
-.strategy_main {
-  display: flex;
-}
-</style>
-
-<script>
-  let map = document.getElementById("map");
-  map.style.zIndex = "1";
-  let pin = document.getElementById("pin");
-  pin.style.position = "absolute";
-  pin.style.cursor = "pointer";
-  pin.style.zIndex = "2";
-  pin.ondragstart = function(e){
-    return false;
-  }
-
-  window.onload = function(){
-    let el = document.getElementById("container");
-    console.log(el);
-    el.onmousemove = function(e){
-      document.getElementById("pagex").innerHTML = e.pageX;
-      document.getElementById("pagey").innerHTML = e.pageY;
-      document.getElementById("offsetx").innerHTML = e.offsetX;
-      document.getElementById("offsety").innerHTML = e.offsetY;
-    }
-  }
-
-  // ピンのクリック
-  document.getElementById("pin").addEventListener('click', function(){
-    // const div = document.getElementById('pin');
-    // div.classList.toggle('clicked');
-    const elem = document.querySelector("#pin");
-    elem.classList.toggle('clicked');
-  });
-
-  // マップのクリック
-  document.getElementById("map").addEventListener('click', function(el){
-    var el = document.getElementById("map");
-
-    let pin_x = event.offsetX;
-    let pin_y = event.offsetY;
-    let client_w = el.clientWidth;
-    let client_h = el.clientHeight;
-
-    // ピンの位置情報、mapサイズ
-    location_data = { 
-      location: {
-        // idとピンの位置情報
-        // id: strategy_info.id,
-        pin_x: pin_x,
-        pin_y: pin_y,
-        map_x: client_w,
-        map_y: client_h,
-      }
-    };
-    
-    $.ajax({
-        url: 'strategy_infos/ ',
-        data: location_data,
-        type: 'PATCH'
-    });
-    
-  });
-    
-    // window.addEventListener("click", function(){
-    //   let px = event.pageX;  //クリックX
-    //   let py = event.pageY;  //クリックY
-    
-    //   let ox = window.pageXOffset;  //スクロールX
-    //   let oy = window.pageYOffset;  //スクロールY
-    
-    //   let obj = document.elementFromPoint(px - ox, py - oy);  //object
-    
-    //   let objX = obj.getBoundingClientRect().left;  //objectのX
-    //   let objY = obj.getBoundingClientRect().top;   //objectのY
-
-    //   let pxin = event.offsetX;  //クリックX
-    //   let pyin = event.offsetY;  //クリックY
-    
-    //   console.log("クリックした位置のX座標　x:" + (px-ox));
-    //   console.log("クリックした位置のY座標　y:" + (py-oy));
-    //   console.log("クリックした要素のX座標　x:" + objX);
-    //   console.log("クリックした要素のY座標　y:" + objY);
-    //   console.log("クリックした要素内のX座標　x:" + pxin);
-    //   console.log("クリックした要素内のY座標　y:" + pyin);
-    // });
-
-</script>
-
-<style>
-.clicked {
-  background-Color: yellow;
-}
-</style>
