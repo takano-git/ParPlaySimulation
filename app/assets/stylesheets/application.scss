@@ -74,10 +74,6 @@ img {
   color: white;
 }
 
-// .navbar-brand-custom:link, a:visited, a:hover, a:active {
-//   color: white;
-//   text-decoration: none;
-// }
 /* デバッグウインドウ */
 
 .debug_dump {
@@ -127,12 +123,7 @@ footer {
   position: absolute;/* ←絶対位置 */
   bottom: 0;
   width: 100%;
-  padding: 20px;
-  // padding-bottom: 20px; /* ←フッターの高さを指定 */
-  // padding-right: 20px;
-  // padding-left: 20px;
-
-
+  padding: 20px; /* ←フッターの高さも指定 */
   
   /* 以下 背景色やテキストカラーなど */
   background: #224444;
@@ -142,7 +133,8 @@ footer {
 
  /* footerとコンテンツの重なりを防ぐスペース */
 .padding-box {
-  padding-bottom: 260px;
+  // padding-bottom: 177px; /* ←デプロイ前に戻す */
+  padding-bottom: 400px; /* ←デプロイ前にけす */
 }
 
 .copy-right {
