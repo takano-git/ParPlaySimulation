@@ -112,9 +112,11 @@ class CardsController < ApplicationController
     customer = Payjp::Customer.retrieve(@card.customer_id)
     customer.delete # PAY.JPの顧客情報を削除
     if @card.destroy # App上でもクレジットカードを削除
-      redirect_to action: "index", notice: "削除しました。"
+      flash[:success] = 'カード情報を削除しました。'
+      redirect_to action: "index"
     else
-      redirect_to action: "index", alert: "削除できませんでした。"
+      flash[:danger] = 'カード情報を削除できませんでした。'
+      redirect_to action: "index"
     end
   end
 

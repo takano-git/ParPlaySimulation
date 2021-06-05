@@ -29,27 +29,36 @@
     <% end %>
   </div>
 
-  <h3 class="text-left"><span class="badge badge-brand"><%= Area.find_by(id: @golfclub.area_id).prefecture %></span></h3>
+  <h3 class="text-left">
+    <span class="badge badge-brand"><%= Area.find_by(id: @golfclub.area_id).prefecture %></span>
+  </h3>
 
   <div class="card mb-3" style="max-width: 1140px;">
     <div class="row no-gutters">
-      <div class="col-md-4">
+      <%# <div class="col-md-4"> %>
+      <div class="col-md-6">
         <% if @golfclub.photo.attached? %>
           <%= image_tag @golfclub.photo.variant(resize:'350x350') %>
         <% else %>
-          <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text></svg>
+          <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#868e96"/>
+            <text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text>
+          </svg>
         <% end %>
       </div>
-      <div class="col-md-8">
+      <%# <div class="col-md-8"> %>
+      <div class="col-md-6">
         <div class="card-body">
           <div class="row">
-
-            <div class="col-md-6">
-              <h5 class="text-left"><%= link_to "#{@golfclub.name}", golfclub_path(@golfclub.id) if @golfclub.present? %></h5>
+            <div class="col-md-10">
+              <!--<h5 class="text-left"><%= link_to "#{@golfclub.name}", golfclub_path(@golfclub.id) if @golfclub.present? %></h5>-->
+              <h6 class="text-left"><%= link_to "#{@golfclub.name}", golfclub_strategy_infos_path(@golfclub.id) if @golfclub.present? %></h6>
               <div class="row">
-                <div class="col-6"><%= link_to '攻略動画', "#{@golfclub.strategy_video}" if @golfclub.strategy_video.present? %></div>
-                <div  class="col-6"><div style="width:160px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
-              </div>
+                <div class="col-5"><%= link_to '攻略動画', "#{@golfclub.strategy_video}" if @golfclub.strategy_video.present? %></div>
+                <!---<div class="col-6"><div style="width:160px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>-->
+                <div class="col-7"><div style="width:100px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
+              </div><br>
               <p><%= link_to "#{@golfclub.home_page_url}", "#{@golfclub.home_page_url}" if @golfclub.home_page_url.present? %></p>
             </div>
           </div>
@@ -57,6 +66,5 @@
       </div>
     </div>
   </div>
-
 
 </div>

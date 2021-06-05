@@ -9,7 +9,7 @@
   .mypage-main.col-12
     .single-container
       %section.creditcard_section
-        %h4 クレジットカード一覧
+        %h4 クレジットカード情報
         - if @card.present?
           .container
             .creditcard-info.col-8.offset-2
@@ -23,7 +23,7 @@
                 = @exp_month + " / " + @exp_year
                 = button_to "削除する", card_path(@card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
         - else
-          .new-card.col-6.offset-4
-            = link_to new_card_path, data: {"turbolinks" => false}, class:"new-card-btn" do
-              %i.far.fa-credit-card 
-              クレジットカードを登録する
+          .new-card.col-6.offset-3.text-center
+            = link_to new_card_path, data: {"turbolinks" => false}, class:"new-card-btn btn btn-info" do
+              %i.far.fa-credit-card
+                クレジットカードを登録する
