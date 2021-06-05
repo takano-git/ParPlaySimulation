@@ -143,7 +143,7 @@ class CardsController < ApplicationController
       )
       # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
       current_user.update(subscription_id: subscription.id, premium: true)
-      flash[:success] = '定期課金に登録できました.'
+      flash[:success] = '定期課金にご登録ありがとうございます.'
       redirect_to cards_path
     end
   
