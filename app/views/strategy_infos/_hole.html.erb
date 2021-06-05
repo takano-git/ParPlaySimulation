@@ -1,4 +1,4 @@
-<h1>(view/strategy_infos/)hole.html.erb</h1>
+
 <div class="strategy_hole_bar">
 
   <div id="strategy_hole_btns">
@@ -7,7 +7,7 @@
       <%= link_to "#{hole.hole_number}",
       # 渡すのはhole_idとR,B,L情報だけでいいかも。
                    main_golfclub_strategy_infos_path(golfclub_id: @golfclub_id, course_id: @course_id, hole_id: hole.id, location: "r"),
-                   remote: :true, class: "btn btn-default strategy_hole_btn" %>
+                   remote: :true, class: "btn btn-brand strategy_hole_btn" %>
     <%# </div> %>
     <% end %>
   </div>

@@ -2,6 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.strategy_cource_bar {
+  display: flex;
+  margin-top: 18px;
+
+  & .course_btns {
+    margin-left: 13px;
+  }
+}
+
+
 .strategy_hole_btns {
   background-color: aqua;
 }

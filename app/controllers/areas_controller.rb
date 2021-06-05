@@ -6,6 +6,8 @@ class AreasController < ApplicationController
     # @areas = Area.all.order(:id).group_by(&:district) # 13地区でグループ化された47都道府県
 
     @golfclub = Golfclub.first
+    @golfclubs_citys = Golfclub.all.pluck(:area_id).uniq.sort
+
     # @prefectures = Area.all # 47都道府県のインスタンス
     # # golfclub_of_prefecture = [[prefecture, ゴルフ場の数],[prefecture, ゴルフ場の数],[prefecture, ゴルフ場の数]]
     # golfclubs_per_prefecture = [] #[[prefecture, golfclubs],[prefecture, golfclubs], ...]
@@ -23,6 +25,7 @@ class AreasController < ApplicationController
     # @areas = Area.all.order(:id).group_by(&:district)
     @area = Area.find(params[:id])
     @golfclubs = Golfclub.where(area_id: @area.id).order(:id)
+    @golfclubs_citys = Golfclub.all.pluck(:area_id).uniq.sort
   end
 
   def edit

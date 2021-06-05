@@ -1,5 +1,5 @@
 <div id="container" class="container" data-turbolinks='false'>
-  <h1>Index.html.erb</h1>
+
   <%# 攻略ホールボタン %>
   <div class="strategy_cource_bar">
 
@@ -7,11 +7,11 @@
       <h5><%= @golfclub.name %></h5>
     </div>
 
-    <div class="cource_btns">
+    <div class="course_btns">
       <% @courses.each do |course| %>
         <%= link_to "#{course.name}", 
           hole_golfclub_strategy_infos_path(golfclub_id: @golfclub.id, course_id: course.id),
-          remote: :true, class: "btn btn-danger" %>
+          remote: :true, class: "btn btn-danger course" %>
         <%# (course_id: course.id) %>
       <% end %>
     </div>
