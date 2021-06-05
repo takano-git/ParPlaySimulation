@@ -20,7 +20,9 @@
   </div>
 </div>
 
-<%= render 'main', id: @strategy_info.id %> 
+<div id="main">
+  <%= render 'main', id: @strategy_info.id %> 
+</div>
 
 <div class="shot_bar">
   <%= link_to "Tee", "#", class: "btn btn-default" %>
@@ -36,10 +38,7 @@
 // ーーーーーーーーーーーー
   $("#map_b").hide();
   $("#map_l").hide();
-window.onload = function() {
-  // 1回のみ実行する処理
-  const initial_state = $('.strategy_hole_btn').attr('href');
-}
+  
   $('.location').on('click', function () {
     let val = $(this).attr('id');
     let remove_val = $('.l_selected').attr('id');
@@ -58,9 +57,6 @@ window.onload = function() {
     //   $(this).attr('href', $(this).attr('href') + "?追加したいパラメータ");
 // ----------------------------------
 $('.strategy_hole_btn').attr(
-  // locationに値が存在すれば削除
-
-  // -----
   'href',function(){
     if($(this).attr('href').match('location=r')) {
       return $(this).attr('href').replace('location=r', 'location='+val);

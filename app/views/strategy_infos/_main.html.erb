@@ -16,8 +16,7 @@
     <div class="strategy_main_center_photo">
       <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
       <img src="strage/photo_1.png" id="pin" width="26px"> %>
-      <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid"  %>
-      <%# <%= image_tag @strategy_info.photo.variant(resize:'550x800'), class: "img-fluid"  %> 
+      <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
     </div>
     <div class="strategy_main_center_comment">
       <h6 class=""><%= @strategy_info.comment %></h6>
