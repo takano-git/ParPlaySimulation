@@ -17,7 +17,7 @@
       <% if user_signed_in? %>
         <% unless current_user.admin?%>
           <li class="nav-item">
-            <%= link_to '会員登録', new_card_path, class: 'nav-link',  data: {"turbolinks" => false} %>
+            <%= link_to '会員登録', cards_path, class: 'nav-link',  data: {"turbolinks" => false} %>
           </li>
           <li class="nav-item">
             <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
