@@ -1,0 +1,8 @@
+<div class="container">
+  <%= render 'layouts/flash_messages' %>
+  <h1>ゴルフクラブ一覧</h1>
+
+  <% @clubs.each do |club| %>
+    <p><%= club.yarn_count_string %><%=club.yarn_count_number %></p>
+  <% end %>
+</div>

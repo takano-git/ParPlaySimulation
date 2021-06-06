@@ -3,17 +3,19 @@ class ClubsController < ApplicationController
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
 
+  def index
+    @clubs = Club.where(user_id: @user)
+  end
+
   def new
-    @user = current_user
     @club = Club.new
   end
 
   def create
-    # @user = User.find(params [:user_id])
     @club= Club.new(club_params)
     if @club.save
       flash[:success] = 'ゴルフクラブを登録しました。'
-      redirect_to root_url
+      redirect_to clubs_url(@user)
     else
       render :edit
     end
