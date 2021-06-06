@@ -86,8 +86,8 @@ puts "地域作成！"
   n = i + 1
   golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n}",
-    home_page_url: "https://www.google.com",
-    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    home_page_url: "https://www.next-golf.jp/okinawa/",
+    strategy_video: "https://youtu.be/cB01psesXvI",
     area_id: rand(1..47)
   )
   golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_1.jpeg"), filename: "golfclub_sample_1.jpeg")
@@ -97,8 +97,8 @@ end
   n = i + 1
   golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 10}",
-    home_page_url: "https://www.google.com",
-    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    home_page_url: "http://fukuokacc.com/",
+    strategy_video: "https://youtu.be/yId0rVY0jKs",
     area_id: rand(1..47)
   )
   golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_2.jpeg"), filename: "golfclub_sample_2.jpeg")
@@ -108,8 +108,8 @@ end
   n = i + 1
   golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 20}",
-    home_page_url: "https://www.google.com",
-    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    home_page_url: "https://www.hawaiiprincegolf.com/",
+    strategy_video: "https://youtu.be/3s8EtEjo81E",
     area_id: rand(1..47)
   )
   golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_3.jpeg"), filename: "golfclub_sample_3.jpeg")

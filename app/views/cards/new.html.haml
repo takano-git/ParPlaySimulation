@@ -34,8 +34,10 @@
         %p.about
           = icon('fas','question-circle')
           %span
-          = link_to 'カード裏面の番号とは？', "#", class:'about__registered'
+          = link_to 'カード裏面の番号とは？', about_cards_url, remote: true, class:'about__registered'
       .form__upper__group
         #card_token
         = f.submit 'サブスクリプションを購入', class: 'btn-default', id: "token_submit"
   %br
+
+  #cvc-about.modal.fade tabindex="-1" role="dialog" aria-hidden="true"

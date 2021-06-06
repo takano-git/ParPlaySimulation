@@ -1,4 +1,5 @@
 class Golfclub < ApplicationRecord
+  belongs_to :area
   has_many :courses, dependent: :destroy
   has_many :holes, through: :courses, dependent: :destroy
   has_one_attached :photo

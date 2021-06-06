@@ -59,10 +59,10 @@
                 <div class="col-md-10">
                   <h6 class="text-left"><%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub.id) if golfclub.present? %></h6>
                   <div class="row">
-                    <div class="col-5"><%= link_to '攻略動画', "#{golfclub.strategy_video}" if golfclub.present? %></div>
+                    <div class="col-5"><%= link_to '攻略動画', "#{golfclub.strategy_video}", target: "_blank", rel: "noopener noreferrer" if golfclub.strategy_video.present? %></div>
                     <div class="col-7"><div style="width:100px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
                   </div><br>
-                  <p><%= link_to "#{golfclub.home_page_url}", "#{golfclub.home_page_url}" if golfclub.present? %></p>
+                  <p><%= link_to "#{golfclub.home_page_url}", "#{golfclub.home_page_url}", target: "_blank", rel: "noopener noreferrer" if golfclub.home_page_url.present? %></p>
                 </div>
               </div>
             </div>
