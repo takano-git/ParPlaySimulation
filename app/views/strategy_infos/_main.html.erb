@@ -10,11 +10,9 @@
   </div>
 
   <%# renderを追加するならここかも(viewはshowでもよさそう) %>
-  <%# R,B,L以外のすべてのボタンで切り替わる %>
+  <%# R,B,L以外のすべてのボタンで切り替わる？ %>
   <div id="strategy_main_center column">
     <div class="strategy_main_center_photo">
-      <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
-      <img src="strage/photo_1.png" id="pin" width="26px"> %>
       <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
     </div>
     <div class="strategy_main_center_comment">
@@ -22,11 +20,15 @@
     </div>
   </div>
 
-  <%# @holeがカラムを持っているので単に表示切り替え %>
+  <%# @holeがカラムを持っているので単に表示切り替え(.show();,.hide(); %>
+  <%#  %>
   <div id="strategy_main_map">
     <%= image_tag @hole.map_r.variant(resize:'138x436'), id: "map_r", class: "img-fluid" %>
     <%= image_tag @hole.map_b.variant(resize:'138x436'), id: "map_b", class: "img-fluid" %>
     <%= image_tag @hole.map_l.variant(resize:'138x436'), id: "map_l", class: "img-fluid" %>
+    <%# ピン %>
+    <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
+      <img src="strage/photo_1.png" id="pin" width="26px"> %>
   </div>
 
 </div>

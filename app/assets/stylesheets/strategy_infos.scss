@@ -40,12 +40,12 @@ $brand_t1: #224444;
   }
 }
 
-#strategy_hole {
+.strategy_hole_bar {
 
   &__btns {
-    margin-bottom: 30px;
+    margin-bottom: 3px;
     .btn {
-      margin-left: 2px;
+      // margin-left: 2px;
     } 
   }
 }
