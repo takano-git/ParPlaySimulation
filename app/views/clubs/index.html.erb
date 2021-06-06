@@ -2,7 +2,37 @@
   <%= render 'layouts/flash_messages' %>
   <h1>ゴルフクラブ一覧</h1>
 
-  <% @clubs.each do |club| %>
-    <p><%= club.yarn_count_string %><%=club.yarn_count_number %></p>
-  <% end %>
+  <% row_num = 1 %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">所持数</th>
+          <th scope="col">番手</th>
+          <th scope="col">クラブ詳細</th>
+          <th scope="col">ロフト</th>
+          <th scope="col">長さ</th>
+          <th scope="col">重量</th>
+          <th scope="col">バランス</th>
+          <th scope="col">振動数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @clubs.each do |club| %>
+          <tr>
+            <th scope="row"><%= row_num %></th>
+            <% row_num = row_num + 1 %>
+            <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+            <td><%= club.detail %></td>
+            <td><%= club.loft %></td>
+            <td><%= club.largo %></td>
+            <td><%= club.weight %></td>
+            <td><%= club.balance_string %><%= club.balance_number %></td>
+            <td><%= club.frequency %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
 </div>
