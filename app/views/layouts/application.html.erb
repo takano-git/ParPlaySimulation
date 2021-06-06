@@ -12,8 +12,12 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
-    <%= yield %>
+    <div class="footerFixed">
+      <%= render 'layouts/header' %>
+      <%= yield %>
+      <%= render 'layouts/margin_box' %>
+      <%= render 'layouts/footer' %>
+    </div>
     <%= debug(params) if Rails.env.development? %>
   </body>
 </html>

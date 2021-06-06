@@ -4,6 +4,12 @@
   padding: 2rem;
 }
 
+.container-golfclub-index {
+  @extend .container-fluid;
+  max-width: 768px;
+  padding: 2rem;
+}
+
 .course-table{
   vertical-align: middle !important;
   text-align: center;
@@ -21,4 +27,8 @@
 .link_to_remove_association, .link_to_remove_association:hover {
   font-size: x-large;
   text-decoration: none;
+}
+
+.golfclub-search-form {
+  margin-bottom: 5px;
 }
