@@ -9,10 +9,10 @@
         </button>
         <div class="dropdown-menu">
           <% areas.each do |area| %> <%# 県 %>
-            <% if Golfclub.find_by(area_id: area.id) == nil %>
-              <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item  disabled" %>
-            <% else %>
+            <% if @golfclubs_citys.include?(area.id) %>
               <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item" %>
+            <% else %>
+              <%= link_to "#{area.prefecture}", area_path(area.id), class: "dropdown-item  disabled" %>
             <% end %>
           <% end %>
         </div>

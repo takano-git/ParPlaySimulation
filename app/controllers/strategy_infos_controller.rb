@@ -2,20 +2,24 @@ class StrategyInfosController < ApplicationController
 
   def index
     @golfclub = Golfclub.find(params[:golfclub_id])
+    @golfclub_id = @golfclub.id
     @courses = Course.where(golfclub_id: params[:golfclub_id])
+    @course_id = @courses.first.id
     @holes = Hole.where(
       golfclub_id: params[:golfclub_id], course_id: @courses.first.id
     )
-    @hole = Hole.where(golfclub_id: params[:golfclub_id]).first
+    @hole = @holes.first
     @strategy_info = StrategyInfo.where(golfclub_id: params[:golfclub_id]).first
     # byebug
   end
 
   def hole
-    # byebug
+    @golfclub_id = params[:golfclub_id]
+    @course_id = params[:course_id]
     @holes = Hole.where(
       golfclub_id: params[:golfclub_id], course_id: params[:course_id]
     )
+    @hole = @holes.first
     @strategy_info = StrategyInfo.where(
       golfclub_id: params[:golfclub_id], course_id: params[:course_id]
     ).first
@@ -23,12 +27,21 @@ class StrategyInfosController < ApplicationController
   end
   
   def main 
-    @holes = Hole.where(
-      golfclub_id: params[:golfclub_id], course_id: params[:course_id]
+    # byebug
+    # @holes = Hole.where(
+    #   golfclub_id: params[:golfclub_id], course_id: params[:course_id]
+    # )
+    @hole = Hole.find(params[:hole_id])
+    location_colums = ["map_r","map_b","map_l"]
+    @p_loca = [params[:location]]
+    @hide_locations = location_colums - ["map_"+params[:location]]
+    @strategy_infos = StrategyInfo.where(
+      golfclub_id: params[:golfclub_id], course_id: params[:course_id], 
+      hole_id: params[:hole_id], 
+      location_name: params[:location].upcase
     )
-    @strategy_info = StrategyInfo.where(
-      golfclub_id: params[:golfclub_id]
-    ).first
+    @strategy_info = @strategy_infos.first
+    # byebug
   end
 
   def show
