@@ -1,13 +1,16 @@
 
 <div class="strategy_hole_bar">
 
-  <div id="strategy_hole_btns">
-    <% @holes.each do |hole| %>
+  <div class="strategy_hole_bar__btns">
+    <% @holes.each_with_index do |hole, i| %>
     <%# <div class="rotate-<%= cycle(0, 45, 90, 135, 180) %>
+      <%# # 渡すのはhole_idとR,B,L情報だけでいいかも。 %>
       <%= link_to "#{hole.hole_number}",
-      # 渡すのはhole_idとR,B,L情報だけでいいかも。
-                   main_golfclub_strategy_infos_path(golfclub_id: @golfclub_id, course_id: @course_id, hole_id: hole.id, location: "r"),
-                   remote: :true, class: "btn btn-brand strategy_hole_btn" %>
+          main_golfclub_strategy_infos_path(golfclub_id: @golfclub_id, course_id: @course_id, hole_id: hole.id, location: "r"),
+          remote: :true, class: "btn strategy_hole_btn h_selected" if i == 0 %>
+      <%= link_to "#{hole.hole_number}",
+          main_golfclub_strategy_infos_path(golfclub_id: @golfclub_id, course_id: @course_id, hole_id: hole.id, location: "r"),
+          remote: :true, class: "btn strategy_hole_btn" if i != 0 %>
     <%# </div> %>
     <% end %>
   </div>
@@ -34,7 +37,10 @@
 <script>
 // 初期状態でクリックされているボタンのクラス付与（eachを使っているボタンのクラス）
 
-
+$('.strategy_hole_btn').on('click', function () {
+  $('.strategy_hole_btn').removeClass('h_selected');
+  $(this).addClass('h_selected');
+});
 // ーーーーーーーーーーーー
   $("#map_b").hide();
   $("#map_l").hide();

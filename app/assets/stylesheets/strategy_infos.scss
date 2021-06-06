@@ -2,18 +2,52 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$brand_t1: #224444;
+
 .strategy_cource_bar {
   display: flex;
   margin-top: 18px;
 
-  & .course_btns {
+  & .strategy_course_btns {
     margin-left: 13px;
   }
 }
 
+.c_selected {
+  color: white;
+  background-color: $brand_t1;
+  
+  &:hover {
+    color: white;
+  }
+}
 
-.strategy_hole_btns {
-  background-color: aqua;
+.h_selected {
+  color: white;
+  background-color: $brand_t1;
+  
+  &:hover {
+    color: white;
+  }
+}
+
+.l_selected {
+  color: white;
+  background-color: $brand_t1;
+
+  &:hover {
+    color: white;
+  }
+}
+
+#strategy_hole {
+
+  &__btns {
+    margin-bottom: 30px;
+    .btn {
+      margin-left: 2px;
+    } 
+  }
 }
 
 .strategy_main {
