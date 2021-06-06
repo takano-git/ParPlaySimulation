@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'clubs/new'
   get 'admin_pages/index'
   root 'homes#index'
 
@@ -9,6 +10,14 @@ Rails.application.routes.draw do
       registrations: "users/registrations",
       omniauth_callbacks: "users/omniauth_callbacks"
   }
+
+  resources :users do
+    member do
+      # get 'clubs/edit_all'
+      resources :clubs
+    end
+  end
+
 
   resources :cards
   # resources :card, only: [:new, :create] do

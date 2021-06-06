@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
 		user == current_user
 	end
 
+	# current_userを@userにセット
+	def set_user
+		@user = current_user
+	end
+
 	# アクセスしたユーザーが現在ログインしているユーザーか確認する。
 	def correct_user
 		unless current_user?(@user)

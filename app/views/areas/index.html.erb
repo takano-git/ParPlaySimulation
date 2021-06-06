@@ -35,7 +35,11 @@
         <% if @golfclub.photo.attached? %>
           <%= image_tag @golfclub.photo.variant(resize:'350x350') %>
         <% else %>
-          <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text></svg>
+          <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#868e96"/>
+            <text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text>
+          </svg>
         <% end %>
       </div>
       <div class="col-md-8">
@@ -55,6 +59,4 @@
       </div>
     </div>
   </div>
-
-
 </div>
