@@ -1,0 +1,22 @@
+<%= render 'layouts/flash_messages' %>
+<h1><%= @user.name %>の投稿一覧(仮)</h1>
+<%= link_to '新規投稿', new_user_post_path(current_user) %>
+
+<table class="table">
+  <% @user.posts.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.comment %></td>
+      <td>
+        <% if post.photo.attached? %>
+          <%= image_tag post.photo.variant(resize:'100x100') %>
+        <% else %>
+          画像登録無し
+        <% end %>
+      </td>
+      <td><%= Golfclub.find(post.golfclub_id).name %></td>
+      <td><%= Category.find(post.category_id).name %></td>
+      <td><%= link_to '編集', edit_user_post_path(@user, post) %></td>
+    </tr>
+  <% end %>
+</table>

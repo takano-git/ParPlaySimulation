@@ -1,8 +1,8 @@
 <%= render 'layouts/flash_messages' %>
 <div class="container-post">
-  <h5>新規投稿</h5>
+  <h5><%= @post.title %>の編集</h5>
 
-  <%= form_with model: @post, url: user_posts_path(@user), local: true do |post| %>
+  <%= form_with model: @post, url: user_post_path(@user, @post), local: true do |post| %>
     <div class="form-group">
       <%= post.label :title %>
       <%= post.text_field :title, class: "form-control" %>
@@ -32,6 +32,3 @@
     </div>
   <% end %>
 </div>
-
-<p>新規投稿(仮)</p>
-<p>id:<%= @user.id %> / <%= @user.name %> / <%= @user.email %></p>
