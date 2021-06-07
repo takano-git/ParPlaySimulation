@@ -268,3 +268,10 @@ end
 # susono
 
 puts "攻略情報作成！"
+
+# Club情報作成
+Club.create( yarn_count_string: 'W', yarn_count_number: 1, largo: 45.75, weight: 316, user_id: 2)
+
+puts "クラブ作成！"
+
+

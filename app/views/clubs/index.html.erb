@@ -2,6 +2,14 @@
   <%= render 'layouts/flash_messages' %>
   <h1>ゴルフクラブ一覧</h1>
 
+  <%= line_chart @data, width: "800px", height: "500px", colors: ["#666"], xtitle: "長さ（インチ）", ytitle: "（g）量重", min: 250, max: 500 %>
+
+  <div class="row">
+    <div class="col-12">
+      <%= line_chart @data, height: "500px", xtitle: "長さ（インチ）", ytitle: "（g）量重" %>
+    </div>
+  </div>
+
   <% row_num = 1 %>
   <div class="table-responsive">
     <table class="table">

@@ -18,6 +18,8 @@
 //= require cocoon
 //= require turbolinks
 //= require_tree .
+//= require chartkick
+//= require Chart.bundle
 
 // flashメッセージをフェードアウトで消す。
 $(function(){

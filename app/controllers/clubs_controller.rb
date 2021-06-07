@@ -5,6 +5,9 @@ class ClubsController < ApplicationController
 
   def index
     @clubs = Club.where(user_id: @user)
+    #配列形式でデータを用意する
+    @data = Club.where(user_id: @user).pluck(:weight, :largo)
+    # @data = [['2019-06-01', 100], ['2019-06-02', 200], ['2019-06-03', 150]]
   end
 
   def new
