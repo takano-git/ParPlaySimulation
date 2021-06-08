@@ -17,6 +17,16 @@
       <td><%= Golfclub.find(post.golfclub_id).name %></td>
       <td><%= Category.find(post.category_id).name %></td>
       <td><%= link_to '編集', edit_user_post_path(@user, post) %></td>
+      <td>
+        <%= link_to "", user_post_path(@user, post), 
+                    class: "fas fa-times-circle",
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "タイトル: #{post.title} を削除してよろしいですか？",
+                            cancel: 'キャンセル',
+                            commit: '削除する'
+                          }, title: '削除確認' %>
+      </td>
     </tr>
   <% end %>
 </table>

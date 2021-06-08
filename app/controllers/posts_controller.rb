@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   before_action :set_user
+  before_action :set_post, only: %i(edit update destroy)
   before_action :authenticate_user!
   before_action :user_signed_in?
 
   def index
-    # @posts = @user.posts
   end
 
   def show
@@ -17,31 +17,38 @@ class PostsController < ApplicationController
   def create
     @post = @user.posts.build(post_params)
     if @post.save
-      redirect_to user_posts_url(@user), flash: { success: "新規投稿を登録しました。" }
+      redirect_to user_posts_url(@user), flash: { success: "タイトル: #{@post.title} を投稿しました。" }
     else
-      flash[:danger] = @post.errors.full_messages.join
+      flash[:danger] = @post.errors.full_messages.join("<br>").html_safe
       render :new
     end
   end
 
   def edit
-    @post = @user.posts.find_by(id: params[:id])
   end
 
   def update
-    @post = @user.posts.find_by(id: params[:id])
     if @post.update(post_params)
-      redirect_to user_posts_url(@user), flash: { success: "投稿を修正しました。" }
+      redirect_to user_posts_url(@user), flash: { success: "タイトル: #{@post.title} を更新しました。" }
     else
-      flash[:danger] = @post.errors.full_messages.join
+      flash[:danger] = @post.errors.full_messages.join("<br>").html_safe
       render :edit
     end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to user_posts_url(@user), flash: { success: "タイトル: #{@post.title} を削除しました。" }
   end
 
   private
 
     def set_user
       @user = current_user
+    end
+
+    def set_post
+      @post = @user.posts.find_by(id: params[:id])
     end
 
     def post_params
