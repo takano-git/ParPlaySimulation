@@ -1,6 +1,7 @@
 <%= render 'layouts/flash_messages' %>
+
 <div class="container-golfclub-index">
-  <h5>ゴルフ場一覧</h5>
+  <h3>ゴルフ場一覧</h3>
 
   <div class="golfclub-search-form">
     <%= search_form_for @q, url: golfclubs_path do |f| %>
@@ -21,11 +22,12 @@
     <% end %>
   </div>
 
-<style>
-  .aaa {
-    display: inline-block;
-  }
-</style>
+  <style>
+    .aaa {
+      display: inline-block;
+    }
+  </style>
+
   <table class="table table-bordered border-danger table-sm">
     <tr class="text-center bg-brand" style="color: white;">
       <th><%= Golfclub.human_attribute_name :name %></th>
@@ -66,3 +68,5 @@
       </tr>
     <% end %>
   </table>
+
+</div>

@@ -85,7 +85,7 @@ puts "地域作成！"
 10.times do |i|
   n = i + 1
   golfclub = Golfclub.create!(
-    name: "サンプルカントリー#{n + 30}",
+    name: "サンプルカントリー#{n}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
@@ -96,7 +96,7 @@ end
 10.times do |i|
   n = i + 1
   golfclub = Golfclub.create!(
-    name: "サンプルカントリー#{n + 60}",
+    name: "サンプルカントリー#{n + 10}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)
@@ -107,7 +107,7 @@ end
 10.times do |i|
   n = i + 1
   golfclub = Golfclub.create!(
-    name: "サンプルカントリー#{n + 90}",
+    name: "サンプルカントリー#{n + 20}",
     home_page_url: "https://www.google.com",
     strategy_video: "https://youtu.be/KgFxOBZZFhc",
     area_id: rand(1..47)

@@ -1,21 +1,33 @@
 <div id="container" class="container" data-turbolinks='false'>
-  <h1>Index.html.erb</h1>
+
   <%# 攻略ホールボタン %>
   <div class="strategy_cource_bar">
 
     <div id="<%= @golfclub.id %>" class="strategy_holebar_club_name">
-      <h5>サンプルカントリークラブ</h5>
+      <h5><%= @golfclub.name %></h5>
     </div>
 
-    <div class="cource_btns">
-      <% @courses.each do |course| %>
+    <div class="strategy_course_btns">
+      <% @courses.each_with_index do |course, i| %>
         <%= link_to "#{course.name}", 
           hole_golfclub_strategy_infos_path(golfclub_id: @golfclub.id, course_id: course.id),
-          remote: :true, class: "btn btn-danger" %>
+          remote: :true, class: "btn strategy_course_btn c_selected" if i == 0%>
+        <%= link_to "#{course.name}", 
+          hole_golfclub_strategy_infos_path(golfclub_id: @golfclub.id, course_id: course.id),
+          remote: :true, class: "btn strategy_course_btn" if i != 0%>
         <%# (course_id: course.id) %>
       <% end %>
     </div>
 
   </div>
-  <div id="hole"><%= render 'strategy_infos/hole' %></div>
+  <div id="strategy_hole">
+    <%= render 'strategy_infos/hole' %>
+  </div>
 </div>
+
+<script>
+  $('.strategy_course_btn').on('click', function () {
+    $('.strategy_course_btn').removeClass('c_selected');
+    $(this).addClass('c_selected');
+  });
+</script>
