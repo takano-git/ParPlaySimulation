@@ -9,7 +9,7 @@ class StrategyInfosController < ApplicationController
       golfclub_id: params[:golfclub_id], course_id: @courses.first.id
     )
     @hole = @holes.first
-    @strategy_info = StrategyInfo.where(golfclub_id: params[:golfclub_id]).first
+    @strategy_info = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").first
     # byebug
   end
 
@@ -45,6 +45,7 @@ class StrategyInfosController < ApplicationController
   end
 
   def show
+    # byebug
   end
 
 

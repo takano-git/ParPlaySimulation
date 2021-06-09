@@ -1,25 +1,31 @@
 
 <div class="strategy_hole_bar">
 
-  <div class="strategy_hole_bar__btns">
+  <div id="strategy_hole_bar__btns">
     <% @holes.each_with_index do |hole, i| %>
     <%# <div class="rotate-<%= cycle(0, 45, 90, 135, 180) %>
       <%# # 渡すのはhole_idとR,B,L情報だけでいいかも。 %>
       <%= link_to "#{hole.hole_number}",
-          main_golfclub_strategy_infos_path(golfclub_id: @golfclub_id, course_id: @course_id, hole_id: hole.id, location: "r"),
-          remote: :true, class: "btn strategy_hole_btn h_selected" if i == 0 %>
+          main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
+          remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn h_selected" if i == 0 %>
       <%= link_to "#{hole.hole_number}",
-          main_golfclub_strategy_infos_path(golfclub_id: @golfclub_id, course_id: @course_id, hole_id: hole.id, location: "r"),
-          remote: :true, class: "btn strategy_hole_btn" if i != 0 %>
+          main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
+          remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn" if i != 0 %>
     <%# </div> %>
     <% end %>
   </div>
 
 <%# マップの表示するカラムの入れ替え（hole.map_r→hole.map_b %>
   <div class="location_btns">
-    <button id="r" class="btn btn-default location l_selected">R</button>
-    <button id="b" class="btn btn-default location">B</button>
-    <button id="l" class="btn btn-default location">L</button>
+    <%# <button id="r" class="btn location_btn l_selected">R</button>
+    <button id="b" class="btn location_btn">B</button>
+    <button id="l" class="btn location_btn">L</button> %>
+    <%= link_to "R", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "R"),
+          remote: :true, id: "r", class: "btn location_btn l_selected" %>
+    <%= link_to "B", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "B"),
+          remote: :true, id: "b", class: "btn location_btn" %>
+    <%= link_to "L", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "L"),
+          remote: :true, id: "l", class: "btn location_btn" %>
   </div>
 </div>
 
@@ -27,43 +33,74 @@
   <%= render 'main', id: @strategy_info.id %> 
 </div>
 
-<div class="shot_bar">
-  <%= link_to "Tee", "#", class: "btn btn-default" %>
-  <%= link_to "2nd", "#", class: "btn btn-default" %>
-  <%= link_to "3rd", "#", class: "btn btn-default" %>
-  <%= link_to "Green", "#", class: "btn btn-default" %>
-</div>
 
 <script>
 // 初期状態でクリックされているボタンのクラス付与（eachを使っているボタンのクラス）
+// strategy_hole_bar__btns
+// let holeElements = document.getElementById('strategy_hole_bar__btns');
+// let holeFirstElement = holeElements.firstElementChild;
+// let hole_id = holeFirstElement.id;
+// $(function(){
+//   $('.location_btn').attr('href',function(){return $(this).attr('href')+"&hole_id="+hole_id});
+// });
+function getParam(name, url) {
+    if (!url) url = $('.h_selected').attr('href');
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+console.log(getParam('hole_id'));
+console.log($('.location_btn').attr('href'));
 
 $('.strategy_hole_btn').on('click', function () {
   $('.strategy_hole_btn').removeClass('h_selected');
   $(this).addClass('h_selected');
+  // ホールボタン押下後のホールidをR,B,GボタンURLに渡す。
+  // let hole_id = this.id;
+  // $('.location_btn').attr('href',function(){
+  //   // if($(this).attr('href').match(hole_id)) {
+  //     return $(this).attr('href')+"&"+hole_id);
+  //   // };
+  // });
+  // console.log($('.location_btn').attr('href'))
+  console.log(getParam('hole_id'));
+  console.log($('.location_btn').attr('href').match(/[&|\?]hole_id=(.*?)[&|$]/)[1]);
+  let hole_btn_id = getParam('hole_id');
+  let location_param = $('.location_btn').attr('href').match(/[&|\?]hole_id=(.*?)[&|$]/)[1];
+  $('.location_btn').attr('href',function(){
+    if (hole_btn_id != location_param) {
+      return $('.location_btn').attr('href').replace('hole_id='+location_param, 'hole_id='+hole_btn_id);
+    };
+  });
+
+  
+
 });
 // ーーーーーーーーーーーー
   $("#map_b").hide();
   $("#map_l").hide();
   
-  $('.location').on('click', function () {
-    let val = $(this).attr('id');
-    let remove_val = $('.l_selected').attr('id');
-    $("#map_" + remove_val).hide();
-    $('.location').removeClass('l_selected');
-    $(this).addClass('l_selected');
-    $("#map_" + val).show();
+$('.location_btn').on('click', function () {
+  let val = $(this).attr('id');
+  let remove_val = $('.l_selected').attr('id');
+  $("#map_" + remove_val).hide();
+  $('.location_btn').removeClass('l_selected');
+  $(this).addClass('l_selected');
+  $("#map_" + val).show();
 
-    // holeボタンの数
-    // let hole_btns_num = $('.strategy_hole_btn').length
-    // holeボタンを配列に格納
-    // let hole_btns = $('.strategy_hole_btn')
-    // hole_btns.forEach( function( value ) {
-    //   console.log( value.name );
-    // });
-    //   $(this).attr('href', $(this).attr('href') + "?追加したいパラメータ");
+  // holeボタンの数
+  // let hole_btns_num = $('.strategy_hole_btn').length
+  // holeボタンを配列に格納
+  // let hole_btns = $('.strategy_hole_btn')
+  // hole_btns.forEach( function( value ) {
+  //   console.log( value.name );
+  // });
+  //   $(this).attr('href', $(this).attr('href') + "?追加したいパラメータ");
 // ----------------------------------
-$('.strategy_hole_btn').attr(
-  'href',function(){
+  $('.strategy_hole_btn').attr('href',function(){
     if($(this).attr('href').match('location=r')) {
       return $(this).attr('href').replace('location=r', 'location='+val);
     };
@@ -77,8 +114,7 @@ $('.strategy_hole_btn').attr(
     // return $(this).attr('href').replace('location=r', 'location='+val);
     // return $(this).attr('href')+'&location='+val
     // return initial_state+'&location='+val
-  }
-);
+  });
 // URLにhogeが含まれていたら処理を実行する
 // if(document.URL.match("/hoge/")) {
 //   $('body').addClass('hoge');
@@ -94,5 +130,5 @@ $('.strategy_hole_btn').attr(
     // let newHref = oldHref.replace('jquery', 'javascript');
     // //置き換えた値をa要素のhref属性に設定する
     // link.setAttribute('href', newHref);
-  });
+});
 </script>

@@ -9,16 +9,33 @@
     </h3>
   </div>
 
+<%# render追加（R,G,BとTee,2nd,3rd,Greenボタンでrender）------------------------------------------------------- %>
   <%# renderを追加するならここかも(viewはshowでもよさそう) %>
   <%# R,B,L以外のすべてのボタンで切り替わる？ %>
-  <div id="strategy_main_center column">
+  <div id="show">
+    <%# <% = render 'show', id: @strategy_info.id %>  
+  </div>
+  <%# @strategy_infoがあるかないかで表示切替 %>
+  <%# @strategy_infoがある場合 %>
+  <div class="strategy_main_center">
     <div class="strategy_main_center_photo">
       <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
     </div>
     <div class="strategy_main_center_comment">
       <h6 class=""><%= @strategy_info.comment %></h6>
     </div>
+    <%# enum? %>
+    <div class="shot_bar">
+      <%= link_to "Tee", "#", class: "btn btn-default" %>
+      <%= link_to "2nd", "#", class: "btn btn-default" %>
+      <%= link_to "3rd", "#", class: "btn btn-default" %>
+      <%= link_to "Green", "#", class: "btn btn-default" %>
+      <%= link_to "Tee", golfclub_strategy_info_path(id: @strategy_info.id, location_name: "R"),
+              remote: :true, class: "btn d_selected" %>
+    </div>
   </div>
+  <%# @strategy_infoがない場合 %>
+<%# ------------------------------------------- %>
 
   <%# @holeがカラムを持っているので単に表示切り替え(.show();,.hide(); %>
   <%#  %>

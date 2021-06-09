@@ -4,6 +4,7 @@
 
 $brand_t1: #224444;
 
+// 攻略情報ページ
 .strategy_cource_bar {
   display: flex;
   margin-top: 18px;
@@ -40,16 +41,24 @@ $brand_t1: #224444;
   }
 }
 
-.strategy_hole_bar {
+// .strategy_hole_bar {}
 
-  &__btns {
-    margin-bottom: 3px;
-    // .btn {
-    //   // margin-left: 2px;
-    // } 
-  }
+#strategy_hole_bar__btns {
+  margin-bottom: 3px;
+  // .btn {
+  //   // margin-left: 2px;
+  // } 
 }
+
 
 .strategy_main {
   display: flex;
 }
+
+
+// 攻略情報新規作成、更新ページ
+.strategy_main_center {
+  display: flex;
+  flex-flow: column;
+}
+
