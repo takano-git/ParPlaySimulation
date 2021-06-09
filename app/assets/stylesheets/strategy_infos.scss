@@ -55,10 +55,12 @@ $brand_t1: #224444;
   display: flex;
 }
 
-
-// 攻略情報新規作成、更新ページ
 .strategy_main_center {
   display: flex;
   flex-flow: column;
 }
 
+// 攻略情報新規作成、更新ページ
+.create_strategy_info {
+  display: flex;
+}

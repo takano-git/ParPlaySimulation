@@ -216,7 +216,7 @@ end
     strategy_info.golfclub_id = 1
     strategy_info.course_id = @course_id
     strategy_info.hole_id = @hole_first_id + i
-    strategy_info.shot_id = h
+    strategy_info.shot_id = l
     strategy_info.user_id = 1
     strategy_info.location_name = "R"
     strategy_info.photo.attach(
@@ -252,7 +252,7 @@ hamano_in.push ([
     strategy_info.golfclub_id = 1
     strategy_info.course_id = @course_id
     strategy_info.hole_id = @hole_first_id + i
-    strategy_info.shot_id = h
+    strategy_info.shot_id = l
     strategy_info.user_id = 1
     strategy_info.location_name = "R"
     strategy_info.photo.attach(

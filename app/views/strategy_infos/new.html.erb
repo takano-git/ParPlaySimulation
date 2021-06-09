@@ -1,5 +1,56 @@
 
 
+<div class="create_strategy_info">
+
+  <div class="strategy_info_form">
+
+    <%= form_with(url: new_golfclub_strategy_info_path, local: true) do |f| %>
+      <%# ゴルフ場名、県名 %>
+
+      <%# コース名、HOle.NO、shot %>
+
+
+      <%# < %= render 'shared/error_messages', object: @user %> %>
+      <%= f.label :location_name, class: "label-#{yield(:class_text)}" %>
+      <%= f.text_field :location_name, class: "form-control" %>
+      <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
+      <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %>
+      <%= f.label :comment, class: "label-#{yield(:class_text)}" %>
+      <%= f.text_field :comment, class: "form-control" %>
+      <%# ピン座標 %>
+      <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :photo_point_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :photo_point_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :photo_size_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :photo_size_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_target_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_target_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_point_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_point_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_shoot_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_size_x, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_size_y, value: "0", class: "form-control" %>
+      <%= f.submit "新規作成", class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+    <% end %>
+  </div>
+
+  <div class="location_btns">
+    <button id="r" class="btn location_btn l_selected">R</button>
+    <button id="b" class="btn location_btn">B</button>
+    <button id="l" class="btn location_btn">L</button>
+  </div>
+
+  <div id="strategy_map">
+    <%= image_tag @hole.map_r.variant(resize:'128x426'), id: "map_r", class: "img-fluid" %>
+    <%= image_tag @hole.map_b.variant(resize:'128x426'), id: "map_b", class: "img-fluid" %>
+    <%= image_tag @hole.map_l.variant(resize:'128x426'), id: "map_l", class: "img-fluid" %>
+  </div>
+
+</div>
+
+<div>
     <p>
       container's mouse event pageX: <span id="pagex"></span>  
                               pageY: <span id="pagey"></span>
@@ -10,9 +61,24 @@
                               offsetY: <span id="offsety"></span>
     </p>
     ----------------------------------------------------------------
+</div>
 
 
 <script>
+// hole.htmlに記述済み
+  $("#map_b").hide();
+  $("#map_l").hide();
+  
+$('.location_btn').on('click', function () {
+  let val = $(this).attr('id');
+  let remove_val = $('.l_selected').attr('id');
+  $("#map_" + remove_val).hide();
+  $('.location_btn').removeClass('l_selected');
+  $(this).addClass('l_selected');
+  $("#map_" + val).show();
+});
+// ---------------------------------------------
+
   let map = document.getElementById("map");
   map.style.zIndex = "1";
   let pin = document.getElementById("pin");

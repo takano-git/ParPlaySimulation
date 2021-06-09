@@ -50,6 +50,8 @@ class StrategyInfosController < ApplicationController
 
 
   def new
+    # @hole_id = params[:hole_id]
+    @hole = Hole.find(1)
     @strategy_info = StrategyInfo.new
   end
 
