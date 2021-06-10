@@ -1,9 +1,10 @@
+<%= render 'layouts/flash_messages' %>
+
 <div class="container-login">
 
   <h1><%= t('.forgot_your_password') %></h1>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-    <%= bootstrap_devise_error_messages! %>
 
     <div class="form-group">
       <%= f.label :email %>
