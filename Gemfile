@@ -48,7 +48,7 @@ gem 'font-awesome-sass'
 gem 'ransack'
 
 # グラフ機能
-gem "chartkick"
+gem 'chart-js-rails', '~> 0.1.4'
 
 group :development, :test do
   gem 'sqlite3'
