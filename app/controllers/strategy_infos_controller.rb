@@ -51,11 +51,17 @@ class StrategyInfosController < ApplicationController
 
   def new
     # @hole_id = params[:hole_id]
-    @hole = Hole.find(1)
+    @golfclub = Golfclub.find(params[:golfclub_id])
+    @area = Area.find(@golfclub.area_id)
+    @courses = Course.where(golfclub_id: params[:golfclub_id]).pluck(:id, :name).transpose
+    @holes = Hole.where(params[:golfclub_id])
+    @hole = @holes.first
     @strategy_info = StrategyInfo.new
+    # byebug
   end
 
   def create
+    byebug
   end
 
   def edit
@@ -69,4 +75,8 @@ class StrategyInfosController < ApplicationController
     # strategy_info.hole_map.perge
     
   end
+
+    # def strategy_info_params
+    #   params.require(:book).permit(:commtent)
+    # end
 end

@@ -4,19 +4,25 @@
 
   <div class="strategy_info_form">
 
-    <%= form_with(url: new_golfclub_strategy_info_path, local: true) do |f| %>
+    <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
       <%# ゴルフ場名、県名 %>
-
+      <%= @golfclub.name %>
+      <%= @area.prefecture %><br>
       <%# コース名、HOle.NO、shot %>
-
-
-      <%# < %= render 'shared/error_messages', object: @user %> %>
-      <%= f.label :location_name, class: "label-#{yield(:class_text)}" %>
-      <%= f.text_field :location_name, class: "form-control" %>
+      <%= f.select :course_id, @courses[1], class: "form-control" %>
+      <%= f.select :hole_id, @holes.where(course_id: @courses[0][0]).pluck(:hole_number), class: "form-control" %>
       <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
-      <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %>
+      <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %><br>
+      <%# 画像up %>]
+      <div >
+        <%= image_tag "", id: "photo_prev",  width: '50%', height: '50%'  %>
+      </div>
+      <%= f.file_field :photo, required: true, id: "strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
+      <%# --------------------- %>
       <%= f.label :comment, class: "label-#{yield(:class_text)}" %>
       <%= f.text_field :comment, class: "form-control" %>
+      <%# location_name %>
+      <%= f.hidden_field :location_name, value: "R", class: "form-control" %>
       <%# ピン座標 %>
       <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
       <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
@@ -32,6 +38,7 @@
       <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
       <%= f.hidden_field :map_size_x, value: "0", class: "form-control" %>
       <%= f.hidden_field :map_size_y, value: "0", class: "form-control" %>
+
       <%= f.submit "新規作成", class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
     <% end %>
   </div>
@@ -63,7 +70,22 @@
     ----------------------------------------------------------------
 </div>
 
-
+<script type="text/javascript">
+$(function() {
+ function readURL(input) {
+   if (input.files && input.files[0]) {
+     var reader = new FileReader();
+     reader.onload = function (e) {
+       $('#photo_prev').attr('src', e.target.result);
+     }
+     reader.readAsDataURL(input.files[0]);
+   }
+ }
+ $("#strategy_photo").change(function(){
+   readURL(this);
+ });
+});
+</script>
 <script>
 // hole.htmlに記述済み
   $("#map_b").hide();
@@ -78,6 +100,30 @@ $('.location_btn').on('click', function () {
   $("#map_" + val).show();
 });
 // ---------------------------------------------
+
+// 画像ファイル関係
+var fileArea = document.getElementById('drag-drop-area');
+var fileInput = document.getElementById('fileInput');
+
+
+fileArea.addEventListener('dragover', function(evt){
+  evt.preventDefault();
+  fileArea.classList.add('dragover');
+});
+
+fileArea.addEventListener('dragleave', function(evt){
+    evt.preventDefault();
+    fileArea.classList.remove('dragover');
+});
+fileArea.addEventListener('drop', function(evt){
+    evt.preventDefault();
+    fileArea.classList.remove('dragenter');
+    var files = evt.dataTransfer.files;
+    fileInput.files = files;
+});
+
+
+// ｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰ
 
   let map = document.getElementById("map");
   map.style.zIndex = "1";
@@ -159,6 +205,8 @@ $('.location_btn').on('click', function () {
     //   console.log("クリックした要素内のX座標　x:" + pxin);
     //   console.log("クリックした要素内のY座標　y:" + pyin);
     // });
+
+
 
 </script>
 
