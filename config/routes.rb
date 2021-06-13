@@ -37,6 +37,9 @@ Rails.application.routes.draw do
       patch "update", to: 'areas/update', as: :update
     end
   end
+
   resources :areas, only: :show
 
   resources :categories
+
+end
