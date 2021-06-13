@@ -20,6 +20,10 @@
   @extend .alert-danger;
 }
 
+.alert {
+  margin-bottom: 0;
+}
+
 // トップ画面
 .toppage-img img {
   width: 100%;    /* 横幅を割合で指定 */
@@ -132,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 footer {
-  position: absolute;/* ←絶対位置 */
+  // position: absolute;/* ←絶対位置 */
   bottom: 0;
   width: 100%;
   padding: 20px;

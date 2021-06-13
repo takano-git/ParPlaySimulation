@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'admin_pages/index'
   root 'homes#index'
 
   devise_for :users,
@@ -14,16 +13,11 @@ Rails.application.routes.draw do
     resources :posts
   end
 
-  resources :cards
-  # resources :card, only: [:new, :create] do
-  #   collection do
-  #     post 'show', to: 'card/show',
-  #     post 'pay', to: 'card/pay',
-  #     post 'delete', to: 'card/delete'
-  #   end
-  # end
-
-  resources :admin_pages, only: :index 
+  resources :cards, only: %i(index new create destroy) do
+    collection do
+      get 'about', to: 'card/about'
+    end
+  end
 
   resources :golfclubs do
     resources :courses, except: %i(index show) do
@@ -43,6 +37,7 @@ Rails.application.routes.draw do
       patch "update", to: 'areas/update', as: :update
     end
   end
+
   resources :areas, only: :show
 
   resources :categories
