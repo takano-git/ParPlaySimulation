@@ -61,6 +61,12 @@ $brand_t1: #224444;
 }
 
 // 攻略情報新規作成、更新ページ
-.create_strategy_info {
-  display: flex;
+// .create_strategy_info {
+//   display: flex;
+// }
+.strategy_img {
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
 }

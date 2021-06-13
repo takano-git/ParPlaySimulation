@@ -1,76 +1,142 @@
+<div id="container" class="container" data-turbolinks='false'>
 
+  <div class="create_strategy_info row">
 
-<div class="create_strategy_info">
+    <div class="strategy_info_form col-sm-7">
 
-  <div class="strategy_info_form">
+      <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
+        <%# ゴルフ場名、県名 %>
+        <%= @golfclub.name %>
+        <%= @area.prefecture %>
+        <br>
+        <%# コース名、HOle.NO、shot %>
+        コース
+        <%# <%= f.select :course, @courses[1], class: "form-control" %> %>
+        <%= f.select :course, @course_options, class: "form-control" %>
+        ホール
+        <%# < %= f.select :hole, @holes.where(course_id: @courses[0][0]).pluck(:hole_number), class: "form-control select-children" %> %>
+        <%= f.select :hole, @hole_options, class: "form-control" %>
+        <%# ショット %>
+        <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
+        <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %>
+        ティグラウンド
+        <button id="r" class="btn location_btn l_selected">R</button>
+        <button id="b" class="btn location_btn">B</button>
+        <button id="l" class="btn location_btn">L</button>
+        <br>
+        <%# 画像up %>
+        <div >
+          <%= image_tag "", id: "photo_prev", class: "strategy_img" %>
+        </div>
+        <%= f.file_field :photo, required: true, id: "strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
+        <%# --------------------- %>
+        <%= f.label :comment, class: "label-#{yield(:class_text)}" %>
+        <%= f.text_field :comment, class: "form-control" %>
+        <%# location_name %>
+        <%= f.hidden_field :location_name, value: "R", class: "form-control" %>
+        <%# ピン座標 %>
+        <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_point_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_point_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_size_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_size_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_target_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_target_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_point_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_point_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_size_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_size_y, value: "0", class: "form-control" %>
 
-    <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
-      <%# ゴルフ場名、県名 %>
-      <%= @golfclub.name %>
-      <%= @area.prefecture %><br>
-      <%# コース名、HOle.NO、shot %>
-      <%= f.select :course_id, @courses[1], class: "form-control" %>
-      <%= f.select :hole_id, @holes.where(course_id: @courses[0][0]).pluck(:hole_number), class: "form-control" %>
-      <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
-      <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %><br>
-      <%# 画像up %>]
-      <div >
-        <%= image_tag "", id: "photo_prev",  width: '50%', height: '50%'  %>
-      </div>
-      <%= f.file_field :photo, required: true, id: "strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
-      <%# --------------------- %>
-      <%= f.label :comment, class: "label-#{yield(:class_text)}" %>
-      <%= f.text_field :comment, class: "form-control" %>
-      <%# location_name %>
-      <%= f.hidden_field :location_name, value: "R", class: "form-control" %>
-      <%# ピン座標 %>
-      <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_point_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_point_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_size_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_size_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_target_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_target_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_point_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_point_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_shoot_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_size_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_size_y, value: "0", class: "form-control" %>
+        <%= f.submit "新規作成", class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+      <% end %>
+    </div>
 
-      <%= f.submit "新規作成", class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
-    <% end %>
+    <div class="location_btns col-sm-2">
+      <button id="r" class="btn location_btn l_selected">R</button>
+      <button id="b" class="btn location_btn">B</button>
+      <button id="l" class="btn location_btn">L</button>
+    </div>
+
+    <div id="strategy_map" class=" col-sm-3">
+      <%= render 'strategy_infos/form_map', hole: @hole %>
+    </div>
+
   </div>
 
-  <div class="location_btns">
-    <button id="r" class="btn location_btn l_selected">R</button>
-    <button id="b" class="btn location_btn">B</button>
-    <button id="l" class="btn location_btn">L</button>
+  <div>
+      <p>
+        container's mouse event pageX: <span id="pagex"></span>  
+                                pageY: <span id="pagey"></span>
+      </p>
+      ----------------------------------------------------------------
+      <p>
+        container's mouse event offsetX: <span id="offsetx"></span>  
+                                offsetY: <span id="offsety"></span>
+      </p>
+      ----------------------------------------------------------------
   </div>
-
-  <div id="strategy_map">
-    <%= image_tag @hole.map_r.variant(resize:'128x426'), id: "map_r", class: "img-fluid" %>
-    <%= image_tag @hole.map_b.variant(resize:'128x426'), id: "map_b", class: "img-fluid" %>
-    <%= image_tag @hole.map_l.variant(resize:'128x426'), id: "map_l", class: "img-fluid" %>
-  </div>
-
 </div>
 
-<div>
-    <p>
-      container's mouse event pageX: <span id="pagex"></span>  
-                              pageY: <span id="pagey"></span>
-    </p>
-    ----------------------------------------------------------------
-    <p>
-      container's mouse event offsetX: <span id="offsetx"></span>  
-                              offsetY: <span id="offsety"></span>
-    </p>
-    ----------------------------------------------------------------
-</div>
+<script>
+// コースボタン切り替えによるホールボタン&マップの切り替え
+$(function() {
+  $('select#course').change(function() {
+    let course_id = $(this).val();
+    childrenPath = $(this).find('option:selected').data().childrenPath;
+    course_data = { 
+      course: {
+        course_id: course_id,
+      }
+    };
+    $.ajax({
+      url: childrenPath,
+      type: "GET",
+      data: {
+        id: "",
+        course_data
+      },
+    });
+  });
+});
 
-<script type="text/javascript">
+// --------------------------------------------------
+
+
+// ホールボタン切り替えによるマップの切り替え
+$(function() {
+  //セレクトボックスが切り替わったら発動
+  $('select#hole').change(function() {
+    //選択したvalue値を変数に格納
+    let hole_id = $(this).val();
+    let course_id = $('select#course').val();
+    console.log(course_id);
+    console.log(hole_id);
+    holePath = $(this).find('option:selected').data().holePath;
+    console.log(holePath);
+    hole_data = { 
+      hole: {
+        course_id: course_id,
+        hole_id: hole_id,
+      }
+    };
+    $.ajax({
+      url: holePath,
+      type: "GET",
+      data: {
+        id: "",
+        hole_data
+      },
+    });
+  });
+});
+
+// --------------------------------------------------
+
+
+// アップロードする画像ファイル表示
 $(function() {
  function readURL(input) {
    if (input.files && input.files[0]) {
@@ -85,9 +151,11 @@ $(function() {
    readURL(this);
  });
 });
-</script>
-<script>
-// hole.htmlに記述済み
+
+// ---------------------------------------------------
+
+
+// map表示切替(hole.htmlに記述済み)
   $("#map_b").hide();
   $("#map_l").hide();
   
@@ -101,29 +169,29 @@ $('.location_btn').on('click', function () {
 });
 // ---------------------------------------------
 
-// 画像ファイル関係
-var fileArea = document.getElementById('drag-drop-area');
-var fileInput = document.getElementById('fileInput');
 
+// // 
+// var fileArea = document.getElementById('drag-drop-area');
+// var fileInput = document.getElementById('fileInput');
 
-fileArea.addEventListener('dragover', function(evt){
-  evt.preventDefault();
-  fileArea.classList.add('dragover');
-});
+// fileArea.addEventListener('dragover', function(evt){
+//   evt.preventDefault();
+//   fileArea.classList.add('dragover');
+// });
 
-fileArea.addEventListener('dragleave', function(evt){
-    evt.preventDefault();
-    fileArea.classList.remove('dragover');
-});
-fileArea.addEventListener('drop', function(evt){
-    evt.preventDefault();
-    fileArea.classList.remove('dragenter');
-    var files = evt.dataTransfer.files;
-    fileInput.files = files;
-});
-
-
+// fileArea.addEventListener('dragleave', function(evt){
+//     evt.preventDefault();
+//     fileArea.classList.remove('dragover');
+// });
+// fileArea.addEventListener('drop', function(evt){
+//     evt.preventDefault();
+//     fileArea.classList.remove('dragenter');
+//     var files = evt.dataTransfer.files;
+//     fileInput.files = files;
+// });
 // ｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰ
+
+
 
   let map = document.getElementById("map");
   map.style.zIndex = "1";
