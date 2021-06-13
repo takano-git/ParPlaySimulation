@@ -6,8 +6,21 @@ class ClubsController < ApplicationController
   def index
     @clubs = Club.where(user_id: @user)
     #配列形式でデータを用意する
-    @data = Club.where(user_id: @user).pluck(:largo, :weight)
-    # @data = [['2019-06-01', 100], ['2019-06-02', 200], ['2019-06-03', 150]]
+    # @data = Club.where(user_id: @user).pluck(:largo, :weight)
+    # @data = [['2019-06-01', 100], ['2019-06-02', 200], ['2019-06-03', 150]](参考)
+    # gon.data = []
+    # 6.times do
+    #   gon.data << rand(100.0)
+    # end
+    sum = 0
+    gon.bardata = []
+    gon.linedata = []
+    6.times do |i|
+      data = rand(100.0)
+      gon.bardata << data
+      sum = sum + data
+      gon.linedata << sum
+    end
   end
 
   def new
