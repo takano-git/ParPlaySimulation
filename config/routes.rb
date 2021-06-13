@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       omniauth_callbacks: "users/omniauth_callbacks"
   }
 
+  resources :users do
+    resources :posts
+  end
+
   resources :cards, only: %i(index new create destroy) do
     collection do
       get 'about', to: 'card/about'
@@ -36,7 +40,3 @@ Rails.application.routes.draw do
   resources :areas, only: :show
 
   resources :categories
-
-  resources :posts
-
-end

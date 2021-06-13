@@ -1,0 +1,276 @@
+<%= render 'layouts/flash_messages' %>
+<h1><%= @user.name %>の投稿一覧(仮)</h1>
+<%= link_to '新規投稿', new_user_post_path(current_user) %>
+
+<%= link_to 'テスト', user_posts_path(q: { category_id_eq: 3 }) %>
+
+<div class="container">
+  <div class="category_box">
+    <% @categories.each do |category| %>
+      <div><%= link_to Category.find(category).name, user_posts_path(q: { category_id_eq: Category.find(category) }), class: "btn btn-sm btn-outline-secondary" %></div>
+    <% end %>
+  </div>
+  <section>
+    <% @user_posts.each do |user_post| %>
+      <article class="wrap">
+        <figure class="figure-box">
+          <% if user_post.photo.attached? %>
+            <%= image_tag user_post.photo.variant(resize:'300x300'), class: "figure-item" %>
+          <% else %>
+            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#868e96"/>
+              <text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text>
+            </svg>
+          <% end %>
+          <!--
+          <figcaption>
+            <%= Golfclub.find(user_post.golfclub_id).name %>
+          </figcaption>
+          -->
+        </figure>
+
+        <div class="comment-box">
+          <div class="comment-item">
+            <span class="post-title"><%= user_post.title %></span><br/>
+            <span><%= user_post.comment %></span>
+          </div>
+          <div class="info-box">
+            <div class="info-category"><%= Category.find(user_post.category_id).name %></div>
+            <div><%= link_to '編集', edit_user_post_path(@user_posts, user_post) %></div>
+            <div>
+              <%= link_to "", user_post_path(@user_posts, user_post), 
+                    class: "fas fa-times-circle",
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "タイトル: #{user_post.title} を削除してよろしいですか？",
+                            cancel: 'キャンセル',
+                            commit: '削除する'
+                          }, title: '削除確認' %>
+            </div>
+            <div class="info-time">投稿日 : <%= user_post.created_at.strftime("%Y/%m/%d") %></div>
+            <div class="info-user">投稿者 : <%= User.find(user_post.user_id).name %></div>
+          </div>
+        </div>
+      </article>
+    <% end %>
+  </section>
+</div>
+
+<style>
+  .category_box {
+    display: flex;
+  }
+
+  .article {
+    padding-bottom: 300px;
+  }
+
+  .info-category {
+    border: solid 1px #224444;
+    border-radius: 5px;
+    padding: 0 30px 0 30px;
+    margin: -2px 0 0 12px;
+  }
+
+  .info-category:first-child{
+    margin-right: auto;
+  }
+
+  .post-title {
+    color: #224444;
+    font-weight: bold;
+    border-bottom: solid 2px #224444;
+  }
+
+  .info-box {
+    display: flex;
+    justify-content: flex-end;
+    font-size: small;
+    font-weight: bold;
+    margin-top: -10px;
+  }
+
+  .info-time {
+    padding-right: 30px;
+  }
+
+  .figure-box {
+    /* flex: 0 0 50px; */
+    /* margin-right: 20px; */
+    /* color: #5d627b; */
+    /* background: white; */
+    /* border-top: solid 4px #224444; */
+    /* box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22); */
+    /* border-radius: 5px; */
+  }
+
+  .figure-item {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+  }
+
+  .wrap {
+    display: flex;
+    margin-bottom: 10px;
+    /* margin-left: 2px; */
+  }
+
+  .comment-box {
+    /* border-radius: 5px;
+    margin: 5px 0 20PX 10px;
+    padding: 3px 0 0 5px;
+    height: 190px; */
+    /* margin-bottom: 10px; */
+    flex-grow: 1;
+  }
+
+  .comment-item {
+    color: #5d627b;
+    background: white;
+    border-top: solid 1px #224444;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+    margin: 5px 0 20PX 10px;
+    padding: 3px 0 0 5px;
+    height: 150px;
+  }
+
+  @media screen and (max-width:768px) {
+    .wrap {
+      display:block;
+      margin-bottom: 20px;
+      /* margin-left: 0; */
+    }
+
+    .comment-box {
+      /* margin-left: 0;
+      margin-bottom: 10px; */
+    }
+
+    .comment-item {
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+
+    .info-box {
+      margin: -2px 0 5px 0;
+    }
+    
+    .info-category {
+      border: solid 1px #224444;
+      border-radius: 5px;
+      padding: 0 30px 0 30px;
+      margin: -2px 0 0 0;
+    }
+  }
+</style>
+
+
+
+
+<!-- <section>
+  <% @user.posts.each do |post| %>
+    <article class="post">
+      <figure class="image">
+        <% if post.photo.attached? %>
+          <%= image_tag post.photo.variant(resize:'300x300') %>
+        <% end %>
+        <figcaption><%= Golfclub.find(post.golfclub_id).name %></figcaption>
+      </figure>
+
+      <div class="text">
+        <p>
+          <span class="post-title"><%= post.title %></span>
+        </p>
+
+        <div style="border: 1px solid #6c0;">
+          <p><%= post.comment %></p>
+        </div>
+        <div>aaa</div>
+      </div>
+
+    </article>
+  <% end %>
+</section> -->
+
+<!--
+<div class="container">
+  <% @user.posts.each do |post| %>
+    <div class="card">
+      <div class="row no-gutters">
+        <div class="col-sm-4">
+          <% if post.photo.attached? %>
+            <%= image_tag post.photo.variant(resize:'300x300') %>
+          <% else %>
+            no image
+          <% end %>
+        </div>
+
+        <div class="col-sm-8 no-gutters">
+          <div>
+            <span class="post-title"><%= post.title %></span>
+          </div>
+
+          <div style="border: 1px solid #6c0;" height="500px">
+            <div><%= post.comment %></div>
+          </div>
+          <div>aaa</div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+-->
+
+<!-- <table class="table">
+  <% @user.posts.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.comment %></td>
+      <td>
+        <% if post.photo.attached? %>
+          <%= image_tag post.photo.variant(resize:'100x100') %>
+        <% else %>
+          画像登録無し
+        <% end %>
+      </td>
+      <td><%= Golfclub.find(post.golfclub_id).name %></td>
+      <td><%= Category.find(post.category_id).name %></td>
+      <td><%= link_to '編集', edit_user_post_path(@user, post) %></td>
+      <td>
+        <%= link_to "", user_post_path(@user, post), 
+                    class: "fas fa-times-circle",
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "タイトル: #{post.title} を削除してよろしいですか？",
+                            cancel: 'キャンセル',
+                            commit: '削除する'
+                          }, title: '削除確認' %>
+      </td>
+    </tr>
+  <% end %>
+</table> -->
+
+<!-- <style>
+  .post-title {
+    background:linear-gradient(transparent 70%, #6c0 100%);
+  }
+
+  .aaa {
+    font-size: 1.066666666666667vw;
+    padding: 2.666666666666667vw;
+    display: inline-block;
+    flex-direction: column;
+    width: 50%;
+  }
+
+.post {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 1100px;
+  width: 100%;
+  background-color: #f8f8f8;
+  margin-bottom: 2vw;
+  text-decoration: none !important;
+}
+</style> -->
