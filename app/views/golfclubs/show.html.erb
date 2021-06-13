@@ -50,29 +50,27 @@
         </tr>
 
         <% if course.holes.present? %>
+          <tr>
+            <th>
+              <%= Hole.human_attribute_name :hole_number %>
+            </th>
+            <% course.holes.each do |hole| %>
+              <td>
+                <%= hole.hole_number %>
+              </td>
+            <% end %>
+          </tr>
 
-        <tr>
-          <th>
-            <%= Hole.human_attribute_name :hole_number %>
-          </th>
-          <% course.holes.each do |hole| %>
-            <td>
-              <%= hole.hole_number %>
-            </td>
-          <% end %>
-        </tr>
-
-        <tr>
-          <th>
-            <%= Hole.human_attribute_name :number_of_pars %>
-          </th>
-          <% course.holes.each do |hole| %>
-            <td>
-              <%= hole.number_of_pars %>
-            </td>
-          <% end %>
-        </tr>
-
+          <tr>
+            <th>
+              <%= Hole.human_attribute_name :number_of_pars %>
+            </th>
+            <% course.holes.each do |hole| %>
+              <td>
+                <%= hole.number_of_pars %>
+              </td>
+            <% end %>
+          </tr>
         <% else %>
           <tr>
             <th style="width: 15%">
