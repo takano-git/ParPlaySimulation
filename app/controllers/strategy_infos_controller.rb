@@ -50,26 +50,23 @@ class StrategyInfosController < ApplicationController
 
 
   def new
-    # @hole_id = params[:hole_id]
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
-    # @courses = Course.where(golfclub_id: params[:golfclub_id]).pluck(:id, :name).transpose
     @courses = Course.where(golfclub_id: params[:golfclub_id])
     @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
       |c| [c.name, c.id, data: { children_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
     }
-    # @holes = Hole.where(params[:golfclub_id])
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id)
     @hole = @holes.first
     @strategy_info = StrategyInfo.new
     @hole_options = @holes.order(:id).map { 
       |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
     }
-    # byebug
   end
 
   def form_map
-    # byebug
+    location_colums = ["map_r","map_b","map_l"]
+    @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
     if params[:hole_data].blank?
       course_id = params[:course_data][:course][:course_id]
       @holes = Hole.where(course_id: course_id)
@@ -78,12 +75,8 @@ class StrategyInfosController < ApplicationController
         |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
       }
     else
-      # course_id = params[:hole_data][:hole][:course_id]
-      # hole_id = params[:hole_data][:hole][:hole_id]
       @hole = Hole.find(params[:hole_data][:hole][:hole_id])
-      # byebug
     end
-    # render json: @holes.select(:id, :hole_number)
   end
 
   def create

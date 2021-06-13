@@ -11,10 +11,8 @@
         <br>
         <%# コース名、HOle.NO、shot %>
         コース
-        <%# <%= f.select :course, @courses[1], class: "form-control" %> %>
         <%= f.select :course, @course_options, class: "form-control" %>
         ホール
-        <%# < %= f.select :hole, @holes.where(course_id: @courses[0][0]).pluck(:hole_number), class: "form-control select-children" %> %>
         <%= f.select :hole, @hole_options, class: "form-control" %>
         <%# ショット %>
         <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
@@ -25,7 +23,7 @@
         <button id="l" class="btn location_btn">L</button>
         <br>
         <%# 画像up %>
-        <div >
+        <div id="photo_space">
           <%= image_tag "", id: "photo_prev", class: "strategy_img" %>
         </div>
         <%= f.file_field :photo, required: true, id: "strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
@@ -33,31 +31,34 @@
         <%= f.label :comment, class: "label-#{yield(:class_text)}" %>
         <%= f.text_field :comment, class: "form-control" %>
         <%# location_name %>
-        <%= f.hidden_field :location_name, value: "R", class: "form-control" %>
-        <%# ピン座標 %>
+        <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
+        <%# photoピン座標 %>
         <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
         <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
         <%= f.hidden_field :photo_point_x, value: "0", class: "form-control" %>
         <%= f.hidden_field :photo_point_y, value: "0", class: "form-control" %>
-        <%= f.hidden_field :photo_size_x, value: "0", class: "form-control" %>
-        <%= f.hidden_field :photo_size_y, value: "0", class: "form-control" %>
+        <%# photoサイズ %>
+        <%= f.hidden_field :photo_size_x, value: "0", id: 'photo_size_x', class: "form-control" %>
+        <%= f.hidden_field :photo_size_y, value: "0", id: 'photo_size_y', class: "form-control" %>
+        <%# photoピン座標 %>
         <%= f.hidden_field :map_target_x, value: "0", class: "form-control" %>
         <%= f.hidden_field :map_target_y, value: "0", class: "form-control" %>
         <%= f.hidden_field :map_point_x, value: "0", class: "form-control" %>
         <%= f.hidden_field :map_point_y, value: "0", class: "form-control" %>
         <%= f.hidden_field :map_shoot_x, value: "0", class: "form-control" %>
         <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
-        <%= f.hidden_field :map_size_x, value: "0", class: "form-control" %>
-        <%= f.hidden_field :map_size_y, value: "0", class: "form-control" %>
+        <%# mapサイズ %>
+        <%= f.hidden_field :map_size_x, value: "0", id: 'map_size_x', class: "form-control" %>
+        <%= f.hidden_field :map_size_y, value: "0", id: 'map_size_y', class: "form-control" %>
 
         <%= f.submit "新規作成", class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
       <% end %>
     </div>
 
     <div class="location_btns col-sm-2">
-      <button id="r" class="btn location_btn l_selected">R</button>
+      <%# <button id="r" class="btn location_btn l_selected">R</button>
       <button id="b" class="btn location_btn">B</button>
-      <button id="l" class="btn location_btn">L</button>
+      <button id="l" class="btn location_btn">L</button> %>
     </div>
 
     <div id="strategy_map" class=" col-sm-3">
@@ -66,26 +67,33 @@
 
   </div>
 
+  <div id="pins">
+
+  </div>
+
   <div>
-      <p>
-        container's mouse event pageX: <span id="pagex"></span>  
-                                pageY: <span id="pagey"></span>
-      </p>
-      ----------------------------------------------------------------
-      <p>
-        container's mouse event offsetX: <span id="offsetx"></span>  
-                                offsetY: <span id="offsety"></span>
-      </p>
-      ----------------------------------------------------------------
+    <p>
+      container's mouse event pageX: <span id="pagex"></span>  
+                              pageY: <span id="pagey"></span>
+    </p>
+    ----------------------------------------------------------------
+    <p>
+      container's mouse event offsetX: <span id="offsetx"></span>  
+                              offsetY: <span id="offsety"></span>
+    </p>
+    ----------------------------------------------------------------
   </div>
 </div>
 
 <script>
+
+
 // コースボタン切り替えによるホールボタン&マップの切り替え
 $(function() {
   $('select#course').change(function() {
     let course_id = $(this).val();
-    childrenPath = $(this).find('option:selected').data().childrenPath;
+    let childrenPath = $(this).find('option:selected').data().childrenPath;
+    let location_name = $('.l_selected').text();
     course_data = { 
       course: {
         course_id: course_id,
@@ -96,25 +104,22 @@ $(function() {
       type: "GET",
       data: {
         id: "",
+        location_name: location_name,
         course_data
       },
     });
   });
 });
-
 // --------------------------------------------------
 
 
 // ホールボタン切り替えによるマップの切り替え
 $(function() {
-  //セレクトボックスが切り替わったら発動
   $('select#hole').change(function() {
-    //選択したvalue値を変数に格納
     let hole_id = $(this).val();
     let course_id = $('select#course').val();
-    console.log(course_id);
-    console.log(hole_id);
-    holePath = $(this).find('option:selected').data().holePath;
+    let holePath = $(this).find('option:selected').data().holePath;
+    let location_name = $('.l_selected').text();
     console.log(holePath);
     hole_data = { 
       hole: {
@@ -127,6 +132,7 @@ $(function() {
       type: "GET",
       data: {
         id: "",
+        location_name: location_name,
         hole_data
       },
     });
@@ -138,26 +144,54 @@ $(function() {
 
 // アップロードする画像ファイル表示
 $(function() {
- function readURL(input) {
-   if (input.files && input.files[0]) {
-     var reader = new FileReader();
-     reader.onload = function (e) {
-       $('#photo_prev').attr('src', e.target.result);
-     }
-     reader.readAsDataURL(input.files[0]);
-   }
- }
- $("#strategy_photo").change(function(){
-   readURL(this);
- });
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#photo_prev').attr('src', e.target.result);
+      } 
+      reader.readAsDataURL(input.files[0]);
+      let photo_size_x = document.getElementById('photo_space').clientWidth;
+      let photo_size_y = document.getElementById('photo_space').clientHeight;
+      document.getElementById('photo_size_x').value = photo_size_x;
+      document.getElementById('photo_size_y').value = photo_size_y;
+    }
+  }
+  $("#strategy_photo").change(function(){
+    readURL(this);
+  });
 });
 
 // ---------------------------------------------------
 
 
+// window変更時のphoto_size,map_size取得
+window.addEventListener( 'resize', function() {
+  // photo
+  let photo_size_x = document.getElementById('photo_space').clientWidth;
+  let photo_size_y = document.getElementById('photo_space').clientHeight;
+  document.getElementById('photo_size_x').value = photo_size_x;
+  document.getElementById('photo_size_y').value = photo_size_y;
+  // map
+  let map_size_x = document.getElementById('strategy_map').clientWidth;
+  let map_size_y = document.getElementById('strategy_map').clientHeight;
+  document.getElementById('map_size_x').value = map_size_x;
+  document.getElementById('map_size_y').value = map_size_y;
+}, false );
+
+// --------------------------------------------------------------------
+
+//　初期map_size
+let map_size_x = document.getElementById('strategy_map').clientWidth;
+let map_size_y = document.getElementById('strategy_map').clientHeight;
+document.getElementById('map_size_x').value = map_size_x;
+document.getElementById('map_size_y').value = map_size_y;
+
+// --------------------------------
+
 // map表示切替(hole.htmlに記述済み)
-  $("#map_b").hide();
-  $("#map_l").hide();
+$("#map_b").hide();
+$("#map_l").hide();
   
 $('.location_btn').on('click', function () {
   let val = $(this).attr('id');
@@ -166,6 +200,7 @@ $('.location_btn').on('click', function () {
   $('.location_btn').removeClass('l_selected');
   $(this).addClass('l_selected');
   $("#map_" + val).show();
+  document.getElementById('hidden_location').value = $('.l_selected').text();;
 });
 // ---------------------------------------------
 
@@ -190,7 +225,6 @@ $('.location_btn').on('click', function () {
 //     fileInput.files = files;
 // });
 // ｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰ
-
 
 
   let map = document.getElementById("map");
@@ -273,8 +307,6 @@ $('.location_btn').on('click', function () {
     //   console.log("クリックした要素内のX座標　x:" + pxin);
     //   console.log("クリックした要素内のY座標　y:" + pyin);
     // });
-
-
 
 </script>
 

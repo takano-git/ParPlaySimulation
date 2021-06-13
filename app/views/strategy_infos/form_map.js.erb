@@ -1,6 +1,6 @@
 $("#strategy_map").html("<%= j(render 'strategy_infos/form_map', hole: @hole) %>");
-$("#map_b").hide();
-$("#map_l").hide();
+$("#<%=@hide_locations[0]%>").hide();
+$("#<%=@hide_locations[1]%>").hide();
 
 <% if params[:hole_data].blank? %>
   $('select#hole > option').remove();
