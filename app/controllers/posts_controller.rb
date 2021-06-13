@@ -5,6 +5,9 @@ class PostsController < ApplicationController
   before_action :user_signed_in?
 
   def index
+    @q = @user.posts.ransack(params[:q])
+    @user_posts = @q.result(distinct: true)
+    @categories = Post.all.pluck(:category_id).uniq.sort
   end
 
   def show
