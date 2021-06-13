@@ -2,7 +2,7 @@
 # ユーザーサンプルデーター作成
 
 User.create!(name: "管理者",
-  nickname: "カンリシャ",
+  nickname: "えぐさん",
   membership_number: "A000000",
   email: "admin@gmail.com",
   password: "password",

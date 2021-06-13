@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_073806) do
   end
 
   create_table "cards", force: :cascade do |t|
+    t.integer "card_id", null: false
     t.string "customer_id", default: "", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -136,11 +137,10 @@ ActiveRecord::Schema.define(version: 2021_05_16_073806) do
     t.integer "flying_distance"
     t.boolean "admin", default: false
     t.integer "payment_id"
-    t.string "uid"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer "subscription_id"
+    t.string "subscription_id"
     t.boolean "premium", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

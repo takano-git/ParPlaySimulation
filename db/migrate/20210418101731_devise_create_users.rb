@@ -13,7 +13,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.integer :flying_distance
       t.boolean :admin, default: false
       t.integer :payment_id
-      t.string :uid
+      # t.string :uid
 
 
       ## Recoverable
@@ -41,7 +41,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.integer :subscription_id
+      t.string :subscription_id
       t.boolean :premium, default: false
 
       t.timestamps null: false
