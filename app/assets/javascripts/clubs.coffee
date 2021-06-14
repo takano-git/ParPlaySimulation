@@ -17,12 +17,12 @@ window.draw_graph = ->
       data: {
         datasets: [{
           label: 'ゴルフクラブの重さと長さの推移表',
-          data: gon.linedata,
+          data: gon.linedata, # 
           backgroundColor: bgColors,
           borderColor: bdColors,
           # borderWidth: 1
         }],
-        labels: labels,
+        labels: gon.labeldata,
       },
       options: {
         responsive: true,

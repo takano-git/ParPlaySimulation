@@ -13,10 +13,12 @@ class ClubsController < ApplicationController
     # 6.times do
     #   gon.data << rand(100.0)
     # end
-    sum = 0
+    # sum = 0
     # gon.bardata = []
+    gon.labeldata = []
     gon.linedata = []
-    gon.linedata = Club.where(user_id: @user).pluck(:weight)
+    gon.labeldata = Club.where(user_id: @user).pluck(:largo) # x軸データ配列
+    gon.linedata = Club.where(user_id: @user).pluck(:weight) # y軸データ配列
 
     # 6.times do |i|
     #   data = rand(100.0)
