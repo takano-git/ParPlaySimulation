@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :premium_user, only: %i(index show new create edit update destroy)
   before_action :set_user
   before_action :set_post, only: %i(edit update destroy)
   before_action :authenticate_user!

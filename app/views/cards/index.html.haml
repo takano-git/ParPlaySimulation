@@ -13,6 +13,10 @@
         - if @card.present?
           .container
             .creditcard-info.col-8.offset-2
+              %p.creditcard-info__membership_number
+              = "会員番号："
+              = User.find_by(payment_id: @card.id).membership_number
+              %p.creditcard-info__company
               = "カード会社："
               = image_tag "creditcards/#{@card_image}",width:'34',height:'20', alt:'master-card'
               %p.creditcard-info__number

@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  before_action :premim_user, only: %i(new create edit update)
   before_action :set_golfclub, only: %i(new create edit update)
   before_action :set_course, only: %i(edit update)
   before_action :set_pars, only: %i(new create edit update)

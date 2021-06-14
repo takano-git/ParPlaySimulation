@@ -24,4 +24,5 @@ production:
   <<: *default
   adapter: postgresql
   encoding: unicode
-  pool: 100
+  pool: 1000
+  
