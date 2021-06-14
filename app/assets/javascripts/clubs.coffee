@@ -13,18 +13,14 @@ window.draw_graph = ->
         bgColors[i] = 'rgba(75, 192, 192, 0.2)'
         bdColors[i] = 'rgba(75, 192, 192, 1)'
     myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             datasets: [{
-                label: '# of Votes',
-                data: gon.bardata,
+                label: 'ゴルフクラブの重さと長さの推移表',
+                data: gon.linedata,
                 backgroundColor: bgColors,
                 borderColor: bdColors,
-                borderWidth: 1
-            }, {
-                label: 'Line Dataset',
-                data: gon.linedata,
-                type: 'line'
+                # borderWidth: 1
             }],
             labels: labels,
         },
