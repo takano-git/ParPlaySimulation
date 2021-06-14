@@ -5,12 +5,11 @@ class StrategyInfosController < ApplicationController
     @golfclub_id = @golfclub.id
     @courses = Course.where(golfclub_id: params[:golfclub_id])
     @course_id = @courses.first.id
-    @holes = Hole.where(
-      golfclub_id: params[:golfclub_id], course_id: @courses.first.id
-    )
+    @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id)
     @hole = @holes.first
-    @strategy_info = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").first
-    # byebug
+    @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R")
+    @strategy_info = @strategy_infos.first
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
   end
 
   def hole
@@ -20,32 +19,28 @@ class StrategyInfosController < ApplicationController
       golfclub_id: params[:golfclub_id], course_id: params[:course_id]
     )
     @hole = @holes.first
-    @strategy_info = StrategyInfo.where(
+    @strategy_infos = StrategyInfo.where(
       golfclub_id: params[:golfclub_id], course_id: params[:course_id]
-    ).first
-    # byebug
+    )
+    @strategy_info = @strategy_infos.first
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
   end
   
-  def main 
-    # byebug
-    # @holes = Hole.where(
-    #   golfclub_id: params[:golfclub_id], course_id: params[:course_id]
-    # )
+  def main
     @hole = Hole.find(params[:hole_id])
     location_colums = ["map_r","map_b","map_l"]
     @p_loca = [params[:location]]
     @hide_locations = location_colums - ["map_"+params[:location]]
     @strategy_infos = StrategyInfo.where(
       golfclub_id: params[:golfclub_id], course_id: params[:course_id], 
-      hole_id: params[:hole_id], 
-      location_name: params[:location].upcase
+      hole_id: params[:hole_id], location_name: params[:location].upcase
     )
     @strategy_info = @strategy_infos.first
-    # byebug
+    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
   end
 
   def show
-    # byebug
+    @strategy_info = StrategyInfo.find(params[:id])
   end
 
 

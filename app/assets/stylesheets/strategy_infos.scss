@@ -35,12 +35,20 @@ $brand_t1: #224444;
 .l_selected {
   color: white;
   background-color: $brand_t1;
-
+  
   &:hover {
     color: white;
   }
 }
 
+.s_selected {
+  color: white;
+  background-color: $brand_t1;
+  
+  &:hover {
+    color: white;
+  }
+}
 // .strategy_hole_bar {}
 
 #strategy_hole_bar__btns {
@@ -53,13 +61,32 @@ $brand_t1: #224444;
 
 .strategy_main {
   display: flex;
+
+  &_center {
+    display: flex;
+    flex-flow: column;
+  
+    &_photo img {
+      padding: 0.38em;
+    }
+  }
 }
 
-.strategy_main_center {
+#strategy_main_map img {
+  padding: 0.78em 0.38em 0.1em 0.38em;
+
+}
+
+// shot_bar
+.shot_bar {
+  display: flex;
+}
+
+.shot_btns {
   display: flex;
   flex-flow: column;
 }
-
+// -----------------------------
 // 攻略情報新規作成、更新ページ
 // .create_strategy_info {
 //   display: flex;
