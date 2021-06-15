@@ -3,8 +3,6 @@
 
   <div id="strategy_hole_bar__btns">
     <% @holes.each_with_index do |hole, i| %>
-    <%# <div class="rotate-<%= cycle(0, 45, 90, 135, 180) %>
-      <%# # 渡すのはhole_idとR,B,L情報だけでいいかも。 %>
       <%= link_to "#{hole.hole_number}",
           main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
           remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn h_selected" if i == 0 %>
@@ -15,11 +13,8 @@
     <% end %>
   </div>
 
-<%# マップの表示するカラムの入れ替え（hole.map_r→hole.map_b %>
+<%# マップを表示切り替え（hole.map_r→hole.map_b %>
   <div class="location_btns">
-    <%# <button id="r" class="btn location_btn l_selected">R</button>
-    <button id="b" class="btn location_btn">B</button>
-    <button id="l" class="btn location_btn">L</button> %>
     <%= link_to "R", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "R"),
           remote: :true, id: "r", class: "btn location_btn l_selected" %>
     <%= link_to "B", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "B"),
@@ -43,6 +38,7 @@
 // $(function(){
 //   $('.location_btn').attr('href',function(){return $(this).attr('href')+"&hole_id="+hole_id});
 // });
+// クラス名h_selectedのurlから指定したパラメータ（name）の値をとる
 function getParam(name, url) {
   if (!url) url = $('.h_selected').attr('href');
   name = name.replace(/[\[\]]/g, "\\$&");
@@ -52,22 +48,12 @@ function getParam(name, url) {
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-console.log(getParam('hole_id'));
-console.log($('.location_btn').attr('href'));
 
+// ホールボタンクリック時
 $('.strategy_hole_btn').on('click', function () {
   $('.strategy_hole_btn').removeClass('h_selected');
   $(this).addClass('h_selected');
-  // ホールボタン押下後のホールidをR,B,GボタンURLに渡す。
-  // let hole_id = this.id;
-  // $('.location_btn').attr('href',function(){
-  //   // if($(this).attr('href').match(hole_id)) {
-  //     return $(this).attr('href')+"&"+hole_id);
-  //   // };
-  // });
-  // console.log($('.location_btn').attr('href'))
-  console.log(getParam('hole_id'));
-  console.log($('.location_btn').attr('href').match(/[&|\?]hole_id=(.*?)[&|$]/)[1]);
+  // クリックしたホールボタンのurlと他のホールボタンのurlを比較し、hole_idを一致させる。
   let hole_btn_id = getParam('hole_id');
   let location_param = $('.location_btn').attr('href').match(/[&|\?]hole_id=(.*?)[&|$]/)[1];
   $('.location_btn').attr('href',function(){
@@ -88,15 +74,8 @@ $('.location_btn').on('click', function () {
   $(this).addClass('l_selected');
   $("#map_" + val).show();
 
-  // holeボタンの数
-  // let hole_btns_num = $('.strategy_hole_btn').length
-  // holeボタンを配列に格納
-  // let hole_btns = $('.strategy_hole_btn')
-  // hole_btns.forEach( function( value ) {
-  //   console.log( value.name );
-  // });
   //   $(this).attr('href', $(this).attr('href') + "?追加したいパラメータ");
-// ----------------------------------
+  // ホールボタンのurl中のlocation_name(R,B,L)情報の書き換え
   $('.strategy_hole_btn').attr('href',function(){
     if($(this).attr('href').match('location=r')) {
       return $(this).attr('href').replace('location=r', 'location='+val);
@@ -107,10 +86,6 @@ $('.location_btn').on('click', function () {
     if($(this).attr('href').match('location=l')) {
       return $(this).attr('href').replace('location=l', 'location='+val);
     };
-
-    // return $(this).attr('href').replace('location=r', 'location='+val);
-    // return $(this).attr('href')+'&location='+val
-    // return initial_state+'&location='+val
   });
 // URLにhogeが含まれていたら処理を実行する
 // if(document.URL.match("/hoge/")) {
