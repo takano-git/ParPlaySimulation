@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'admin_pages/index'
   root 'homes#index'
 
   devise_for :users,
@@ -10,16 +9,15 @@ Rails.application.routes.draw do
       omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :cards
-  # resources :card, only: [:new, :create] do
-  #   collection do
-  #     post 'show', to: 'card/show',
-  #     post 'pay', to: 'card/pay',
-  #     post 'delete', to: 'card/delete'
-  #   end
-  # end
+  resources :users do
+    resources :posts
+  end
 
-  resources :admin_pages, only: :index 
+  resources :cards, only: %i(index new create destroy) do
+    collection do
+      get 'about', to: 'card/about'
+    end
+  end
 
   resources :golfclubs do
     resources :courses, except: %i(index show) do
@@ -34,17 +32,16 @@ Rails.application.routes.draw do
       end
     end
   end
-  # resources :courses
-  # resources :holes
+
   resources :areas, only: %i(index) do
     collection do
       get "edit", to: 'areas/edit', as: :edit
       patch "update", to: 'areas/update', as: :update
     end
   end
+
   resources :areas, only: :show
 
   resources :categories
-  resources :posts
 
 end

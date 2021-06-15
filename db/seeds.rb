@@ -2,7 +2,7 @@
 # ユーザーサンプルデーター作成
 
 User.create!(name: "管理者",
-  nickname: "カンリシャ",
+  nickname: "えぐさん",
   membership_number: "A000000",
   email: "admin@gmail.com",
   password: "password",
@@ -30,53 +30,53 @@ puts "会員作成！"
 
 # 地域データ作成
 
-Area.create( prefecture: '北海道', district: "北海道" )
-Area.create( prefecture: '青森県', district: "東北（北）" )
-Area.create( prefecture: '岩手県', district: "東北（北）" )
-Area.create( prefecture: '秋田県', district: "東北（北）" )
-Area.create( prefecture: '宮城県', district: "東北（南）" )
-Area.create( prefecture: '山形県', district: "東北（南）" )
-Area.create( prefecture: '福島県', district: "東北（南）" )
-Area.create( prefecture: '茨城県', district: "関東（北）" )
-Area.create( prefecture: '栃木県', district: "関東（北）" )
-Area.create( prefecture: '群馬県', district: "関東（北）" )
-Area.create( prefecture: '埼玉県', district: "関東（北）" )
-Area.create( prefecture: '千葉県', district: "関東（南）" )
-Area.create( prefecture: '東京都', district: "関東（南）" )
-Area.create( prefecture: '神奈川県', district: "関東（南）" )
-Area.create( prefecture: '山梨県', district: "甲信越" )
-Area.create( prefecture: '長野県', district: "甲信越" )
-Area.create( prefecture: '新潟県', district: "甲信越" )
-Area.create( prefecture: '富山県', district: "北陸" )
-Area.create( prefecture: '石川県', district: "北陸" )
-Area.create( prefecture: '福井県', district: "北陸" )
-Area.create( prefecture: '静岡県', district: "中部" )
-Area.create( prefecture: '愛知県', district: "中部" )
-Area.create( prefecture: '岐阜県', district: "中部" )
-Area.create( prefecture: '三重県', district: "中部" )
-Area.create( prefecture: '滋賀県', district: "近畿" )
-Area.create( prefecture: '京都府', district: "近畿" )
-Area.create( prefecture: '大阪府', district: "近畿" )
-Area.create( prefecture: '兵庫県', district: "近畿" )
-Area.create( prefecture: '奈良県', district: "近畿" )
-Area.create( prefecture: '和歌山県', district: "近畿" )
-Area.create( prefecture: '鳥取県', district: "中国" )
-Area.create( prefecture: '島根県', district: "中国" )
-Area.create( prefecture: '岡山県', district: "中国" )
-Area.create( prefecture: '広島県', district: "中国" )
-Area.create( prefecture: '山口県', district: "中国" )
-Area.create( prefecture: '徳島県', district: "四国" )
-Area.create( prefecture: '香川県', district: "四国" )
-Area.create( prefecture: '愛媛県', district: "四国" )
-Area.create( prefecture: '高知県', district: "四国" )
-Area.create( prefecture: '福岡県', district: "北部九州" )
-Area.create( prefecture: '佐賀県', district: "北部九州" )
-Area.create( prefecture: '長崎県', district: "北部九州" )
-Area.create( prefecture: '熊本県', district: "北部九州" )
-Area.create( prefecture: '大分県', district: "北部九州" )
-Area.create( prefecture: '宮崎県', district: "南九州・沖縄" )
-Area.create( prefecture: '鹿児島県', district: "南九州・沖縄" )
-Area.create( prefecture: '沖縄県', district: "南九州・沖縄" )
+Area.create(prefecture: '北海道', district: "北海道")
+Area.create(prefecture: '青森県', district: "東北（北）")
+Area.create(prefecture: '岩手県', district: "東北（北）")
+Area.create(prefecture: '秋田県', district: "東北（北）")
+Area.create(prefecture: '宮城県', district: "東北（南）")
+Area.create(prefecture: '山形県', district: "東北（南）")
+Area.create(prefecture: '福島県', district: "東北（南）")
+Area.create(prefecture: '茨城県', district: "関東（北）")
+Area.create(prefecture: '栃木県', district: "関東（北）")
+Area.create(prefecture: '群馬県', district: "関東（北）")
+Area.create(prefecture: '埼玉県', district: "関東（北）")
+Area.create(prefecture: '千葉県', district: "関東（南）")
+Area.create(prefecture: '東京都', district: "関東（南）")
+Area.create(prefecture: '神奈川県', district: "関東（南）")
+Area.create(prefecture: '山梨県', district: "甲信越")
+Area.create(prefecture: '長野県', district: "甲信越")
+Area.create(prefecture: '新潟県', district: "甲信越")
+Area.create(prefecture: '富山県', district: "北陸")
+Area.create(prefecture: '石川県', district: "北陸")
+Area.create(prefecture: '福井県', district: "北陸")
+Area.create(prefecture: '静岡県', district: "中部")
+Area.create(prefecture: '愛知県', district: "中部")
+Area.create(prefecture: '岐阜県', district: "中部")
+Area.create(prefecture: '三重県', district: "中部")
+Area.create(prefecture: '滋賀県', district: "近畿")
+Area.create(prefecture: '京都府', district: "近畿")
+Area.create(prefecture: '大阪府', district: "近畿")
+Area.create(prefecture: '兵庫県', district: "近畿")
+Area.create(prefecture: '奈良県', district: "近畿")
+Area.create(prefecture: '和歌山県', district: "近畿")
+Area.create(prefecture: '鳥取県', district: "中国")
+Area.create(prefecture: '島根県', district: "中国")
+Area.create(prefecture: '岡山県', district: "中国")
+Area.create(prefecture: '広島県', district: "中国")
+Area.create(prefecture: '山口県', district: "中国")
+Area.create(prefecture: '徳島県', district: "四国")
+Area.create(prefecture: '香川県', district: "四国")
+Area.create(prefecture: '愛媛県', district: "四国")
+Area.create(prefecture: '高知県', district: "四国")
+Area.create(prefecture: '福岡県', district: "北部九州")
+Area.create(prefecture: '佐賀県', district: "北部九州")
+Area.create(prefecture: '長崎県', district: "北部九州")
+Area.create(prefecture: '熊本県', district: "北部九州")
+Area.create(prefecture: '大分県', district: "北部九州")
+Area.create(prefecture: '宮崎県', district: "南九州・沖縄")
+Area.create(prefecture: '鹿児島県', district: "南九州・沖縄")
+Area.create(prefecture: '沖縄県', district: "南九州・沖縄")
 
 puts "地域作成！"
 
@@ -86,8 +86,8 @@ puts "地域作成！"
   n = i + 1
   golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n}",
-    home_page_url: "https://www.google.com",
-    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    home_page_url: "https://www.next-golf.jp/okinawa/",
+    strategy_video: "https://youtu.be/cB01psesXvI",
     area_id: rand(1..47)
   )
   golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_1.jpeg"), filename: "golfclub_sample_1.jpeg")
@@ -97,8 +97,8 @@ end
   n = i + 1
   golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 10}",
-    home_page_url: "https://www.google.com",
-    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    home_page_url: "http://fukuokacc.com/",
+    strategy_video: "https://youtu.be/yId0rVY0jKs",
     area_id: rand(1..47)
   )
   golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_2.jpeg"), filename: "golfclub_sample_2.jpeg")
@@ -108,8 +108,8 @@ end
   n = i + 1
   golfclub = Golfclub.create!(
     name: "サンプルカントリー#{n + 20}",
-    home_page_url: "https://www.google.com",
-    strategy_video: "https://youtu.be/KgFxOBZZFhc",
+    home_page_url: "https://www.hawaiiprincegolf.com/",
+    strategy_video: "https://youtu.be/3s8EtEjo81E",
     area_id: rand(1..47)
   )
   golfclub.photo.attach(io: File.open("./public/golfclub_photos/golfclub_sample_3.jpeg"), filename: "golfclub_sample_3.jpeg")
@@ -125,6 +125,7 @@ golfclubs.each { |golfclub| golfclub.courses.create!([ { name: "OUT" }, { name: 
 puts "コース作成！"
 
 # ホールデータ作成
+
 courses = Course.order(:id)
 
 courses.each do |course|
@@ -190,7 +191,6 @@ hole.save
 # hole.save
 
 puts "ホール作成！"
-
 
 # 攻略情報データ作成
 # # hamano,out
@@ -268,3 +268,33 @@ end
 # susono
 
 puts "攻略情報作成！"
+
+# カテゴリーデータ作成
+
+Category.create(name: '料理')
+Category.create(name: '施設')
+Category.create(name: '周辺')
+
+puts "カテゴリー作成！"
+
+# 投稿データ作成
+
+users = User.order(:created_at).where.not(id: 1).take(8)
+
+5.times do |n|
+  n = n + 1
+  title = "タイトル#{n}"
+  comment = "テスト投稿#{n}"
+
+  users.each { |user|
+    user_post = user.posts.create(
+      title: title,
+      comment: comment,
+      golfclub_id: rand(1..30),
+      category_id: rand(1..3)
+    )
+    user_post.photo.attach(io: File.open("./public/post_photos/post_sample.jpeg"), filename: "post_sample.jpeg")
+  }
+end
+
+puts "投稿情報作成！"

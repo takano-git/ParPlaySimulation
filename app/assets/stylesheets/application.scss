@@ -3,6 +3,7 @@
 @import "golfclubs";
 @import "courses";
 @import "holes";
+@import "posts";
 @import "cards";
 @import "areas";
 @import "strategy_infos";
@@ -17,6 +18,10 @@
 
 .alert-alert {
   @extend .alert-danger;
+}
+
+.alert {
+  margin-bottom: 0;
 }
 
 // トップ画面
@@ -131,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 footer {
-  position: absolute;/* ←絶対位置 */
+  // position: absolute;/* ←絶対位置 */
   bottom: 0;
   width: 100%;
   padding: 20px;

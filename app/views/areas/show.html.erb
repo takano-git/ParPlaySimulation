@@ -24,24 +24,13 @@
     <span class="badge badge-brand"><%= @area.prefecture %></span>
   </h3>
 
-  <!--
-  < % if @golfclubs == [] %>
-  -->
   <% if @golfclubs.empty? %>
     <h5 class="my-5"><%= @area.prefecture %>のゴルフ場登録はまだありません。</h5>
   <% else %>
     <% @golfclubs.each do |golfclub| %>
       <div class="card mb-3" style="max-width: 1140px;">
         <div class="row no-gutters">
-          <%# <div class="col-md-4"> %>
           <div class="col-md-6">
-            <!--
-            <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#868e96"/>
-              <text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text>
-            </svg>
-            -->
             <% if golfclub.photo.attached? %>
               <%= image_tag golfclub.photo.variant(resize:'350x350') %>
             <% else %>
@@ -52,17 +41,26 @@
               </svg>
             <% end %>
           </div>
-          <%# <div class="col-md-8"> %>
           <div class="col-md-6">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-10">
-                  <h6 class="text-left"><%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub.id) if golfclub.present? %></h6>
+                  <% if StrategyInfo.find_by(golfclub_id: golfclub.id) %>
+                    <h6 class="text-left"><%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub.id) if golfclub.present? %></h6>
+                  <% else %>
+                    <h6 class="text-left"><%= golfclub.name %></h6>
+                  <% end %>
                   <div class="row">
-                    <div class="col-5"><%= link_to '攻略動画', "#{golfclub.strategy_video}" if golfclub.present? %></div>
-                    <div class="col-7"><div style="width:100px;"><img src="/assets/yt_logo_rgb_light.png" class="img-fluid"></div></div>
+                    <% if golfclub.strategy_video.present? %>
+                      <div class="col-5"><%= link_to '攻略動画', "#{golfclub.strategy_video}", target: "_blank", rel: "noopener noreferrer" %></div>
+                      <div class="col-7">
+                        <div style="width:100px;">
+                          <img src="/assets/yt_logo_rgb_light.png" class="img-fluid">
+                        </div>
+                      </div>
+                    <% end %>
                   </div><br>
-                  <p><%= link_to "#{golfclub.home_page_url}", "#{golfclub.home_page_url}" if golfclub.present? %></p>
+                  <p><%= link_to "#{golfclub.home_page_url}", "#{golfclub.home_page_url}", target: "_blank", rel: "noopener noreferrer" if golfclub.home_page_url.present? %></p>
                 </div>
               </div>
             </div>
