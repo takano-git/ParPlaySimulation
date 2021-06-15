@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       collection do
         get :hole
         get :main
+
+        get :form_map
       end
     end
   end

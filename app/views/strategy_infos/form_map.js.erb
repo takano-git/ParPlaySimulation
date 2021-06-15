@@ -1,0 +1,11 @@
+$("#strategy_map").html("<%= j(render 'strategy_infos/form_map', hole: @hole) %>");
+$("#<%=@hide_locations[0]%>").hide();
+$("#<%=@hide_locations[1]%>").hide();
+
+<% if params[:hole_data].blank? %>
+  $('select#hole > option').remove();
+  <% @hole_options.each_with_index do |hole, i| %>
+    $('select#hole').append($('<option>').html('<%= hole[0]%>').val('<%= hole[1]%>'));
+    $('select#hole')[0].children[<%= i %>].dataset.holePath = '<%= hole[2][:data][:hole_path] %>';
+  <% end %>
+<% end %>

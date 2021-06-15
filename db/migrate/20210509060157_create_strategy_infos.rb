@@ -5,7 +5,7 @@ class CreateStrategyInfos < ActiveRecord::Migration[5.2]
       t.references :golfclub, foreign_key: true
       t.references :course, foreign_key: true
       t.references :hole, foreign_key: true
-      t.integer :shot_id, null: false
+      t.integer :shot_id, defalut: 0
       t.integer :location_name
       t.text :comment
       t.integer :photo_target_x
