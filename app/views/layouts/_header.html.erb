@@ -44,7 +44,11 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <% if user_signed_in? %>
-              <%= "✨ " %><%= current_user.nickname %>
+              <% if current_user.premium? %>
+                <%= "✨ " %><%= current_user.nickname %>
+              <% else %>
+                <%= current_user.nickname %>
+              <% end %>
             <% else %>
               アカウント
             <% end %>
