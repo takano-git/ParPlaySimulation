@@ -9,12 +9,6 @@
     </h3>
   </div>
 
-<%# render追加（R,G,BとTee,2nd,3rd,Greenボタンでrender）------------------------------------------------------- %>
-  <%# renderを追加するならここかも(viewはshowでもよさそう) %>
-  <%# R,B,L以外のすべてのボタンで切り替わる？ %>
-  
-  <%# @strategy_infoがあるかないかで表示切替 %>
-  <%# @strategy_infoがある場合 %>
   <div class="strategy_main_center">
     <div id="show">
       <%= render 'show', strategy_info: @strategy_info %>
@@ -39,8 +33,7 @@
   <%# @strategy_infoがない場合 %>
 <%# ------------------------------------------- %>
 
-  <%# @holeがカラムを持っているので単に表示切り替え(.show();,.hide(); %>
-  <%#  %>
+  <%# 表示切り替え(.show();,.hide(); %>
   <div id="strategy_main_map">
     <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
     <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
