@@ -71,7 +71,12 @@
     </div>
 
     <div id="strategy_map" class=" col-sm-3">
-      <%= render 'strategy_infos/form_map', hole: @hole %>
+      <div class="map_area">
+        <%= render 'strategy_infos/form_map', hole: @hole %>
+      </div>
+      <div class="map_pin_area">
+        <img src="/strategy_infos/pin/target.png" id="pin">
+      </div>
     </div>
 
   </div>
@@ -84,7 +89,7 @@
 
   <div id="app">
     <%# <img src="/strategy_infos/pin/target.png" id="map"> %>
-    <img src="/strategy_infos/pin/target.png" id="pin">
+    <%# <img src="/strategy_infos/pin/target.png" id="pin"> %>
   </div>
     <p>
       container's mouse event pageX: <span id="pagex"></span>  
@@ -122,8 +127,8 @@
       let ofy = event.offsetY;
       var width = pin.offsetWidth;
       var height = pin.offsetHeight;
-      pin.style.top = (y-height/2) + "px";
-      pin.style.left = (x-width/2) + "px";
+      // pin.style.top = (y-height/2) + "px";
+      // pin.style.left = (x-width/2) + "px";
       // var mapRect = map.getBoundingClientRect();
       // if((x>=mapRect.left && x<=(mapRect.left+mapRect.width)) && (y>=mapRect.top && y<=(mapRect.top+mapRect.height))){
       //   map.style.backgroundColor = "pink";
@@ -135,11 +140,13 @@
       console.log(target_rect);
       var tx = event.clientX - target_rect.left;
       var ty = event.clientY - target_rect.top;
+      pin.style.top = (ty-height/2) + "px";
+      pin.style.left = (tx+width/2) + "px";
       console.log("(x, y) = (" + tx + "," + ty + ")");
-      console.log(x);
-      console.log(y);
-      console.log(ofx);
-      console.log(ofy);
+      console.log("pin要素のx座標"+x);
+      console.log("pin要素のy座標"+y);
+      console.log("pin要素自身のx座標"+ofx);
+      console.log("pin要素自身のx座標"+ofy);
       console.log(width);
       console.log(height);
       // document.getElementById('photo_size_x').value = photo_size_x;

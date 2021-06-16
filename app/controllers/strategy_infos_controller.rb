@@ -12,6 +12,7 @@ class StrategyInfosController < ApplicationController
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
   end
 
+  # 攻略情報ページ。コースボタンクリック時のAjaxアクション
   def hole
     @golfclub_id = params[:golfclub_id]
     @course_id = params[:course_id]
@@ -26,6 +27,7 @@ class StrategyInfosController < ApplicationController
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
   end
   
+  # 攻略情報ページ。ホールボタンクリック時のAjaxアクション
   def main
     @hole = Hole.find(params[:hole_id])
     location_colums = ["map_r","map_b","map_l"]
@@ -39,6 +41,7 @@ class StrategyInfosController < ApplicationController
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
   end
 
+  # 攻略情報ページ。shotボタンクリック時のAjaxアクション
   def show
     @strategy_info = StrategyInfo.find(params[:id])
   end
@@ -59,6 +62,7 @@ class StrategyInfosController < ApplicationController
     }
   end
 
+  # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
   def form_map
     location_colums = ["map_r","map_b","map_l"]
     @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
@@ -91,6 +95,7 @@ class StrategyInfosController < ApplicationController
     
   end
 
+    
     # def strategy_info_params
     #   params.require(:book).permit(:commtent)
     # end
