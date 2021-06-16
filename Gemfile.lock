@@ -63,8 +63,8 @@ GEM
     autoprefixer-rails (10.2.5.1)
       execjs (> 0)
     aws-eventstream (1.1.1)
-    aws-partitions (1.464.0)
-    aws-sdk-core (3.114.0)
+    aws-partitions (1.468.0)
+    aws-sdk-core (3.114.3)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
@@ -72,7 +72,7 @@ GEM
     aws-sdk-kms (1.43.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.95.1)
+    aws-sdk-s3 (1.96.1)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
@@ -108,7 +108,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     crass (1.0.6)
     data-confirm-modal (1.6.3)
       railties (>= 3.0)
@@ -134,7 +134,7 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
-    ffi (1.15.1)
+    ffi (1.15.3)
     font-awesome-sass (5.15.1)
       sassc (>= 1.11)
     globalid (0.4.2)
@@ -155,7 +155,7 @@ GEM
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
     http-accept (1.7.0)
-    http-cookie (1.0.3)
+    http-cookie (1.0.4)
       domain_name (~> 0.5)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
@@ -172,7 +172,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.9.1)
+    loofah (2.10.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -184,7 +184,6 @@ GEM
     mime-types-data (3.2021.0225)
     mini_magick (4.11.0)
     mini_mime (1.1.0)
-    mini_portile2 (2.5.1)
     minitest (5.14.4)
     msgpack (1.4.2)
     multi_json (1.15.0)
@@ -192,8 +191,9 @@ GEM
     multipart-post (2.1.1)
     netrc (0.11.0)
     nio4r (2.5.7)
-    nokogiri (1.11.6)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.11.7-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -351,14 +351,14 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    websocket-driver (0.7.4)
+    websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
 PLATFORMS
-  ruby
+  universal-darwin-19
 
 DEPENDENCIES
   active_storage_validations (~> 0.8.8)
@@ -400,4 +400,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.17.2
+   2.2.5

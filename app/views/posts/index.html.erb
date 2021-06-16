@@ -1,7 +1,7 @@
 <%= render 'layouts/flash_messages' %>
 <h5><%= @user.name %>の投稿一覧</h5>
 
-<div class="container">
+<div class="container" data-turbolinks="false">
   <%= link_to '新規投稿', new_user_post_path(current_user), class: "btn btn-sm btn-primary" %>
   <ul class="category-box">
     <li class="category-item"><%= link_to "全て", user_posts_path(current_user), class: "btn btn-sm btn-outline-brand" %><li>
@@ -17,7 +17,9 @@
       <article class="wrap">
         <figure class="figure-box">
           <% if user_post.photo.attached? %>
-            <%= image_tag user_post.photo.variant(resize:'300x300'), class: "figure-item" %>
+            <%= link_to user_post.photo, "data-lightbox": user_post.photo, remote: true do %>
+              <%= image_tag user_post.photo.variant(resize:'300x300'), class: "figure-item" %>
+            <% end %>
           <% else %>
             <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
               <title>Placeholder</title>
