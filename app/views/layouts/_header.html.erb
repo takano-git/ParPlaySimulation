@@ -1,52 +1,70 @@
 <header id="header">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
-  <%= link_to image_tag("/assets/pps.png", width: 46, height: 46, class:"d-inline-block align-top"), root_path %>
-  <span class="d-none d-lg-block">　</span>
-  <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand navbar-brand-custom' %>              
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-brand">
+    <%= link_to image_tag("/assets/pps.png", width: 46, height: 46, class:"d-inline-block align-top"), root_path %>
+    <span class="d-none d-lg-block">　</span>
+    <%= link_to "Par Play Simulation", root_path, class: 'navbar-brand navbar-brand-custom' %>              
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto"></ul>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <%= link_to 'ゴルフ場検索', areas_path, class: 'nav-link' %>
-      </li>
-      <% if user_signed_in? %>
-        <% unless current_user.admin?%>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"></ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to 'ゴルフ場検索', areas_path, class: 'nav-link' %>
+        </li>
+        <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
-            <%= link_to '会員登録', new_card_path, class: 'nav-link',  data: {"turbolinks" => false} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
+            <%= link_to 'ゴルフ場一覧', golfclubs_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <li class="nav-item">
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+        <!--
+        <% if user_signed_in? %>
+          <% unless current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to '会員登録', cards_path, class: 'nav-link',  data: {"turbolinks" => false} %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "新規登録", new_user_registration_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_user_session_path, class: 'nav-link' %>
+          </li>
+        <% end %>
+        -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <% if user_signed_in? %>
+              <%= current_user.nickname %>
+            <% else %>
+              アカウント
+            <% end %>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <% if !user_signed_in? %>
+              <%= link_to "ログイン", new_user_session_path, class: "dropdown-item" %>
+              <%= link_to "新規登録", new_user_registration_path, class: "dropdown-item" %>
+            <% else %>
+              <% if !current_user.admin? %>
+                <%= link_to '会員登録', cards_path, class: "dropdown-item",  data: {"turbolinks" => false} %>
+                <%= link_to 'アカウント編集', edit_user_registration_path, class: "dropdown-item" %>
+              <% end %>
+              <div class="dropdown-divider"></div>
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            <% end %>
+          </div>
         </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "新規登録", new_user_registration_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "ログイン", new_user_session_path, class: 'nav-link' %>
-        </li>
-      <% end %>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
+      </ul>
+    </div>
+  </nav>
 
 </header>

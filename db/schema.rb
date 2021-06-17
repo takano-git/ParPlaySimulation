@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2021_06_04_124157) do
     t.integer "golfclub_id"
     t.integer "course_id"
     t.integer "hole_id"
-    t.integer "shot_id", null: false
+    t.integer "shot_id"
     t.integer "location_name"
     t.text "comment"
     t.integer "photo_target_x"
@@ -144,21 +144,19 @@ ActiveRecord::Schema.define(version: 2021_06_04_124157) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "nickname"
+    t.string "name", default: "匿名さん", null: false
+    t.string "nickname", default: "匿名さん", null: false
     t.string "membership_number"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "phone_number"
+    t.string "phone_number", default: "000-0000-0000", null: false
     t.integer "flying_distance"
     t.boolean "admin", default: false
     t.integer "payment_id"
-    t.string "provider"
-    t.string "uid"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer "subscription_id"
+    t.string "subscription_id"
     t.boolean "premium", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

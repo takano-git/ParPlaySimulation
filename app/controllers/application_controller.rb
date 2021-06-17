@@ -45,7 +45,6 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
-
 	private
 	
 		def no_admin_return

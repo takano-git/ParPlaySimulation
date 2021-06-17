@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
         sign_in user
         flash[:notice] = "ログインに成功しました。"
         if user.admin?
-          redirect_to admin_pages_path
+          redirect_to golfclubs_path
         else
           redirect_to areas_path
         end
@@ -25,7 +25,7 @@ class Users::SessionsController < Devise::SessionsController
         redirect_to new_user_session_path
       end
     else
-      flash[:danger] = "名前が見つかりませんでした。ログインをやり直して下さい。" 
+      flash[:danger] = "メールアドレスが見つかりませんでした。ログインをやり直して下さい。" 
       redirect_to new_user_session_path
     end
   end

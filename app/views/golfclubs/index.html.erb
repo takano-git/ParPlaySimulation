@@ -1,6 +1,7 @@
 <%= render 'layouts/flash_messages' %>
+
 <div class="container-golfclub-index">
-  <h5>ゴルフ場一覧</h5>
+  <h3>ゴルフ場一覧</h3>
 
   <div class="golfclub-search-form">
     <%= search_form_for @q, url: golfclubs_path do |f| %>
@@ -21,16 +22,18 @@
     <% end %>
   </div>
 
-<style>
-  .aaa {
-    display: inline-block;
-  }
-</style>
+  <style>
+    .aaa {
+      display: inline-block;
+    }
+  </style>
+
   <table class="table table-bordered border-danger table-sm">
     <tr class="text-center bg-brand" style="color: white;">
       <th><%= Golfclub.human_attribute_name :name %></th>
       <th>地域</th>
       <th>コース数</th>
+      <th>攻略情報</th>
       <th></th>
     </tr>
 
@@ -54,6 +57,10 @@
         </td>
 
         <td class="text-center">
+          <%= link_to "作成", new_golfclub_strategy_info_path(golfclub), class: "fas fa-edit" %>
+        </td>
+
+        <td class="text-center">
           <%= link_to "", golfclub_path(golfclub), 
                     class: "fas fa-times-circle",
                     method: :delete,
@@ -66,3 +73,5 @@
       </tr>
     <% end %>
   </table>
+
+</div>

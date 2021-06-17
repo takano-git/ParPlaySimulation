@@ -3,7 +3,7 @@ module GolfclubsHelper
     if golfclub.courses.count <= 0
       "未登録"
     else
-      golfclub.courses.count.to_s + '件'
+      golfclub.courses.count.to_s + 'コース'
     end
   end
 end

@@ -22,7 +22,7 @@ class GolfclubsController < ApplicationController
     if @golfclub.save
       redirect_to golfclub_url(@golfclub), flash: { success: "#{@golfclub.name}を登録しました。" }
     else
-      flash[:danger] = @golfclub.errors.full_messages.join
+      flash[:danger] = @golfclub.errors.full_messages.join("<br>").html_safe
       render :new
     end
   end
@@ -34,7 +34,7 @@ class GolfclubsController < ApplicationController
     if @golfclub.update(golfclub_params)
       redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を更新しました。" }
     else
-      flash[:danger] = @golfclub.errors.full_messages.join
+      flash[:danger] = @golfclub.errors.full_messages.join("<br>").html_safe
       render :edit
     end
   end
