@@ -1,0 +1,38 @@
+<div class="container">
+
+    <%= render 'layouts/flash_messages' %>
+  <h1>ChartSample#index</h1>
+  <div class="row">
+    <div class="col-6">
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">番手</th>
+              <th scope="col">ロフト</th>
+              <th scope="col">長さ</th>
+              <th scope="col">重量</th>
+              <th scope="col">バランス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @clubs.each do |club| %>
+              <tr>
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+                <td><%= club.loft %></td>
+                <td><%= club.largo %></td>
+                <td><%= club.weight %></td>
+                <td><%= club.balance_string %><%= club.balance_number %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-6">
+      <canvas id="myChart" width="200" height="100"></canvas>
+      <script>draw_graph();</script>
+    </div>
+  </div>
+
+</div>
