@@ -33,6 +33,7 @@
       <th><%= Golfclub.human_attribute_name :name %></th>
       <th>地域</th>
       <th>コース数</th>
+      <th>攻略情報</th>
       <th></th>
     </tr>
 
@@ -53,6 +54,10 @@
           <%= course_count(golfclub) %>
           &nbsp;
           <%= link_to "", golfclub_path(golfclub), class: "fas fa-edit" %>
+        </td>
+
+        <td class="text-center">
+          <%= link_to "作成", new_golfclub_strategy_info_path(golfclub), class: "fas fa-edit" %>
         </td>
 
         <td class="text-center">

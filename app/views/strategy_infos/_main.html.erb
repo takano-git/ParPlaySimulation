@@ -9,26 +9,46 @@
     </h3>
   </div>
 
-  <%# renderを追加するならここかも(viewはshowでもよさそう) %>
-  <%# R,B,L以外のすべてのボタンで切り替わる？ %>
-  <div id="strategy_main_center column">
-    <div class="strategy_main_center_photo">
-      <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
+  <div class="strategy_main_center">
+    <div id="show">
+      <%= render 'show', strategy_info: @strategy_info %>
     </div>
-    <div class="strategy_main_center_comment">
-      <h6 class=""><%= @strategy_info.comment %></h6>
+    <%# アコーディオン未設定 %>
+    <div class="shot_bar">
+      <% @strategy_shots.each_with_index do |shots, n| %>
+        <div id="<%= shots[0] %>_btns" class="shot_btns">
+          <% shots[1].each.with_index(1) do |strategy, i| %>
+            <%= link_to "#{shots[0]}#{i}", golfclub_strategy_info_path(id: strategy[:id]),
+                remote: :true, class: "btn shot_btn s_selected" if n == 0 %>
+            <%= link_to "#{shots[0]}#{i}", golfclub_strategy_info_path(id: strategy[:id]),
+                remote: :true, class: "btn shot_btn" if n != 0 %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-  </div>
 
-  <%# @holeがカラムを持っているので単に表示切り替え(.show();,.hide(); %>
-  <%#  %>
+
+
+  </div>
+  <%# @strategy_infoがない場合 %>
+<%# ------------------------------------------- %>
+
+  <%# 表示切り替え(.show();,.hide(); %>
   <div id="strategy_main_map">
-    <%= image_tag @hole.map_r.variant(resize:'138x436'), id: "map_r", class: "img-fluid" %>
-    <%= image_tag @hole.map_b.variant(resize:'138x436'), id: "map_b", class: "img-fluid" %>
-    <%= image_tag @hole.map_l.variant(resize:'138x436'), id: "map_l", class: "img-fluid" %>
+    <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
+    <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
+    <%= image_tag @hole.map_l.variant(resize:'134x430'), id: "map_l", class: "img-fluid" %>
     <%# ピン %>
     <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
       <img src="strage/photo_1.png" id="pin" width="26px"> %>
   </div>
 
 </div>
+
+<script>
+$('.shot_btn').on('click', function () {
+  $('.shot_btn').removeClass('s_selected');
+  $(this).addClass('s_selected');
+});
+
+</script>
