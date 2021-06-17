@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      # get 'clubs/edit_all'
+      get 'clubs/chart'
       resources :clubs
     end
   end

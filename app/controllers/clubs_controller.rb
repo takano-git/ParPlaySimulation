@@ -42,6 +42,15 @@ class ClubsController < ApplicationController
     end
   end
 
+  # ゴルフクラブチャート表示
+  def chart
+    @clubs = Club.where(user_id: @user)
+    gon.labeldata = []
+    gon.linedata = []
+    gon.labeldata = Club.where(user_id: @user).pluck(:largo) # x軸データ配列
+    gon.linedata = Club.where(user_id: @user).pluck(:weight) # y軸データ配列
+  end
+
   private
 
     def club_params
