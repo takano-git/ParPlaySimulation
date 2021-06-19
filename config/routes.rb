@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'clubs/new'
   root 'homes#index'
 
   devise_for :users,
@@ -13,7 +12,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'clubs/chart'
-      resources :clubs
+      resources :clubs, except: %i(show)
     end
     resources :posts
   end

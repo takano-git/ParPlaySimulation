@@ -1,7 +1,8 @@
 <div class="container">
   <%= render 'layouts/flash_messages' %>
   <h1 class="my-5">ゴルフクラブ一覧</h1>
-
+  <%= link_to "新しいゴルフクラブを登録する", new_club_path(current_user), remote: true, class: "btn btn-outline-brand mb-5" %>
+  
   <% row_num = 1 %>
   <div class="table-responsive">
     <table class="table">
@@ -36,3 +37,6 @@
   </div>
 
 </div>
+
+<!--モーダルウインドウ表示-->
+<div id="new_club_path" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

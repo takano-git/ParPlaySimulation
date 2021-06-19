@@ -1,5 +1,10 @@
+<% provide(:title, 'All Users') %>
+<h1>ユーザー一覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
 <div class="container">
-  <h1>ゴルフクラブを登録する</h1>
+  <h1>ゴルフクラブを登録する
+  </h1>
   <%= current_user.id %>
   <%= form_with(model: @club, local: true) do |f| %>
     <div class="form-group">
@@ -36,4 +41,5 @@
     <%= f.hidden_field :user_id, :value => current_user.id %>
     <%= f.submit "送信" %>
   <% end %>
+</div>
 </div>
