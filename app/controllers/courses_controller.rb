@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  # before_action 管理者のみアクセス可能にする(あとで設定)
   before_action :set_golfclub, only: %i(new create edit update)
   before_action :set_course, only: %i(edit update)
   before_action :set_pars, only: %i(new create edit update)

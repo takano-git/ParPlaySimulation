@@ -10,14 +10,6 @@ Rails.application.routes.draw do
       omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :users do
-    member do
-      get 'clubs/chart'
-      resources :clubs
-    end
-    resources :posts
-  end
-
   resources :cards, only: %i(index new create destroy) do
     collection do
       get 'about', to: 'card/about'
@@ -36,6 +28,7 @@ Rails.application.routes.draw do
         get :form_map
       end
     end
+    resources :posts
   end
 
   resources :areas, only: %i(index) do

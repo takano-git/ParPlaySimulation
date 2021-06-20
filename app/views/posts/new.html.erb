@@ -1,11 +1,9 @@
 <%= render 'layouts/flash_messages' %>
 <div class="container-post">
+  <h5><%= @golfclub.name %></h5>
   <h5>新規投稿</h5>
 
-  <%= form_with model: @post, url: user_posts_path(@user), local: true do |post| %>
+  <%= form_with model: @post, url: golfclub_posts_path(@golfclub, @post), local: true do |post| %>
     <%= render 'form', post: post %>
   <% end %>
 </div>
-
-<p>新規投稿(仮)</p>
-<p>id:<%= @user.id %> / <%= @user.name %> / <%= @user.email %></p>

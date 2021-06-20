@@ -59,13 +59,14 @@
 
 /* 共通 */
 
-.fa-edit {
+.fa-edit, .fa-edit:hover {
   color: #224444;
 }
 
-.fa-times-circle {
+.fa-trash-alt, .fa-trash-alt:hover {
   color: #dc3545;
 }
+
 
 .container {
   margin-top: 10px;

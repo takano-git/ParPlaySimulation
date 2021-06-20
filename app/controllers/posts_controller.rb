@@ -1,17 +1,19 @@
 class PostsController < ApplicationController
   before_action :set_user
+  before_action :set_golfclub, only: %i(index new create edit update)
   before_action :set_post, only: %i(edit update destroy)
   before_action :authenticate_user!
   before_action :user_signed_in?
+  before_action :post_limitation, only: %i(edit update destroy)
 
   def index
-    @q = @user.posts.ransack(params[:q])
-    @user_posts = @q.result(distinct: true)
+    @search = Post.where(golfclub_id: @golfclub.id).ransack(params[:search])
+    @posts = @search.result(distinct: true)
     @categories = Post.all.pluck(:category_id).uniq.sort
   end
 
-  def show
-  end
+  # def show
+  # end
 
   def new
     @post = Post.new
@@ -20,7 +22,7 @@ class PostsController < ApplicationController
   def create
     @post = @user.posts.build(post_params)
     if @post.save
-      redirect_to user_posts_url(@user), flash: { success: "タイトル: #{@post.title} を投稿しました。" }
+      redirect_to golfclub_posts_url, flash: { success: "タイトル: #{@post.title} を投稿しました。" }
     else
       flash[:danger] = @post.errors.full_messages.join("<br>").html_safe
       render :new
@@ -32,7 +34,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to user_posts_url(@user), flash: { success: "タイトル: #{@post.title} を更新しました。" }
+      redirect_to golfclub_posts_url, flash: { success: "タイトル: #{@post.title} を更新しました。" }
     else
       flash[:danger] = @post.errors.full_messages.join("<br>").html_safe
       render :edit
@@ -40,8 +42,9 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    @post.photo.purge if @post.photo.attached?
     @post.destroy
-    redirect_to user_posts_url(@user), flash: { success: "タイトル: #{@post.title} を削除しました。" }
+    redirect_to golfclub_posts_url, flash: { success: "タイトル: #{@post.title} を削除しました。" }
   end
 
   private
@@ -50,11 +53,23 @@ class PostsController < ApplicationController
       @user = current_user
     end
 
+    def set_golfclub
+      @golfclub = Golfclub.find(params[:golfclub_id])
+    end
+
     def set_post
-      @post = @user.posts.find_by(id: params[:id])
+      @post = Post.find(params[:id])
     end
 
     def post_params
       params.require(:post).permit(:title, :comment, :user_id, :golfclub_id, :category_id, :photo)
+    end
+    
+    # 自分以外の投稿のアクセス制限
+    def post_limitation
+      @post = Post.find(params[:id])
+      unless @post.user_id. == @current_user.id
+        redirect_to golfclub_posts_url
+      end
     end
 end
