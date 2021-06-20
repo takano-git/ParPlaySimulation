@@ -54,6 +54,7 @@
               <div class="col-md-10">
                 <% if StrategyInfo.find_by(golfclub_id: @golfclub.id) %>
                   <h6 class="text-left"><%= link_to "#{@golfclub.name}", golfclub_strategy_infos_path(@golfclub.id) %></h6>
+                  <p><%= link_to '投稿', golfclub_posts_path(@golfclub) %></p>
                 <% else %>
                   <h6 class="text-left"><%= @golfclub.name %></h6>
                 <% end %>

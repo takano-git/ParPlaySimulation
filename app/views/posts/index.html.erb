@@ -1,24 +1,28 @@
 <%= render 'layouts/flash_messages' %>
-<h5><%= @user.name %>の投稿一覧</h5>
+<h5><%= @golfclub.name %>の投稿一覧</h5>
 
 <div class="container" data-turbolinks="false">
-  <%= link_to '新規投稿', new_user_post_path(current_user), class: "btn btn-sm btn-primary" %>
+  <%= link_to '新規投稿', new_golfclub_post_path, class: "btn btn-sm btn-primary" %>
   <ul class="category-box">
-    <li class="category-item"><%= link_to "全て", user_posts_path(current_user), class: "btn btn-sm btn-outline-brand" %><li>
+    <li class="category-item"><%= link_to "全て", golfclub_posts_path, class: "btn btn-sm btn-outline-brand" %><li>
     <% @categories.each do |category| %>
       <li class="category-item">
-        <%= link_to Category.find(category).name, user_posts_path(search: { category_id_eq: Category.find(category) }),
+        <%= link_to Category.find(category).name, golfclub_posts_path(search: { category_id_eq: Category.find(category) }),
                                                   class: "btn btn-sm btn-outline-brand" %>
       </li>
     <% end %>
+    <li class="category-item">
+      <%= link_to "自分の投稿", golfclub_posts_path(search: { user_id_eq: current_user.id }),
+                              class: "btn btn-sm btn-outline-brand" %>
+    <li>
   </ul>
   <section>
-    <% @user_posts.each do |user_post| %>
+    <% @posts.each do |post| %>
       <article class="wrap">
         <figure class="figure-box">
-          <% if user_post.photo.attached? %>
-            <%= link_to user_post.photo, "data-lightbox": user_post.photo, remote: true do %>
-              <%= image_tag user_post.photo.variant(resize:'300x300'), class: "figure-item" %>
+          <% if post.photo.attached? %>
+            <%= link_to post.photo, "data-lightbox": post.photo, remote: true do %>
+              <%= image_tag post.photo.variant(resize:'300x300'), class: "figure-item" %>
             <% end %>
           <% else %>
             <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
@@ -29,31 +33,25 @@
           <% end %>
           <!--
           <figcaption>
-            <%= Golfclub.find(user_post.golfclub_id).name %>
+            <%= Golfclub.find(post.golfclub_id).name %>
           </figcaption>
           -->
         </figure>
 
         <div class="comment-box">
           <div class="comment-item">
-            <span class="post-title"><%= user_post.title %></span><br/>
-            <span><%= user_post.comment %></span>
+            <span class="post-title">
+              <%= post.title %>(<%= Golfclub.find(post.golfclub_id).name %>)
+            </span><br/>
+            <span><%= post.comment %></span>
           </div>
+
           <ul class="info-box">
-            <li class="info-category"><%= Category.find(user_post.category_id).name %></li>
-            <li class="info-edit"><%= link_to "", edit_user_post_path(@user_posts, user_post), class: "fas fa-edit" %></li>
-            <li class="info-delete">
-              <%= link_to "", user_post_path(@user_posts, user_post), 
-                    class: "fas fa-trash-alt",
-                    method: :delete,
-                    remote: true,
-                    data: { confirm: "タイトル: #{user_post.title} を削除してよろしいですか？",
-                            cancel: 'キャンセル',
-                            commit: '削除する'
-                          }, title: '削除確認' %>
-            </li>
-            <li class="info-time">投稿日 : <%= user_post.created_at.strftime("%Y/%m/%d") %></li>
-            <li class="info-user">投稿者 : <%= User.find(user_post.user_id).name %></li>
+            <li class="info-category"><%= Category.find(post.category_id).name %></li>
+            <li class="info-edit"><%= current_user_edit_post(post) %></li>
+            <li class="info-delete"><%= current_user_destroy_post(@golfclub, post) %></li>
+            <li class="info-time">投稿日 : <%= post.created_at.strftime("%Y/%m/%d") %></li>
+            <li class="info-user">投稿者 : <%= user_nickname(post) %></li>
           </ul>
         </div>
       </article>

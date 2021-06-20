@@ -9,9 +9,7 @@ Rails.application.routes.draw do
       omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :users do
-    resources :posts
-  end
+  resources :posts
 
   resources :cards, only: %i(index new create destroy) do
     collection do
@@ -31,6 +29,7 @@ Rails.application.routes.draw do
         get :form_map
       end
     end
+    resources :posts
   end
 
   resources :areas, only: %i(index) do
