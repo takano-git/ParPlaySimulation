@@ -1,0 +1,45 @@
+<% provide(:title, 'All Users') %>
+<h1>ユーザー一覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
+<div class="container">
+  <h1>ゴルフクラブを登録する
+  </h1>
+  <%= current_user.id %>
+  <%= form_with(model: @club, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :yarn_count_string, '番手', class: "control-label" %>
+      <%= f.text_field :yarn_count_string, placeholder: '（例）W'  %>
+      <%= f.number_field :yarn_count_number, placeholder: '1', min: 0, max: 13 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :detail, class: "control-label" %>
+      <%= f.text_field :detail, class: "form-control", placeholder: '（例）MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）' %>
+      <small class="form-text text-muted">（例）メーカー名、モデル名、シャフト名、フレックス名</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :loft %>
+      <%= f.number_field :loft, class: "form-control", placeholder: '（例）27.55', step: '0.01', min: 0.00, max: 70.00 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :largo %>
+      <%= f.number_field :largo, class: "form-control", placeholder: '（例）35.25', step: '0.01', min: 31.00, max: 48.00 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :weight %>
+      <%= f.number_field :weight, class: "form-control", placeholder: '（例）315', min: 0 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :balance_string, 'バランス', class: "control-label" %>
+      <%= f.text_field :balance_string, placeholder: '（例）D' %>
+      <%= f.number_field :balance_number, placeholder: '0.0', step: '0.1', min: 0.0, max: 9.9 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :frequency %>
+      <%= f.text_field :frequency, class: "form-control", placeholder: '（例）250' %>
+    </div>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.submit "送信" %>
+  <% end %>
+</div>
+</div>

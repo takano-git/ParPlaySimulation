@@ -1,7 +1,7 @@
 <div class="container">
 
-    <%= render 'layouts/flash_messages' %>
-  <h1>ChartSample#index</h1>
+  <%= render 'layouts/flash_messages' %>
+  <h1>ChartSample</h1>
   <div class="row">
     <div class="col-6">
       <div class="table-responsive">
@@ -30,9 +30,28 @@
       </div>
     </div>
     <div class="col-6">
-      <canvas id="myChart" width="200" height="100"></canvas>
-      <script>draw_graph();</script>
-    </div>
-  </div>
+<canvas id="myChart" width="900" height="400"></canvas>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      data: [
+        { x: 1, y: 8 },
+        { x: 2, y: 7 },
+        { x: 1, y: 6 },
+        { x: 3, y: 5 }
+      ],
+      fill: false,
+      showLine: true
+    }]
+  }
+});
+</script>
 
+
+
+
+  </div>
 </div>
