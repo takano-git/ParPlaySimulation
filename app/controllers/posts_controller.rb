@@ -42,6 +42,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    @post.photo.purge if @post.photo.attached?
     @post.destroy
     redirect_to golfclub_posts_url, flash: { success: "タイトル: #{@post.title} を削除しました。" }
   end

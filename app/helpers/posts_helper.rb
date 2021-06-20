@@ -8,9 +8,9 @@ module PostsHelper
   end
 
   # current_userの編集,削除ボタンのみ表示する
-  def current_user_destroy_post(golfclub, post)
+  def current_user_destroy_post(post)
     if current_user.id == post.user_id
-      link_to "", golfclub_post_path(golfclub, post), 
+      link_to "", golfclub_post_path(@golfclub, post), 
                     class: "fas fa-trash-alt",
                     method: :delete,
                     remote: true,
