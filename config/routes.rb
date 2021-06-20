@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'clubs/new'
   root 'homes#index'
 
   devise_for :users,
@@ -8,8 +9,6 @@ Rails.application.routes.draw do
       registrations: "users/registrations",
       omniauth_callbacks: "users/omniauth_callbacks"
   }
-
-  resources :posts
 
   resources :cards, only: %i(index new create destroy) do
     collection do
