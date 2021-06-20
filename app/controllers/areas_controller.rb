@@ -4,22 +4,8 @@ class AreasController < ApplicationController
   before_action :set_areas_group_by_district, only: %i(index show)
 
   def index
-    # @areas = Area.all.order(:id).group_by(&:district) # 13地区でグループ化された47都道府県
-
     @golfclub = Golfclub.first
     @golfclubs_citys = Golfclub.all.pluck(:area_id).uniq.sort
-
-    # @prefectures = Area.all # 47都道府県のインスタンス
-    # # golfclub_of_prefecture = [[prefecture, ゴルフ場の数],[prefecture, ゴルフ場の数],[prefecture, ゴルフ場の数]]
-    # golfclubs_per_prefecture = [] #[[prefecture, golfclubs],[prefecture, golfclubs], ...]
-
-    # @prefectures.values.each do |prefecture|
-    #   golfclubs = Golfclub.where(area_id: id) #その件に登録されているゴルフ場のインスタンスを取得 []
-    #   golfclubs_per_prefecture = [].push([prefecture, golfclubs]) #["北海道" ,[]]
-    # end
-
-    # @golfclubs_per_prefecture = golfclubs_per_prefecture
-
   end
 
   def show
