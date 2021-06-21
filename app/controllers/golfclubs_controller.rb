@@ -1,5 +1,6 @@
 class GolfclubsController < ApplicationController
   # before_action 管理者のみアクセス可能にする(あとで設定)
+  before_action :admin_user, only: %i(index new create edit update destroy)
   before_action :set_golfclub, only: %i(show edit update destroy)
 
   def index

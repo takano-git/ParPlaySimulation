@@ -22,5 +22,5 @@
 
 // flashメッセージをフェードアウトで消す。
 $(function(){
-  setTimeout("$('.alert').fadeOut('slow')", 7000);
+  setTimeout("$('.alert').fadeOut('slow')", 5000);
 });
