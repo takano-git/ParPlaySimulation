@@ -19,6 +19,7 @@
               %p.creditcard-info__company
               = "カード会社："
               = image_tag "creditcards/#{@card_image}",width:'34',height:'20', alt:'master-card'
+              %p
               %p.creditcard-info__number
                 = "カード番号："
                 = "**** **** **** " + @card_info.last4 #クレジットカードの下４桁を表示
