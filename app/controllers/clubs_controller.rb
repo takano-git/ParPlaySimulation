@@ -25,13 +25,13 @@ class ClubsController < ApplicationController
   # ゴルフクラブチャート表示
   def chart
     largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
-    scatterdata = [] # 散布図表示用データ
+    scatterdata = [] # 散布図表示用データ配列
   
     largo_weight_data = Club.where(user_id: @user).pluck(:largo, :weight)
     largo_weight_data.each do |data|
       scatterdata.push({ x: data[0], y: data[1] })
     end
-    gon.scatterdata = scatterdata  # jsに渡す散布図表示用データ
+    gon.scatterdata = scatterdata  # jsに渡す散布図表示用データ配列
   end
 
   private

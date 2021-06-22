@@ -44,12 +44,18 @@
         label: 'ゴルフクラブの重さと長さの推移',
         data: gon.scatterdata,
         fill: false,
-        showLine: true
+        showLine: true,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // 点の色
+        borderColor: 'rgba(75, 192, 192, 1)', // 線の色
       }]
     },
       options:{
         scales:{
           xAxes:[{
+            scaleLabel: {             
+              display: true,          
+              labelString: '長さ（インチ）' 
+            },
             ticks:{
               min:31, // グラフの最小値
               max:48, // グラフの最大値
@@ -58,14 +64,17 @@
             }
           }],
         yAxes:[{
-            ticks:{
-              min:200, // グラフの最小値
-              max:500, // グラフの最大値
-              stepSize:50 // グラフの刻み
-            }
-          }]
-        }
+          scaleLabel: {             
+            display: true,          
+            labelString: '重さ（g）' 
+          },
+          ticks:{
+            min:200, // グラフの最小値
+            max:500, // グラフの最大値
+            stepSize:50 // グラフの刻み
+          }
+        }]
       }
+    }
   });
 </script>
-
