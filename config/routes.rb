@@ -35,16 +35,15 @@ Rails.application.routes.draw do
         get :form_map
       end
     end
+    resources :posts
   end
 
-  resources :areas, only: %i(index) do
+  resources :areas, only: %i(index show) do
     collection do
       get "edit", to: 'areas/edit', as: :edit
       patch "update", to: 'areas/update', as: :update
     end
   end
-
-  resources :areas, only: :show
 
   resources :categories
 

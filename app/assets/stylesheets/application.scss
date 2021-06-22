@@ -31,13 +31,13 @@
 }
 
 /* トップイメージ */
-.main-container {
-  background-image: url("/assets/toppage.png");
-  height: 800px;
-  background-size: cover;
+// .main-container {
+  // background-image: url("/assets/toppage.png");
+  // height: 800px;
+  // background-size: cover;
   // background: url("/assets/toppage.png") no-repeat center center;
   // background-size:100% auto;
-}
+// }
 
 .box {  
   position: relative;
@@ -59,13 +59,14 @@
 
 /* 共通 */
 
-.fa-edit {
+.fa-edit, .fa-edit:hover {
   color: #224444;
 }
 
-.fa-times-circle {
+.fa-trash-alt, .fa-trash-alt:hover {
   color: #dc3545;
 }
+
 
 .container {
   margin-top: 10px;

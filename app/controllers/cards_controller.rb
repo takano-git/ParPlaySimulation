@@ -112,7 +112,7 @@ class CardsController < ApplicationController
     customer = Payjp::Customer.retrieve(@card.customer_id)
     customer.delete # PAY.JPの顧客情報を削除
     if @card.destroy # App上でもクレジットカードを削除
-      current_user.update(subscription_id: nil, premium: false)
+      current_user.update(payment_id: nil, membership_number: nil, subscription_id: nil, premium: false)
       flash[:success] = 'カード情報を削除しました。'
       redirect_to action: "index"
     else
@@ -146,7 +146,8 @@ class CardsController < ApplicationController
       metadata: {current_id: current_user.id}
       )
       # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
-      current_user.update(subscription_id: subscription.id, premium: true)
+      membership_number = "PSP" + sprintf("%05d", card.id)
+      current_user.update(payment_id: card.id, membership_number: membership_number, subscription_id: subscription.id, premium: true)
       flash[:success] = '定期課金にご登録ありがとうございます.'
       redirect_to cards_path
     end
