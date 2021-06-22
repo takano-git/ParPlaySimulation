@@ -3,7 +3,7 @@
 <h2 class="mt-5">ゴルフクラブの重さと長さの推移表</h2>
 <div class="container-fluid">
 
-  <div class="row">
+  <div class="row mb-5">
     <div class="col-4">
       <div class="table-responsive">
         <table class="table table-sm">
@@ -42,15 +42,7 @@
     data: {
       datasets: [{
         label: 'ゴルフクラブの重さと長さの推移',
-        data: [
-          { x: 45.75, y: 316 },
-          { x: 41.00, y: 348 },
-          { x: 40.50, y: 415 },
-          { x: 37.75, y: 428 },
-          { x: 37.25, y: 435 },
-          { x: 36.25, y: 449 },
-          { x: 35.75, y: 456 }
-        ],
+        data: gon.scatterdata,
         fill: false,
         showLine: true
       }]
@@ -62,7 +54,7 @@
               min:31, // グラフの最小値
               max:48, // グラフの最大値
               stepSize:1, // グラフの刻み
-              reverse: true 
+              reverse: true, // x軸を反転
             }
           }],
         yAxes:[{

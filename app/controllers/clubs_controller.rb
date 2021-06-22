@@ -5,27 +5,6 @@ class ClubsController < ApplicationController
 
   def index
     @clubs = Club.where(user_id: @user)
-    #配列形式でデータを用意する
-    # @data = Club.where(user_id: @user).pluck(:largo, :weight)
-
-    # @data = [['2019-06-01', 100], ['2019-06-02', 200], ['2019-06-03', 150]](参考)
-    # gon.data = []
-    # 6.times do
-    #   gon.data << rand(100.0)
-    # end
-    # sum = 0
-    # gon.bardata = []
-    gon.labeldata = []
-    gon.linedata = []
-    gon.labeldata = Club.where(user_id: @user).pluck(:largo) # x軸データ配列
-    gon.linedata = Club.where(user_id: @user).pluck(:weight) # y軸データ配列
-
-    # 6.times do |i|
-    #   data = rand(100.0)
-    #   gon.bardata << data
-    #   sum = sum + data
-    #   gon.linedata << sum
-    # end
   end
 
   def new
@@ -45,10 +24,14 @@ class ClubsController < ApplicationController
   # ゴルフクラブチャート表示
   def chart
     @clubs = Club.where(user_id: @user)
-    gon.labeldata = []
-    gon.linedata = []
-    gon.labeldata = Club.where(user_id: @user).pluck(:largo) # x軸データ配列
-    gon.linedata = Club.where(user_id: @user).pluck(:weight) # y軸データ配列
+    largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
+    scatterdata = [] # 散布図表示用データ
+  
+    largo_weight_data = Club.where(user_id: @user).pluck(:largo, :weight)
+    largo_weight_data.each do |data|
+      scatterdata.push({ x: data[0], y: data[1] })
+    end
+    gon.scatterdata = scatterdata  # jsに渡す散布図表示用データ
   end
 
   private
