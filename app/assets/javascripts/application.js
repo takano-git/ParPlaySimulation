@@ -17,6 +17,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require cocoon
+//= require lightbox
 //= require turbolinks
 //= require_tree .
 
