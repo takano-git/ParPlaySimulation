@@ -2,9 +2,10 @@ class ClubsController < ApplicationController
   before_action :authenticate_user! # ログインしているユーザーのみ許可
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
+  before_action :set_clubs , only: %i[ index chart ]
+
 
   def index
-    @clubs = Club.where(user_id: @user)
   end
 
   def new
@@ -23,7 +24,6 @@ class ClubsController < ApplicationController
 
   # ゴルフクラブチャート表示
   def chart
-    @clubs = Club.where(user_id: @user)
     largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
     scatterdata = [] # 散布図表示用データ
   
@@ -40,4 +40,7 @@ class ClubsController < ApplicationController
       params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id)
     end
 
+    def set_clubs
+      @clubs = Club.where(user_id: @user)
+    end
 end
