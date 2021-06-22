@@ -1,11 +1,12 @@
-<div class="container">
+<%= render 'layouts/flash_messages' %>
 
-  <%= render 'layouts/flash_messages' %>
-  <h1>ChartSample</h1>
+<h2 class="mt-5">ゴルフクラブの重さと長さの推移表</h2>
+<div class="container-fluid">
+
   <div class="row">
-    <div class="col-6">
+    <div class="col-4">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-sm">
           <thead class="thead-dark">
             <tr>
               <th scope="col">番手</th>
@@ -29,54 +30,50 @@
         </table>
       </div>
     </div>
-    <div class="col-6">
-<canvas id="myChart" width="900" height="400"></canvas>
-<script>
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'scatter',
-  data: {
-    datasets: [{
-      label: 'ゴルフクラブの重さと長さの推移',
-      data: [
-        { x: 45.75, y: 316 },
-        { x: 41.00, y: 348 },
-        { x: 40.50, y: 415 },
-        { x: 37.75, y: 428 },
-        { x: 37.25, y: 435 },
-        { x: 36.25, y: 449 },
-        { x: 35.75, y: 456 }
-      ],
-      fill: false,
-      showLine: true
-    }]
-  },
-    options:{
-      scales:{
-        xAxes:[{
-          ticks:{
-            min:31, // グラフの最小値
-            max:48, // グラフの最大値
-            stepSize:1, // グラフの刻み
-            reverse: true 
-          }
-        }],
-       yAxes:[{
-          ticks:{
-            min:200, // グラフの最小値
-            max:500, // グラフの最大値
-            stepSize:50 // グラフの刻み
-          }
-        }]
-      },
-      elements:{
-        line:{
-          tension: 0 // 線グラフのベジェ曲線を無効にする
-        }
-      }
-    }
-});
-</script>
-
+    <div class="col-8">
+      <canvas id="myChart" width="900" height="400"></canvas>
+    </div>
   </div>
 </div>
+<script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'ゴルフクラブの重さと長さの推移',
+        data: [
+          { x: 45.75, y: 316 },
+          { x: 41.00, y: 348 },
+          { x: 40.50, y: 415 },
+          { x: 37.75, y: 428 },
+          { x: 37.25, y: 435 },
+          { x: 36.25, y: 449 },
+          { x: 35.75, y: 456 }
+        ],
+        fill: false,
+        showLine: true
+      }]
+    },
+      options:{
+        scales:{
+          xAxes:[{
+            ticks:{
+              min:31, // グラフの最小値
+              max:48, // グラフの最大値
+              stepSize:1, // グラフの刻み
+              reverse: true 
+            }
+          }],
+        yAxes:[{
+            ticks:{
+              min:200, // グラフの最小値
+              max:500, // グラフの最大値
+              stepSize:50 // グラフの刻み
+            }
+          }]
+        }
+      }
+  });
+</script>
+
