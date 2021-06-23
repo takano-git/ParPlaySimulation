@@ -7,6 +7,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
+# 画像拡大、スライド機能(lightbox.js lightbox.css)
 Rails.application.config.assets.precompile += %w( courses.js lightbox.js lightbox.css )
 
 # Precompile additional assets.
