@@ -1,4 +1,6 @@
 class StrategyInfosController < ApplicationController
+  before_action :admin_user, only: %i(destroy)
+  before_action :premium_user, only: %i(index new create edit update)
 
   def index
     @golfclub = Golfclub.find(params[:golfclub_id])

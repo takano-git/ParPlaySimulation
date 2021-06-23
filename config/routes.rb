@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'clubs/new'
   root 'homes#index'
 
   devise_for :users,
@@ -9,6 +8,14 @@ Rails.application.routes.draw do
       registrations: "users/registrations",
       omniauth_callbacks: "users/omniauth_callbacks"
   }
+
+  resources :users do
+    member do
+      get 'clubs/chart'
+      resources :clubs, except: %i(show)
+    end
+    resources :posts
+  end
 
   resources :cards, only: %i(index new create destroy) do
     collection do
@@ -31,14 +38,12 @@ Rails.application.routes.draw do
     resources :posts
   end
 
-  resources :areas, only: %i(index) do
+  resources :areas, only: %i(index show) do
     collection do
       get "edit", to: 'areas/edit', as: :edit
       patch "update", to: 'areas/update', as: :update
     end
   end
-
-  resources :areas, only: :show
 
   resources :categories
 

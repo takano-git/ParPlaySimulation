@@ -31,13 +31,13 @@
 }
 
 /* トップイメージ */
-.main-container {
-  background-image: url("/assets/toppage.png");
-  height: 800px;
-  background-size: cover;
+// .main-container {
+  // background-image: url("/assets/toppage.png");
+  // height: 800px;
+  // background-size: cover;
   // background: url("/assets/toppage.png") no-repeat center center;
   // background-size:100% auto;
-}
+// }
 
 .box {  
   position: relative;
@@ -164,6 +164,18 @@ footer {
   // margin-top: 16px;
   text-align: center;
   line-height: 21px;
+}
+
+
+/* モーダルウインドウの位置調整 */
+.modal-dialog-center {
+  padding-top: 10%;
+}
+
+/* ゴルフクラブ登録モーダルウインドウ */
+.btn-club-new{
+  margin: 15px 0;
+  width: 30%;
 }
 
 /*------------------------------------

@@ -1,6 +1,7 @@
 class AreasController < ApplicationController
-  before_action :set_areas_group_by_district, only: %i[ index show ]
   # before_action 管理者のみアクセス可能にする(あとで設定)
+  before_action :admin_user, only: %i(edit update)
+  before_action :set_areas_group_by_district, only: %i(index show)
 
   def index
     @golfclub = Golfclub.first

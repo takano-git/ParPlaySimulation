@@ -49,6 +49,7 @@ gem 'ransack'
 
 # グラフ機能
 gem 'chart-js-rails', '~> 0.1.4'
+
 # Railsのコントローラ側から値を渡す
 gem 'gon', '~> 6.2.0'
 
