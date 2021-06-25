@@ -1,6 +1,10 @@
 class StrategyInfosController < ApplicationController
 
   def index
+    # new,editから飛んできた場合の処理(before_action)
+    # 新規登録、編集した攻略情報のcourse,hole,shot,location_nameの攻略情報を表示
+
+    # -----------------------------------
     @golfclub = Golfclub.find(params[:golfclub_id])
     @golfclub_id = @golfclub.id
     @courses = Course.where(golfclub_id: params[:golfclub_id])
@@ -46,8 +50,9 @@ class StrategyInfosController < ApplicationController
     @strategy_info = StrategyInfo.find(params[:id])
   end
 
-
   def new
+    # どのviewから飛んできたかどうかで場合分け
+    # byebug
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
     @courses = Course.where(golfclub_id: params[:golfclub_id])
@@ -62,27 +67,19 @@ class StrategyInfosController < ApplicationController
     }
   end
 
-  # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
-  def form_map
-    location_colums = ["map_r","map_b","map_l"]
-    @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
-    if params[:hole_data].blank?
-      course_id = params[:course_data][:course][:course_id]
-      @holes = Hole.where(course_id: course_id)
-      @hole = @holes.first
-      @hole_options = @holes.order(:id).map { 
-        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-      }
-    else
-      @hole = Hole.find(params[:hole_data][:hole][:hole_id])
-    end
-  end
-
   def create
-    # byebug
+    byebug
+    @strategy_info = StrategyInfo.new(strategy_info_params)
+    if @strategy_info.save
+      flash[:success] = "#{}を登録しました。"
+    else
+      flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
+    end
+    redirect_to action: :new
   end
 
   def edit
+    @strategy_info = StrategyInfo.find(params[:id])
   end
 
   def update
@@ -95,8 +92,28 @@ class StrategyInfosController < ApplicationController
     
   end
 
-    
-    # def strategy_info_params
-    #   params.require(:book).permit(:commtent)
-    # end
+  private
+
+    # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
+    def form_map
+      location_colums = ["map_r","map_b","map_l"]
+      @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
+      if params[:hole_data].blank?
+        course_id = params[:course_data][:course][:course_id]
+        @holes = Hole.where(course_id: course_id)
+        @hole = @holes.first
+        @hole_options = @holes.order(:id).map { 
+          |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+        }
+      else
+        @hole = Hole.find(params[:hole_data][:hole][:hole_id])
+      end
+    end
+
+    def strategy_info_params
+      params.require(:strategy_info)
+             .permit(:user_id, :golfclub_id, :course_id, :hole_id, :shot_id, :location_name, :comment,
+                     :photo_target_x, :photo_target_y, :photo_point_x, :photo_point_y, :photo_size_x, :photo_size_y,
+                     :map_target_x, :map_target_y, :map_point_x, :map_point_y, :map_shoot_x, :map_shoot_y, :map_size_x, :map_size_y)
+    end
 end

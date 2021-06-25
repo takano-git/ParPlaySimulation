@@ -1,20 +1,20 @@
 
 <div class="strategy_main">
 
-  <%# ホールボタンでのみ切り替わる %>
+  <%# ホールボタンでのみ切り替わる  col-md-1.5%>
   <div class="strategy_main_status">
     <h3>
       Hole<%= @hole.hole_number %><br>
       Par<%= @hole.number_of_pars %>
     </h3>
   </div>
-
+<%#  col-md-8.5 %>
   <div class="strategy_main_center">
     <div id="show">
       <%= render 'show', strategy_info: @strategy_info %>
     </div>
     <%# アコーディオン未設定 %>
-    <div class="shot_bar">
+    <div class="shot_bar row">
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
           <% shots[1].each.with_index(1) do |strategy, i| %>
@@ -33,8 +33,8 @@
   <%# @strategy_infoがない場合 %>
 <%# ------------------------------------------- %>
 
-  <%# 表示切り替え(.show();,.hide(); %>
-  <div id="strategy_main_map">
+  <%# 表示切り替え(.show();,.hide(); col-md-2%>
+  <div id="strategy_main_map" class="">
     <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
     <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
     <%= image_tag @hole.map_l.variant(resize:'134x430'), id: "map_l", class: "img-fluid" %>

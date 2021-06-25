@@ -1,30 +1,37 @@
 
-<div class="strategy_hole_bar">
-
-  <div id="strategy_hole_bar__btns">
-    <% @holes.each_with_index do |hole, i| %>
-      <%= link_to "#{hole.hole_number}",
-          main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
-          remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn h_selected" if i == 0 %>
-      <%= link_to "#{hole.hole_number}",
-          main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
-          remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn" if i != 0 %>
-    <%# </div> %>
-    <% end %>
+<div class="hole_header row">
+  <div class="strategy_hole_bar col-md-offset-2">
+    <div id="strategy_hole_bar__btns">
+      <% @holes.each_with_index do |hole, i| %>
+        <%= link_to "#{hole.hole_number}",
+            main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
+            remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn h_selected" if i == 0 %>
+        <%= link_to "#{hole.hole_number}",
+            main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
+            remote: :true, id: "hole_id=#{hole.id}", class: "btn strategy_hole_btn" if i != 0 %>
+      <%# </div> %>
+      <% end %>
+    </div>
+    <%# マップを表示切り替え（hole.map_r→hole.map_b %>
+    <div class="location_btns">
+      <%= link_to "R", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "R"),
+            remote: :true, id: "r", class: "btn location_btn l_selected" %>
+      <%= link_to "B", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "B"),
+            remote: :true, id: "b", class: "btn location_btn" %>
+      <%= link_to "L", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "L"),
+            remote: :true, id: "l", class: "btn location_btn" %>
+    </div>
   </div>
 
-<%# マップを表示切り替え（hole.map_r→hole.map_b %>
-  <div class="location_btns">
-    <%= link_to "R", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "R"),
-          remote: :true, id: "r", class: "btn location_btn l_selected" %>
-    <%= link_to "B", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "B"),
-          remote: :true, id: "b", class: "btn location_btn" %>
-    <%= link_to "L", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "L"),
-          remote: :true, id: "l", class: "btn location_btn" %>
+  <div class="new_edit_btn">
+    <%= link_to "追加", golfclub_strategy_info_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "L"),
+            remote: :true, id: "l", class: "btn" %>
+    <%= link_to "編集", edit_golfclub_strategy_info_path(id: @strategy_info.id), remote: :true, id: "l", class: "btn" %>
   </div>
+
 </div>
 
-<div id="main">
+<div id="main" class="">
   <%= render 'main', id: @strategy_info.id %> 
 </div>
 

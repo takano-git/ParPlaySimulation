@@ -55,7 +55,7 @@
               <%= link_to "新規登録", new_user_registration_path, class: "dropdown-item" %>
             <% else %>
               <% if !current_user.admin? %>
-                <%= link_to '会員登録', cards_path, class: "dropdown-item",  data: {"turbolinks" => false} %>
+                <%= link_to '会員登録', cards_path, class: "dropdown-item", data: {"turbolinks" => false} %>
                 <%= link_to 'アカウント編集', edit_user_registration_path, class: "dropdown-item" %>
               <% end %>
               <div class="dropdown-divider"></div>
