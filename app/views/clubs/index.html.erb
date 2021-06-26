@@ -64,6 +64,7 @@
         });
 
         // dropzoneのリスナーを設定
+        
         var $dropzone = $('#dropzone')
             .on('dragover', onDragOver)
             .on('dragenter', onDragEnter)
@@ -93,7 +94,7 @@
                 url: "<%=  clubs_add_user_path  %>",
                 type: "POST",
                 data: {
-                    id: id
+                    selected_club: id
                 },
                 dataType: "html",
                 success: function (data) {
@@ -106,7 +107,7 @@
                     // {"id":1,"name":"Yamada Taro"}
 
                     // 暫定的にページを再読込
-                    // location.href = "<%= clubs_path %>"
+                    location.href = "<%= clubs_path %>"
                 },
                 error: function (data) {
                     alert("errror");
@@ -117,7 +118,7 @@
         // ドラッグ＆ドロップ操作
         function onDragStart(e) {
             // Touchイベントに限らずjQueryを通してのイベントオブジェクトの取得はすべてoriginalEventで取得できます。
-            // targetとはドラッグされている要素を指す
+            // targetとはドラッグされている要素を指す（のidをvar idへ格納）
             var id = e.originalEvent.target.id;
             var name = e.originalEvent.target.cells[1].innerHTML;
             // ドラッグ操作の data に指定したデータと型を設定

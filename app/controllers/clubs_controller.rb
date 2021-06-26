@@ -11,8 +11,8 @@ class ClubsController < ApplicationController
 
   def add
     selected_club = SelectedClub.new
-    selected_club.user_id = params[:id] # パラメーターからユーザーid取得する
-    selected_club.club_id = "13" # ここどうやってクラブid取得する？
+    selected_club.user_id = params[:id] 
+    selected_club.club_id = params[:selected_club]
 
     if selected_club.save
       #head 201
