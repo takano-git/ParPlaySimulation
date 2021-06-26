@@ -11,6 +11,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto"></ul>
       <ul class="navbar-nav">
+        <% if user_signed_in? && current_user.premium? %>
+          <li class="nav-item">
+            <%= link_to 'ゴルフクラブ推移表', clubs_chart_user_path(current_user), class: 'nav-link' %>
+          </li>
+        <% end %>
         <li class="nav-item">
           <%= link_to 'ゴルフ場検索', areas_path, class: 'nav-link' %>
         </li>
