@@ -6,6 +6,24 @@ class ClubsController < ApplicationController
 
 
   def index
+    @selected_clubs = SelectedClub.all
+  end
+
+  def add
+    selected_club = SelectedClub.new
+    selected_club.user_id = params[:id] # パラメーターからユーザーid取得する
+    selected_club.club_id = "13" # ここどうやってクラブid取得する？
+
+    if selected_club.save
+      #head 201
+      club = Club.find(selected_club.club_id)
+      hash = {id: club.id, detail: club.detail}
+      require 'json'
+      render :json => hash.to_json
+    else
+      head 500
+    end
+
   end
 
   def new

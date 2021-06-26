@@ -6,7 +6,7 @@
   <div class="row mb-5">
     <div class="col-4">
       <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table table-sm table-hover">
           <thead class="thead-dark">
             <tr>
               <th scope="col">番手</th>
@@ -34,6 +34,33 @@
       <canvas id="myChart" width="900" height="400"></canvas>
     </div>
   </div>
+
+  <div class="row mb-5">
+    <div class="col-lg-10 offset-lg-1 col-xl-8 offset-lg-2">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover table-borderless">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">番手</th>
+              <th scope="col" class="text-center">名称</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @clubs.each do |club| %>
+              <tr>
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+                <td><%= club.detail %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
 </div>
 <script>
   var ctx = document.getElementById("myChart").getContext('2d');
