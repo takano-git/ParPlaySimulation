@@ -1,7 +1,7 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-golfclub-index">
-  <h3>ゴルフ場一覧</h3>
+  <h5>ゴルフ場一覧</h5>
 
   <div class="golfclub-search-form">
     <%= search_form_for @q, url: golfclubs_path do |f| %>
@@ -21,12 +21,6 @@
       </div>
     <% end %>
   </div>
-
-  <style>
-    .aaa {
-      display: inline-block;
-    }
-  </style>
 
   <table class="table table-bordered border-danger table-sm">
     <tr class="text-center bg-brand" style="color: white;">
@@ -73,5 +67,4 @@
       </tr>
     <% end %>
   </table>
-
 </div>
