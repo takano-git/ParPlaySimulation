@@ -16,8 +16,7 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to categories_url, flash: { success: "カテゴリー【#{@category.name}】を登録しました。" }
     else
-      flash[:danger] = @category.errors.full_messages.join
-      render :new
+      redirect_to categories_url, flash: { danger: @category.errors.full_messages.join }
     end
   end
 
@@ -28,8 +27,7 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to categories_url, flash: { success: "カテゴリー【#{@category.name}】を更新しました。" }
     else
-      flash[:danger] = @category.errors.full_messages.join
-      render :edit
+      redirect_to categories_url, flash: { danger: @category.errors.full_messages.join }
     end
   end
 
