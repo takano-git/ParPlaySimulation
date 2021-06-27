@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を登録しました。" }
     else
-      render :new
+      redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
     end
   end
 
@@ -32,7 +32,7 @@ class CoursesController < ApplicationController
     if @course.update(course_params)
       redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を編集しました。" }
     else
-      render :edit
+      redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
     end
   end
 

@@ -4,8 +4,18 @@
   padding: 2rem;
 }
 
-#hole_btn {
+.form-group-course-btn {
+  display: inline-block;
   margin-top: 5px;
+  letter-spacing: 10px;
+}
+
+.course-form {
+  margin-bottom: 5px;
+}
+
+.course-name-field {
+  color: #fff;
 }
 
 .form-group-course {
