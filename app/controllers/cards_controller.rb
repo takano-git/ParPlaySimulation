@@ -1,6 +1,7 @@
 class CardsController < ApplicationController
   require 'payjp'
   before_action :set_card, only: %i(index show destroy)
+  before_action :admin_return
   # before_action :
 
   # GET /cards or /cards.json
@@ -148,7 +149,7 @@ class CardsController < ApplicationController
       # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
       membership_number = "PSP" + sprintf("%05d", card.id)
       current_user.update(payment_id: card.id, membership_number: membership_number, subscription_id: subscription.id, premium: true)
-      flash[:success] = '定期課金にご登録ありがとうございます.'
+      flash[:success] = '会員登録ありがとうございます.'
       redirect_to cards_path
     end
   
