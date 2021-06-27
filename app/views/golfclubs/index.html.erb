@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-4 ml-auto text-right">
-          <%= link_to '新規登録', new_golfclub_path, class: "btn btn-primary btn-sm" %>
+          <%= link_to '新規登録', new_golfclub_path, remote: true, class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     <% end %>
@@ -36,7 +36,7 @@
         <td>
           <%= golfclub.name %>
           &nbsp;
-          <%= link_to "", edit_golfclub_path(golfclub), class: "fas fa-edit", style: "color: #224444;" %>
+          <%= link_to "", edit_golfclub_path(golfclub), remote: true, class: "fas fa-edit", style: "color: #224444;" %>
         </td>
 
         <td>
@@ -68,3 +68,6 @@
     <% end %>
   </table>
 </div>
+
+<div id="new-golfclub" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-golfclub" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
