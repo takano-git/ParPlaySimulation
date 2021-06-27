@@ -2,10 +2,14 @@ class ClubsController < ApplicationController
   before_action :authenticate_user! # ログインしているユーザーのみ許可
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
-  before_action :set_clubs , only: %i[ index chart ]
+  before_action :set_clubs , only: %i[ index select chart ]
 
 
   def index
+    @selected_clubs = SelectedClub.all
+  end
+
+  def select
     @selected_clubs = SelectedClub.all
   end
 
