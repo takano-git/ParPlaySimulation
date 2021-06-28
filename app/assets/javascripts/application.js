@@ -13,13 +13,15 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require Chart.min
 //= require rails-ujs
 //= require activestorage
 //= require cocoon
+//= require lightbox
 //= require turbolinks
 //= require_tree .
 
 // flashメッセージをフェードアウトで消す。
 $(function(){
-  setTimeout("$('.alert').fadeOut('slow')", 7000);
+  setTimeout("$('.alert').fadeOut('slow')", 5000);
 });

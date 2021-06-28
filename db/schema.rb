@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_16_073806) do
+ActiveRecord::Schema.define(version: 2021_06_24_014004) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -55,6 +55,22 @@ ActiveRecord::Schema.define(version: 2021_05_16_073806) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "clubs", force: :cascade do |t|
+    t.string "yarn_count_string", default: "", null: false
+    t.integer "yarn_count_number"
+    t.string "detail", default: ""
+    t.float "loft"
+    t.float "largo", null: false
+    t.integer "weight", null: false
+    t.string "balance_string", default: ""
+    t.float "balance_number"
+    t.integer "frequency"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_clubs_on_user_id"
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.integer "golfclub_id"
@@ -95,6 +111,14 @@ ActiveRecord::Schema.define(version: 2021_05_16_073806) do
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["golfclub_id"], name: "index_posts_on_golfclub_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "selected_clubs", force: :cascade do |t|
+    t.integer "club_id", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_selected_clubs_on_user_id"
   end
 
   create_table "strategy_infos", force: :cascade do |t|

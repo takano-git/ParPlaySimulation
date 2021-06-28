@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   }
 
   resources :users do
-    resources :posts
+    member do
+      get 'clubs/chart'
+      post 'clubs/add'
+      resources :clubs, except: %i(show)
+    end
   end
 
   resources :cards, only: %i(index new create destroy) do
@@ -31,16 +35,15 @@ Rails.application.routes.draw do
         get :form_map
       end
     end
+    resources :posts
   end
 
-  resources :areas, only: %i(index) do
+  resources :areas, only: %i(index show) do
     collection do
       get "edit", to: 'areas/edit', as: :edit
       patch "update", to: 'areas/update', as: :update
     end
   end
-
-  resources :areas, only: :show
 
   resources :categories
 

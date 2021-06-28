@@ -30,6 +30,15 @@
   height: auto;  /* 高さは自動指定 */
 }
 
+/* トップイメージ */
+// .main-container {
+  // background-image: url("/assets/toppage.png");
+  // height: 800px;
+  // background-size: cover;
+  // background: url("/assets/toppage.png") no-repeat center center;
+  // background-size:100% auto;
+// }
+
 .box {  
   position: relative;
 }
@@ -50,13 +59,14 @@
 
 /* 共通 */
 
-.fa-edit {
+.fa-edit, .fa-edit:hover {
   color: #224444;
 }
 
-.fa-times-circle {
+.fa-trash-alt, .fa-trash-alt:hover {
   color: #dc3545;
 }
+
 
 .container {
   margin-top: 10px;
@@ -84,10 +94,6 @@ img {
   color: white;
 }
 
-// .navbar-brand-custom:link, a:visited, a:hover, a:active {
-//   color: white;
-//   text-decoration: none;
-// }
 /* デバッグウインドウ */
 
 .debug_dump {
@@ -139,12 +145,7 @@ footer {
   // position: absolute;/* ←絶対位置 */
   bottom: 0;
   width: 100%;
-  padding: 20px;
-  // padding-bottom: 20px; /* ←フッターの高さを指定 */
-  // padding-right: 20px;
-  // padding-left: 20px;
-
-
+  padding: 20px; /* ←フッターの高さも指定 */
   
   /* 以下 背景色やテキストカラーなど */
   background: #224444;
@@ -163,6 +164,18 @@ footer {
   // margin-top: 16px;
   text-align: center;
   line-height: 21px;
+}
+
+
+/* モーダルウインドウの位置調整 */
+.modal-dialog-center {
+  padding-top: 10%;
+}
+
+/* ゴルフクラブ登録モーダルウインドウ */
+.btn-club-new{
+  margin: 15px 0;
+  width: 30%;
 }
 
 /*------------------------------------

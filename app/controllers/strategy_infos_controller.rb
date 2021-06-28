@@ -1,4 +1,6 @@
 class StrategyInfosController < ApplicationController
+  before_action :admin_user, only: %i(destroy)
+  before_action :premium_user, only: %i(index new create edit update)
 
   def index
     # new,editから飛んできた場合の処理(before_action)

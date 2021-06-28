@@ -47,6 +47,12 @@ gem 'font-awesome-sass'
 # 検索機能
 gem 'ransack'
 
+# グラフ機能
+gem 'chart-js-rails', '~> 0.1.4'
+
+# Railsのコントローラ側から値を渡す
+gem 'gon', '~> 6.2.0'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -3,30 +3,31 @@
 
 User.create!(name: "管理者",
   nickname: "えぐさん",
-  membership_number: "A000000",
+  membership_number: "PPS00000",
   email: "admin@gmail.com",
   password: "password",
   password_confirmation: "password",
   phone_number: "012-0000-0000",
   flying_distance: 240,
-  admin: true)
+  admin: true,
+  premium: true)
 
 puts "管理者作成！"
 
 9.times do |i|
 n = i + 1 
 name_number = n.to_s.tr('0-9a-zA-Z','０-９ａ-ｚＡ-Ｚ')
-User.create!(name: "会員#{name_number}",
-    nickname: "カイイン#{n}",
-    membership_number: "A00000#{n}",
+User.create!(name: "サンプルユーザー#{name_number}",
+    nickname: "サンプル#{n}",
+    # membership_number: "PSP0000#{n}",
     email: "sample#{n}@gmail.com",
     password: "password#{n}",
     phone_number: "012-1234-5678",
-    flying_distance: 260,
+    flying_distance: 200,
     password_confirmation: "password#{n}")
 end
 
-puts "会員作成！"
+puts "サンプルユーザー作成！"
 
 # 地域データ作成
 
@@ -281,6 +282,21 @@ end
 # susono
 
 puts "攻略情報作成！"
+
+# Club情報作成
+Club.create( yarn_count_string: 'W', yarn_count_number: 1, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 10, largo: 45.75, weight: 316, balance_string: 'D', balance_number: '4', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'U', yarn_count_number: 3, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 15, largo: 41.00, weight: 348, balance_string: 'D', balance_number: '0', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'U', yarn_count_number: 5, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 40.50, weight: 415, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'I', yarn_count_number: 5, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 37.75, weight: 428, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'I', yarn_count_number: 6, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 37.25, weight: 435, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'I', yarn_count_number: 7, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 36.75, weight: 442, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'I', yarn_count_number: 8, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 36.25, weight: 449, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'I', yarn_count_number: 9, detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 35.75, weight: 456, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'PW', detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 25, largo: 35.25, weight: 465, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+Club.create( yarn_count_string: 'SW', detail: 'MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）',loft: 58, largo: 34.5, weight: 483, balance_string: 'D', balance_number: '3', frequency: 250, user_id: 2)
+
+puts "クラブ作成！"
+
 
 # カテゴリーデータ作成
 

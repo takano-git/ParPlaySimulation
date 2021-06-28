@@ -1,0 +1,107 @@
+<%= render 'layouts/flash_messages' %>
+
+<h2 class="mt-5">ゴルフクラブの重さと長さの推移表</h2>
+<div class="container-fluid">
+
+  <div class="row mb-5">
+    <div class="col-4">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">番手</th>
+              <th scope="col">ロフト</th>
+              <th scope="col">長さ</th>
+              <th scope="col">重量</th>
+              <th scope="col">バランス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @clubs.each do |club| %>
+              <tr>
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+                <td><%= club.loft %></td>
+                <td><%= club.largo %></td>
+                <td><%= club.weight %></td>
+                <td><%= club.balance_string %><%= club.balance_number %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-8">
+      <canvas id="myChart" width="900" height="400"></canvas>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-lg-10 offset-lg-1 col-xl-8 offset-lg-2">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover table-borderless">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">番手</th>
+              <th scope="col" class="text-center">名称</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @clubs.each do |club| %>
+              <tr>
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+                <td><%= club.detail %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+<script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'ゴルフクラブの重さと長さの推移',
+        data: gon.scatterdata,
+        fill: false,
+        showLine: true,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // 点の色
+        borderColor: 'rgba(75, 192, 192, 1)', // 線の色
+      }]
+    },
+      options:{
+        scales:{
+          xAxes:[{
+            scaleLabel: {             
+              display: true,          
+              labelString: '長さ（インチ）' 
+            },
+            ticks:{
+              min:31, // グラフの最小値
+              max:48, // グラフの最大値
+              stepSize:1, // グラフの刻み
+              reverse: true, // x軸を反転
+            }
+          }],
+        yAxes:[{
+          scaleLabel: {             
+            display: true,          
+            labelString: '重さ（g）' 
+          },
+          ticks:{
+            min:200, // グラフの最小値
+            max:500, // グラフの最大値
+            stepSize:50 // グラフの刻み
+          }
+        }]
+      }
+    }
+  });
+</script>

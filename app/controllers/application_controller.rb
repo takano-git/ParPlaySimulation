@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
 		user == current_user
 	end
 
+	# current_userを@userにセット
+	def set_user
+		@user = current_user
+	end
+
 	# アクセスしたユーザーが現在ログインしているユーザーか確認する。
 	def correct_user
 		unless current_user?(@user)
@@ -26,7 +31,7 @@ class ApplicationController < ActionController::Base
 	# システム管理権限所有かどうか判定する。
 	def admin_user
 		unless user_signed_in? && current_user.admin?
-			flash[:danger] = "管理者権限がありません。"
+			flash[:danger] = "権限がありません。"
 			redirect_to root_url
 		end
 	end
@@ -40,7 +45,19 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
+	# 会員かどうか判定する。
+	def premium_user
+		unless user_signed_in? && current_user.premium?
+			flash[:danger] = "権限がありません。会員様専用のページです。"
+			redirect_to root_url
+		end
+	end
+
 	private
+
+		def admin_return
+			redirect_to root_path if current_user.admin?
+		end
 	
 		def no_admin_return
 			redirect_to root_path unless current_user.admin?
