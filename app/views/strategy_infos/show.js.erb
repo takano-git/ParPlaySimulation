@@ -1,1 +1,2 @@
-$("#show").html("<%= j(render 'strategy_infos/show', strategy_info: @strategy_info) %>");
+$("#show").html("<%= j(render 'strategy_infos/index_render_files/show', strategy_info: @strategy_info) %>");
+$("#new_edit_btns").html("<%= j(render 'strategy_infos/index_render_files/new_edit_btns') %>");

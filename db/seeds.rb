@@ -263,6 +263,19 @@ hamano_in.push ([
   end
 end
 
+  strategy_info = StrategyInfo.new
+  strategy_info.golfclub_id = 1
+  strategy_info.course_id = 1
+  strategy_info.hole_id = 1
+  strategy_info.shot_id = 1
+  strategy_info.user_id = 1
+  strategy_info.location_name = "B"
+  strategy_info.photo.attach(
+    io: File.open("./public/strategy_infos/hamano/out/hamano_h1_tee.jpg"),
+    filename: "hamano_h1_tee.jpg")
+  strategy_info.comment = "ロケーションB"
+  strategy_info.save
+
 # -----------------------------------------------------------------
 
 # susono
