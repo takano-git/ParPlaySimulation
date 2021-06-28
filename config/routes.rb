@@ -21,8 +21,6 @@ Rails.application.routes.draw do
       post 'clubs/add'
       resources :clubs, except: %i(show)
     end
-    # 投稿情報
-    resources :posts
   end
 
   # カード情報
@@ -44,7 +42,7 @@ Rails.application.routes.draw do
       collection do
         get :hole
         get :main
-
+        get :location
         get :form_map
       end
     end

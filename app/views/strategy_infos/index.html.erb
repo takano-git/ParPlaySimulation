@@ -1,7 +1,7 @@
 <div id="container" class="container" data-turbolinks='false'>
 
   <%# 攻略ホールボタン %>
-  <div class="strategy_cource_bar">
+  <div class="strategy_cource_bar row">
 
     <div id="<%= @golfclub.id %>" class="strategy_holebar_club_name">
       <h5><%= @golfclub.name %></h5>
@@ -21,7 +21,7 @@
 
   </div>
   <div id="strategy_hole">
-    <%= render 'strategy_infos/hole' %>
+    <%= render 'strategy_infos/index_render_files/hole' %>
   </div>
 </div>
 
