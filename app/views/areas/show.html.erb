@@ -48,14 +48,18 @@
                   <% if StrategyInfo.find_by(golfclub_id: golfclub.id) %>
                     <p class="text-left">
                       <%= link_to "#{golfclub.name}", golfclub_strategy_infos_path(golfclub.id) if golfclub.present? %>
-                      <%= "　" %>
-                      <%= link_to '投稿', golfclub_posts_path(golfclub), class: "btn btn-sm btn-success" %>
+                      <% if user_signed_in? %>
+                        <%= "　" %>
+                        <%= link_to '投稿', golfclub_posts_path(golfclub), class: "btn btn-sm btn-success" %>
+                      <% end %>
                     </p>
                   <% else %>
                     <p class="text-left">
                       <%= golfclub.name %>
-                      <%= "　" %>
-                      <%= link_to '投稿', golfclub_posts_path(golfclub), class: "btn btn-sm btn-success" %>
+                      <% if user_signed_in? %>
+                        <%= "　" %>
+                        <%= link_to '投稿', golfclub_posts_path(golfclub), class: "btn btn-sm btn-success" %>
+                      <% end %>
                     </p>
                   <% end %>
                   <div class="row">
