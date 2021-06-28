@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2021_06_24_014004) do
     t.integer "course_id"
     t.integer "hole_id"
     t.integer "shot_id"
-    t.integer "location_name"
+    t.string "location_name"
     t.text "comment"
     t.integer "photo_target_x"
     t.integer "photo_target_y"

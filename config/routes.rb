@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       post 'clubs/add'
       resources :clubs, except: %i(show)
     end
-    resources :posts
   end
 
   resources :cards, only: %i(index new create destroy) do
@@ -32,7 +31,7 @@ Rails.application.routes.draw do
       collection do
         get :hole
         get :main
-
+        get :location
         get :form_map
       end
     end
