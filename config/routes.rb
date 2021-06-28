@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       post 'clubs/add'
       resources :clubs, except: %i(show)
     end
-    resources :posts
   end
 
   resources :cards, only: %i(index new create destroy) do
