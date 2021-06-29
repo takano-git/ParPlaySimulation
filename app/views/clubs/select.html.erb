@@ -53,7 +53,7 @@
 
         // idが #listテーブルの.itemクラスが付いている行が操作された時のイベントリスナーを設定
         items = document.getElementById('list').getElementsByClassName('item');
-        // forEach でArrayの要素各々に対し（）内を実行？いや定義？する。call(item, コールバック関数)で定義するとthisの値として使えるみたいだ
+        // forEach でArrayの要素各々に対し（）内を実行？いや定義？する。call(item, コールバック関数)で定義するとthisの値として使えるよう
         Array.prototype.forEach.call(items, function (item) {
             // $(対象).on(イベント, 自作関数);
             $(item).on('dragstart', onDragStart);
@@ -104,10 +104,10 @@
                     // {"id":1,"name":"Yamada Taro"}
 
                     // 暫定的にページを再読込
-                    location.href = "<%= clubs_path %>"
+                    location.href = "<%= clubs_select_user_path %>"
                 },
                 error: function (data) {
-                    alert("errror");
+                    alert("選択できるメインゴルフクラブは14本までです。同じゴルフクラブを２回選択できません。");
                 }
             });
         }
