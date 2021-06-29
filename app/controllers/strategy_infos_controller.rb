@@ -68,6 +68,70 @@ class StrategyInfosController < ApplicationController
     @strategy_info = StrategyInfo.find(params[:id])
   end
 
+  # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
+  def form_map
+    location_colums = ["map_r","map_b","map_l"]
+    @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
+    if params[:hole_data].blank?
+      course_id = params[:course_data][:course][:course_id]
+      @holes = Hole.where(course_id: course_id).order(:id)
+      @hole = @holes.first
+      @hole_options = @holes.order(:id).map { 
+        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+    else
+      @hole = Hole.find(params[:hole_data][:hole][:hole_id])
+    end
+  end
+  
+  # newかeditどちらなのか判定するアクション
+  def Judge
+  end
+
+  def registration_edit
+    byebug
+    # @golfclubと@areaは確定
+    @golfclub = Golfclub.find(params[:golfclub_id])
+    @area = Area.find(@golfclub.area_id)
+    # パラメータからゴルフクラブ一覧ページ、攻略情報ページのどちらから飛んできたか判断
+    # ゴルフクラブ一覧から来た場合、(攻略情報ページのぱらめーたがない)
+    if params[:strategy_info_id].blank?
+      # params[:golfclub_id]の
+      # @courses, course_idの最も小さい@holes,
+      # hole_idの最も小さい@strategy_info取得 → edit
+      # @stratwgy_infoがないとき
+        # @strategy_info = StrategyInfo.new → new
+  
+      @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+      @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+        |c| [c.name, c.id, data: { children_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+      @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
+      @hole = @holes.first
+      @strategy_info = StrategyInfo.new
+      @hole_options = @holes.order(:id).map { 
+        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+    else
+    # 攻略情報ページから来た場合、
+      # パラメータの本人データがあるか確認
+      # （couse,hole,location,shotとuser_idチェック）
+      # ある場合
+        # それらのデータを変数に格納 → edit
+      # ない場合
+        # 江草さんのデータを探す
+        # ある場合
+          # @strategy_info_eg = えぐささんのデータ
+          # ,@strategy_info = StrategyInfo.new → new
+        # ない場合
+          #  → new
+    end
+    # 
+    # (例)usersコントローラーのshowアクションにid=1を渡す
+      redirect_to  controller: :users, action: :show, id: 1
+
+  end
+
   def new
     # どのviewから飛んできたかどうかで場合分け？
     # ゴルフクラブIDはどちらからでも取れている。
@@ -118,21 +182,7 @@ class StrategyInfosController < ApplicationController
 
   private
 
-    # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
-    def form_map
-      location_colums = ["map_r","map_b","map_l"]
-      @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
-      if params[:hole_data].blank?
-        course_id = params[:course_data][:course][:course_id]
-        @holes = Hole.where(course_id: course_id).order(:id)
-        @hole = @holes.first
-        @hole_options = @holes.order(:id).map { 
-          |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-        }
-      else
-        @hole = Hole.find(params[:hole_data][:hole][:hole_id])
-      end
-    end
+    
 
     def strategy_info_params
       params.require(:strategy_info)
