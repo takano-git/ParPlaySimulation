@@ -1,28 +1,33 @@
 <%= render 'layouts/flash_messages' %>
 <div id="container" class="container" data-turbolinks='false'>
+
+  <br>
+  <h5>攻略情報登録画面</h5>
+
   <div class="create_strategy_info row">
 
     <div class="strategy_info_form col-sm-7">
 
       <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
         <%# ゴルフ場名、県名 %>
-        <%= @golfclub.name %>
+        <%= @golfclub.name %><br>
         <%= @area.prefecture %>
         <br>
         <%# ゴルフクラブidはすでにurlに含まれる %>
         <%# ユーザーid %>
         <%= f.hidden_field :user_id, value: current_user.id, class: "form-control" %>
-        コース
+        コース名:
         <%= f.select :course_id, @course_options, class: "form-control" %>
-        ホール
+        Hole No:
         <%= f.select :hole_id, @hole_options, class: "form-control" %>
-        <%# ショット %>
-        <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
+        shot:
+        <%# <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
         <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %>
-        ティグラウンド
-        <button id="r" class="btn location_btn l_selected">R</button>
-        <button id="b" class="btn location_btn">B</button>
-        <button id="l" class="btn location_btn">L</button>
+        <%# ティグラウンド %>
+        <%# <br> %>
+        <button id="r" class="btn btn-sm location_btn l_selected">R</button>
+        <button id="b" class="btn btn-sm location_btn">B</button>
+        <button id="l" class="btn btn-sm location_btn">L</button>
         <br>
         <%# 画像up %>
         <div id="strategy_photo">
@@ -36,7 +41,7 @@
         </div>
         <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
         <%# --------------------- %>
-        <%= f.label :comment, class: "label-#{yield(:class_text)}" %>
+        <%= f.label :コメント, class: "label-#{yield(:class_text)}" %>
         <%= f.text_field :comment, class: "form-control" %>
         <%# location_name %>
         <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
@@ -58,8 +63,8 @@
         <%# mapサイズ %>
         <%= f.hidden_field :map_size_x, value: "0", id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: "0", id: 'map_size_y', class: "form-control" %>
-
-        <%= f.submit "新規作成", class: "btn btn-primary btn-block" %>
+        <br>
+        <%= f.submit "攻略情報登録", class: "btn btn-primary btn-block" %>
       <% end %>
     </div>
 
@@ -100,5 +105,5 @@
   <div class="to_index">
     <%= link_to "攻略情報ページへ", golfclub_strategy_infos_path, class:"btn btn-primary"%>
   </div>
-
+  <br>
 </div>

@@ -12,6 +12,12 @@
       <ul class="navbar-nav mr-auto"></ul>
       <ul class="navbar-nav">
 
+        <% if !user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to '機能紹介', about_path, class: 'nav-link' %>
+          </li>
+        <% end %>
+
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
             <%= link_to 'ゴルフ場一覧', golfclubs_path, class: 'nav-link' %>
