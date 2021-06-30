@@ -1,8 +1,0 @@
-<%= render 'layouts/flash_messages' %>
-<div class="container-post">
-  <h5><%= @post.title %>の編集</h5>
-
-  <%= form_with model: @post, url: golfclub_post_path(@golfclub, @post), local: true do |post| %>
-    <%= render 'form', post: post %>
-  <% end %>
-</div>
