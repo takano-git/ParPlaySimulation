@@ -8,6 +8,9 @@ ja:
       hole: ホール
       post: 投稿
       user: ユーザー
+      card: カード情報
+      strategy_infos: 攻略情報
+      club: ゴルフクラブ情報
     attributes:
       area:
         id: ID
@@ -56,3 +59,24 @@ ja:
         password_confirmation: パスワード確認
         created_at: 作成日
         updated_at: 更新日
+      card:
+        name: 名前
+        created_at: 作成日
+        updated_at: 更新日
+      strategy_infos:
+        location_name: 撮影場所
+        comment: コメント
+        created_at: 作成日
+        updated_at: 更新日
+      club:
+        yarn_count_string: クラブ種類種類
+        yarn_count_number: クラブ番号
+        detail: 詳細
+        loft: ロフト角度
+        weight: 重量
+        balance_string: バランス種類
+        balance_number: バランス番号
+        frequency: 周波数
+        created_at: 作成日
+        updated_at: 更新日
+

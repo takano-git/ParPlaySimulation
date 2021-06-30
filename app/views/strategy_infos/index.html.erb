@@ -11,10 +11,10 @@
       <% @courses.each_with_index do |course, i| %>
         <%= link_to "#{course.name}", 
           hole_golfclub_strategy_infos_path(course_id: course.id),
-          remote: :true, class: "btn strategy_course_btn c_selected" if i == 0%>
+          remote: :true, class: "btn btn-sm strategy_course_btn c_selected" if i == 0 %>
         <%= link_to "#{course.name}", 
           hole_golfclub_strategy_infos_path(course_id: course.id),
-          remote: :true, class: "btn strategy_course_btn" if i != 0%>
+          remote: :true, class: "btn btn-sm strategy_course_btn" if i != 0 %>
         <%# (course_id: course.id) %>
       <% end %>
     </div>
