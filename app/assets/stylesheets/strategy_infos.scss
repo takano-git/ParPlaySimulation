@@ -6,7 +6,7 @@ $brand_t1: #224444;
 
 // 攻略情報ページ
 .strategy_cource_bar {
-  display: flex;
+  // display: flex;
   margin-top: 18px;
 
   & .strategy_course_btns {
@@ -79,12 +79,12 @@ $brand_t1: #224444;
 
 // shot_bar
 .shot_bar {
-  display: flex;
+  // display: flex;
 }
 
 .shot_btns {
-  display: flex;
-  flex-flow: column;
+  // display: flex;
+  // flex-flow: column;
 }
 // -----------------------------
 // 攻略情報新規作成、更新ページ
@@ -98,9 +98,36 @@ $brand_t1: #224444;
   max-height:100%;
 }
 
+// 全てのピンに
 .pin {
+  cursor: pointer;
+}
 
+#strategy_map {
+  position: relative;
+}
+.map_pin {
   &_target {
-    
+    z-index: 20;
+  }
+  &_point {
+    z-index: 15;
+    left: 23px;
+  }
+  &_shoot {
+    z-index: 10;
+    left: 46px;
+  }
+}
+
+#strategy_photo {
+  position: relative;
+}
+.photo_pin {
+  &_target {
+    z-index: 20;
+  }
+  &_point {
+    z-index: 15;
   }
 }
