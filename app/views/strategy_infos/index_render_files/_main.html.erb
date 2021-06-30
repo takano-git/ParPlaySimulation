@@ -17,9 +17,9 @@
         <div id="<%= shots[0] %>_btns" class="shot_btns">
           <% shots[1].each.with_index(1) do |strategy, i| %>
             <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: strategy[:id]),
-                remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 %>
+                remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 && i == 1 %>
             <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: strategy[:id]),
-                remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
+                remote: :true, class: "btn btn-sm shot_btn" if n != 0 || i != 1 %>
           <% end %>
         </div>
       <% end %>

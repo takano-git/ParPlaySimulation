@@ -65,6 +65,7 @@ class StrategyInfosController < ApplicationController
 
   # 攻略情報ページ。shotボタンクリック時のAjaxアクション
   def show
+    # byebug
     @strategy_info = StrategyInfo.find(params[:id])
   end
 
@@ -151,7 +152,7 @@ class StrategyInfosController < ApplicationController
   end
 
   def create
-    # byebug
+    byebug
     @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
       flash[:success] = "攻略情報を登録しました。"
@@ -180,7 +181,7 @@ class StrategyInfosController < ApplicationController
     
 
     def strategy_info_params
-      params.permit(:user_id, :golfclub_id, :course_id, :hole_id, :shot_id, :location_name, :comment,
+      params.permit(:user_id, :golfclub_id, :course_id, :hole_id, :shot_id, :location_name, :photo, :comment,
                      :photo_target_x, :photo_target_y, :photo_point_x, :photo_point_y, :photo_size_x, :photo_size_y,
                      :map_target_x, :map_target_y, :map_point_x, :map_point_y, :map_shoot_x, :map_shoot_y, :map_size_x, :map_size_y)
     end
