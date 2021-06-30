@@ -1,11 +1,11 @@
 <div id="container" class="container" data-turbolinks='false'>
   <%# newかeditかでrennder分け %>
-  <% if @ログインユーザーの攻略情報のカラム.blank? %>
-    <%# new %>
-    <% render, "#" %>
+  <% if @new_or_edit %>
+    <%= render "strategy_infos/registration_edit_render_files/new" %>
+    <%= "ユーザーデータない(new)" %>
   <% else %>
-    <%# edit %>
-    <% render, "#" %>
+    <%= render "strategy_infos/registration_edit_render_files/edit" %>
+    <%= "ユーザーデータある(edit)" %>
   <% end %>
   
   

@@ -84,52 +84,47 @@ class StrategyInfosController < ApplicationController
     end
   end
   
-  # newかeditどちらなのか判定するアクション
-  def Judge
-  end
+  # # newかeditどちらなのか判定するアクション
+  # def Judge
+  # end
 
-  def registration_edit
-    byebug
-    # @golfclubと@areaは確定
+  def egirstration_edit
+    # byebug
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
-    # パラメータからゴルフクラブ一覧ページ、攻略情報ページのどちらから飛んできたか判断
-    # ゴルフクラブ一覧から来た場合、(攻略情報ページのぱらめーたがない)
-    if params[:strategy_info_id].blank?
-      # params[:golfclub_id]の
-      # @courses, course_idの最も小さい@holes,
-      # hole_idの最も小さい@strategy_info取得 → edit
-      # @stratwgy_infoがないとき
-        # @strategy_info = StrategyInfo.new → new
-  
-      @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
-      @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
-        |c| [c.name, c.id, data: { children_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-      }
+    @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+    @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+      |c| [c.name, c.id, data: { children_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+    }
+    if params[:course_id].blank?
+      # ゴルフクラブ一覧ページから来た場合
       @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
-      @hole = @holes.first
-      @strategy_info = StrategyInfo.new
       @hole_options = @holes.order(:id).map { 
         |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
       }
+      @hole = @holes.first
+      # ここからログインユーザー登録情報の有無フラグ
+      @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole.id,
+                                                location_name: "R", shot_id: "tee").first
+      @new_or_edit = @strategy_info.blank?
+      @strategy_info = StrategyInfo.new if @new_or_edit
     else
-    # 攻略情報ページから来た場合、
-      # パラメータの本人データがあるか確認
-      # （couse,hole,location,shotとuser_idチェック）
-      # ある場合
-        # それらのデータを変数に格納 → edit
-      # ない場合
-        # 江草さんのデータを探す
-        # ある場合
-          # @strategy_info_eg = えぐささんのデータ
-          # ,@strategy_info = StrategyInfo.new → new
-        # ない場合
-          #  → new
+      # 攻略情報ページから来た場合
+      @course_id = params[:course_id]
+      @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
+      @hole_options = @holes.order(:id).map { 
+        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+      @hole_id = params[:hole_id]
+      # ここからログインユーザー登録情報の有無フラグ
+      @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, location_name: params[:location_name],
+                                                shot_id: params[:shot_id]).first
+      @new_or_edit = @strategy_info.blank?
+      # ログインユーザー登録情報画ない場合権利者のものを探す
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: params[:location_name],
+                                                shot_id: params[:shot_id]).first if @new_or_edit
+      @strategy_info = StrategyInfo.new if @new_or_edit
     end
-    # 
-    # (例)usersコントローラーのshowアクションにid=1を渡す
-      redirect_to  controller: :users, action: :show, id: 1
-
   end
 
   def new
@@ -137,7 +132,7 @@ class StrategyInfosController < ApplicationController
     # ゴルフクラブIDはどちらからでも取れている。
     # →indexページで選択されている、course_id, hole_id, shot_id, location_name, 座標カラムを渡す。 
     # byebug
-    @strategy_info_index = StrategyInfo.find(params[:id]) if params[:id].present?
+    @strategy_info_admiin = StrategyInfo.find(params[:id]) if params[:id].present?
     # viewでstrategy_info_indexの有無で表示切替
 
     @golfclub = Golfclub.find(params[:golfclub_id])
@@ -159,7 +154,7 @@ class StrategyInfosController < ApplicationController
     # byebug
     @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
-      flash[:success] = "#{}を登録しました。"
+      flash[:success] = "攻略情報を登録しました。"
     else
       flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
     end
@@ -185,8 +180,7 @@ class StrategyInfosController < ApplicationController
     
 
     def strategy_info_params
-      params.require(:strategy_info)
-             .permit(:user_id, :golfclub_id, :course_id, :hole_id, :shot_id, :location_name, :comment,
+      params.permit(:user_id, :golfclub_id, :course_id, :hole_id, :shot_id, :location_name, :comment,
                      :photo_target_x, :photo_target_y, :photo_point_x, :photo_point_y, :photo_size_x, :photo_size_y,
                      :map_target_x, :map_target_y, :map_point_x, :map_point_y, :map_shoot_x, :map_shoot_y, :map_size_x, :map_size_y)
     end
