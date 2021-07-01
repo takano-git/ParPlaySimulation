@@ -37,10 +37,11 @@ class ClubsController < ApplicationController
   def create
     @club= Club.new(club_params)
     if @club.save
-      flash[:success] = '新しいゴルフクラブを登録しました。'
+      flash[:success] = '新しいマイクラブを登録しました。'
       redirect_to clubs_url(@user)
     else
       render :edit
+      # redirect_to :edit
     end
   end
 

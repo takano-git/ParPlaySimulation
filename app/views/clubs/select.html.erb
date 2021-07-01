@@ -4,7 +4,7 @@
 <%# ここからドロップアンドドラッグのサンプル %>
 
 <!-- SelectedUser一覧をリスト表示 -->
-<h2>メインゴルフクラブ</h2>
+<h2>クラブセッティング</h2>
   <%= link_to "ゴルフバックの中身をグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand my-5" %>
 
 <table border="1" width="300">
@@ -28,7 +28,7 @@
 <br>
 
 <!-- Club一覧をリスト表示 -->
-<h2>所持ゴルフクラブ一覧</h2>
+<h2> マイクラブ一覧</h2>
 
 <table id="list" border="1" width="300" class="mb-5">
   <tr>
@@ -107,7 +107,7 @@
                     location.href = "<%= clubs_select_user_path %>"
                 },
                 error: function (data) {
-                    alert("選択できるメインゴルフクラブは14本までです。同じゴルフクラブを２回選択できません。");
+                    alert("選択できるメインゴルフクラブは14本までです。\n同じゴルフクラブを２回選択できません。");
                 }
             });
         }
