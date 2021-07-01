@@ -29,6 +29,21 @@ end
 
 puts "サンプルユーザー作成！"
 
+# ユーザーサンプルデーター作成
+
+User.create!(name: "会員1",
+  nickname: "会員1",
+  membership_number: "PPS01000",
+  email: "k-sample@gmail.com",
+  password: "password",
+  password_confirmation: "password",
+  phone_number: "012-0000-1000",
+  flying_distance: 240,
+  admin: false,
+  premium: true)
+
+puts "会員作成！"
+
 # 地域データ作成
 
 Area.create(prefecture: '北海道', district: "北海道")

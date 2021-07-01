@@ -1,0 +1,19 @@
+<div id="container" class="container" data-turbolinks='false'>
+  <%# newかeditかでrennder分け %>
+  <% if @new_or_edit %>
+    <%= render "strategy_infos/registration_edit_render_files/new" %>
+    <%= "ユーザーデータない(new)" %>
+  <% else %>
+    <%= render "strategy_infos/registration_edit_render_files/edit" %>
+    <%= "ユーザーデータある(edit)" %>
+  <% end %>
+  
+  
+  <%# 管理者の場合はゴルフクラブ一覧に戻るボタンも表示 %>
+
+  <%# ---------------- %>
+  <div class="to_index">
+    <%= link_to "攻略情報ページへ", golfclub_strategy_infos_path, class:"btn btn-primary"%>
+  </div>
+
+</div>

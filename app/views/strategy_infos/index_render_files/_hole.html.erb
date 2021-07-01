@@ -56,9 +56,7 @@ $('.strategy_hole_btn').on('click', function () {
   // クリックしたホールボタンのurlとlocationボタンのurlを比較し、hole_idを一致させる。
   let hole_btn_id = getParam('hole_id');
   let location_hole_id = $('.location_btn').attr('href').match(/[&|\?]hole_id=(.*?)[&|$]/)[1];
-  const edit_hole_id = function(){
-    return $(this).attr('href').replace('hole_id='+location_hole_id, 'hole_id='+hole_btn_id);
-  }
+  const edit_hole_id = () => $(this).attr('href').replace('hole_id='+location_hole_id, 'hole_id='+hole_btn_id);
   if (hole_btn_id !== location_hole_id) {
     $('#r').attr('href', edit_hole_id);
     $('#b').attr('href', edit_hole_id);

@@ -43,6 +43,7 @@ Rails.application.routes.draw do
         get :hole
         get :main
         get :location
+        get :registration_edit
         get :form_map
       end
     end
