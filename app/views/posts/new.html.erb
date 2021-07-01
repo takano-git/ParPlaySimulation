@@ -1,6 +1,6 @@
 <%= render 'layouts/flash_messages' %>
 <div class="container-post">
-  <h5><%= @golfclub.name %></h5>
+  <h4><%= @golfclub.name %></h4>
   <h5>新規投稿</h5>
 
   <%= form_with model: @post, url: golfclub_posts_path(@golfclub, @post), local: true do |post| %>

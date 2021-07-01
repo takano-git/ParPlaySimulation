@@ -152,7 +152,7 @@ class StrategyInfosController < ApplicationController
   end
 
   def create
-    byebug
+    # byebug
     @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
       flash[:success] = "攻略情報を登録しました。"

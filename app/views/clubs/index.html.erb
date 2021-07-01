@@ -6,7 +6,7 @@
 <%# ここからドロップアンドドラッグのサンプル %>
 
 <!-- SelectedUser一覧をリスト表示 -->
-<h2>ゴルフバッグの中に入れて持っていくゴルフクラブ</h2>
+<h4>クラブセッティング</h4>
   <%= link_to "新しいゴルフクラブを登録する", new_club_path(current_user), remote: true, class: "btn btn-outline-brand my-5" %>
   <%= link_to "ゴルフバックの中身をグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand my-5" %>
 
@@ -31,7 +31,7 @@
 <br>
 
 <!-- Club一覧をリスト表示 -->
-<h2>所持ゴルフクラブ一覧</h2>
+<h4>マイクラブ</h4>
 
 <table id="list" border="1" width="300" class="mb-5">
   <tr>
@@ -228,7 +228,7 @@
 
 
 <%# あとでここに本当のselected_clubを表示したい %>
-  <h2>ゴルフバッグの中に入れて持っていくゴルフクラブ</h2>
+  <h4>クラブセッティング</h4>
 
   <% row_num = 1 %>
   <div class="table-responsive mb-5">
@@ -266,7 +266,7 @@
 
 
 
-  <h2>所持ゴルフクラブ一覧</h2>
+  <h4>マイクラブ</h4>
 
   <% row_num = 1 %>
   <div class="table-responsive">
