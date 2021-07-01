@@ -40,8 +40,13 @@ class ClubsController < ApplicationController
       flash[:success] = '新しいマイクラブを登録しました。'
       redirect_to clubs_url(@user)
     else
-      render :edit
-      # redirect_to :edit
+      # render :edit
+      # redirect_to :new
+      # flash[:danger] = @club.errors.full_messages.join("<br>").html_safe
+      # render :new
+      # render json: { status: 'error'}
+      redirect_to clubs_path
+      flash[:danger] = @club.errors.full_messages.join('。').html_safe
     end
   end
 
