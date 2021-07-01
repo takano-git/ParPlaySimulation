@@ -5,7 +5,7 @@
   <div class="modal-content">
 
     <div class="modal-header">
-      <h5 class="modal-title">新しいゴルフクラブを登録</h5>
+      <h5 class="modal-title">新しいマイクラブを登録</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -14,9 +14,10 @@
     <div class="modal-body">
       <%= form_with(model: @club, local: true) do |f| %>
         <div class="form-group">
-          <%= f.label :yarn_count_string, '番手', class: "control-label" %>
+          <%= f.label :yarn_count_string, required: true, class: "control-label" %>
           <%= f.text_field :yarn_count_string, placeholder: '（例）W'  %>
           <%= f.number_field :yarn_count_number, placeholder: '1', min: 0, max: 13 %>
+          <small class="form-text text-muted">半角アルファベット（大文字）で入力してください</small>
         </div>
         <div class="form-group">
           <%= f.label :detail, class: "control-label" %>
@@ -29,14 +30,14 @@
         </div>
         <div class="form-group">
           <%= f.label :largo %>
-          <%= f.number_field :largo, class: "form-control", placeholder: '（例）35.25', step: '0.01', min: 31.00, max: 48.00 %>
+          <%= f.number_field :largo, class: "form-control", placeholder: '（例）35.25', required: true, step: '0.01', min: 31.00, max: 48.00 %>
         </div>
         <div class="form-group">
           <%= f.label :weight %>
-          <%= f.number_field :weight, class: "form-control", placeholder: '（例）315', min: 0 %>
+          <%= f.number_field :weight, class: "form-control", placeholder: '（例）315', required: true, min: 0 %>
         </div>
         <div class="form-group">
-          <%= f.label :balance_string, 'バランス', class: "control-label" %>
+          <%= f.label :balance_string, class: "control-label" %>
           <%= f.text_field :balance_string, placeholder: '（例）D' %>
           <%= f.number_field :balance_number, placeholder: '0.0', step: '0.1', min: 0.0, max: 9.9 %>
         </div>

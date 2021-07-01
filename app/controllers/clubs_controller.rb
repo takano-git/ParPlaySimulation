@@ -2,17 +2,21 @@ class ClubsController < ApplicationController
   before_action :authenticate_user! # ログインしているユーザーのみ許可
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
-  before_action :set_clubs , only: %i[ index chart ]
+  before_action :set_clubs , only: %i[ index select chart ]
 
 
   def index
     @selected_clubs = SelectedClub.all
   end
 
+  def select
+    @selected_clubs = SelectedClub.all
+  end
+
   def add
     selected_club = SelectedClub.new
-    selected_club.user_id = params[:id] # パラメーターからユーザーid取得する
-    selected_club.club_id = "13" # ここどうやってクラブid取得する？
+    selected_club.user_id = params[:id] 
+    selected_club.club_id = params[:selected_club]
 
     if selected_club.save
       #head 201
@@ -33,10 +37,16 @@ class ClubsController < ApplicationController
   def create
     @club= Club.new(club_params)
     if @club.save
-      flash[:success] = '新しいゴルフクラブを登録しました。'
+      flash[:success] = '新しいマイクラブを登録しました。'
       redirect_to clubs_url(@user)
     else
-      render :edit
+      # render :edit
+      # redirect_to :new
+      # flash[:danger] = @club.errors.full_messages.join("<br>").html_safe
+      # render :new
+      # render json: { status: 'error'}
+      redirect_to clubs_path
+      flash[:danger] = @club.errors.full_messages.join('。').html_safe
     end
   end
 

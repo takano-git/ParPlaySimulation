@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     member do
       # ゴルフクラブ情報
       get 'clubs/chart'
+      get 'clubs/select'
       post 'clubs/add'
       resources :clubs, except: %i(show)
     end
