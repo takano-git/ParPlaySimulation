@@ -29,6 +29,21 @@ end
 
 puts "サンプルユーザー作成！"
 
+# ユーザーサンプルデーター作成
+
+User.create!(name: "会員1",
+  nickname: "会員1",
+  membership_number: "PPS01000",
+  email: "k-sample@gmail.com",
+  password: "password",
+  password_confirmation: "password",
+  phone_number: "012-0000-1000",
+  flying_distance: 240,
+  admin: false,
+  premium: true)
+
+puts "会員作成！"
+
 # 地域データ作成
 
 Area.create(prefecture: '北海道', district: "北海道")
@@ -263,6 +278,19 @@ hamano_in.push ([
     strategy_info.save
   end
 end
+
+  strategy_info = StrategyInfo.new
+  strategy_info.golfclub_id = 1
+  strategy_info.course_id = 1
+  strategy_info.hole_id = 1
+  strategy_info.shot_id = 1
+  strategy_info.user_id = 1
+  strategy_info.location_name = "B"
+  strategy_info.photo.attach(
+    io: File.open("./public/strategy_infos/hamano/out/hamano_h1_tee.jpg"),
+    filename: "hamano_h1_tee.jpg")
+  strategy_info.comment = "ロケーションB"
+  strategy_info.save
 
 # -----------------------------------------------------------------
 

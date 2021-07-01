@@ -5,7 +5,7 @@ class GolfclubsController < ApplicationController
 
   def index
     @q = Golfclub.ransack(params[:q])
-    @golfclubs = @q.result(distinct: true)
+    @golfclubs = @q.result(distinct: true).order(:id)
     # @golfclubs = Golfclub.all
   end
 

@@ -1,0 +1,71 @@
+
+<div class="hole_header row">
+  <div class="strategy_hole_bar col-md-offset-2">
+    <div id="strategy_hole_bar__btns">
+      <% @holes.each_with_index do |hole, i| %>
+        <%= link_to "#{hole.hole_number}",
+            main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
+            remote: :true, id: "hole_id=#{hole.id}", class: "btn btn-sm strategy_hole_btn h_selected" if i == 0 %>
+        <%= link_to "#{hole.hole_number}",
+            main_golfclub_strategy_infos_path(course_id: @course_id, hole_id: hole.id, location: "r"),
+            remote: :true, id: "hole_id=#{hole.id}", class: "btn btn-sm strategy_hole_btn" if i != 0 %>
+      <%# </div> %>
+      <% end %>
+    </div>
+    <%# マップを表示切り替え（hole.map_r→hole.map_b %>
+    <div class="location_btns">
+    <%# mainアクションに飛ばしてholeボタンが押された場合、locationボタンが押された場合で場合分け %>
+    <%# もしくは新しいルート、アクションの追加 %>
+      <%= link_to "R", location_golfclub_strategy_infos_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "R"),
+            remote: :true, id: "r", class: "btn btn-sm location_btn l_selected" %>
+      <%= link_to "B", location_golfclub_strategy_infos_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "B"),
+            remote: :true, id: "b", class: "btn btn-sm location_btn" %>
+      <%= link_to "L", location_golfclub_strategy_infos_path(id: @strategy_info.id, hole_id: @hole.id, location_name: "L"),
+            remote: :true, id: "l", class: "btn btn-sm location_btn" %>
+    </div>
+  </div>
+
+  <div id="new_edit_btns">
+    <%= render "strategy_infos/index_render_files/new_edit_btns" %>
+  </div>
+
+</div>
+
+<div id="main" class="">
+  <%= render 'strategy_infos/index_render_files/main', id: @strategy_info.id %> 
+</div>
+
+
+<script>
+
+// クラス名h_selectedのurlから指定したパラメータ（name）の値をとる
+function getParam(name, url) {
+  if (!url) url = $('.h_selected').attr('href');
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// ホールボタンクリック時
+$('.strategy_hole_btn').on('click', function () {
+  $('.strategy_hole_btn').removeClass('h_selected');
+  $(this).addClass('h_selected');
+  // クリックしたホールボタンのurlとlocationボタンのurlを比較し、hole_idを一致させる。
+  let hole_btn_id = getParam('hole_id');
+  let location_hole_id = $('.location_btn').attr('href').match(/[&|\?]hole_id=(.*?)[&|$]/)[1];
+  const edit_hole_id = () => $(this).attr('href').replace('hole_id='+location_hole_id, 'hole_id='+hole_btn_id);
+  if (hole_btn_id !== location_hole_id) {
+    $('#r').attr('href', edit_hole_id);
+    $('#b').attr('href', edit_hole_id);
+    $('#l').attr('href', edit_hole_id);
+  };
+});
+// ーーーーーーーーーーーー
+  $("#map_b").hide();
+  $("#map_l").hide();
+  
+
+</script>

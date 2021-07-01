@@ -1,0 +1,25 @@
+$("#main").html("<%= j(render 'strategy_infos/index_render_files/main') %>");
+$("#new_edit_btns").html("<%= j(render 'strategy_infos/index_render_files/new_edit_btns') %>");
+
+<%#  %>
+$("#<%=@hide_locations[0]%>").hide();
+$("#<%=@hide_locations[1]%>").hide();
+$("#map_<%= @strategy_info.location_name.downcase %>").show();
+
+  <%# let location_val = $(< %= @strategy_info.location_name.downcase).attr('id'); %>
+  $('.location_btn').removeClass('l_selected');
+  $("#<%= @strategy_info.location_name.downcase %>").addClass('l_selected');
+
+  <%# //   $(this).attr('href', $(this).attr('href') + "?追加したいパラメータ"); %>
+  <%# // ホールボタンのurl中のlocation_name(R,B,L)情報の書き換え %>
+  $('.strategy_hole_btn').attr('href',function(){
+    if($(this).attr('href').match('location=r')) {
+      return $(this).attr('href').replace('location=r', 'location='+'<%= @strategy_info.location_name.downcase %>');
+    };
+    if($(this).attr('href').match('location=b')) {
+      return $(this).attr('href').replace('location=b', 'location='+'<%= @strategy_info.location_name.downcase %>');
+    };
+    if($(this).attr('href').match('location=l')) {
+      return $(this).attr('href').replace('location=l', 'location='+'<%= @strategy_info.location_name.downcase %>');
+    };
+  });

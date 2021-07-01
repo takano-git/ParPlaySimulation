@@ -6,12 +6,19 @@ $brand_t1: #224444;
 
 // 攻略情報ページ
 .strategy_cource_bar {
-  display: flex;
+  // display: flex;
   margin-top: 18px;
+  margin-bottom: -10px;
+  margin-left: 130px;
 
   & .strategy_course_btns {
     margin-left: 13px;
   }
+}
+
+.strategy_course_btn {
+  border-color: $brand_t1;
+  width: 60px;
 }
 
 .c_selected {
@@ -23,6 +30,15 @@ $brand_t1: #224444;
   }
 }
 
+.strategy_hole_bar {
+  margin-left: 150px;
+}
+
+.strategy_hole_btn {
+  border-color: $brand_t1;
+  width: 40px;
+}
+
 .h_selected {
   color: white;
   background-color: $brand_t1;
@@ -32,6 +48,11 @@ $brand_t1: #224444;
   }
 }
 
+.location_btn {
+  border-color: $brand_t1;
+  width: 40px;
+}
+
 .l_selected {
   color: white;
   background-color: $brand_t1;
@@ -39,6 +60,16 @@ $brand_t1: #224444;
   &:hover {
     color: white;
   }
+}
+
+.shot_bar {
+  margin-left: 0px;
+}
+
+
+.shot_btn {
+  border-color: $brand_t1;
+  width: 80px;
 }
 
 .s_selected {
@@ -72,19 +103,38 @@ $brand_t1: #224444;
   }
 }
 
-#strategy_main_map img {
-  padding: 0.78em 0.38em 0.1em 0.38em;
+.strategy_main_status {
+  color: white;
+  background-color: #224444;
+  height: 45px;
+  width: 125px;
+  font-size: 15px;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
 
+#strategy_main_map img {
+  // padding: 0.78em 0.38em 0.1em 0.38em;
+  max-width: 80%;
+}
+
+.strategy_main_center_comment {
+  background: #fff;
+  border: 1px #ccc solid;
+  box-shadow: 0 2px 3px 0 #ddd;
+  font-size: 100%;
+  padding: 2px;
 }
 
 // shot_bar
 .shot_bar {
-  display: flex;
+  // display: flex;
 }
 
 .shot_btns {
-  display: flex;
-  flex-flow: column;
+  // display: flex;
+  // flex-flow: column;
 }
 // -----------------------------
 // 攻略情報新規作成、更新ページ
@@ -94,13 +144,40 @@ $brand_t1: #224444;
 .strategy_img {
   width:auto;
   height:auto;
-  max-width:100%;
-  max-height:100%;
+  max-width:80%;
+  max-height:80%;
 }
 
+// 全てのピンに
 .pin {
+  cursor: pointer;
+}
 
+#strategy_map {
+  position: relative;
+}
+.map_pin {
   &_target {
-    
+    z-index: 20;
+  }
+  &_point {
+    z-index: 15;
+    left: 23px;
+  }
+  &_shoot {
+    z-index: 10;
+    left: 46px;
+  }
+}
+
+#strategy_photo {
+  position: relative;
+}
+.photo_pin {
+  &_target {
+    z-index: 20;
+  }
+  &_point {
+    z-index: 15;
   }
 }

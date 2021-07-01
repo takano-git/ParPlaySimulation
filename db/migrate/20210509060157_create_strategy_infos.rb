@@ -6,7 +6,7 @@ class CreateStrategyInfos < ActiveRecord::Migration[5.2]
       t.references :course, foreign_key: true
       t.references :hole, foreign_key: true
       t.integer :shot_id, defalut: 0
-      t.integer :location_name
+      t.string :location_name
       t.text :comment
       t.integer :photo_target_x
       t.integer :photo_target_y
