@@ -6,7 +6,7 @@ class ClubsController < ApplicationController
 
 
   def index
-    @selected_clubs = SelectedClub.all
+    @Clubs = SelectedClub.where(user_id: current_user.id)
   end
 
   def select

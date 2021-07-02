@@ -1,6 +1,6 @@
 <div class="container">
   <%= render 'layouts/flash_messages' %>
-  <h2 class="py-5" >マイクラブ一覧</h2>
+  <h4 class="mt-4">マイクラブ一覧</h4>
   <%= link_to "新しいゴルフクラブを登録する", new_club_path(current_user), remote: true, class: "btn btn-brand mb-3" %>
   <% row_num = 1 %>
   <div class="table-responsive">
