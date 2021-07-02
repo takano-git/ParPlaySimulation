@@ -1,49 +1,64 @@
 <div class="container">
   <%= render 'layouts/flash_messages' %>
 
-<%# ここからドロップアンドドラッグのサンプル %>
+  <%# ここからドロップアンドドラッグ %>
 
-<!-- SelectedUser一覧をリスト表示 -->
-<h2>クラブセッティング</h2>
-  <%= link_to "ゴルフバックの中身をグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand my-5" %>
+  <!-- SelectedUser一覧をリスト表示 -->
+  <div class="text-right">
+    <%= link_to "クラブセッティングをグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand my-5" %>
+  </div>
 
-<table border="1" width="300">
-  <tr>
-    <th>SelectedClubのid</th>
-    <th>SelectedClubの名称</th>
-  </tr>
-  <!-- Array(@selected_clubs)は（）の中身を配列にする -->
-  <% Array(@selected_clubs).each do |selected_club| %>
-      <tr>
-        <td><%= selected_club.club_id %></td>
-        <td><%= Club.find(selected_club.club_id).detail %></td>
-      </tr>
-  <% end %>
-  <tr>
-    <!-- ドロップエリア -->
-    <td colspan="3" id="dropzone" class="dropzone"></td>
-  </tr>
-</table>
+  <div class="row">
+    <div class="col-6">
+      <!-- Club一覧をリスト表示 -->
+      <h2 class="float-left">マイクラブ一覧</h2>
 
-<br>
+      <div class="table-responsive">
+        <table id="list" class=" table table-sm table-bordered mb-5">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>詳細</th>
+            </tr>
+          </thead>
+          <% Array(@clubs).each do |club| %>
+              <!-- rowにドラッグ可能(draggable)属性を指定 -->
+              <tr class="item" draggable="true" id="<%= club.id %>">
+                <td><%= club.id %></td>
+                <td><%= club.detail %></td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
 
-<!-- Club一覧をリスト表示 -->
-<h2> マイクラブ一覧</h2>
+    <div class="col-6">
+      <h2 class="float-left">クラブセッティング</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>名称</th>
+            </tr>
+          </thead>
+          <!-- Array(@selected_clubs)は（）の中身を配列にする -->
+          <% Array(@selected_clubs).each do |selected_club| %>
+              <tr>
+                <td><%= selected_club.club_id %></td>
+                <td><%= Club.find(selected_club.club_id).detail %></td>
+              </tr>
+          <% end %>
+          <tr>
+            <!-- ドロップエリア -->
+            <td colspan="3" id="dropzone" class="dropzone"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
 
-<table id="list" border="1" width="300" class="mb-5">
-  <tr>
-    <th>club.id</th>
-    <th>club.detail</th>
-  </tr>
-  <% Array(@clubs).each do |club| %>
-  
-      <!-- rowにドラッグ可能(draggable)属性を指定 -->
-      <tr class="item" draggable="true" id="<%= club.id %>">
-        <td><%= club.id %></td>
-        <td><%= club.detail %></td>
-      </tr>
-  <% end %>
-</table>
 <script>
 
     $(function () {

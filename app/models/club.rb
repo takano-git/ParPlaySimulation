@@ -3,7 +3,7 @@ class Club < ApplicationRecord
 
   validates :yarn_count_string, :largo, :weight, presence: true
   VALID_YARN_COUNT_STRING_REGEX = /\A[A-Z]+\z/
-  # 振動数は３桁の数字
+  # 振動数は３桁の半角数字
   VALID_FREQUENCY_REGEX = /\d+\d+\d/
   
   validates :yarn_count_string, format: { with: VALID_YARN_COUNT_STRING_REGEX }
