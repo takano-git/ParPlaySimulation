@@ -3,7 +3,7 @@ module PostsHelper
   # current_userの編集,削除ボタンのみ表示する
   def current_user_edit_post(post)
     if current_user.id == post.user_id
-      link_to "", edit_golfclub_post_path(@golfclub, post), class: "fas fa-edit"
+      link_to "", edit_golfclub_post_path(@golfclub, post), remote: true, class: "fas fa-edit"
     end
   end
 

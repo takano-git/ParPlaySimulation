@@ -1,11 +1,11 @@
 <div class="form-group">
   <%= post.label :title %>
-  <%= post.text_field :title, class: "form-control" %>
+  <%= post.text_field :title, placeholder: "30文字以内", required: true, maxlength: "30", class: "form-control" %>
 </div>
 
 <div class="form-group">
   <%= post.label :comment %>
-  <%= post.text_area :comment, class: "form-control" %>
+  <%= post.text_area :comment, placeholder: "250文字以内", required: true, maxlength: "250", class: "form-control" %>
 </div>
 
 <div class="form-group">
@@ -13,32 +13,15 @@
   <%= post.select :category_id, Category.all.order(:id).map { |category| [category.name, category.id] }, {}, { required: true, class: "form-control" } %>
 </div>
 
-<!--
-<div class="form-group">
-  <%= post.label :golfclub_id %>
-  <%= post.select :golfclub_id, Golfclub.all.order(:id).map { |golfclub| [golfclub.name, golfclub.id] }, {}, { required: true, class: "form-control" } %>
-</div>
--->
-<!--
-<div class="form-group">
-  <%= post.label :golfclub_id, "ゴルフ場" %>
-  <%= post.collection_select :golfclub_id, Golfclub.where(id: @golfclub.id), :id, :name, {}, { class: "form-control" } %>
-</div>
--->
-
 <div class="form-group">
   <%= post.hidden_field :golfclub_id, value: @golfclub.id %>
 </div>
 
 <div class="form-group">
   <%= post.label :photo %><br>
-  <%= post.file_field :photo,  class: "form-control-file" %>
+  <%= post.file_field :photo, accept: "image/png, image/jpg, image/jpeg", class: "form-control-file" %>
 </div>
 
 <div class="form-group">
   <%= post.submit submit_name, data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
-</div>
-
-<div class="form-group">
-  <%= link_to 'キャンセル', golfclub_posts_path, class: "btn btn-secondary btn-block" %>
 </div>

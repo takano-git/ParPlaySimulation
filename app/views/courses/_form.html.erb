@@ -1,8 +1,11 @@
 <div class="form-group">
   <%= course.label :name %>
-  <%= course.text_field :name, class: "col col-md-12 form-control", required: true %>
+  <%= course.text_field :name, class: "col col-md-12 form-control" %>
   
-  <input type="button" id="hole_btn" value="ホール番号" class="col col-md-2 btn btn-sm btn-success" style="width:50%;">
+  <div class="form-group-course-btn">
+    <input type="button" id="hole_btn" value="ホール番号切替" class="btn btn-sm btn-brand">
+    <%= course.submit submit_name, data: { disable_with: '送信中' }, class: "btn btn-sm btn-primary" %>
+  </div>
 </div>
 
 <div class="form-group-course col col-md-3 px-0">
@@ -34,8 +37,3 @@
     <% end %>
   </div>
 <% end %>
-
-<div class="form-group-course">
-  <%= course.submit submit_name, class: "btn btn-primary", data: { disable_with: '送信中' }, class: "btn btn-primary btn-block" %>
-  <%= link_to 'キャンセル', golfclub_path(@golfclub), class: "btn btn-secondary" %>
-</div>

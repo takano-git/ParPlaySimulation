@@ -50,7 +50,7 @@
 }
 
 // ログイン画面
- 
+
 .container-login {
   @extend .container-fluid;
   max-width: 576px;
@@ -61,12 +61,18 @@
 
 .fa-edit, .fa-edit:hover {
   color: #224444;
+  text-decoration: none;
 }
 
 .fa-trash-alt, .fa-trash-alt:hover {
   color: #dc3545;
+  text-decoration: none;
 }
 
+.fa-times-circle, .fa-times-circle:hover {
+  color: #dc3545;
+  text-decoration: none;
+}
 
 .container {
   margin-top: 10px;

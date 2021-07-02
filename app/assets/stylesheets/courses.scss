@@ -4,13 +4,32 @@
   padding: 2rem;
 }
 
-#hole_btn {
+.form-group-course-btn {
+  display: inline-block;
   margin-top: 5px;
+  letter-spacing: 10px;
+}
+
+.course-form {
+  margin-bottom: 5px;
+}
+
+.course-name-field {
+  color: #fff;
 }
 
 .form-group-course {
   display: inline-block;
   margin-bottom: 1px;
+}
+
+.golfclub-table-header {
+  background-color: #f2f5f7;
+}
+
+.course-table-header {
+  background-color: #f2f5f7;
+  width: 20%;
 }
 
 /* パー入力ラジオボタン */
