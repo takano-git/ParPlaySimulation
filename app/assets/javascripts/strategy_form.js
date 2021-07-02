@@ -285,6 +285,7 @@ window.onload = function() {
     $('select#course').change(function() {
       let course_id = $(this).val();
       let childrenPath = $(this).find('option:selected').data().childrenPath;
+      // shot情報も追加
       let location_name = $('.l_selected').text();
       course_data = { 
         course: {

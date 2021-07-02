@@ -3,10 +3,8 @@
 
   <%# ホールボタンでのみ切り替わる  col-md-1.5%>
   <div class="strategy_main_status">
-    <h3>
       Hole<%= @hole.hole_number %><br>
       Par<%= @hole.number_of_pars %>
-    </h3>
   </div>
 <%#  col-md-8.5 %>
   <div class="strategy_main_center">
@@ -18,14 +16,14 @@
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
           <% shots[1].each.with_index(1) do |strategy, i| %>
-            <%= link_to "#{shots[0]}#{i}", golfclub_strategy_info_path(id: strategy[:id]),
-                remote: :true, class: "btn shot_btn s_selected" if n == 0 %>
-            <%= link_to "#{shots[0]}#{i}", golfclub_strategy_info_path(id: strategy[:id]),
-                remote: :true, class: "btn shot_btn" if n != 0 %>
+            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: strategy[:id]),
+                remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 && i == 1 %>
+            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: strategy[:id]),
+                remote: :true, class: "btn btn-sm shot_btn" if n != 0 || i != 1 %>
           <% end %>
         </div>
       <% end %>
-    </div>
+    </div><br>
 
 
 

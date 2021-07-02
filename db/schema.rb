@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_06_24_014004) do
   end
 
   create_table "clubs", force: :cascade do |t|
-    t.string "yarn_count_string", default: "", null: false
+    t.string "yarn_count_string", null: false
     t.integer "yarn_count_number"
     t.string "detail", default: ""
     t.float "loft"

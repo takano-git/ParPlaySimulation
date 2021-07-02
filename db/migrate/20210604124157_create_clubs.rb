@@ -1,7 +1,7 @@
 class CreateClubs < ActiveRecord::Migration[5.2]
   def change
     create_table :clubs do |t|
-      t.string :yarn_count_string, default: "", null: false
+      t.string :yarn_count_string, null: false
       t.integer :yarn_count_number
       t.string :detail, default: ""
       t.float :loft
