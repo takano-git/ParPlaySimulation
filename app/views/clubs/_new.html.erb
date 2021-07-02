@@ -13,11 +13,19 @@
 
     <div class="modal-body">
       <%= form_with(model: @club, local: true) do |f| %>
-        <div class="form-group">
-          <%= f.label :yarn_count_string, required: true, class: "control-label" %>
-          <%= f.text_field :yarn_count_string, placeholder: '（例）W'  %>
-          <%= f.number_field :yarn_count_number, placeholder: '1', min: 0, max: 13 %>
-          <small class="form-text text-muted">半角アルファベット（大文字）で入力してください</small>
+        <div class="form-group row">
+          <%= f.label :yarn_count_string, required: true, class: "col-2 col-form-label" %>
+          <%# <%= f.text_field :yarn_count_string, placeholder: '（例）W'  %>
+          <div class="col-5">
+            <%= f.select :yarn_count_string,
+                         [['W', 'W'], ['U', 'U'], ['I', 'I'], ['PW', 'PW'], ['AW', 'AW'], ['SW', 'SW'], ['LW', 'LW'], ['CP', 'CP'], ['PT', 'PT']],
+                         { selected: 'W' },
+                         { class: "form-control" }
+            %>
+          </div>
+          <div class="col-5">
+            <%= f.number_field :yarn_count_number, placeholder: '1', min: 0, max: 13, class: "form-control" %>
+          </div>
         </div>
         <div class="form-group">
           <%= f.label :detail, class: "control-label" %>
