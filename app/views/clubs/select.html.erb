@@ -45,8 +45,8 @@
           <!-- Array(@selected_clubs)は（）の中身を配列にする -->
           <% Array(@selected_clubs).each do |selected_club| %>
               <tr>
-                <td><%= selected_club.club_id %></td>
-                <td><%= Club.find(selected_club.club_id).detail %></td>
+                <td><%= selected_club.id %></td>
+                <td><%= selected_club.detail %></td>
               </tr>
           <% end %>
           <tr>

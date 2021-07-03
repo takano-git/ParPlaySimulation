@@ -6,21 +6,27 @@ class ClubsController < ApplicationController
 
 
   def index
-    @selected_clubs = SelectedClub.all
   end
 
   def select
-    @selected_clubs = SelectedClub.all
+    @selected_clubs = @user.clubs.where(selected: true)
   end
 
   def add
-    selected_club = SelectedClub.new
-    selected_club.user_id = params[:id] 
-    selected_club.club_id = params[:selected_club]
+    # selected_club = SelectedClub.new
+    club = Club.find(params[:selected_club])
+    
+    if club.selected == true
+      flash[:danger] = 'すでにクラブセッティングに入っています。'
+      redirect_to clubs_select_user_path(@user)
+    else
+      club.selected = true
+    end
+    # club.selected = true
 
-    if selected_club.save
+    if club.save
       #head 201
-      club = Club.find(selected_club.club_id)
+      # club = Club.find(selected_club.club_id)
       hash = {id: club.id, detail: club.detail}
       require 'json'
       render :json => hash.to_json
@@ -40,11 +46,6 @@ class ClubsController < ApplicationController
       flash[:success] = '新しいマイクラブを登録しました。'
       redirect_to clubs_url(@user)
     else
-      # render :edit
-      # redirect_to :new
-      # flash[:danger] = @club.errors.full_messages.join("<br>").html_safe
-      # render :new
-      # render json: { status: 'error'}
       redirect_to clubs_path
       flash[:danger] = @club.errors.full_messages.join('。').html_safe
     end
@@ -65,7 +66,7 @@ class ClubsController < ApplicationController
   private
 
     def club_params
-      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id)
+      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected)
     end
 
     def set_clubs

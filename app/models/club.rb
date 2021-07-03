@@ -9,4 +9,12 @@ class Club < ApplicationRecord
   validates :yarn_count_string, format: { with: VALID_YARN_COUNT_STRING_REGEX }
   validates :frequency, format: { with: VALID_FREQUENCY_REGEX }
 
+
+    # ゴルフクラブセッティングは最大14本まで
+    validate :limit_club_setting
+  
+  def limit_club_setting
+    errors.add(:club, "クラブセッティングは14本までです。") if user && user.clubs.where(selected: true).count > 14
+  end
+
 end
