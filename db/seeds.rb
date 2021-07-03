@@ -334,21 +334,22 @@ puts "カテゴリー作成！"
 
 # 投稿データ作成
 
-users = User.order(:created_at).where.not(id: 1).take(8)
+golfclubs = Golfclub.order(:created_at).take(30)
 
-5.times do |n|
-  n = n + 1
+3.times do |n|
+  n += 1
   title = "タイトル#{n}"
   comment = "テスト投稿#{n}"
 
-  users.each { |user|
-    user_post = user.posts.create(
+  golfclubs.each { |golfclub|
+    golfclub_post = Post.create!(
       title: title,
       comment: comment,
-      golfclub_id: rand(1..30),
-      category_id: rand(1..3)
+      user_id: rand(2..9),
+      category_id: rand(1..3),
+      golfclub_id: golfclub.id
     )
-    user_post.photo.attach(io: File.open("./public/post_photos/post_sample.jpeg"), filename: "post_sample.jpeg")
+    golfclub_post.photo.attach(io: File.open("./public/post_photos/post_sample.jpeg"), filename: "post_sample.jpeg")
   }
 end
 

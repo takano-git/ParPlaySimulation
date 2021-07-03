@@ -1,7 +1,40 @@
 <%= render 'layouts/flash_messages' %>
 
-<% @categories.each do |category| %>
-  <p><%= category.id %>.
-  <%= category.name %>.
-  <%= link_to '削除', category_path(category), method: :delete %></p>
-<% end %>
+<div class="container-category-index">
+  <h5>カテゴリ一覧</h5>
+
+  <div class="category-new-form text-right">
+    <%= link_to '新規登録', new_category_path, remote: true, class: "btn btn-primary btn-sm" %>
+  </div>
+
+  <table class="table table-bordered border-danger table-sm">
+    <tr class="text-center bg-brand" style="color: white;">
+      <th><%= Category.human_attribute_name :name %></th>
+      <th></th>
+    </tr>
+
+    <% @categories.each do |category| %> 
+      <tr>
+        <td>
+          <%= category.name %>
+          &nbsp;
+          <%= link_to "", edit_category_path(category), remote: true, class: "fas fa-edit" %>
+        </td>
+
+        <td class="text-center">
+          <%= link_to "", category_path(category), 
+                    class: "fas fa-times-circle",
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "#{category.name}を削除してよろしいですか？",
+                            cancel: 'キャンセル',
+                            commit: '削除する'
+                          }, title: '削除確認' %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div id="new-category" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-category" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

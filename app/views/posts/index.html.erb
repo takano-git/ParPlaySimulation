@@ -2,7 +2,7 @@
 <h4><%= @golfclub.name %>の投稿一覧</h4>
 
 <div class="container" data-turbolinks="false">
-  <%= link_to '新規投稿', new_golfclub_post_path, class: "btn btn-sm btn-primary" %>
+  <%= link_to '新規投稿', new_golfclub_post_path, remote: true, class: "btn btn-sm btn-primary" %>
   <ul class="category-box">
     <li class="category-item"><%= link_to "全て", golfclub_posts_path, class: "btn btn-sm btn-outline-brand" %><li>
     <% @categories.each do |category| %>
@@ -31,17 +31,12 @@
               <text x="40%" y="50%" fill="#dee2e6" dy=".3em">No Image</text>
             </svg>
           <% end %>
-          <!--
-          <figcaption>
-            <%= Golfclub.find(post.golfclub_id).name %>
-          </figcaption>
-          -->
         </figure>
 
         <div class="comment-box">
           <div class="comment-item">
             <span class="post-title">
-              <%= post.title %>(<%= Golfclub.find(post.golfclub_id).name %>)
+              <%= post.title %>
             </span><br/>
             <span><%= post.comment %></span>
           </div>
@@ -58,3 +53,6 @@
     <% end %>
   </section>
 </div>
+
+<div id="new-post" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-post" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
