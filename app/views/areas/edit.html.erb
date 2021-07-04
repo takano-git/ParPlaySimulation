@@ -1,16 +1,18 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-area-index">
-  <h3>エリア一覧</h3>
+  <h5>エリア一覧</h5>
 
-  <%= submit_tag '更新', form: "area-form", class: "btn btn-primary" %>
-  <%= link_to '戻る', areas_path, class: "btn btn-secondary" %>
+  <div class="btn-form">
+    <%= submit_tag '更新', form: "area-form", class: "btn btn-sm btn-primary" %>
+    <%= link_to '戻る', areas_path, class: "btn btn-sm btn-secondary" %>
+  </div>
 
   <%= form_with model: @areas, url: update_areas_path, id: "area-form", local:true, method: :patch do |f| %>
     <%# <div class="float-left"> %>
-    <table class="table table-sm">
+    <table class="table table-sm table-bordered">
       <thead>
-        <tr>
+        <tr class="bg-brand" style="color: white;">
           <th>ID</th>
           <th>都道府県</th>
           <th>地区</th>
