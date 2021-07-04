@@ -9,7 +9,7 @@ class ClubsController < ApplicationController
   end
 
   def select
-    @selected_clubs = @user.clubs.where(selected: true)
+    @selected_clubs = current_user.clubs.where(selected: true)
   end
 
   def add
@@ -20,19 +20,19 @@ class ClubsController < ApplicationController
       flash[:danger] = 'すでにクラブセッティングに入っています。'
       redirect_to clubs_select_user_path(@user)
     else
-      club.selected = true
+      # club.selected = true
+      # if club.save
+      if club.update(selected: true)
+        #head 201
+        # club = Club.find(selected_club.club_id)
+        hash = {id: club.id, detail: club.detail}
+        require 'json'
+        render :json => hash.to_json
+      else
+        head 500
+      end
     end
-    # club.selected = true
 
-    if club.save
-      #head 201
-      # club = Club.find(selected_club.club_id)
-      hash = {id: club.id, detail: club.detail}
-      require 'json'
-      render :json => hash.to_json
-    else
-      head 500
-    end
 
   end
 
@@ -70,6 +70,7 @@ class ClubsController < ApplicationController
     end
 
     def set_clubs
-      @clubs = Club.where(user_id: @user)
+      # @clubs = Club.where(user_id: current_user)
+      @clubs = current_user.clubs.all
     end
 end
