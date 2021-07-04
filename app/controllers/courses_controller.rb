@@ -1,8 +1,8 @@
 class CoursesController < ApplicationController
   before_action :premium_user, only: %i(new create edit update)
   before_action :admin_user
-  before_action :set_golfclub, only: %i(new create edit update)
-  before_action :set_course, only: %i(edit update)
+  before_action :set_golfclub, only: %i(new create show edit update destroy)
+  before_action :set_course, only: %i(show edit update destroy)
   before_action :set_pars, only: %i(new create edit update)
 
   # 入力フォームのパー数(名前空間を切ってmoduleをfreezeして定数の書き換えを防ぐ)
@@ -25,6 +25,9 @@ class CoursesController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def edit
   end
 
@@ -35,11 +38,11 @@ class CoursesController < ApplicationController
       redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
     end
   end
-
-  # def destroy
-  #   @course.destroy
-  #   redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を削除しました。" }
-  # end
+  
+  def destroy
+    @course.destroy
+    redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を削除しました。" }
+  end
 
   private
 

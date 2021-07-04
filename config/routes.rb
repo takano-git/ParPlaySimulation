@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   # ゴルフ場
   resources :golfclubs do
     # ゴルフコース情報
-    resources :courses, except: %i(index show) do
+    resources :courses, except: %i(index) do
       # ゴルフホール情報
       resources :holes
     end
