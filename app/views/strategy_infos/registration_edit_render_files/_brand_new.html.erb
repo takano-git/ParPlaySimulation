@@ -1,8 +1,4 @@
 <%= render 'layouts/flash_messages' %>
-<div id="container" class="container" data-turbolinks='false'>
-
-  <br>
-  <h5>攻略情報登録画面</h5>
 
   <div class="create_strategy_info row">
 
@@ -36,14 +32,14 @@
           </div>
           <div class="upload-btn-wrapper">
             <button class="upload-btn">画像選択</button>
-            <%= f.file_field :photo, required: true, accept: 'image/jpeg,image/gif,image/png', onChange:'inform()' %>
+            <%= f.file_field :photo, accept: 'image/jpeg,image/gif,image/png', onChange:'inform()' %>
+            <h3 id="file_name"></h3>
           </div>
           <div class="photo_pin">
             <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="pin">
             <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="pin">
           </div>
         </div>
-        
         <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
         <%# --------------------- %>
         <%= f.label :コメント, class: "label-#{yield(:class_text)}" %>
@@ -106,15 +102,4 @@
     </div>
 
   </div>
-
-  <div class="to_index">
-    <%= link_to "攻略情報ページへ", golfclub_strategy_infos_path, class:"btn btn-primary"%>
-  </div>
-  <br>
 </div>
-
-<script>
-function inform(){
-$("#file_name").text("画像が選択されています");
-}
-</script>

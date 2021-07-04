@@ -237,44 +237,7 @@ window.onload = function() {
   }
   photo_pin_point.onmouseup = function(event){
     document.removeEventListener("mousemove",PhotoPinPointMove, true);
-  }
-
-
-
-  // // 6.photo_pin_shoot
-  // let photo_pin_shoot= document.getElementById("photo_pin_shoot");
-  // const PhotoPinShootMove = function onMouseMove(event){
-  //   photo_pin_shoot.style.position = "absolute";
-  //   photo_pin_shoot.ondragstart = function(e){
-  //     return false;
-  //   }
-  //   // photo_pin_shoot要素、対windowのx,y座標
-  //   let x = event.clientX;
-  //   let y = event.clientY;
-  //   // photo_pin_shoot要素自身のx,y座標
-  //   let width = photo_pin_shoot.offsetWidth;
-  //   let height = photo_pin_shoot.offsetHeight;
-  //   // photo取得
-  //   let photo = document.querySelector('#photo_prev');
-
-  //   let photo_shoot_rect = photo.getBoundingClientRect();
-  //   let photo_shoot_x = (x - photo_shoot_rect.left)-width/2-2;
-  //   let photo_shoot_y = (y - photo_shoot_rect.top)-height/2-3;
-  //   // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
-  //   photo_pin_shoot.style.left = photo_shoot_x + "px";
-  //   photo_pin_shoot.style.top = photo_shoot_y + "px";
-  //   // const
-  //   document.getElementById('photo_shoot_x').value = photo_shoot_x;
-  //   document.getElementById('photo_shoot_y').value = photo_shoot_y;
-  // }
-  // photo_pin_shoot.onmousedown = function(event){
-  //   document.addEventListener("mousemove", PhotoPinShootMove, true)
-  // }
-  // photo_pin_shoot.onmouseup = function(event){
-  //   document.removeEventListener("mousemove",PhotoPinShootMove, true);
-  // }
-
-  
+  }  
   
   
   // ------------ここまで-------------------------------------------
@@ -332,25 +295,62 @@ window.onload = function() {
 
 
   // アップロードする画像ファイル表示
-  $(function() {
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $('#photo_prev').attr('src', e.target.result);
-        } 
-        reader.readAsDataURL(input.files[0]);
-        let photo_size_x = document.getElementById('photo_area').clientWidth;
-        let photo_size_y = document.getElementById('photo_area').clientHeight;
-        document.getElementById('photo_size_x').value = photo_size_x;
-        document.getElementById('photo_size_y').value = photo_size_y;
-      }
-    }
-    $("#f_strategy_photo").change(function(){
-      readURL(this);
-    });
-  });
 
+  // $(function() {
+  //   function readURL(input) {
+  //     if (input.files && input.files[0]) {
+  //       var reader = new FileReader();
+  //       reader.onload = function (e) {
+  //         $('#photo_prev').attr('src', e.target.result);
+  //       } 
+  //       reader.readAsDataURL(input.files[0]);
+  //       let photo_size_x = document.getElementById('photo_area').clientWidth;
+  //       let photo_size_y = document.getElementById('photo_area').clientHeight;
+  //       document.getElementById('photo_size_x').value = photo_size_x;
+  //       document.getElementById('photo_size_y').value = photo_size_y;
+  //     }
+  //   }
+  //   $("#f_strategy_photo").change(function(){
+  //     readURL(this);
+  //   });
+  // });
+
+  $(document).ready(function () {
+    const photo_prev_src = document.getElementById('photo_prev').getAttribute('src');
+    $('#admin_photo').val(photo_prev_src);
+    let photo_area = $('#photo_area');
+    
+    $("#f_strategy_photo").on('change', function(){
+      let fileprop = $(this).prop('files')[0];
+      //  find_img 画像表示部分
+      let find_img = $("#photo_selected");
+      let fileRdr = new FileReader();
+      // find_imgがあればimgを消去
+      if(find_img.length) {
+        find_img.remove();
+      }
+      const img = '<img id="photo_selected", class="strategy_img">'
+      // .propメソッド―選択地取得('files'（ファイル名）取得)
+      //　filepropがない場合、@strategy_info_admin.photo表示
+      if( $("#f_strategy_photo").prop('files')[0] === undefined ){
+        $('#photo_prev').show();
+      } else {
+        $('#photo_prev').hide();
+        photo_area.append(img);
+        fileRdr.onload = function() {
+          photo_area.find('#photo_selected').attr('src', fileRdr.result);
+        }
+        fileRdr.readAsDataURL(fileprop);
+      };
+      // 画像サイズ取得
+      let photo_size_x = document.getElementById('photo_area').clientWidth;
+      let photo_size_y = document.getElementById('photo_area').clientHeight;
+      document.getElementById('photo_size_x').value = photo_size_x;
+      document.getElementById('photo_size_y').value = photo_size_y;
+        
+    });
+      
+  });
   // ---------------------------------------------------
 
 

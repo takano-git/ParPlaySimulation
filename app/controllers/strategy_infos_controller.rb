@@ -89,7 +89,7 @@ class StrategyInfosController < ApplicationController
   # def Judge
   # end
 
-  def egirstration_edit
+  def registration_edit
     # byebug
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
@@ -100,7 +100,7 @@ class StrategyInfosController < ApplicationController
     if params[:course_id].blank?
       # ゴルフクラブ一覧ページから来た場合
       @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
-      @hole_options = @holes.order(:id).map { 
+      @hole_options = @holes.map { 
         |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
       }
       @hole = @holes.first
@@ -113,9 +113,10 @@ class StrategyInfosController < ApplicationController
       # 攻略情報ページから来た場合
       @course_id = params[:course_id]
       @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
-      @hole_options = @holes.order(:id).map { 
+      @hole_options = @holes.map { 
         |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
       }
+      @hole = Hole.find(params[:hole_id])
       @hole_id = params[:hole_id]
       # ここからログインユーザー登録情報の有無フラグ
       @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, location_name: params[:location_name],
@@ -125,7 +126,14 @@ class StrategyInfosController < ApplicationController
       @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: params[:location_name],
                                                 shot_id: params[:shot_id]).first if @new_or_edit
       @strategy_info = StrategyInfo.new if @new_or_edit
+      # byebug
     end
+    byebug
+  end
+
+  # registration_editでのAjax
+  def switch
+
   end
 
   def new
@@ -152,8 +160,23 @@ class StrategyInfosController < ApplicationController
   end
 
   def create
+    # byebug
+    if params[:photo].blank?
+      strategy_info = StrategyInfo.new
+      strategy_info.golfclub_id = params[:golfclub_id]
+      strategy_info.course_id = params[:course_id]
+      strategy_info.hole_id = params[:hole_id]
+      strategy_info.shot_id = params[:shot_id]
+      strategy_info.user_id = params[:user_id]
+      strategy_info.location_name = params[:location_name]
+      strategy_info.photo.attach(
+        io: File.open(params[:admin_photo]),
+        filename: "default_photo")
+      strategy_info.comment = params[:comment]
+      strategy_info.save
+    end
     byebug
-    @strategy_info = StrategyInfo.new(strategy_info_params)
+      @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
       flash[:success] = "攻略情報を登録しました。"
     else

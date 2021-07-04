@@ -1,0 +1,101 @@
+<%= render 'layouts/flash_messages' %>
+<%= image_tag @strategy_info.photo, id: "map_r", class: "img-fluid strategy_img" %>
+  <div class="create_strategy_info row">
+
+    <div class="strategy_info_form col-sm-7">
+
+      <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
+        <%# ゴルフ場名、県名 %>
+        <%= @golfclub.name %><br>
+        <%= @area.prefecture %>
+        <br>
+        <%# ゴルフクラブidはすでにurlに含まれる %>
+        <%# ユーザーid %>
+        <%= f.hidden_field :user_id, value: current_user.id, class: "form-control" %>
+        コース名:
+        <%= f.select :course_id, @course_options, class: "form-control" %>
+        Hole No:
+        <%= f.select :hole_id, @hole_options, class: "form-control" %>
+        shot:
+        <%# <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
+        <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %>
+        <%# ティグラウンド %>
+        <%# <br> %>
+        <%# select_boxに変更 %>
+        <button id="r" class="btn btn-sm location_btn l_selected">R</button>
+        <button id="b" class="btn btn-sm location_btn">B</button>
+        <button id="l" class="btn btn-sm location_btn">L</button>
+        <br>
+        <%# 画像up %>
+        <div id="strategy_photo">
+          <div id="photo_area">
+            <%= image_tag "", id: "photo_prev", class: "strategy_img" %>
+          </div>
+          <div class="photo_pin">
+            <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="pin">
+            <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="pin">
+          </div>
+        </div>
+        <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
+        <%# --------------------- %>
+        <%= f.label :コメント, class: "label-#{yield(:class_text)}" %>
+        <%= f.text_field :comment, class: "form-control" %>
+        <%# location_name %>
+        <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
+        <%# photoピン座標 %>
+        <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_point_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :photo_point_y, value: "0", class: "form-control" %>
+        <%# photoサイズ %>
+        <%= f.hidden_field :photo_size_x, value: "0", id: 'photo_size_x', class: "form-control" %>
+        <%= f.hidden_field :photo_size_y, value: "0", id: 'photo_size_y', class: "form-control" %>
+        <%# mapピン座標 %>
+        <%= f.hidden_field :map_target_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_target_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_point_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_point_y, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_x, value: "0", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
+        <%# mapサイズ %>
+        <%= f.hidden_field :map_size_x, value: "0", id: 'map_size_x', class: "form-control" %>
+        <%= f.hidden_field :map_size_y, value: "0", id: 'map_size_y', class: "form-control" %>
+        <br>
+        <%= f.submit "攻略情報登録", class: "btn btn-primary btn-block" %>
+      <% end %>
+    </div>
+
+    <div class=" col-sm-1">
+      
+    </div>
+
+    <div id="strategy_map" class=" col-sm-3">
+      <div class="map_area">
+        <%= render 'strategy_infos/form_map', hole: @hole %>
+      </div>
+      <div class="map_pin">
+        <img src="/strategy_infos/pin/target.png" id="pin", class="pin">
+        <img src="/strategy_infos/pin/point.png" id="map_pin_point", class="pin">
+        <img src="/strategy_infos/pin/shoot.png" id="map_pin_shoot", class="pin">
+      </div>
+
+      <div class="pins_description">
+        <ul>
+          <li>
+            <img src="/strategy_infos/pin/target.png">
+            狙い目
+          </li>
+          <li>
+            <img src="/strategy_infos/pin/point.png">
+            目印
+          </li>
+          <li>
+            <img src="/strategy_infos/pin/shoot.png">
+            撮影地点
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
