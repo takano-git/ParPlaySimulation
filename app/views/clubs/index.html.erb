@@ -29,8 +29,8 @@
         <% @clubs.each do |club| %>
           <tr>
             <th scope="row"><%= row_num %></th>
-            <td><%= club.counter %></td>
             <% row_num = row_num + 1 %>
+            <td><%= club.counter %></td>
             <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
             <td><%= club.detail %></td>
             <td><%= club.loft %></td>

@@ -20,9 +20,8 @@ class ClubsController < ApplicationController
       flash[:danger] = 'すでにクラブセッティングに入っています。'
       redirect_to clubs_select_user_path(@user)
     else
-      # club.selected = true
-      # if club.save
-      if club.update(selected: true)
+      club.selected = true
+      if club.save
         #head 201
         # club = Club.find(selected_club.club_id)
         hash = {id: club.id, detail: club.detail}
