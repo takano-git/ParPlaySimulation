@@ -14,6 +14,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">所持数</th>
+          <th scope="col">番号</th>
           <th scope="col">番手</th>
           <th scope="col" class="text-center">名称</th>
           <th scope="col">ロフト</th>
@@ -28,6 +29,7 @@
         <% @clubs.each do |club| %>
           <tr>
             <th scope="row"><%= row_num %></th>
+            <td><%= club.counter %></td>
             <% row_num = row_num + 1 %>
             <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
             <td><%= club.detail %></td>
