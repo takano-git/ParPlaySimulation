@@ -13,17 +13,20 @@ class ClubsController < ApplicationController
   end
 
   def add
-    # selected_club = SelectedClub.new
     club = Club.find(params[:selected_club])
+    selected_clubs = current_user.clubs.where(selected: true).count
     
-    if club.selected == true
+    if selected_clubs >= 14
+      flash[:danger] = 'クラブセッティングは14本までです。'
+      redirect_to clubs_select_user_path(@user)
+    elsif club.selected == true
       flash[:danger] = 'すでにクラブセッティングに入っています。'
       redirect_to clubs_select_user_path(@user)
     else
       club.selected = true
       if club.save
         #head 201
-        # club = Club.find(selected_club.club_id)
+        flash[:success] = 'クラブセッティングを１本追加しました。'
         hash = {id: club.id, detail: club.detail}
         require 'json'
         render :json => hash.to_json
