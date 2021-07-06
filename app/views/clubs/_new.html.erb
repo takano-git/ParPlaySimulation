@@ -13,11 +13,23 @@
 
     <div class="modal-body">
       <%= form_with(model: @club, local: true) do |f| %>
-        <div class="form-group">
-          <%= f.label :yarn_count_string, required: true, class: "control-label" %>
-          <%= f.text_field :yarn_count_string, placeholder: '（例）W'  %>
-          <%= f.number_field :yarn_count_number, placeholder: '1', min: 0, max: 13 %>
-          <small class="form-text text-muted">半角アルファベット（大文字）で入力してください</small>
+        <div class="form-group row">
+          <%= f.label :yarn_count_string, required: true, class: "col-2 col-form-label" %>
+          <div class="col-5">
+            <%= f.select :yarn_count_string,
+                         [['W', 'W'], ['U', 'U'], ['I', 'I'], ['PW', 'PW'], ['AW', 'AW'], ['SW', 'SW'], ['LW', 'LW'], ['CP', 'CP'], ['PT', 'PT']],
+                         { selected: 'W' },
+                         { class: "form-control" }
+            %>
+          </div>
+          <div class="col-5">
+            <%= f.select :yarn_count_number,
+                         [['0', 0], ['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9], ['10', 10], ['11', 11], ['12', 12], ['13', 13]],
+                         { include_blank: true, selected: 1 },
+                         { class: "form-control" }
+            %>
+          </div>
+          <small class="form-text text-muted">　（例）W1</small>
         </div>
         <div class="form-group">
           <%= f.label :detail, class: "control-label" %>
@@ -36,14 +48,24 @@
           <%= f.label :weight %>
           <%= f.number_field :weight, class: "form-control", placeholder: '（例）315', required: true, min: 0 %>
         </div>
-        <div class="form-group">
-          <%= f.label :balance_string, class: "control-label" %>
-          <%= f.text_field :balance_string, placeholder: '（例）D' %>
-          <%= f.number_field :balance_number, placeholder: '0.0', step: '0.1', min: 0.0, max: 9.9 %>
+        <div class="form-group row">
+          <%= f.label :balance_string, class: "col-2 col-form-label" %>
+          <div class="col-5">
+            <%= f.select :balance_string,
+                         [['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F']],
+                         { include_blank: true },
+                         { class: "form-control" }
+            %>
+          </div>
+          <div class="col-5">
+            <%= f.number_field :balance_number, class: "form-control", placeholder: '0.0', step: '0.1', min: 0.0, max: 9.9 %>
+          </div>
+          <small class="form-text text-muted">　（例）D1</small>
         </div>
         <div class="form-group">
           <%= f.label :frequency %>
           <%= f.text_field :frequency, class: "form-control", placeholder: '（例）250' %>
+          <small class="form-text text-muted">*半角数字３桁でご入力ください。</small>
         </div>
           <%= f.hidden_field :user_id, :value => current_user.id %>
         <div class="d-flex justify-content-center">

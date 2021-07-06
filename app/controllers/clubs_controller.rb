@@ -6,27 +6,35 @@ class ClubsController < ApplicationController
 
 
   def index
-    @Clubs = SelectedClub.where(user_id: current_user.id)
   end
 
   def select
-    @selected_clubs = SelectedClub.all
+    @selected_clubs = current_user.clubs.where(selected: true)
   end
 
   def add
-    selected_club = SelectedClub.new
-    selected_club.user_id = params[:id] 
-    selected_club.club_id = params[:selected_club]
-
-    if selected_club.save
-      #head 201
-      club = Club.find(selected_club.club_id)
-      hash = {id: club.id, detail: club.detail}
-      require 'json'
-      render :json => hash.to_json
+    club = Club.find(params[:selected_club])
+    selected_clubs = current_user.clubs.where(selected: true).count
+    
+    if selected_clubs >= 14
+      flash[:danger] = 'クラブセッティングは14本までです。'
+      redirect_to clubs_select_user_path(@user)
+    elsif club.selected == true
+      flash[:danger] = 'すでにクラブセッティングに入っています。'
+      redirect_to clubs_select_user_path(@user)
     else
-      head 500
+      club.selected = true
+      if club.save
+        #head 201
+        flash[:success] = 'クラブセッティングを１本追加しました。'
+        hash = {id: club.id, detail: club.detail}
+        require 'json'
+        render :json => hash.to_json
+      else
+        head 500
+      end
     end
+
 
   end
 
@@ -36,15 +44,20 @@ class ClubsController < ApplicationController
 
   def create
     @club= Club.new(club_params)
+
+    # ユーザー毎のゴルフクラブのカウンターを計算し@club.counterに代入
+      # ゴルフクラブ登録が初めてなら
+    if current_user.clubs.count == 0
+      @club.counter = 1
+      # ゴルフクラブ登録が1本以上あれば
+    elsif current_user.clubs.count > 0
+      @club.counter = current_user.clubs.all.pluck(:counter).max + 1
+    end
+
     if @club.save
       flash[:success] = '新しいマイクラブを登録しました。'
       redirect_to clubs_url(@user)
     else
-      # render :edit
-      # redirect_to :new
-      # flash[:danger] = @club.errors.full_messages.join("<br>").html_safe
-      # render :new
-      # render json: { status: 'error'}
       redirect_to clubs_path
       flash[:danger] = @club.errors.full_messages.join('。').html_safe
     end
@@ -65,10 +78,11 @@ class ClubsController < ApplicationController
   private
 
     def club_params
-      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id)
+      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected)
     end
 
     def set_clubs
-      @clubs = Club.where(user_id: @user)
+      # @clubs = Club.where(user_id: current_user)
+      @clubs = current_user.clubs.all
     end
 end

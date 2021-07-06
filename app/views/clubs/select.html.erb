@@ -1,49 +1,78 @@
 <div class="container">
   <%= render 'layouts/flash_messages' %>
 
-<%# ここからドロップアンドドラッグのサンプル %>
+  <%# ここからドロップアンドドラッグ %>
 
-<!-- SelectedUser一覧をリスト表示 -->
-<h4 class="mt-4">クラブセッティング</h4>
-  <%= link_to "ゴルフバックの中身をグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand my-1" %>
+  <!-- SelectedUser一覧をリスト表示 -->
+  <div class="text-right">
+    <%= link_to "クラブセッティングをグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand mt-4 mb-3" %>
+  </div>
+  <div class="text-right">
+    <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand mb-5" %>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <!-- Club一覧をリスト表示 -->
+      <h2 class="float-left">マイクラブ一覧</h2>
 
-<table border="1" width="300">
-  <tr>
-    <th>SelectedClubのid</th>
-    <th>SelectedClubの名称</th>
-  </tr>
-  <!-- Array(@selected_clubs)は（）の中身を配列にする -->
-  <% Array(@selected_clubs).each do |selected_club| %>
-      <tr>
-        <td><%= selected_club.club_id %></td>
-        <td><%= Club.find(selected_club.club_id).detail %></td>
-      </tr>
-  <% end %>
-  <tr>
-    <!-- ドロップエリア -->
-    <td colspan="3" id="dropzone" class="dropzone"></td>
-  </tr>
-</table>
+      <% row_num_club = 1 %>
+      <div class="table-responsive">
+        <table id="list" class=" table table-sm table-bordered mb-5">
+          <thead class="thead-dark">
+            <tr>
+              <th>所持数</th>
+              <th>番号</th>
+              <th>番手</th>
+              <th>詳細</th>
+            </tr>
+          </thead>
+          <% Array(@clubs).each do |club| %>
+              <!-- rowにドラッグ可能(draggable)属性を指定 -->
+              <tr class="item" draggable="true" id="<%= club.id %>">
+                <th><%= row_num_club %></th>
+                <% row_num_club = row_num_club + 1 %>
+                <td><%= club.counter %></td>
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+                <td><%= club.detail %></td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
 
-<br>
+    <div class="col-6">
+      <h2 class="float-left">クラブセッティング</h2>
+      <% row_num_selected = 1 %>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>セッティング数</th>
+              <th>番号</th>
+              <th>番手</th>
+              <th>名称</th>
+            </tr>
+          </thead>
+          <!-- Array(@selected_clubs)は（）の中身を配列にする -->
+          <% Array(@selected_clubs).each do |selected_club| %>
+              <tr>
+                <th><%= row_num_selected %></th>
+                <% row_num_selected = row_num_selected + 1 %>
+                <td><%= selected_club.counter %></td>
+                <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
+                <td><%= selected_club.detail %></td>
+              </tr>
+          <% end %>
+          <tr>
+            <!-- ドロップエリア -->
+            <td colspan="4" id="dropzone" class="dropzone"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
 
-<!-- Club一覧をリスト表示 -->
-<h4> マイクラブ一覧</h4>
-
-<table id="list" border="1" width="300" class="mb-5">
-  <tr>
-    <th>club.id</th>
-    <th>club.detail</th>
-  </tr>
-  <% Array(@clubs).each do |club| %>
-  
-      <!-- rowにドラッグ可能(draggable)属性を指定 -->
-      <tr class="item" draggable="true" id="<%= club.id %>">
-        <td><%= club.id %></td>
-        <td><%= club.detail %></td>
-      </tr>
-  <% end %>
-</table>
 <script>
 
     $(function () {
@@ -101,8 +130,7 @@
                     // Userのid, nameがjson形式で
                     // 渡される
                     console.log(data);
-                    // {"id":1,"name":"Yamada Taro"}
-
+                    // {"id":10,"detail":"MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）"}
                     // 暫定的にページを再読込
                     location.href = "<%= clubs_select_user_path %>"
                 },
