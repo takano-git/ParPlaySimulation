@@ -75,10 +75,23 @@ class ClubsController < ApplicationController
     gon.scatterdata = scatterdata  # jsに渡す散布図表示用データ配列
   end
 
+  # ゴルフクラブ論理削除
+  def logical_deletion
+    club = Club.find(params[:id])
+    club.deleted_at = Time.now
+    if club.save
+      flash[:success] = 'ゴルフクラブを削除しました。'
+      redirect_to clubs_url(@user)
+    else
+      flash[:danger] = 'ゴルフクラブの削除に失敗しました。'
+      redirect_to clubs_url(@user)
+    end
+  end
+
   private
 
     def club_params
-      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected)
+      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :deleted_at)
     end
 
     def set_clubs
