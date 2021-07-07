@@ -1,6 +1,6 @@
 <div class="container">
   <%= render 'layouts/flash_messages' %>
-  <h2 class="py-5">マイクラブ一覧</h2><%= Club.find(10).deleted_at %>
+  <h2 class="py-5">マイクラブ一覧</h2>
   <div class="text-right">
     <%= link_to "新しいマイクラブを登録する", new_club_path(current_user), remote: true, class: "btn btn-outline-brand mb-3" %>
   </div>
