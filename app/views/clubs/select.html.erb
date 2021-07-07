@@ -27,8 +27,12 @@
             </tr>
           </thead>
           <% Array(@clubs).each do |club| %>
-              <!-- rowにドラッグ可能(draggable)属性を指定 -->
+            <!-- rowにドラッグ可能(draggable)属性を指定 -->
+            <% if club.deleted_at != nil %>
+              <tr class="item bg-secondary" draggable="true" id="<%= club.id %>">
+            <% else %>
               <tr class="item" draggable="true" id="<%= club.id %>">
+            <% end %>
                 <th><%= row_num_club %></th>
                 <% row_num_club = row_num_club + 1 %>
                 <td><%= club.counter %></td>
@@ -55,13 +59,17 @@
           </thead>
           <!-- Array(@selected_clubs)は（）の中身を配列にする -->
           <% Array(@selected_clubs).each do |selected_club| %>
+            <% if selected_club.deleted_at != nil %>
+              <tr class="bg-secondary">
+            <% else %>
               <tr>
-                <th><%= row_num_selected %></th>
-                <% row_num_selected = row_num_selected + 1 %>
-                <td><%= selected_club.counter %></td>
-                <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
-                <td><%= selected_club.detail %></td>
-              </tr>
+            <% end %>
+              <th><%= row_num_selected %></th>
+              <% row_num_selected = row_num_selected + 1 %>
+              <td><%= selected_club.counter %></td>
+              <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
+              <td><%= selected_club.detail %></td>
+            </tr>
           <% end %>
           <tr>
             <!-- ドロップエリア -->

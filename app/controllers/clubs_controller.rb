@@ -77,6 +77,7 @@ class ClubsController < ApplicationController
 
   # ゴルフクラブ論理削除
   def logical_deletion
+
     club = Club.find(params[:id])
     club.deleted_at = Time.now
     if club.save
