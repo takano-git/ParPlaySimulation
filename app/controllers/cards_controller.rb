@@ -161,6 +161,7 @@ class CardsController < ApplicationController
         :amount => 980,
         :interval => 'month',
         :currency => 'jpy',
+        :trial_days => 30,
       )
     end
 
