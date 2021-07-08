@@ -26,7 +26,7 @@
     %>
   </div>
   
-  <div class="form-group-course col-md-8 form-control">
+  <div class="form-group-course col-md-5 form-control">
     <% @pars.each do |par| %>
       &emsp;
       <%= hole_fields.label :pars, par %>
@@ -36,4 +36,92 @@
       </label>
     <% end %>
   </div>
+
+  <div class="form-group-course">
+    <%= hole_fields.hidden_field :golfclub_id, value: @golfclub.id %>
+  </div>
+
+  <div class="bbb">
+  <label class="aaa" for="file_map_r">
+    R
+    <%= hole_fields.file_field :map_r, accept: "image/png, image/jpg, image/jpeg", id: "file_map_r", class: "form-control-file js-upload-file" %>
+  </label>
+  <div class="js-upload-filename"></div>
+  </div>
+
+  <div class="bbb">
+  <label class="aaa" for="file_map_b">
+    B
+    <%= hole_fields.file_field :map_b, accept: "image/png, image/jpg, image/jpeg", id: "file_map_b", class: "form-control-file js-upload-file" %>
+  </label>
+  <div class="js-upload-filename"></div>
+  </div>
+
+  <div class="bbb">
+  <label class="aaa" for="file_map_l">
+    L
+    <%= hole_fields.file_field :map_l, accept: "image/png, image/jpg, image/jpeg", id: "file_map_l", class: "form-control-file js-upload-file" %>
+    <div class="js-upload-filename"></div>
+  </label>
+  </div>
+<!--
+  <div class="bbb">
+  <label class="aaa" for="file_photo">
+    L
+    <input type="file" id="file_photo" class="js-upload-file">
+  </label>
+  </div> -->
+
 <% end %>
+
+<style>
+/* .aaa {
+  display: none;
+}
+.bbb {b
+  color: white;  
+  background-color: #224444;
+  padding: 0  10px 0 10px;
+  border-radius: 12px;
+} */
+/* input[type="file"] {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+} */
+
+.bbb {
+  display: inline-block;
+}
+
+.aaa {
+  color: white;  
+  background-color: #224444;
+  padding: 0  10px 0 10px;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* .fileclear {
+  display: none;
+  margin: 10px 0 0;
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+} */
+</style>
+
+<script>
+$(function() {
+  $('.js-upload-file').on('change', function () { //ファイルが選択されたら
+    // var file = $(this).prop('files')[0]; //ファイルの情報を代入(file.name=ファイル名/file.size=ファイルサイズ/file.type=ファイルタイプ)
+    // var css = document.querySelector(".js-upload-filename");
+    // $('.js-upload-filename').text(file.name); //ファイル名を出力
+    document.querySelector(".aaa").style.backgroundColor = "#ccffcc";
+  });
+});
+</script>
+
+
+

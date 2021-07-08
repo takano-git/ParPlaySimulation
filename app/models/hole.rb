@@ -1,5 +1,6 @@
 class Hole < ApplicationRecord
   has_many :strategy_infos
+  belongs_to :golfclub
   belongs_to :course
 
   has_one_attached :map_r

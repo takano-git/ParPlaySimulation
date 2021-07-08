@@ -1,0 +1,5 @@
+.container-hole {
+  @extend .container-fluid;
+  max-width: 992px;
+  padding: 2rem;
+}

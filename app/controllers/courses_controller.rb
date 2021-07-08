@@ -56,7 +56,7 @@ class CoursesController < ApplicationController
     
     # holes_attributes: [:id ...] ここに:idを渡してないとupdateした時、ホール情報が新たに重複登録されてしまう。
     def course_params
-      params.require(:course).permit(:name, holes_attributes: [:id, :hole_number, :number_of_pars, :golfclub_id, :course_id])
+      params.require(:course).permit(:name, holes_attributes: [:id, :hole_number, :number_of_pars, :golfclub_id, :course_id, :map_r, :map_b, :map_l])
     end
 
     def set_pars
