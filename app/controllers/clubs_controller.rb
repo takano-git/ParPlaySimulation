@@ -16,21 +16,20 @@ class ClubsController < ApplicationController
 
   # ドロップアンドドラッグしクラブセッティングに加える機能
   def add
-    club = Club.find(params[:selected_club])
+    @club = Club.find(params[:selected_club])
     selected_clubs = current_user.clubs.where(selected: true).count
     
     if selected_clubs >= 14
       flash[:danger] = 'クラブセッティングは14本までです。'
       redirect_to clubs_select_user_path(@user)
-    elsif club.selected == true
-      flash[:danger] = 'すでにクラブセッティングに入っています。'
-      redirect_to clubs_select_user_path(@user)
+    elsif @club.selected == true
+      redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}はすでにクラブセッティングに入っています。" }
     else
-      club.selected = true
-      if club.save
+      @club.selected = true
+      if @club.save
         #head 201
         flash[:success] = 'クラブセッティングを１本追加しました。'
-        hash = {id: club.id, detail: club.detail}
+        hash = {id: @club.id, detail: @club.detail}
         require 'json'
         render :json => hash.to_json
       else
@@ -41,14 +40,13 @@ class ClubsController < ApplicationController
 
   # セッティングから外す機能
   def take
-    club = Club.find(params[:id])
-    club.selected = false
-    if club.save
-      flash[:success] = 'クラブセッティングから外しました。'
+    @club = Club.find(params[:id])
+    @club.selected = false
+    if @club.save
+      redirect_to clubs_select_user_path(@user), flash: { success: "#{@club.yarn_count_string}#{@club.yarn_count_number}をクラブセッティングから外しました。" }
     else
-      flash[:danger] = 'クラブセッティングから外す処理に失敗しました。'
+      redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}をクラブセッティングから外す処理に失敗しました。" }
     end
-    redirect_to clubs_select_user_path(@user)
   end
 
   def new
