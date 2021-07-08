@@ -47,6 +47,7 @@
               <th>セッティング数</th>
               <th>番手</th>
               <th>名称</th>
+              <th>　</th>
             </tr>
           </thead>
           <!-- Array(@selected_clubs)は（）の中身を配列にする -->
@@ -60,11 +61,14 @@
               <% row_num_selected = row_num_selected + 1 %>
               <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
               <td><%= selected_club.detail %></td>
+              <td>
+                <%= link_to '外す', clubs_take_user_path(selected_club), :method => :post, class: "btn btn-outline-brand" %>
+              </td>
             </tr>
           <% end %>
           <tr>
             <!-- ドロップエリア -->
-            <td colspan="4" id="dropzone" class="dropzone"></td>
+            <td colspan="5" id="dropzone" class="dropzone"></td>
           </tr>
         </table>
       </div>

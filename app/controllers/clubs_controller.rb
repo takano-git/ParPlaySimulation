@@ -8,11 +8,13 @@ class ClubsController < ApplicationController
   def index
   end
 
+  # クラブセッティングに加えるselectページ
   def select
     # 長い順にクラブセッティングに選ばれたクラブを並び替え
     @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
   end
 
+  # ドロップアンドドラッグしクラブセッティングに加える機能
   def add
     club = Club.find(params[:selected_club])
     selected_clubs = current_user.clubs.where(selected: true).count
@@ -35,8 +37,18 @@ class ClubsController < ApplicationController
         head 500
       end
     end
+  end
 
-
+  # セッティングから外す機能
+  def take
+    club = Club.find(params[:id])
+    club.selected = false
+    if club.save
+      flash[:success] = 'クラブセッティングから外しました。'
+    else
+      flash[:danger] = 'クラブセッティングから外す処理に失敗しました。'
+    end
+    redirect_to clubs_select_user_path(@user)
   end
 
   def new
