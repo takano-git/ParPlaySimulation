@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       get 'clubs/chart'
       get 'clubs/select'
       post 'clubs/add'
+      post 'clubs/take'
+      post 'clubs/logical_deletion'
       resources :clubs, except: %i(show)
     end
   end
