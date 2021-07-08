@@ -9,7 +9,8 @@ class ClubsController < ApplicationController
   end
 
   def select
-    @selected_clubs = current_user.clubs.where(selected: true)
+    # 長い順にクラブセッティングに選ばれたクラブを並び替え
+    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
   end
 
   def add
@@ -68,7 +69,9 @@ class ClubsController < ApplicationController
     largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
     scatterdata = [] # 散布図表示用データ配列
   
-    largo_weight_data = Club.where(user_id: @user).pluck(:largo, :weight)
+    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
+    largo_weight_data = @selected_clubs.pluck(:largo, :weight)
+
     largo_weight_data.each do |data|
       scatterdata.push({ x: data[0], y: data[1] })
     end
@@ -77,14 +80,18 @@ class ClubsController < ApplicationController
 
   # ゴルフクラブ論理削除
   def logical_deletion
-
     club = Club.find(params[:id])
-    club.deleted_at = Time.now
-    if club.save
-      flash[:success] = 'ゴルフクラブを削除しました。'
-      redirect_to clubs_url(@user)
+    if club.deleted_at == nil
+     club.deleted_at = Time.now
     else
-      flash[:danger] = 'ゴルフクラブの削除に失敗しました。'
+      club.deleted_at = nil
+    end
+
+    if club.save
+      redirect_to clubs_url(@user)
+      flash[:success] = 'ゴルフクラブを変更しました。'
+    else
+      flash[:danger] = 'ゴルフクラブの変更に失敗しました。'
       redirect_to clubs_url(@user)
     end
   end

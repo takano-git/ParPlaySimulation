@@ -4,11 +4,9 @@
   <%# ここからドロップアンドドラッグ %>
 
   <!-- SelectedUser一覧をリスト表示 -->
-  <div class="text-right">
-    <%= link_to "クラブセッティングをグラフで見る", clubs_chart_user_path(current_user), class: "btn btn-brand mt-4 mb-3" %>
-  </div>
-  <div class="text-right">
-    <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand mb-5" %>
+  <div class="text-right my-4">
+    <%= link_to "クラブセッティングをグラフで見る", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-brand" %>
+    <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand" %>
   </div>
   <div class="row">
     <div class="col-6">
@@ -20,8 +18,6 @@
         <table id="list" class=" table table-sm table-bordered mb-5">
           <thead class="thead-dark">
             <tr>
-              <th>所持数</th>
-              <th>番号</th>
               <th>番手</th>
               <th>詳細</th>
             </tr>
@@ -33,9 +29,6 @@
             <% else %>
               <tr class="item" draggable="true" id="<%= club.id %>">
             <% end %>
-                <th><%= row_num_club %></th>
-                <% row_num_club = row_num_club + 1 %>
-                <td><%= club.counter %></td>
                 <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
                 <td><%= club.detail %></td>
               </tr>
@@ -52,7 +45,6 @@
           <thead class="thead-dark">
             <tr>
               <th>セッティング数</th>
-              <th>番号</th>
               <th>番手</th>
               <th>名称</th>
             </tr>
@@ -66,7 +58,6 @@
             <% end %>
               <th><%= row_num_selected %></th>
               <% row_num_selected = row_num_selected + 1 %>
-              <td><%= selected_club.counter %></td>
               <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
               <td><%= selected_club.detail %></td>
             </tr>

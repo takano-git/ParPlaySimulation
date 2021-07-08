@@ -1,12 +1,13 @@
 <div class="container">
   <%= render 'layouts/flash_messages' %>
-  <h2 class="py-5">マイクラブ一覧</h2>
-  <div class="text-right">
+
+  <div class="text-right ">
     <%= link_to "新しいマイクラブを登録する", new_club_path(current_user), remote: true, class: "btn btn-outline-brand mb-3" %>
-  </div>
-  <div class="text-right">
     <%= link_to "クラブセッティングする", clubs_select_user_path(current_user), class: "btn btn-brand mb-3" %>
   </div>
+
+
+  <h2 class="py-5">マイクラブ一覧</h2>
 
   <% row_num = 1 %>
   <div class="table-responsive">
@@ -44,7 +45,10 @@
             <td><%= club.frequency %></td>
             <td>
               <% if club.deleted_at != nil %>
-                <button type="button" class="btn btn-outline-brand" disabled>削除</button>
+                <%= link_to '戻す', clubs_logical_deletion_user_path(club, params: { club: { id: club.id, deleted_at: Time.now} }),
+                                  :method => :post,
+                                  class: "btn btn-outline-brand"
+                %>
               <% else %>
                 <%= link_to '削除', clubs_logical_deletion_user_path(club, params: { club: { id: club.id, deleted_at: Time.now} }),
                                   :method => :post,
