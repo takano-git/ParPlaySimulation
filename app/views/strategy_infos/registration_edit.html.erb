@@ -1,16 +1,21 @@
 <div id="container" class="container" data-turbolinks='false'>
+  <div id="golfclub__name_area">
+    <%= @golfclub.name %><br>
+    <%= @area.prefecture %>
+  </div>
   <%# newかeditかでrennder分け %>
-  <% if @new_or_edit && @strategy_info_admin.present? %>
-    <%= "ユーザーのデータなし(new)、かつ管理者のデータあり" %>
-    <%= render "strategy_infos/registration_edit_render_files/new" %>
-  <% elsif @new_or_edit %>
-    <%= "ユーザーのデータなし(new)" %>
-    <%= render "strategy_infos/registration_edit_render_files/brand_new" %>
-  <% else %>
-    <%= "ユーザーのデータあり(edit)" %>
-    <%= render "strategy_infos/registration_edit_render_files/edit" %>
-  <% end %>
-  
+  <div id="registration_edit_renders">
+    <% if @new_or_edit && @strategy_info_admin.present? %>
+      <%= "ユーザーのデータなし(new)、かつ管理者のデータあり" %>
+      <%= render "strategy_infos/registration_edit_render_files/new" %>
+    <% elsif @new_or_edit %>
+      <%= "ユーザーのデータなし(new)" %>
+      <%= render "strategy_infos/registration_edit_render_files/brand_new" %>
+    <% else %>
+      <%= "ユーザーのデータあり(edit)" %>
+      <%= render "strategy_infos/registration_edit_render_files/edit" %>
+    <% end %>
+  </div>
   
   <%# 管理者の場合はゴルフクラブ一覧に戻るボタンも表示 %>
   <%# ---------------- %>
@@ -19,3 +24,7 @@
   </div>
 
 </div>
+
+<%= javascript_include_tag "strategy_infos/preview" %>
+<%= javascript_include_tag "strategy_infos/select_ajax" %>
+<%= javascript_include_tag "strategy_infos/strategy_form" %>
