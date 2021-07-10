@@ -1,3 +1,211 @@
+<div class="row">
+  <div class="form-group">
+    <%= course.label :name %>
+    <%= course.text_field :name, class: "form-control" %>
+    
+    <div class="form-group-course-btn">
+      <input type="button" id="hole_btn" value="ホール番号切替" class="btn btn-sm btn-brand">
+      <%= course.submit submit_name, data: { disable_with: '送信中' }, class: "btn btn-sm btn-primary" %>
+    </div>
+  </div>
+</div>
+
+<!--
+<div class="">
+  <%= Hole.human_attribute_name :hole_number %>
+</div>
+
+<div class="">
+  <%= Hole.human_attribute_name :number_of_pars %>
+</div>
+-->
+<div class="row row-cols-md-1 row-cols-lg-3">
+  <%= course.fields_for :holes do |hole_fields| %>
+    <div class="card">
+      <div class="col mb-4">
+        <%= hole_fields.number_field :hole_number,
+          id: "hole_number_field_#{hole_fields.index + 1}",
+          hole_type: "OUT",
+          class: "form-control",
+          readonly: true
+        %>
+      </div>
+    
+      <div class="">
+        <% @pars.each do |par| %>
+          &emsp;
+          <%= hole_fields.label :pars, par %>
+          <%= hole_fields.radio_button :number_of_pars, par, value: "ball_blue.jpeg" %>
+          <label for=<%= "course_holes_attributes_#{hole_fields.index}_number_of_pars_#{par}" %>>
+            <img src="/ball_blue.jpeg" with="20" height="20">
+          </label>
+        <% end %>
+      </div>
+
+      <div class="">
+        <%= hole_fields.hidden_field :golfclub_id, value: @golfclub.id %>
+      </div>
+
+      <div class="hole-group">
+        <!-- R画像フォーム -->
+        <div class="form-group-hole">
+        <div id="hole_remove_<%= hole_fields.index + 1 %>_r" class="remove">×</div>
+          <%= hole_fields.label :map_r, for: "hole_image_#{hole_fields.index + 1}_r" do %>
+            <div class="hole-name">R</div>
+            <%= hole_fields.file_field :map_r, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_r", style: "display: none;"%>
+            <div>
+              <img src="/noimage.png" class="hole-image-default">
+              <img id=<%= "preview_#{hole_fields.index + 1}_r" %> class="hole-image clear-text">
+            </div>
+          <% end %>
+        </div>
+        
+        <script>
+          $("#hole_image_<%= hole_fields.index + 1 %>_r").on('change', function (e) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $("#preview_<%= hole_fields.index + 1 %>_r").attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+          });
+
+          document.querySelector("#hole_remove_<%= hole_fields.index + 1 %>_r").addEventListener('click', function(){
+            document.querySelector("#preview_<%= hole_fields.index + 1 %>_r").setAttribute('src', '');
+            // preview.style.display = 'none';
+            // button.style.display = 'none';
+            document.querySelector("#hole_image_<%= hole_fields.index + 1 %>_r").value = '';
+          });
+        </script>
+
+        <!-- B画像フォーム -->
+        <div class="form-group-hole">
+        <div id="hole_remove_<%= hole_fields.index + 1 %>_b" class="remove">×</div>
+          <%= hole_fields.label :map_b, for: "hole_image_#{hole_fields.index + 1}_b" do %>
+            <div class="hole-name">B</div>
+            <%= hole_fields.file_field :map_b, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_b", style: "display: none;" %>
+            <div>
+              <img src="/noimage.png" class="hole-image-default">
+              <img src="/noimage.png" id=<%= "preview_#{hole_fields.index + 1}_b" %> class="hole-image">
+            </div>
+          <% end %>
+        </div>
+        
+        <script>
+          $("#hole_image_<%= hole_fields.index + 1 %>_b").on('change', function (e) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $("#preview_<%= hole_fields.index + 1 %>_b").attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+          });
+
+          document.querySelector("#hole_remove_<%= hole_fields.index + 1 %>_b").addEventListener('click', function(){
+          document.querySelector("#preview_<%= hole_fields.index + 1 %>_b").setAttribute('src', '');
+          document.querySelector("#hole_image_<%= hole_fields.index + 1 %>_b").value = '';
+          });
+        </script>
+
+        <!-- L画像フォーム -->
+        <div class="form-group-hole">
+        <div id="hole_remove_<%= hole_fields.index + 1 %>_l" class="remove">×</div>
+          <%= hole_fields.label :map_l, for: "hole_image_#{hole_fields.index + 1}_l" do %>
+            <div class="hole-name">L</div>
+            <%= hole_fields.file_field :map_l, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_l", style: "display: none;" %>
+            <div>
+              <img src="/noimage.png" class="hole-image-default">
+              <img src="/noimage.png" id=<%= "preview_#{hole_fields.index + 1}_l" %> class="hole-image">
+            </div>
+          <% end %>
+        </div>
+
+        <script>
+          $("#hole_image_<%= hole_fields.index + 1 %>_l").on('change', function (e) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $("#preview_<%= hole_fields.index + 1 %>_l").attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+          });
+
+          document.querySelector("#hole_remove_<%= hole_fields.index + 1 %>_l").addEventListener('click', function(){
+            document.querySelector("#preview_<%= hole_fields.index + 1 %>_l").setAttribute('src', '');
+            document.querySelector("#hole_image_<%= hole_fields.index + 1 %>_l").value = '';
+          });
+        </script>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<style>
+.clear-text {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.hole-image-default {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  margin: 0 5px 0 5px;
+}
+
+.hole-image {
+  position: relative;
+  left: 0px;
+  width: 70px;
+  height: 70px;
+  margin: 0 5px 0 5px;
+}
+
+.remove {
+  color: #dc3545;
+  font-size: large;
+  text-shadow:1px 0 0 #fff,0 1px 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff;
+  position: relative;
+  margin: 0 0 -23px 55px;
+  width: 20px;
+  z-index: 11;
+}
+
+.hole-name {
+  color: #224444;
+  text-shadow:1px 0 0 #fff,0 1px 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff;
+  margin: 0 0 -23px -45px;
+  position: relative;
+  z-index: 10;
+}
+
+/* .image_input_btn{
+  display: block;
+  background-color: #007bff;
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  padding-top: 2px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+} */
+
+/* .image_form{
+  display: none;
+} */
+
+</style>
+
+
+
+
+
+
+
+
+<!--
 <div class="form-group">
   <%= course.label :name %>
   <%= course.text_field :name, class: "col col-md-12 form-control" %>
@@ -41,6 +249,20 @@
     <%= hole_fields.hidden_field :golfclub_id, value: @golfclub.id %>
   </div>
 
+  <div class="form-group-course">
+    <%= hole_fields.label :photo %><br>
+    <%= hole_fields.file_field :map_r, accept: "image/png, image/jpg, image/jpeg", id: "file_map_r", class: "form-control-file" %>
+  </div>
+
+  <div class="form-group-course">
+    <%= hole_fields.label :photo %><br>
+    <%= hole_fields.file_field :map_b, accept: "image/png, image/jpg, image/jpeg", id: "file_map_r", class: "form-control-file" %>
+  </div>
+
+  <div class="form-group-course">
+    <%= hole_fields.label :photo %><br>
+    <%= hole_fields.file_field :map_l, accept: "image/png, image/jpg, image/jpeg", id: "file_map_r", class: "form-control-file" %>
+  </div>
   <div class="bbb">
   <label class="aaa" for="file_map_r">
     R
@@ -64,64 +286,12 @@
     <div class="js-upload-filename"></div>
   </label>
   </div>
-<!--
+
   <div class="bbb">
   <label class="aaa" for="file_photo">
     L
     <input type="file" id="file_photo" class="js-upload-file">
   </label>
-  </div> -->
-
+  </div>
 <% end %>
-
-<style>
-/* .aaa {
-  display: none;
-}
-.bbb {b
-  color: white;  
-  background-color: #224444;
-  padding: 0  10px 0 10px;
-  border-radius: 12px;
-} */
-/* input[type="file"] {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-} */
-
-.bbb {
-  display: inline-block;
-}
-
-.aaa {
-  color: white;  
-  background-color: #224444;
-  padding: 0  10px 0 10px;
-  border-radius: 4px;
-  display: inline-block;
-  cursor: pointer;
-}
-
-/* .fileclear {
-  display: none;
-  margin: 10px 0 0;
-  text-decoration: underline;
-  font-weight: bold;
-  cursor: pointer;
-} */
-</style>
-
-<script>
-$(function() {
-  $('.js-upload-file').on('change', function () { //ファイルが選択されたら
-    // var file = $(this).prop('files')[0]; //ファイルの情報を代入(file.name=ファイル名/file.size=ファイルサイズ/file.type=ファイルタイプ)
-    // var css = document.querySelector(".js-upload-filename");
-    // $('.js-upload-filename').text(file.name); //ファイル名を出力
-    document.querySelector(".aaa").style.backgroundColor = "#ccffcc";
-  });
-});
-</script>
-
-
-
+-->

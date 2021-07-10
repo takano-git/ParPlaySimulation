@@ -41,7 +41,6 @@
 
   <div class="course-form">
     <%= link_to 'コース追加', new_golfclub_course_path(@golfclub),
-                            remote: true,
                             class: "btn btn-sm btn-primary" %>
     <%= link_to '一覧に戻る', golfclubs_path, class: "btn btn-sm btn-secondary" %>
   </div>
@@ -72,7 +71,6 @@
     </table>
     <div class="course-form" style="float: right;">
       <%= link_to '編集', edit_golfclub_course_path(@golfclub, course),
-                          remote: true,
                           class: "fas fa-edit" %>
       &emsp;
       <!--

@@ -1,0 +1,9 @@
+<%= render 'layouts/flash_messages' %>
+
+<div class="container-course">
+  <h5><%= @golfclub.name %> ・ コース情報編集</h5>
+
+  <%= form_with model: @course, url: golfclub_course_path(@golfclub, @course), local: true, method: :patch do |course| %>
+    <%= render 'form', course: course %>
+  <% end %>
+</div>
