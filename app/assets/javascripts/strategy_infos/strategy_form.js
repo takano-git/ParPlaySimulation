@@ -146,8 +146,15 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     let width = photo_pin_target.offsetWidth;
     let height = photo_pin_target.offsetHeight;
     // photo取得
-    let photo = document.querySelector('#photo_prev');
-    
+    let prev_display = document.getElementById('photo_prev');
+    let prev_display_css = getComputedStyle(prev_display).display;
+      // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+    let photo = ""
+    if (prev_display_css !== "none"){
+      photo = document.querySelector('#photo_prev');
+    } else {
+      photo = document.querySelector('#photo_selected');
+    }
     let photo_target_rect = photo.getBoundingClientRect();
     let photo_target_x = (x - photo_target_rect.left)-width/2-2;
     let photo_target_y = (y - photo_target_rect.top)-height/2-3;
@@ -181,7 +188,16 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     let width = photo_pin_point.offsetWidth;
     let height = photo_pin_point.offsetHeight;
     // photo取得
-    let photo = document.querySelector('#photo_prev');
+    // photo取得
+    let prev_display = document.getElementById('photo_prev');
+    let prev_display_css = getComputedStyle(prev_display).display;
+      // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+    let photo = ""
+    if (prev_display_css !== "none"){
+      photo = document.querySelector('#photo_prev');
+    } else {
+      photo = document.querySelector('#photo_selected');
+    }
     
     let photo_point_rect = photo.getBoundingClientRect();
     let photo_point_x = (x - photo_point_rect.left)-width/2-2;

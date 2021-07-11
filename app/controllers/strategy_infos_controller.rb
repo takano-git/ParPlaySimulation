@@ -203,14 +203,13 @@ class StrategyInfosController < ApplicationController
 
   def create
     # byebug
-    byebug
       @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
       flash[:success] = "攻略情報を登録しました。"
     else
       flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
     end
-    redirect_to action: :new
+    redirect_to action: :registration_edit
   end
 
   def edit
@@ -219,12 +218,19 @@ class StrategyInfosController < ApplicationController
 
   def update
     byebug
+    if @strategy_info.update(strategy_info_params)
+      respond_to do |format|
+        format.js { flash.now[:success] = "画像情報を編集しました。(#{@gallery.title})" }
+      end
+    else
+      render :index
+    end
   end
 
   def destroy
-    # strategy_info.photo.perge
-    # strategy_info.hole_map.perge
-    
+    @strategy_info = StrategyInfo.find(params[:id])
+    @strategy_info.photo.perge if @strategy_info.photo.attached? 
+    @strategy_info.destroy
   end
 
   private

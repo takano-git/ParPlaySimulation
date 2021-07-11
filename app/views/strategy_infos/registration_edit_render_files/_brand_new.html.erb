@@ -23,11 +23,11 @@
           <div id="photo_area">
             <%= image_tag "", id: "photo_prev", class: "strategy_img" %>
           </div>
-          <div class="upload-btn-wrapper">
+          <%# <div class="upload-btn-wrapper">
             <button class="upload-btn">画像選択</button>
-            <%= f.file_field :photo, accept: 'image/jpeg,image/gif,image/png', onChange:'inform()' %>
+            < %= f.file_field :photo, accept: 'image/jpeg,image/gif,image/png', onChange:'inform()' % >
             <h3 id="file_name"></h3>
-          </div>
+          </div> %>
           <div class="photo_pin">
             <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="pin">
             <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="pin">
