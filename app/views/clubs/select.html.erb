@@ -1,0 +1,253 @@
+<div class="container">
+  <%= render 'layouts/flash_messages' %>
+
+  <%# ここからドロップアンドドラッグ %>
+
+  <!-- SelectedUser一覧をリスト表示 -->
+  <div class="text-right my-4">
+    <%= link_to "クラブセッティングをグラフで見る", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-brand" %>
+    <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand" %>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <!-- Club一覧をリスト表示 -->
+      <h2 class="float-left">マイクラブ一覧</h2>
+
+      <% row_num_club = 1 %>
+      <div class="table-responsive">
+        <table id="list" class=" table table-sm table-bordered mb-5">
+          <thead class="thead-dark">
+            <tr>
+              <th>番手</th>
+              <th>詳細</th>
+            </tr>
+          </thead>
+          <% Array(@clubs).each do |club| %>
+            <!-- rowにドラッグ可能(draggable)属性を指定 -->
+            <% if club.deleted_at != nil %>
+              <tr class="item bg-secondary" draggable="true" id="<%= club.id %>">
+            <% else %>
+              <tr class="item" draggable="true" id="<%= club.id %>">
+            <% end %>
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+                <td><%= club.detail %></td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <h2 class="float-left">クラブセッティング</h2>
+      <% row_num_selected = 1 %>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>セッティング数</th>
+              <th>番手</th>
+              <th>名称</th>
+              <th>　</th>
+            </tr>
+          </thead>
+          <!-- Array(@selected_clubs)は（）の中身を配列にする -->
+          <% Array(@selected_clubs).each do |selected_club| %>
+            <% if selected_club.deleted_at != nil %>
+              <tr class="bg-secondary">
+            <% else %>
+              <tr>
+            <% end %>
+              <th><%= row_num_selected %></th>
+              <% row_num_selected = row_num_selected + 1 %>
+              <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
+              <td><%= selected_club.detail %></td>
+              <td>
+                <%= link_to '外す', clubs_take_user_path(selected_club), :method => :post, class: "btn btn-outline-brand" %>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <!-- ドロップエリア -->
+            <td colspan="5" id="dropzone" class="dropzone"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+
+<script>
+
+    $(function () {
+
+        // dropzoneの表示テキストを初期化 「ここにドロップできます。」
+        initDropzone();
+
+        // idが #listテーブルの.itemクラスが付いている行が操作された時のイベントリスナーを設定
+        items = document.getElementById('list').getElementsByClassName('item');
+        // forEach でArrayの要素各々に対し（）内を実行？いや定義？する。call(item, コールバック関数)で定義するとthisの値として使えるよう
+        Array.prototype.forEach.call(items, function (item) {
+            // $(対象).on(イベント, 自作関数);
+            $(item).on('dragstart', onDragStart);
+            $(item).on('dragend', onDragEnd);
+        });
+
+        // dropzoneのリスナーを設定
+        
+        var $dropzone = $('#dropzone')
+            .on('dragover', onDragOver)
+            .on('dragenter', onDragEnter)
+            .on('dragleave', onDragLeave)
+            .on('drop', onDrop);
+
+
+        // dropzoneの表示テキストを指定
+        function initDropzone() {
+            $('#dropzone').text("マイクラブ一覧からここにドロップできます。");
+        }
+
+        function startDropzone() {
+            $('#dropzone').text("ドラッグ中。");
+        }
+
+        function endDropzone(name) {
+            $('#dropzone').text(name + "をドロップしました。");
+        }
+
+        // ドロップ時の処理
+        // (1) ドロップされた行のidをPOSTする
+        // (2) 成功したらリダイレクトする
+        // (3) 失敗したらダイアログを表示する
+        function doAction(id) {
+            $.ajax({
+                url: "<%=  clubs_add_user_path  %>",
+                type: "POST",
+                data: {
+                    selected_club: id
+                },
+                dataType: "html",
+                success: function (data) {
+                    // alert("success");
+
+                    // dataにドラッグ＆ドロップした
+                    // Userのid, nameがjson形式で
+                    // 渡される
+                    console.log(data);
+                    // {"id":10,"detail":"MAVRIK 440ツアーバージョン（9°、グラファイトデザイン Tour AD XC-7TX）"}
+                    // 暫定的にページを再読込
+                    location.href = "<%= clubs_select_user_path %>"
+                },
+                error: function (data) {
+                    alert("選択できるメインゴルフクラブは14本までです。\n同じゴルフクラブを２回選択できません。");
+                }
+            });
+        }
+
+        // ドラッグ＆ドロップ操作
+        function onDragStart(e) {
+            // Touchイベントに限らずjQueryを通してのイベントオブジェクトの取得はすべてoriginalEventで取得できます。
+            // targetとはドラッグされている要素を指す（のidをvar idへ格納）
+            var id = e.originalEvent.target.id;
+            var name = e.originalEvent.target.cells[1].innerHTML;
+            // ドラッグ操作の data に指定したデータと型を設定
+            e.originalEvent.dataTransfer.setData('id', id);
+            e.originalEvent.dataTransfer.setData('name', name);
+            addDraggingEffect();
+            startDropzone();
+        }
+
+        function onDragEnter(e) {
+            addEnterEffect();
+        }
+
+        function onDragLeave(e) {
+            removeEnterEffect();
+        }
+
+        function onDragOver(e) {
+            e.preventDefault();
+        }
+
+        function onDragEnd(e) {
+            resetAllEffect();
+        }
+
+        function onDrop(e) {
+            e.preventDefault();
+            var id = e.originalEvent.dataTransfer.getData('id');
+            var name = e.originalEvent.dataTransfer.getData('name');
+            endDropzone(name);
+            doAction(id);
+        }
+
+        function addDraggingEffect() {
+            $dropzone.addClass('dragging');
+        }
+
+        function removeDraggingEffect() {
+            $dropzone.removeClass('dragging');
+            initDropzone();
+        }
+
+        function addEnterEffect() {
+            $dropzone.addClass('dragenter');
+        }
+
+        function removeEnterEffect() {
+            $dropzone.removeClass('dragenter');
+        }
+
+        function resetAllEffect(e) {
+            removeDraggingEffect();
+            removeEnterEffect();
+        }
+
+    });
+
+</script>
+
+
+<style>
+
+  .dropzone p {
+    margin: 0;
+    padding: 0;
+    background-color: #0000E9;
+  }
+
+  .dropzone.small {
+    height: 40px;
+  }
+
+  .dropzone {
+    border: 1px solid #555;
+    margin-top: 5px;
+    /*width: 246px;*/
+    min-height: 100px;
+    font-size: 12px;
+
+    text-align: center;
+    line-height: 100px;
+
+    color: gray;
+    background-color: ghostwhite;
+    border-color: gray;
+  }
+
+  .dragging {
+    color: rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 255, .1);
+    border-color: rgba(0, 0, 255, .3);
+  }
+
+  .dragging:after {
+  }
+
+  .dragenter {
+    border-color: rgba(255, 0, 0, .3);
+    background-color: rgba(255, 0, 0, .1);
+  }
+
+</style>
+<%# ここまでドロップアンドドラッグのサンプル %>
+</div>

@@ -1,16 +1,16 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-golfclub">
-  <h5>コース編集・ホール登録</h5>
+  <h4>コース編集・ホール登録</h4>
   
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <th><%= Golfclub.human_attribute_name :name %></th>
+        <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :name %></th>
         <td><%= @golfclub.name %></td>
       </tr>
       <tr>
-        <th>
+        <th class="golfclub-table-header">
           <%= Area.human_attribute_name :district %> / 
           <%= Area.human_attribute_name :prefecture %>
         </th>
@@ -20,11 +20,11 @@
         </td>
       </tr>
       <tr>
-        <th><%= Golfclub.human_attribute_name :home_page_url %></th>
+        <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :home_page_url %></th>
         <td><%= @golfclub.home_page_url %></td>
       </tr>
       <tr>
-        <th><%= Golfclub.human_attribute_name :strategy_video %></th>
+        <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :strategy_video %></th>
         <td><%= @golfclub.strategy_video %></td>
       </tr>
       <tr>
@@ -39,57 +39,56 @@
     </tbody>
   </table>
 
-  <table class="table table-bordered">
-    <tbody>
-      <% @courses.each do |course| %>
+  <div class="course-form">
+    <%= link_to 'コース追加', new_golfclub_course_path(@golfclub),
+                            remote: true,
+                            class: "btn btn-sm btn-primary" %>
+    <%= link_to '一覧に戻る', golfclubs_path, class: "btn btn-sm btn-secondary" %>
+  </div>
+
+  <% @courses.each do |course| %>
+    <table class="table table-bordered">
+      <tbody>
         <tr>
-          <th colspan="10">
+          <th colspan="10" class="course-name-field bg-brand">
             <%= course.name %>
-            <%= link_to 'コース情報修正', edit_golfclub_course_path(@golfclub, course), class: "badge badge-pill badge-info" %>
+            <%= link_to '', edit_golfclub_course_path(@golfclub, course),
+                            remote: true,
+                            class: "btn btn-sm btn-brand fas fa-edit",
+                            style: "float: right;" %>
           </th>
         </tr>
 
         <% if course.holes.present? %>
           <tr>
-            <th>
-              <%= Hole.human_attribute_name :hole_number %>
-            </th>
+            <th class="course-table-header"><%= Hole.human_attribute_name :hole_number %></th>
             <% course.holes.each do |hole| %>
-              <td>
-                <%= hole.hole_number %>
-              </td>
+              <td class="text-center"><%= hole.hole_number %></td>
             <% end %>
           </tr>
 
           <tr>
-            <th>
-              <%= Hole.human_attribute_name :number_of_pars %>
-            </th>
+            <th class="course-table-header"><%= Hole.human_attribute_name :number_of_pars %></th>
             <% course.holes.each do |hole| %>
-              <td>
-                <%= hole.number_of_pars %>
-              </td>
+              <td class="text-center"><%= hole.number_of_pars %></td>
             <% end %>
           </tr>
         <% else %>
           <tr>
-            <th style="width: 15%">
-              <%= Hole.human_attribute_name :hole_number %>
-            </th>
+            <th style="width: 15%"><%= Hole.human_attribute_name :hole_number %></th>
             <td class="course-table" rowspan="2">
-              <%= link_to 'ホール情報登録', new_golfclub_course_hole_path(@golfclub, course), class: "badge badge-pill badge-primary" %>
+              <%= link_to 'ホール情報登録', new_golfclub_course_hole_path(@golfclub, course),
+                                          class: "badge badge-pill badge-primary" %>
             </td>
           </tr>
           <tr>
             <th><%= Hole.human_attribute_name :number_of_pars %></th>
           </tr>
         <% end %>
-
-      <% end %>
-    </tbody>
-  </table>
-
-  <%= link_to 'コース追加', new_golfclub_course_path(@golfclub), class: "badge badge-pill badge-primary" %>
-  <%= link_to '一覧に戻る', golfclubs_path, class: "badge badge-pill badge-secondary" %>
-  
+      </tbody>
+    </table>  
+  <% end %>
 </div>
+
+<div id="new-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

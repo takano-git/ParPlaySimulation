@@ -3,3 +3,13 @@
   max-width: 576px;
   padding: 2rem;
 }
+
+.container-category-index {
+  @extend .container-fluid;
+  max-width: 576px;
+  padding: 2rem;
+}
+
+.category-new-form {
+  margin-bottom: 5px;
+}

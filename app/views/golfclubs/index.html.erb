@@ -1,7 +1,7 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-golfclub-index">
-  <h3>ゴルフ場一覧</h3>
+  <h4>ゴルフ場一覧</h4>
 
   <div class="golfclub-search-form">
     <%= search_form_for @q, url: golfclubs_path do |f| %>
@@ -16,17 +16,11 @@
         </div>
 
         <div class="col-4 ml-auto text-right">
-          <%= link_to '新規登録', new_golfclub_path, class: "btn btn-primary btn-sm" %>
+          <%= link_to '新規登録', new_golfclub_path, remote: true, class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     <% end %>
   </div>
-
-  <style>
-    .aaa {
-      display: inline-block;
-    }
-  </style>
 
   <table class="table table-bordered border-danger table-sm">
     <tr class="text-center bg-brand" style="color: white;">
@@ -42,7 +36,7 @@
         <td>
           <%= golfclub.name %>
           &nbsp;
-          <%= link_to "", edit_golfclub_path(golfclub), class: "fas fa-edit", style: "color: #224444;" %>
+          <%= link_to "", edit_golfclub_path(golfclub), remote: true, class: "fas fa-edit", style: "color: #224444;" %>
         </td>
 
         <td>
@@ -74,5 +68,7 @@
       </tr>
     <% end %>
   </table>
-
 </div>
+
+<div id="new-golfclub" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-golfclub" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

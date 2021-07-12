@@ -1,7 +1,7 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-course">
-  <h5><%= @golfclub.name %> ・ コース情報登録</h5>
+  <h4><%= @golfclub.name %> ・ コース情報登録</h4>
 
   <%= form_with model: @course, url: golfclub_courses_path, local: true do |course| %>
     <%= render 'form', course: course %>

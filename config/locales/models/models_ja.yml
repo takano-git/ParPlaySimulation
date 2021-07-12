@@ -39,7 +39,7 @@ ja:
         created_at: 作成日
         updated_at: 更新日
       hole:
-        hole_number: ホールNo.
+        hole_number: ホール
         number_of_pars: パー
       post:
         id: ID
@@ -69,14 +69,17 @@ ja:
         created_at: 作成日
         updated_at: 更新日
       club:
-        yarn_count_string: クラブ種類種類
-        yarn_count_number: クラブ番号
-        detail: 詳細
-        loft: ロフト角度
-        weight: 重量
-        balance_string: バランス種類
-        balance_number: バランス番号
-        frequency: 周波数
+        yarn_count_string: 番手
+        yarn_count_number: 番手
+        detail: 名称
+        loft: ロフト
+        largo: 長さ
+        weight: 重さ
+        balance_string: バランス
+        balance_number: バランス
+        frequency: 振動数
+        user_id: ユーザーID
         created_at: 作成日
         updated_at: 更新日
+
 

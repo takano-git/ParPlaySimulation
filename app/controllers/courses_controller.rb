@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_action :premium_user, only: %i(new create edit update)
-  # before_action 管理者のみアクセス可能にする(あとで設定)
+  before_action :admin_user
   before_action :set_golfclub, only: %i(new create edit update)
   before_action :set_course, only: %i(edit update)
   before_action :set_pars, only: %i(new create edit update)
@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を登録しました。" }
     else
-      render :new
+      redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
     end
   end
 
@@ -32,7 +32,7 @@ class CoursesController < ApplicationController
     if @course.update(course_params)
       redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を編集しました。" }
     else
-      render :edit
+      redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
     end
   end
 

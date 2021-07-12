@@ -13,9 +13,6 @@ class PostsController < ApplicationController
     @categories = Post.all.pluck(:category_id).uniq.sort
   end
 
-  # def show
-  # end
-
   def new
     @post = Post.new
   end
@@ -25,8 +22,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to golfclub_posts_url, flash: { success: "タイトル: #{@post.title} を投稿しました。" }
     else
-      flash[:danger] = @post.errors.full_messages.join("<br>").html_safe
-      render :new
+      redirect_to golfclub_posts_url, flash: { danger: @post.errors.full_messages.join }
     end
   end
 
@@ -37,8 +33,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to golfclub_posts_url, flash: { success: "タイトル: #{@post.title} を更新しました。" }
     else
-      flash[:danger] = @post.errors.full_messages.join("<br>").html_safe
-      render :edit
+      redirect_to golfclub_posts_url, flash: { danger: @post.errors.full_messages.join }
     end
   end
 

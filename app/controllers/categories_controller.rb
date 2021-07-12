@@ -1,5 +1,4 @@
 class CategoriesController < ApplicationController
-  # before_action 管理者のみアクセス可能にする(あとで設定)
   before_action :admin_user, only: %i(index new create edit update destroy)
   before_action :set_category, only: %i(edit update destroy)
 
@@ -16,8 +15,7 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to categories_url, flash: { success: "カテゴリー【#{@category.name}】を登録しました。" }
     else
-      flash[:danger] = @category.errors.full_messages.join
-      render :new
+      redirect_to categories_url, flash: { danger: @category.errors.full_messages.join }
     end
   end
 
@@ -28,14 +26,15 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to categories_url, flash: { success: "カテゴリー【#{@category.name}】を更新しました。" }
     else
-      flash[:danger] = @category.errors.full_messages.join
-      render :edit
+      redirect_to categories_url, flash: { danger: @category.errors.full_messages.join }
     end
   end
 
   def destroy
     @category.destroy
-    redirect_to categories_path, flash: { success: "カテゴリー【#{@category.name}】を削除しました。" }
+    redirect_to categories_path, flash: { success: "【#{@category.name}】を削除しました。" }
+  rescue ActiveRecord::InvalidForeignKey
+    redirect_to categories_path, flash: { danger: "【#{@category.name}】は投稿情報へ使用されています。削除できません。" }
   end
 
   private
