@@ -2,7 +2,7 @@
 // document.addEventListener("turbolinks:load", function() {
 
 
-jQuery(document).bind('turbolinks:load ajaxComplete', function() {
+$(document).bind('turbolinks:load ajaxComplete', function() {
 // -----
 // window.onload = function() {
   // function() {
@@ -217,27 +217,6 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
   }  
   
   
-  // window変更時のphoto_size,map_size取得
-  window.addEventListener( 'resize', function() {
-    // photo
-    let photo_size_x = document.getElementById('photo_area').clientWidth;
-    let photo_size_y = document.getElementById('photo_area').clientHeight;
-    document.getElementById('photo_size_x').value = photo_size_x;
-    document.getElementById('photo_size_y').value = photo_size_y;
-    // map
-    let map_size_x = document.getElementById('strategy_map').clientWidth;
-    let map_size_y = document.getElementById('strategy_map').clientHeight;
-    document.getElementById('map_size_x').value = map_size_x;
-    document.getElementById('map_size_y').value = map_size_y;
-  }, false );
-  
-  // --------------------------------------------------------------------
-  
-  //　初期map_size
-  let map_size_x = document.getElementById('strategy_map').clientWidth;
-  let map_size_y = document.getElementById('strategy_map').clientHeight;
-  document.getElementById('map_size_x').value = map_size_x;
-  document.getElementById('map_size_y').value = map_size_y;
   
   
   

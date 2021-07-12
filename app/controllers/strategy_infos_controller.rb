@@ -134,7 +134,7 @@ class StrategyInfosController < ApplicationController
 
   # registration_editでのAjax
   def switch
-    # ホールマップが登録されてなかった時の処理
+    # ホールのマップが登録されてなかった時の処理
 
 
 
@@ -220,7 +220,7 @@ class StrategyInfosController < ApplicationController
     byebug
     if @strategy_info.update(strategy_info_params)
       respond_to do |format|
-        format.js { flash.now[:success] = "画像情報を編集しました。(#{@gallery.title})" }
+        format.js { flash.now[:success] = "画像情報を編集しました。(#{@strategy_info.title})" }
       end
     else
       render :index

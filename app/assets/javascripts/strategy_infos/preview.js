@@ -13,7 +13,7 @@ jQuery(document).bind('turbolinks:load ajaxComplete',function() {
     if(find_img.length) {
       find_img.remove();
     }
-    const img = '<img id="photo_selected", class="strategy_img">'
+    const img = '<img id="photo_selected", class="strategy_img strategy_photo">'
     // .propメソッド―選択地取得('files'（ファイル名）取得)
     //　filepropがない場合、@strategy_info_admin.photo表示
     if( $("#f_strategy_photo").prop('files')[0] === undefined ){
