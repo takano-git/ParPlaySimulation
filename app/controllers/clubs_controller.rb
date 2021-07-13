@@ -11,7 +11,7 @@ class ClubsController < ApplicationController
   # クラブセッティングに加えるselectページ
   def select
     # 長い順にクラブセッティングに選ばれたクラブを並び替え
-    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
+    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
   end
 
   # ドロップアンドドラッグしクラブセッティングに加える機能
@@ -74,12 +74,12 @@ class ClubsController < ApplicationController
     end
   end
 
-  # ゴルフクラブチャート表示
+  # ゴルフクラブチャート表示ページ
   def chart
     largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
     scatterdata = [] # 散布図表示用データ配列
   
-    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
+    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
     largo_weight_data = @selected_clubs.pluck(:largo, :weight)
 
     largo_weight_data.each do |data|
