@@ -84,24 +84,25 @@ class StrategyInfosController < ApplicationController
       @hole = Hole.find(params[:hole_data][:hole][:hole_id])
     end
   end
-  
-  # # newかeditどちらなのか判定するアクション
-  # def Judge
-  # end
 
-  def egirstration_edit
+  def registration_edit
+    # コース、ホールが登録されていなかったらリダイレクト
+
+
+
     # byebug
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+
     @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
-      |c| [c.name, c.id, data: { children_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
     }
     if params[:course_id].blank?
       # ゴルフクラブ一覧ページから来た場合
       @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
-      @hole_options = @holes.order(:id).map { 
-        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      @hole_options = @holes.map { 
+        |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
       }
       @hole = @holes.first
       # ここからログインユーザー登録情報の有無フラグ
@@ -113,9 +114,10 @@ class StrategyInfosController < ApplicationController
       # 攻略情報ページから来た場合
       @course_id = params[:course_id]
       @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
-      @hole_options = @holes.order(:id).map { 
-        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+      @hole_options = @holes.map { 
+        |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
       }
+      @hole = Hole.find(params[:hole_id])
       @hole_id = params[:hole_id]
       # ここからログインユーザー登録情報の有無フラグ
       @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, location_name: params[:location_name],
@@ -125,7 +127,55 @@ class StrategyInfosController < ApplicationController
       @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: params[:location_name],
                                                 shot_id: params[:shot_id]).first if @new_or_edit
       @strategy_info = StrategyInfo.new if @new_or_edit
+      # byebug
     end
+    # byebug
+  end
+
+  # registration_editでのAjax
+  def switch
+    # ホールのマップが登録されてなかった時の処理
+
+
+
+    # 
+    @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+    @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+      |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+    }
+    @course_id = params[:course_id]
+    @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
+    @hole_options = @holes.map { 
+      |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+    }
+    # コースに変更があったかどうか
+    if @course_id == params[:course_first]
+      @hole = Hole.find(params[:hole_id])
+      @hole_id = params[:hole_id]
+      # ここからログインユーザー登録情報の有無フラグ
+      @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id,
+                                          location_name: params[:location_name], shot_id: params[:shot_id]).first
+      @new_or_edit = @strategy_info.blank?
+      # ログインユーザー登録情報画ない場合権利者のものを探す
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
+                                                location_name: params[:location_name],
+                                                shot_id: params[:shot_id]).first if @new_or_edit
+    else
+      # byebug
+      @hole = Hole.where(course_id: @course_id).first
+      @hole_id = @hole.id
+      # ここからログインユーザー登録情報の有無フラグ
+      @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, 
+                                          location_name: params[:location_name], shot_id: params[:shot_id]).first
+      @new_or_edit = @strategy_info.blank?
+      # ログインユーザー登録情報画ない場合権利者のものを探す
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
+                                                location_name: params[:location_name],
+                                                shot_id: params[:shot_id]).first if @new_or_edit
+    end
+    @strategy_info = StrategyInfo.new if @new_or_edit
+    @location_name = params[:location_name] if @new_or_edit
+    # byebug
   end
 
   def new
@@ -159,7 +209,7 @@ class StrategyInfosController < ApplicationController
     else
       flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
     end
-    redirect_to action: :new
+    redirect_to action: :registration_edit
   end
 
   def edit
@@ -167,18 +217,23 @@ class StrategyInfosController < ApplicationController
   end
 
   def update
-    # byebug
+    byebug
+    if @strategy_info.update(strategy_info_params)
+      respond_to do |format|
+        format.js { flash.now[:success] = "画像情報を編集しました。(#{@strategy_info.title})" }
+      end
+    else
+      render :index
+    end
   end
 
   def destroy
-    # strategy_info.photo.perge
-    # strategy_info.hole_map.perge
-    
+    @strategy_info = StrategyInfo.find(params[:id])
+    @strategy_info.photo.perge if @strategy_info.photo.attached? 
+    @strategy_info.destroy
   end
 
   private
-
-    
 
     def strategy_info_params
       params.permit(:user_id, :golfclub_id, :course_id, :hole_id, :shot_id, :location_name, :photo, :comment,

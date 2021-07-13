@@ -1,4 +1,8 @@
 <%= render 'layouts/flash_messages' %>
+<div class="text-right mr-4">
+  <%= link_to "クラブセッティングに戻る", clubs_select_user_path(current_user), class: "btn btn-brand mt-3" %>
+  <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand mt-3" %>
+</div>
 
 <h4 class="mt-4">ゴルフクラブの重さと長さの推移表</h4>
 <div class="container-fluid">
@@ -17,7 +21,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @clubs.each do |club| %>
+            <% @selected_clubs.each do |club| %>
               <tr>
                 <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
                 <td><%= club.loft %></td>
@@ -46,7 +50,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @clubs.each do |club| %>
+            <% @selected_clubs.each do |club| %>
               <tr>
                 <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
                 <td><%= club.detail %></td>
