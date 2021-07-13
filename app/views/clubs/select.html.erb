@@ -26,7 +26,9 @@
           <% Array(@clubs).each do |club| %>
             <!-- rowにドラッグ可能(draggable)属性を指定 -->
             <% if club.delete_flg.present? %>
-              <tr class="item bg-secondary" draggable="true" id="<%= club.id %>">
+              <tr class="item bg-delete" draggable="true" id="<%= club.id %>">
+            <% elsif club.selected.present? %>
+              <tr class="item bg-select" draggable="true" id="<%= club.id %>">
             <% else %>
               <tr class="item" draggable="true" id="<%= club.id %>">
             <% end %>
@@ -56,7 +58,9 @@
           <!-- Array(@selected_clubs)は（）の中身を配列にする -->
           <% Array(@selected_clubs).each do |selected_club| %>
             <% if selected_club.delete_flg.present? %>
-              <tr class="bg-secondary">
+              <tr class="bg-delete">
+            <% elsif selected_club.selected.present? %>
+              <tr class="bg-select">
             <% else %>
               <tr>
             <% end %>

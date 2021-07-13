@@ -22,7 +22,11 @@
           </thead>
           <tbody>
             <% @selected_clubs.each do |club| %>
+            <% if club.delete_flg.present? %>
+              <tr class="bg-delete">
+            <% else %>
               <tr>
+            <% end %>
                 <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
                 <td><%= club.loft %></td>
                 <td><%= club.largo %></td>
@@ -51,7 +55,11 @@
           </thead>
           <tbody>
             <% @selected_clubs.each do |club| %>
-              <tr>
+              <% if club.delete_flg.present? %>
+                <tr class="bg-delete">
+              <% elsif %>
+                <tr>
+              <% end %>
                 <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
                 <td><%= club.detail %></td>
               </tr>
