@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   end
 
   # カード情報
-  resources :cards, only: %i(index new create destroy) do
+  resources :cards do
     collection do
       get 'about', to: 'card/about'
     end

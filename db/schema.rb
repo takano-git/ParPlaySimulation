@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_053154) do
   create_table "cards", force: :cascade do |t|
     t.integer "card_id", null: false
     t.string "customer_id", default: "", null: false
+    t.boolean "default_card"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
