@@ -91,10 +91,10 @@ class ClubsController < ApplicationController
   # ゴルフクラブ論理削除
   def logical_deletion
     club = Club.find(params[:id])
-    if club.deleted_at == nil
-     club.deleted_at = Time.now
+    if club.delete_flg.blank?
+     club.delete_flg = true
     else
-      club.deleted_at = nil
+      club.delete_flg = nil
     end
 
     if club.save
@@ -109,7 +109,7 @@ class ClubsController < ApplicationController
   private
 
     def club_params
-      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :deleted_at)
+      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :delete_flg)
     end
 
     def set_clubs
