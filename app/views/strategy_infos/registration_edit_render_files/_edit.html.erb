@@ -4,7 +4,7 @@
 
     <div class="strategy_info_form col-sm-7">
 
-      <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
+      <%= form_with url: golfclub_strategy_info_path(@golfclub, @strategy_info), method: :put, local: true do |f| %>
         <%# ユーザーid %>
         <%= f.hidden_field :user_id, value: current_user.id, class: "form-control" %>
         コース名:
@@ -21,8 +21,12 @@
         <%# 画像up %>
         <div id="strategy_photo">
           <div id="photo_area">
-            <%= image_tag @strategy_info.photo, id: "photo_prev", class: "strategy_img" %>
-
+          < % byebug%>
+            <% if @strategy_info.photo.blank? %>
+              <%= image_tag @strategy_info.photo, id: "photo_prev", class: "strategy_img" %>
+            <% else %>
+              <%= image_tag @strategy_info_admin.photo, id: "photo_prev", class: "strategy_img" %>
+            <% end %>
           </div>
           <div class="photo_pin">
             <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="pin">
@@ -34,7 +38,7 @@
         <%= f.hidden_field :admin_photo, value: @strategy_info.photo, id: "admin_photo" %>
         <br>
         <%= f.label :コメント, class: "" %>
-        <%= f.text_field :comment, class: "form-control" %>
+        <%= f.text_field :comment, value: @strategy_info.comment,  class: "form-control" %>
         <%# location_name %>
         <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
         <div class="coordinate">
