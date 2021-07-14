@@ -8,7 +8,7 @@ class GolfclubsController < ApplicationController
   end
 
   def show
-    @courses = @golfclub.courses
+    @courses = @golfclub.courses.order(:id)
   end
 
   def new

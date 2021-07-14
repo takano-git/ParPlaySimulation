@@ -62,14 +62,14 @@
         <% if course.holes.present? %>
           <tr>
             <th class="course-table-header"><%= Hole.human_attribute_name :hole_number %></th>
-            <% course.holes.each do |hole| %>
+            <% course.holes.order(:hole_number).each do |hole| %>
               <td class="text-center"><%= hole.hole_number %></td>
             <% end %>
           </tr>
 
           <tr>
             <th class="course-table-header"><%= Hole.human_attribute_name :number_of_pars %></th>
-            <% course.holes.each do |hole| %>
+            <% course.holes.order(:hole_number).each do |hole| %>
               <td class="text-center"><%= hole.number_of_pars %></td>
             <% end %>
           </tr>
