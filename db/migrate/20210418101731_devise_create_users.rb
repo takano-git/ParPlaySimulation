@@ -13,6 +13,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.integer :flying_distance
       t.boolean :admin, default: false
       t.integer :payment_id
+      t.string :customer_id
       # t.string :uid
 
 

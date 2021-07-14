@@ -65,8 +65,13 @@ class CardsController < ApplicationController
 
   # POST /cards or /cards.json
   def create
+    # pj_customer = Payjp::Customer.retrieve(current_user.customer_id)
+    # pj_card = pj_customer.cards.create(
+    #             card: params["payjp-token"]
+    #           )
     Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
     if params['payjp-token'].blank?
+      # debugger
       # トークンが取得出来てなければループ
       flash[:danger] = 'カード情報を登録できませんでした。'
       redirect_to action: "new"
@@ -101,6 +106,7 @@ class CardsController < ApplicationController
           card: params['payjp-token']
         # metadata: {user_id: current_user.id}
         )
+        # debugger
         @card = Card.new(
           user_id: user_id,
           customer_id: customer.id,
