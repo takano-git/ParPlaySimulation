@@ -1,11 +1,12 @@
-<%= render 'layouts/flash_messages' %>
-<div class="text-right mr-4">
-  <%= link_to "クラブセッティングに戻る", clubs_select_user_path(current_user), class: "btn btn-brand mt-3" %>
-  <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand mt-3" %>
-</div>
-
-<h4 class="mt-4">ゴルフクラブの重さと長さの推移表</h4>
 <div class="container-fluid">
+  <%= render 'layouts/flash_messages' %>
+  <div class="text-right ">
+    <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-outline-brand my-3" %>
+    <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-outline-brand my-3" %>
+    <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-brand my-3 disabled" %>
+  </div>
+
+  <h4 class="mt-4">ゴルフクラブの重さと長さの推移表</h4>
 
   <div class="row mb-5">
     <div class="col-4">

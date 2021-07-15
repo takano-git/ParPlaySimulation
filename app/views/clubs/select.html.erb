@@ -4,10 +4,12 @@
   <%# ここからドロップアンドドラッグ %>
 
   <!-- SelectedUser一覧をリスト表示 -->
-  <div class="text-right my-4">
-    <%= link_to "クラブセッティングをグラフで見る", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-brand" %>
-    <%= link_to "マイクラブ一覧に戻る", clubs_path(current_user), class: "btn btn-outline-brand" %>
+  <div class="text-right ">
+    <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-outline-brand mb-3" %>
+    <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-brand mb-3 disabled" %>
+    <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-outline-brand mb-3" %>
   </div>
+
   <div class="row">
     <div class="col-6">
       <!-- Club一覧をリスト表示 -->

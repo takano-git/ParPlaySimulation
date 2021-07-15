@@ -2,10 +2,11 @@
   <%= render 'layouts/flash_messages' %>
 
   <div class="text-right ">
-    <%= link_to "新しいマイクラブを登録する", new_club_path(current_user), remote: true, class: "btn btn-outline-brand mb-3" %>
-    <%= link_to "クラブセッティングする", clubs_select_user_path(current_user), class: "btn btn-brand mb-3" %>
+    <%= link_to "登録", new_club_path(current_user), remote: true, class: "btn btn-outline-brand mb-3" %>
+    <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-brand mb-3 disabled" %>
+    <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-outline-brand mb-3" %>
+    <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-outline-brand mb-3" %>
   </div>
-
 
   <h2 class="py-5">マイクラブ一覧</h2>
 
