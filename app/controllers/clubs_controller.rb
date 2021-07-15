@@ -2,7 +2,7 @@ class ClubsController < ApplicationController
   before_action :authenticate_user! # ログインしているユーザーのみ許可
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
-  before_action :set_clubs , only: %i[ index select chart ]
+  before_action :set_clubs , only: %i[ index select ]
 
 
   def index
@@ -113,7 +113,6 @@ class ClubsController < ApplicationController
     end
 
     def set_clubs
-      # @clubs = Club.where(user_id: current_user)
-      @clubs = current_user.clubs.all
+      @clubs = current_user.clubs.all.order(largo: :DESC)
     end
 end
