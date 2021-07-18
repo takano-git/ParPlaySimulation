@@ -50,7 +50,8 @@
       <tbody>
         <tr>
           <th colspan="10" class="course-name-field bg-brand">
-            <%= course.name %>
+            <%= course.name %>&emsp;
+            <%= link_to "", golfclub_course_holes_path(@golfclub, course), class: "fas fa-camera" %>
           </th>
         </tr>
 
