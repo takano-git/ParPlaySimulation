@@ -9,7 +9,8 @@ $brand_t1: #224444;
   // display: flex;
   margin-top: 18px;
   margin-bottom: -10px;
-  margin-left: 130px;
+  // margin-left: 130px;
+  margin-left: 80px;
 
   & .strategy_course_btns {
     margin-left: 13px;
@@ -31,7 +32,8 @@ $brand_t1: #224444;
 }
 
 .strategy_hole_bar {
-  margin-left: 150px;
+  // margin-left: 150px;
+  margin-left: 100px;
 }
 
 .strategy_hole_btn {
@@ -62,15 +64,17 @@ $brand_t1: #224444;
   }
 }
 
-.shot_bar {
-  margin-left: 0px;
-}
+// .shot_bar {
+//   margin-left: 0px;
+// }
 
 
-.shot_btn {
-  border-color: $brand_t1;
-  width: 80px;
-}
+// .shot_btn {
+//   border-color: $brand_t1;
+//   width: 80px;
+//   margin-top: 3px;
+//   margin-right: 3px;
+// }
 
 .s_selected {
   color: white;
@@ -107,11 +111,19 @@ $brand_t1: #224444;
   color: white;
   background-color: #224444;
   height: 45px;
-  width: 125px;
+  max-width: 70px;
+  min-width: 70px;
+  font-size: 15px;
   font-size: 15px;
   margin-top: 10px;
   text-align: center;
   border-radius: 5px;
+}
+
+.strategy_main_center {
+  // display: flex;
+  // flex-flow: column;
+  margin-right: -50px;
 }
 
 #strategy_main_map img {
@@ -125,11 +137,13 @@ $brand_t1: #224444;
   box-shadow: 0 2px 3px 0 #ddd;
   font-size: 100%;
   padding: 2px;
+  margin-right: 150px;
 }
 
 // shot_bar
 .shot_bar {
   // display: flex;
+  margin-left: 0px;
 }
 
 .shot_btns {
@@ -141,10 +155,18 @@ $brand_t1: #224444;
 // .create_strategy_info {
 //   display: flex;
 // }
+
+.shot_btn {
+  border-color: $brand_t1;
+  width: 80px;
+  margin-top: 3px;
+  margin-right: 3px;
+}
+
 .strategy_img {
   width:auto;
   height:auto;
-  max-width:80%;
+  max-width:100%;
   max-height:80%;
 }
 
@@ -181,3 +203,43 @@ $brand_t1: #224444;
     z-index: 15;
   }
 }
+
+// newの時だけ画像選択ボタン
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+
+    &:before {
+      content: "";
+      display: block;
+      padding-top: 45%;
+    }
+  }
+  
+  .upload-btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 30px;
+  font-weight: bold;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  }
+  
+  .upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  }
+
+  // ここまで

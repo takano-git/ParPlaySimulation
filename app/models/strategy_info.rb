@@ -4,4 +4,5 @@ class StrategyInfo < ApplicationRecord
   has_one_attached :photo
   # enum shot_id: { tee: 0, second: 1, third: 2, green: 3 }, _prefix: true
   enum shot_id: { "tee": 0, "2nd": 1, "3rd": 2, "green": 3 }
+  enum location_name: { "R": 0, "B": 1, "L": 2 }
 end

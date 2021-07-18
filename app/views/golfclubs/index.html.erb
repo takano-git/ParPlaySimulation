@@ -1,7 +1,7 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-golfclub-index">
-  <h5>ゴルフ場一覧</h5>
+  <h4>ゴルフ場一覧</h4>
 
   <div class="golfclub-search-form">
     <%= search_form_for @q, url: golfclubs_path do |f| %>
@@ -51,8 +51,7 @@
         </td>
 
         <td class="text-center">
-          <%= link_to "作成", new_golfclub_strategy_info_path(golfclub), class: "fas fa-edit", data: {"turbolinks" => false} %>
-          <%# < %= link_to "registration_edit", registration_edit_golfclub_strategy_infos_path(golfclub), class: "btn" % > %>
+          <%= link_to "登録編集", registration_edit_golfclub_strategy_infos_path(golfclub), class: "fas fa-edit", data: {"turbolinks" => false} %>
         </td>
 
         <td class="text-center">
