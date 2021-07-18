@@ -1,6 +1,15 @@
 <div class="strategy_main_center_photo">
-  <%= image_tag strategy_info.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
+  < % byebug%>
+<% if @photo_presence %>
+  <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
+<% elsif @strategy_info_admin != nil %>
+  <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
+<% else %>
+  <div class="photo_blank">
+   <p>攻略情報の登録がありません</p>
+  </div>
+<% end %>
 </div>
 <div class="strategy_main_center_comment">
-  <%= strategy_info.comment %>
+  <%= @strategy_info.comment %>
 </div>

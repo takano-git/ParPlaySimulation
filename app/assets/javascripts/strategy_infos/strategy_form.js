@@ -140,16 +140,11 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       return false;
     }
     // photo_pin_target要素、対windowのx,
-    console.log(event);
     let x = event.clientX;
     let y = event.clientY;
-    console.log("x="+x);
-    console.log("y="+y);
     // photo_pin_target要素自身のx,y座標
     let width = photo_pin_target.offsetWidth;
     let height = photo_pin_target.offsetHeight;
-    console.log("pinx="+width);
-    console.log("piny="+height);
     // photo取得
     let prev_display = document.getElementById('photo_prev');
     let prev_display_css = getComputedStyle(prev_display).display;
@@ -161,19 +156,14 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       photo = document.querySelector('#photo_selected');
     }
     let photo_target_rect = photo.getBoundingClientRect();
-    console.log("photo_target_rectx="+photo_target_rect.left);
-    console.log("photo_target_recty="+photo_target_rect.top);
-    let photo_target_x = (x - photo_target_rect.left)-width/2;
-    let photo_target_y = (y - photo_target_rect.top)-height/2;
+    let photo_target_x = (x - photo_target_rect.left)-width/2-2;
+    let photo_target_y = (y - photo_target_rect.top)-height/2-3;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     photo_pin_target.style.left = photo_target_x + "px";
     photo_pin_target.style.top = photo_target_y + "px";
     // photo_pin_target.style.left = (photo_target_x/photo.offsetWidth)*100 + "%";
     // photo_pin_target.style.top = (photo_target_y/photo.offsetHeight)*100 + "%";
-
     // 
-    
-
     // const
     document.getElementById('photo_target_x').value = photo_target_x;
     document.getElementById('photo_target_y').value = photo_target_y;
@@ -184,7 +174,6 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
   photo_pin_target.onmouseup = function(event){
     document.removeEventListener("mousemove",PhotoPinTargetMove, true);
   }
-  
   
   
   // 5.photo_pin_point

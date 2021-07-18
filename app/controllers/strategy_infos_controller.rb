@@ -16,6 +16,12 @@ class StrategyInfosController < ApplicationController
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
+    # 登録情報はあるが、写真がない場合の処理
+    @photo_presence = @strategy_info.photo.attached?
+    unless @photo_presence
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    end
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -26,10 +32,17 @@ class StrategyInfosController < ApplicationController
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id]).order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
+    # 登録情報はあるが、写真がない場合の処理
+    @photo_presence = @strategy_info.photo.attached?
+    unless @photo_presence
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    end
   end
   
   # 攻略情報ページ。ホールボタンクリック時のAjaxアクション
   def main
+    # byebug
     @hole = Hole.find(params[:hole_id])
     location_colums = ["map_r","map_b","map_l"]
     @hide_locations = location_colums - ["map_"+params[:location]]
@@ -39,6 +52,12 @@ class StrategyInfosController < ApplicationController
     ).order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
+    # 登録情報はあるが、写真がない場合の処理
+    @photo_presence = @strategy_info.photo.attached?
+    unless @photo_presence
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    end
   end
 
   # 攻略情報ページ。ロケーション（R,B,G）ボタンクリック時のAjaxアクション
@@ -61,12 +80,23 @@ class StrategyInfosController < ApplicationController
     # 全てのrender時に攻略情報が存在するかどうかチェックし_showのレンダー
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
     # byebug
+    # 登録情報はあるが、写真がない場合の処理
+    @photo_presence = @strategy_info.photo.attached?
+    unless @photo_presence
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    end
   end
 
   # 攻略情報ページ。shotボタンクリック時のAjaxアクション
   def show
-    # byebug
     @strategy_info = StrategyInfo.find(params[:id])
+    # 登録情報はあるが、写真がない場合の処理
+    @photo_presence = @strategy_info.photo.attached?
+    unless @photo_presence
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    end
   end
 
   # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
@@ -134,11 +164,6 @@ class StrategyInfosController < ApplicationController
 
   # registration_editでのAjax
   def switch
-    # ホールのマップが登録されてなかった時の処理
-
-    # byebug
-
-    # 
     @golfclub = Golfclub.find(params[:golfclub_id])
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
     @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
@@ -150,29 +175,37 @@ class StrategyInfosController < ApplicationController
       |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
     }
     # コースに変更があったかどうか
-    # なかった場合
-    if @course_id == params[:course_first]
+    if @course_id == params[:course_first] # なかった場合
       @hole = Hole.find(params[:hole_id])
       @hole_id = params[:hole_id]
-    else
+    else #あった場合
       @hole = Hole.where(course_id: @course_id).first
       @hole_id = @hole.id
     end
+    # ホールのマップが登録されてなかった時の処理
+
+    # byebug
+
+    # 
     # ここからログインユーザー登録情報の有無フラグ
     @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, 
                                         location_name: params[:location_name], shot_id: params[:shot_id]).first
     @new_or_edit = @strategy_info.blank? #trueでnew
     # byebug
-    # photo_flag = @strategy_info.photo.blank?
-    # if !photo_flag
-    #   if !@new_or_edit || @strategy_info.photo.attached?
-    #   else
-        # ログインユーザー登録情報画ない場合権利者のものを探す + 画像だけない場合も管理者情報が必要
-        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
-                                                  location_name: params[:location_name],
-                                                  shot_id: params[:shot_id]).first
-    #   end
-    # end
+    unless @new_or_edit
+      @photo_present = @strategy_info.photo.attached?
+      unless @photo_present
+      # [編集]ログインユーザーの登録情報写真がない場合権利者レコードを探す
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
+        location_name: params[:location_name],
+        shot_id: params[:shot_id]).first unless current_user.admin?
+      end
+    else
+      # [新規]ログインユーザーの登録情報がない場合権利者レコードを探す
+      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
+                                                location_name: params[:location_name],
+                                                shot_id: params[:shot_id]).first unless current_user.admin?
+    end
     @strategy_info = StrategyInfo.new if @new_or_edit
     @location_name = params[:location_name] if @new_or_edit
     # byebug

@@ -21,8 +21,7 @@
         <%# 画像up %>
         <div id="strategy_photo">
           <div id="photo_area">
-          < % byebug%>
-            <% if @strategy_info.photo.blank? %>
+            <% if @photo_present.present? && @photo_present %>
               <%= image_tag @strategy_info.photo, id: "photo_prev", class: "strategy_img" %>
             <% else %>
               <%= image_tag @strategy_info_admin.photo, id: "photo_prev", class: "strategy_img" %>
