@@ -33,9 +33,21 @@
 
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
   <div id="strategy_main_map" class="">
-    <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
-    <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
-    <%= image_tag @hole.map_l.variant(resize:'134x430'), id: "map_l", class: "img-fluid" %>
+    <% if @hole.map_r.attached?%>
+      <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
+    <% else %>
+      <p>マップ情報がありません</p>
+    <% end%>
+    <% if @hole.map_b.attached?%>
+      <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
+    <% else %>
+      <p>マップ情報がありません</p>
+    <% end%>
+    <% if @hole.map_l.attached?%>
+      <%= image_tag @hole.map_l.variant(resize:'134x430'), id: "map_l", class: "img-fluid" %>
+    <% else %>
+      <p>マップ情報がありません</p>
+    <% end%>
     <%# ピン %>
     <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
       <img src="strage/photo_1.png" id="pin" width="26px"> %>

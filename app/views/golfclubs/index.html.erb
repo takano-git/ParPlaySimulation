@@ -40,12 +40,12 @@
         </td>
 
         <td>
-          <%= Area.find(golfclub.area_id).district %> / 
-          <%= Area.find(golfclub.area_id).prefecture %>
+          <%= @areas[golfclub.area_id][:district] %> / 
+          <%= @areas[golfclub.area_id][:prefecture] %>
         </td>
 
         <td class="text-center">
-          <%= course_count(golfclub) %>
+          <%= course_count(golfclub, @courses) %>
           &nbsp;
           <%= link_to "", golfclub_path(golfclub), class: "fas fa-edit" %>
         </td>

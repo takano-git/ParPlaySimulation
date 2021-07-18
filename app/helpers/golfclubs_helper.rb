@@ -1,9 +1,9 @@
 module GolfclubsHelper
-  def course_count(golfclub)
-    if golfclub.courses.count <= 0
+  def course_count(golfclub, courses)
+    if courses[golfclub.id].length <= 0
       "未登録"
     else
-      golfclub.courses.count.to_s + 'コース'
+      courses[golfclub.id].length.to_s + 'コース'
     end
   end
 end

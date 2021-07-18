@@ -16,11 +16,14 @@ class StrategyInfosController < ApplicationController
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
-    # 登録情報はあるが、写真がない場合の処理
-    @photo_presence = @strategy_info.photo.attached?
-    unless @photo_presence
-      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
-        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    # 攻略情報があるとき
+    if @strategy_info.present?
+      # 登録情報はあるが、写真がない場合の処理
+      @photo_presence = @strategy_info.photo.attached?
+      unless @photo_presence
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+          shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+      end
     end
   end
 
@@ -32,11 +35,14 @@ class StrategyInfosController < ApplicationController
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id]).order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
-    # 登録情報はあるが、写真がない場合の処理
-    @photo_presence = @strategy_info.photo.attached?
-    unless @photo_presence
-      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
-        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    # 攻略情報があるとき
+    if @strategy_info.present?
+      # 登録情報はあるが、写真がない場合の処理
+      @photo_presence = @strategy_info.photo.attached?
+      unless @photo_presence
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+          shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+      end
     end
   end
   
@@ -52,11 +58,14 @@ class StrategyInfosController < ApplicationController
     ).order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
-    # 登録情報はあるが、写真がない場合の処理
-    @photo_presence = @strategy_info.photo.attached?
-    unless @photo_presence
-      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
-        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    # 攻略情報があるとき
+    if @strategy_info.present?
+      # 登録情報はあるが、写真がない場合の処理
+      @photo_presence = @strategy_info.photo.attached?
+      unless @photo_presence
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+          shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+      end
     end
   end
 
@@ -80,22 +89,28 @@ class StrategyInfosController < ApplicationController
     # 全てのrender時に攻略情報が存在するかどうかチェックし_showのレンダー
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
     # byebug
-    # 登録情報はあるが、写真がない場合の処理
-    @photo_presence = @strategy_info.photo.attached?
-    unless @photo_presence
-      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
-        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    # 攻略情報があるとき
+    if @strategy_info.present?
+      # 登録情報はあるが、写真がない場合の処理
+      @photo_presence = @strategy_info.photo.attached?
+      unless @photo_presence
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+          shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+      end
     end
   end
 
   # 攻略情報ページ。shotボタンクリック時のAjaxアクション
   def show
     @strategy_info = StrategyInfo.find(params[:id])
-    # 登録情報はあるが、写真がない場合の処理
-    @photo_presence = @strategy_info.photo.attached?
-    unless @photo_presence
-      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
-        shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+    # 攻略情報があるとき
+    if @strategy_info.present?
+      # 登録情報はあるが、写真がない場合の処理
+      @photo_presence = @strategy_info.photo.attached?
+      unless @photo_presence
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @strategy_info.hole_id,
+          shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
+      end
     end
   end
 
@@ -159,6 +174,7 @@ class StrategyInfosController < ApplicationController
       @strategy_info = StrategyInfo.new if @new_or_edit
       # byebug
     end
+    @photo_present = @strategy_info.photo.attached? unless @new_or_edit
     # byebug
   end
 

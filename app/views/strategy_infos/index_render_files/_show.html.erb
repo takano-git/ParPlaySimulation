@@ -1,15 +1,48 @@
-<div class="strategy_main_center_photo">
-  < % byebug%>
-<% if @photo_presence %>
-  <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
-<% elsif @strategy_info_admin != nil %>
-  <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
-<% else %>
-  <div class="photo_blank">
-   <p>攻略情報の登録がありません</p>
+<div id="strategy_photo">
+  <div id="show_photo_area" class="strategy_main_center_photo">
+    <% if @photo_presence %>
+      <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
+    <% elsif @strategy_info_admin != nil %>
+      <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
+    <% else %>
+      <div class="photo_blank">
+        <p>攻略情報の登録がありません</p>
+      </div>
+    <% end %>
   </div>
-<% end %>
+  <%# <div class="show_photo_pin"> %>
+    <% if @strategy_info.photo_target_x.present? %>
+      <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="show_pin">
+    <% end %>
+    <% if @strategy_info.photo_point_x.present? %>
+      <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="show_pin">
+    <% end %>
+  <%# </div> %>
 </div>
 <div class="strategy_main_center_comment">
-  <%= @strategy_info.comment %>
+  <% if @strategy_info.present? %>
+    <%= @strategy_info.comment %>
+  <% end %>
 </div>
+
+<style>
+  #photo_pin_target {
+    left: <%= @strategy_info.photo_target_x %>px;
+    top: <%= @strategy_info.photo_target_y %>px;
+  }
+</style>
+<script>
+  // let photo = document.getElementById("show_photo_area");
+  // let photo_x = photo.clientWidth;
+  // let photo_y = photo.clientHeight;
+  // let b_photo_x = Number('<%= @strategy_info.photo_size_x %>');
+  // let b_photo_y = Number('<%= @strategy_info.photo_size_y %>');
+  // let photo_pin_target = document.getElementById("photo_pin_target");
+  // let photo_target_style_x = Number('<%= @strategy_info.photo_target_x %>');
+  // let photo_target_style_y = Number('<%= @strategy_info.photo_target_y %>');
+  // photo_pin_target.style.left = (photo_target_style_x * b_photo_x)/photo_x + "px";
+  // photo_pin_target.style.top = (photo_target_style_y * b_photo_y)/photo_y + "px";
+
+  let photo_pin_point = document.getElementById("photo_pin_point");
+</script>
+<%# <%= javascript_include_tag "strategy_infos/show" %> %>
