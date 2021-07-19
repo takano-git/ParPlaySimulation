@@ -43,7 +43,7 @@
             <td><%= club.balance_string %><%= club.balance_number %></td>
             <td><%= club.frequency %></td>
             <td>
-              <% if club.delete_flg.present? %>
+              <% if club.delete_flg %>
                 <%= link_to '戻す', clubs_logical_deletion_user_path(club, params: { club: { id: club.id, delete_flg: club.delete_flg } }),
                                   :method => :post,
                                   class: "btn btn-outline-brand"

@@ -14,6 +14,32 @@ class ClubsController < ApplicationController
     @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
   end
 
+  # 選択ボタンを押しクラブセッティングに加える機能
+  def add_buttom
+    @club = Club.find(params[:id])
+    selected_clubs = current_user.clubs.where(selected: true).count
+    
+    if selected_clubs >= 14
+      flash[:danger] = 'クラブセッティングは14本までです。'
+      redirect_to clubs_select_user_path(@user)
+    elsif @club.selected == true
+      redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}はすでにクラブセッティングに入っています。" }
+    else
+      @club.selected = true
+      if @club.save
+        #head 201
+        flash[:success] = 'クラブセッティングを１本追加しました。'
+        redirect_to clubs_select_user_path(@user)
+        # hash = {id: @club.id, detail: @club.detail}
+        # require 'json'
+        # render :json => hash.to_json
+      else
+        head 500
+      end
+    end
+  end
+
+
   # ドロップアンドドラッグしクラブセッティングに加える機能
   def add
     @club = Club.find(params[:selected_club])
