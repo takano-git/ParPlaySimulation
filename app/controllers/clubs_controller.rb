@@ -55,11 +55,10 @@ class ClubsController < ApplicationController
       if @club.save
         #head 201
         flash[:success] = 'クラブセッティングを１本追加しました。'
-        hash = {id: @club.id, detail: @club.detail}
-        require 'json'
-        render :json => hash.to_json
+        redirect_to clubs_select_user_path(@user)
       else
-        head 500
+        flash[:denger] = 'クラブセッティング追加に失敗にました。'
+        redirect_to clubs_select_user_path(@user)
       end
     end
   end
