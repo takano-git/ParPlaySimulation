@@ -51,7 +51,7 @@
         <tr>
           <th colspan="10" class="course-name-field bg-brand">
             <%= course.name %>&emsp;
-            <%= link_to "", golfclub_course_holes_path(@golfclub, course), class: "fas fa-camera" %>
+            <%= link_to "", golfclub_course_holes_path(@golfclub, course), remote: true, class: "fas fa-camera" %>
           </th>
         </tr>
 
@@ -91,3 +91,4 @@
 <div id="new-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="edit-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="show-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="index-hole" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

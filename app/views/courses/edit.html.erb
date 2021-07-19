@@ -7,7 +7,7 @@
     <div class="row">
       <div class="form-group col col-lg-6 pl-0">
         <%= course.label :name %>
-        <%= course.text_field :name, class: "form-control" %>
+        <%= course.text_field :name, placeholder: "20文字以内", required: true, maxlength: "20", class: "form-control" %>
         
         <div class="form-group-course-btn">
           <input type="button" id="hole_btn" value="ホール番号切替" class="btn btn-sm btn-brand">
