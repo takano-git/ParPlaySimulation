@@ -94,6 +94,16 @@ class ClubsController < ApplicationController
     @club = Club.find_by(user_id: current_user, id: params[:id])
   end
 
+  def update
+    @club = Club.find_by(user_id: current_user, id: params[:id])
+
+    if @club.update(club_params)
+      redirect_to clubs_url(@user), flash: { success: "ゴルフクラブ【#{@club.yarn_count_string}#{@club.yarn_count_number}】を編集しました。" }
+    else
+      redirect_to clubs_url(@user), flash: { danger: @club.errors.full_messages.join }
+    end
+  end
+
   # ゴルフクラブチャート表示ページ
   def chart
     largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
