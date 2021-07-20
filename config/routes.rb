@@ -44,11 +44,14 @@ Rails.application.routes.draw do
     # 攻略情報
     resources :strategy_infos do
       collection do
+        # indexページ
         get :hole
         get :main
         get :location
+        # 登録編集ページ
         get :registration_edit
-        get :form_map
+        get :switch
+        get :form_map # 削除予定
       end
     end
     # 投稿情報
