@@ -81,15 +81,6 @@ class ClubsController < ApplicationController
   def create
     @club= Club.new(club_params)
 
-    # ユーザー毎のゴルフクラブのカウンターを計算し@club.counterに代入
-      # ゴルフクラブ登録が初めてなら
-    # if current_user.clubs.count == 0
-    #   @club.counter = 1
-    #   # ゴルフクラブ登録が1本以上あれば
-    # elsif current_user.clubs.count > 0
-    #   @club.counter = current_user.clubs.all.pluck(:counter).max + 1
-    # end
-
     if @club.save
       flash[:success] = '新しいマイクラブを登録しました。'
       redirect_to clubs_url(@user)
