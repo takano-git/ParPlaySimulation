@@ -83,12 +83,12 @@ class ClubsController < ApplicationController
 
     # ユーザー毎のゴルフクラブのカウンターを計算し@club.counterに代入
       # ゴルフクラブ登録が初めてなら
-    if current_user.clubs.count == 0
-      @club.counter = 1
-      # ゴルフクラブ登録が1本以上あれば
-    elsif current_user.clubs.count > 0
-      @club.counter = current_user.clubs.all.pluck(:counter).max + 1
-    end
+    # if current_user.clubs.count == 0
+    #   @club.counter = 1
+    #   # ゴルフクラブ登録が1本以上あれば
+    # elsif current_user.clubs.count > 0
+    #   @club.counter = current_user.clubs.all.pluck(:counter).max + 1
+    # end
 
     if @club.save
       flash[:success] = '新しいマイクラブを登録しました。'
@@ -97,6 +97,10 @@ class ClubsController < ApplicationController
       redirect_to clubs_path
       flash[:danger] = @club.errors.full_messages.join('。').html_safe
     end
+  end
+
+  def edit
+    @club = Club.find_by(user_id: current_user, id: params[:id])
   end
 
   # ゴルフクラブチャート表示ページ
@@ -134,7 +138,7 @@ class ClubsController < ApplicationController
   private
 
     def club_params
-      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :delete_flg)
+      params.require(:club).permit(:id, :yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :delete_flg)
     end
 
     def set_clubs

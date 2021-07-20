@@ -24,6 +24,7 @@
           <th scope="col">重量</th>
           <th scope="col">バランス</th>
           <th scope="col">振動数</th>
+          <th scope="col">編集</th>
           <th scope="col">削除</th>
         </tr>
       </thead>
@@ -43,6 +44,12 @@
             <td><%= club.weight %></td>
             <td><%= club.balance_string %><%= club.balance_number %></td>
             <td><%= club.frequency %></td>
+            <td>
+              <%= link_to "編集", edit_club_path(club, params: { club: { id: club.id } }),
+                                remote: true,
+                                class: "btn btn-brand"
+              %>
+            </td>
             <td>
               <% if club.delete_flg %>
                 <%= link_to '戻す', clubs_logical_deletion_user_path(club, params: { club: { id: club.id, delete_flg: club.delete_flg } }),
@@ -70,3 +77,4 @@
 </div>
 <!--モーダルウインドウ表示-->
 <div id="new_club_path" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit_club_path" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
