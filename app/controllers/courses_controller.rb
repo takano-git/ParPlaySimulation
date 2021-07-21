@@ -1,8 +1,8 @@
 class CoursesController < ApplicationController
   before_action :premium_user, only: %i(new create edit update)
   before_action :admin_user
-  before_action :set_golfclub, only: %i(new create edit update)
-  before_action :set_course, only: %i(edit update)
+  before_action :set_golfclub, only: %i(new create show edit update destroy)
+  before_action :set_course, only: %i(show edit update destroy)
   before_action :set_pars, only: %i(new create edit update)
 
   # 入力フォームのパー数(名前空間を切ってmoduleをfreezeして定数の書き換えを防ぐ)
@@ -21,8 +21,11 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を登録しました。" }
     else
-      redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
+      render :new, flash: { danger: @course.errors.full_messages.join }
     end
+  end
+
+  def show
   end
 
   def edit
@@ -35,11 +38,11 @@ class CoursesController < ApplicationController
       redirect_to golfclub_url(@golfclub), flash: { danger: @course.errors.full_messages.join }
     end
   end
-
-  # def destroy
-  #   @course.destroy
-  #   redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を削除しました。" }
-  # end
+  
+  def destroy
+    @course.destroy
+    redirect_to golfclub_url(@golfclub), flash: { success: "コース【#{@course.name}】を削除しました。" }
+  end
 
   private
 
@@ -53,7 +56,7 @@ class CoursesController < ApplicationController
     
     # holes_attributes: [:id ...] ここに:idを渡してないとupdateした時、ホール情報が新たに重複登録されてしまう。
     def course_params
-      params.require(:course).permit(:name, holes_attributes: [:id, :hole_number, :number_of_pars, :golfclub_id, :course_id])
+      params.require(:course).permit(:name, holes_attributes: [:id, :hole_number, :number_of_pars, :golfclub_id, :course_id, :map_r, :map_b, :map_l])
     end
 
     def set_pars

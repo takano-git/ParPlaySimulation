@@ -41,7 +41,6 @@
 
   <div class="course-form">
     <%= link_to 'コース追加', new_golfclub_course_path(@golfclub),
-                            remote: true,
                             class: "btn btn-sm btn-primary" %>
     <%= link_to '一覧に戻る', golfclubs_path, class: "btn btn-sm btn-secondary" %>
   </div>
@@ -51,44 +50,45 @@
       <tbody>
         <tr>
           <th colspan="10" class="course-name-field bg-brand">
-            <%= course.name %>
-            <%= link_to '', edit_golfclub_course_path(@golfclub, course),
-                            remote: true,
-                            class: "btn btn-sm btn-brand fas fa-edit",
-                            style: "float: right;" %>
+            <%= course.name %>&emsp;
+            <%= link_to "", golfclub_course_holes_path(@golfclub, course), remote: true, class: "fas fa-camera" %>
           </th>
         </tr>
 
-        <% if course.holes.present? %>
-          <tr>
-            <th class="course-table-header"><%= Hole.human_attribute_name :hole_number %></th>
-            <% course.holes.each do |hole| %>
-              <td class="text-center"><%= hole.hole_number %></td>
-            <% end %>
-          </tr>
+        <tr>
+          <th class="course-table-header"><%= Hole.human_attribute_name :hole_number %></th>
+          <% course.holes.each do |hole| %>
+            <td class="text-center"><%= hole.hole_number %></td>
+          <% end %>
+        </tr>
 
-          <tr>
-            <th class="course-table-header"><%= Hole.human_attribute_name :number_of_pars %></th>
-            <% course.holes.each do |hole| %>
-              <td class="text-center"><%= hole.number_of_pars %></td>
-            <% end %>
-          </tr>
-        <% else %>
-          <tr>
-            <th style="width: 15%"><%= Hole.human_attribute_name :hole_number %></th>
-            <td class="course-table" rowspan="2">
-              <%= link_to 'ホール情報登録', new_golfclub_course_hole_path(@golfclub, course),
-                                          class: "badge badge-pill badge-primary" %>
-            </td>
-          </tr>
-          <tr>
-            <th><%= Hole.human_attribute_name :number_of_pars %></th>
-          </tr>
-        <% end %>
+        <tr>
+          <th class="course-table-header"><%= Hole.human_attribute_name :number_of_pars %></th>
+          <% course.holes.each do |hole| %>
+            <td class="text-center"><%= hole.number_of_pars %></td>
+          <% end %>
+        </tr>
       </tbody>
-    </table>  
+    </table>
+    <div class="course-form" style="float: right;">
+      <%= link_to '編集', edit_golfclub_course_path(@golfclub, course),
+                          class: "fas fa-edit" %>
+      &emsp;
+      <!--
+      <%= link_to '削除', golfclub_course_path(@golfclub, course),
+                          method: :delete,
+                          remote: true,
+                          class: "fas fa-times-circle",
+                          data: { confirm: "#{course.name}を削除してよろしいですか？",
+                                  cancel: 'キャンセル',
+                                  commit: '削除する'
+                                } %> -->
+      <%= link_to '削除', golfclub_course_path(@golfclub, course), remote: true, class: "fas fa-times-circle" %>
+    </div>
   <% end %>
 </div>
 
 <div id="new-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="edit-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="show-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="index-hole" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

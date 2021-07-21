@@ -4,7 +4,7 @@
   <% if user_signed_in? %>
     <% if current_user.admin?%>
       <div>
-        <%= link_to '地域編集画面へ', edit_areas_path, class: "btn btn-primary" %>
+        <%= link_to '地域編集画面へ', edit_areas_path, class: "btn btn-sm btn-primary" %>
       </div>
     <% end %>
   <% end %>
