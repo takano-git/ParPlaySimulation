@@ -8,7 +8,7 @@ $brand_t1: #224444;
 .strategy_cource_bar {
   // display: flex;
   margin-top: 18px;
-  margin-bottom: -10px;
+  margin-bottom: 10px;
   // margin-left: 130px;
   margin-left: 80px;
 
@@ -102,7 +102,7 @@ $brand_t1: #224444;
     flex-flow: column;
   
     &_photo img {
-      padding: 0.38em;
+      // padding: 0.38em;
     }
   }
 }
@@ -122,6 +122,14 @@ $brand_t1: #224444;
 
 .strategy_main_center {
   margin-right: -50px;
+}
+
+#show {
+  padding: 0.38em;
+}
+
+#show_photo_area {
+  max-width: 80%;
 }
 
 #strategy_main_map img {

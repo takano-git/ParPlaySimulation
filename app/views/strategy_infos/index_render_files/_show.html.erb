@@ -1,23 +1,25 @@
-<div id="strategy_photo">
-  <div id="show_photo_area" class="strategy_main_center_photo">
-    <% if @photo_presence %>
-      <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
-    <% elsif @strategy_info_admin != nil %>
-      <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid", style: "max-width: 80%;" %>
-    <% else %>
-      <div class="photo_blank">
-        <p>攻略情報の登録がありません</p>
-      </div>
-    <% end %>
+<div id="show_photo_area" class="strategy_main_center_photo">
+  <div id="strategy_photo">
+    <div class="strategy_photo_img">
+      <% if @photo_presence %>
+        <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
+      <% elsif @strategy_info_admin != nil %>
+        <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid" %>
+      <% else %>
+        <div class="photo_blank">
+          <p>攻略情報の登録がありません</p>
+        </div>
+      <% end %>
+    </div>
+    <div class="show_photo_pin">
+      <% if @strategy_info.photo_target_x.present? %>
+        <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="show_pin js-image-switch">
+      <% end %>
+      <% if @strategy_info.photo_point_x.present? %>
+        <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="show_pin">
+      <% end %>
+    </div>
   </div>
-  <%# <div class="show_photo_pin"> %>
-    <% if @strategy_info.photo_target_x.present? %>
-      <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="show_pin">
-    <% end %>
-    <% if @strategy_info.photo_point_x.present? %>
-      <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="show_pin">
-    <% end %>
-  <%# </div> %>
 </div>
 <div class="strategy_main_center_comment">
   <% if @strategy_info.present? %>
@@ -32,17 +34,68 @@
   }
 </style>
 <script>
-  // let photo = document.getElementById("show_photo_area");
-  // let photo_x = photo.clientWidth;
-  // let photo_y = photo.clientHeight;
-  // let b_photo_x = Number('<%= @strategy_info.photo_size_x %>');
-  // let b_photo_y = Number('<%= @strategy_info.photo_size_y %>');
-  // let photo_pin_target = document.getElementById("photo_pin_target");
-  // let photo_target_style_x = Number('<%= @strategy_info.photo_target_x %>');
-  // let photo_target_style_y = Number('<%= @strategy_info.photo_target_y %>');
+  let photo = document.getElementById("show_photo_area");
+  let photo_x = photo.clientWidth;
+  let photo_y = photo.clientHeight;
+  let b_photo_x = Number('<%= @strategy_info.photo_size_x %>');
+  let b_photo_y = Number('<%= @strategy_info.photo_size_y %>');
+  let photo_pin_target = document.getElementById("photo_pin_target");
+  let photo_target_style_x = Number('<%= @strategy_info.photo_target_x %>');
+  let photo_target_style_y = Number('<%= @strategy_info.photo_target_y %>');
   // photo_pin_target.style.left = (photo_target_style_x * b_photo_x)/photo_x + "px";
   // photo_pin_target.style.top = (photo_target_style_y * b_photo_y)/photo_y + "px";
+  photo_pin_target.style.left = (photo_target_style_x / b_photo_x)*100 + "%";
+  photo_pin_target.style.top = (photo_target_style_y / b_photo_y)*100 + "%";
 
   let photo_pin_point = document.getElementById("photo_pin_point");
+
+// リサイズ時、ピンの画像サイズ変更
+$(document).bind('turbolinks:load ajaxComplete', function() {
+// $(function() {
+  // 置換の対象とするclass属性。
+  const $elem = $('.js-image-switch');
+  // 置換の対象とするsrc属性の末尾の文字列。
+  const sp = '_sp.';
+  const pc = '_pc.';
+  const lpc = '_lpc.';
+  // 画像を切り替えるウィンドウサイズ。
+  const replaceWidth = 765;
+  const replaceWidthLpc = 991;
+
+  function imageSwitch() {
+    // ウィンドウサイズを取得する。
+    let windowWidth = parseInt(window.innerWidth);
+
+    // ページ内にあるすべての`.js-image-switch`に適応される。
+    $elem.each(function() {
+      let $this = $(this);
+      // ウィンドウサイズが991px以上であれば_pcを_lpcに置換する。
+      if(windowWidth >= replaceWidthLpc) {
+        $this.attr('src', $this.attr('src').replace(pc, lpc));
+        $this.attr('src', $this.attr('src').replace(sp, lpc));
+      }else if(windowWidth >= replaceWidth) {
+        // ウィンドウサイズが765px以上であれば_spを_pcに置換する。
+        $this.attr('src', $this.attr('src').replace(lpc, pc));
+        $this.attr('src', $this.attr('src').replace(sp, pc));
+
+      // ウィンドウサイズが765px未満であれば_pcを_spに置換する。
+      } else {
+        $this.attr('src', $this.attr('src').replace(pc, sp));
+        $this.attr('src', $this.attr('src').replace(lpc, sp));
+      };
+    });
+  };
+  imageSwitch();
+
+  // 動的なリサイズは操作後0.1秒経ってから処理を実行する。
+  let resizeTimer;
+  $(window).on('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      imageSwitch();
+    }, 10);
+  });
+// });
+});
 </script>
 <%# <%= javascript_include_tag "strategy_infos/show" %> %>

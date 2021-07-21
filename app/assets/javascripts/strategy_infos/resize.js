@@ -84,10 +84,10 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
       
       // (prosses2)
       // // hidden_fieldのvalue書き換え
-      // bp_size_x.value = ap_size_x;
-      // bp_size_y.value = ap_size_y;
-      // bm_size_x.value = am_size_x;
-      // bm_size_y.value = am_size_y;
+      bp_size_x.value = ap_size_x;
+      bp_size_y.value = ap_size_y;
+      bm_size_x.value = am_size_x;
+      bm_size_y.value = am_size_y;
       
       
       function test() {
