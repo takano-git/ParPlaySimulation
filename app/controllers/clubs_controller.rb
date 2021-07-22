@@ -3,12 +3,13 @@ class ClubsController < ApplicationController
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
   before_action :set_clubs , only: %i[ index select ]
+  before_action :premium_user # 有料会員のみ
 
-
+  # ゴルフクラブ一覧表示画面（マイクラブ一覧）
   def index
   end
 
-  # クラブセッティングに加えるselectページ
+  # クラブセッティングに加えるselectページ表示機能
   def select
     # 長い順にクラブセッティングに選ばれたクラブを並び替え
     @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
@@ -36,30 +37,6 @@ class ClubsController < ApplicationController
     end
   end
 
-
-  # ドロップアンドドラッグしクラブセッティングに加える機能
-  def add
-    @club = Club.find(params[:selected_club])
-    selected_clubs = current_user.clubs.where(selected: true).count
-    
-    if selected_clubs >= 14
-      flash[:danger] = 'クラブセッティングは14本までです。'
-      redirect_to clubs_select_user_path(@user)
-    elsif @club.selected == true
-      redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}はすでにクラブセッティングに入っています。" }
-    else
-      @club.selected = true
-      if @club.save
-        #head 201
-        flash[:success] = 'クラブセッティングを１本追加しました。'
-        redirect_to clubs_select_user_path(@user)
-      else
-        flash[:denger] = 'クラブセッティング追加に失敗にました。'
-        redirect_to clubs_select_user_path(@user)
-      end
-    end
-  end
-
   # セッティングから外す機能
   def take
     @club = Club.find(params[:id])
@@ -71,10 +48,12 @@ class ClubsController < ApplicationController
     end
   end
 
+  # ゴルフクラブ新規登録画面
   def new
     @club = Club.new
   end
 
+  # ゴルフクラブ新規登録機能
   def create
     @club= Club.new(club_params)
 
@@ -87,10 +66,12 @@ class ClubsController < ApplicationController
     end
   end
 
+  # ゴルフクラブ編集画面
   def edit
     @club = Club.find_by(user_id: current_user, id: params[:id])
   end
 
+  # ゴルフクラブ更新
   def update
     @club = Club.find_by(user_id: current_user, id: params[:id])
 
