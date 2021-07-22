@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       post 'clubs/add_buttom'
       post 'clubs/take'
       post 'clubs/logical_deletion'
-      resources :clubs, except: %i(show)
+      resources :clubs, except: %i(show destroy)
     end
   end
 
