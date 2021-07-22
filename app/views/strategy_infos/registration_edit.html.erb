@@ -20,7 +20,7 @@
   <%# 管理者の場合はゴルフクラブ一覧に戻るボタンも表示 %>
   <%# ---------------- %>
   <div class="to_index">
-    <%= link_to ">攻略ページ", golfclub_strategy_infos_path, class:""%>
+    <%= link_to ">攻略ページ", golfclub_strategy_infos_path, data: {"turbolinks" => false}, class:""%>
   </div>
   <p>>攻略ページ</p>
 
@@ -30,3 +30,4 @@
 <%= javascript_include_tag "strategy_infos/preview" %>
 <%= javascript_include_tag "strategy_infos/strategy_form" %>
 <%= javascript_include_tag "strategy_infos/resize" %>
+<%= javascript_include_tag "strategy_infos/pin_resize" %>

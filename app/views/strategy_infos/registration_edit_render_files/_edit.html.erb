@@ -29,7 +29,7 @@
           </div>
           <div class="photo_pin">
             <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="pin js-image-switch">
-            <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="pin">
+            <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin js-image-switch">
           </div>
         </div>
         <%= f.file_field :photo, id: "f_strategy_photo", class: "form-control-file",
@@ -83,9 +83,9 @@
 
       </div>
       <div class="map_pin">
-        <img src="/strategy_infos/pin/target_pc.png" id="map_pin_target", class="pin js-image-switch">
-        <img src="/strategy_infos/pin/point.png" id="map_pin_point", class="pin">
-        <img src="/strategy_infos/pin/shoot.png" id="map_pin_shoot", class="pin">
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
       </div>
 
       <div class="pins_description">
@@ -109,48 +109,5 @@
   </div>
 
 <script>
-// リサイズ時、ピンの画像サイズ変更
-$(function() {
-  // 置換の対象とするclass属性。
-  const $elem = $('.js-image-switch');
-  // 置換の対象とするsrc属性の末尾の文字列。
-  const sp = '_sp.';
-  const pc = '_pc.';
-  const lpc = '_lpc.';
-  // 画像を切り替えるウィンドウサイズ。
-  const replaceWidth = 765;
-  const replaceWidthLpc = 991;
 
-  function imageSwitch() {
-    // ウィンドウサイズを取得する。
-    let windowWidth = parseInt(window.innerWidth);
-
-    // ページ内にあるすべての`.js-image-switch`に適応される。
-    $elem.each(function() {
-      let $this = $(this);
-      // ウィンドウサイズが991px以上であれば_pcを_lpcに置換する。
-      if(windowWidth >= replaceWidthLpc) {
-        $this.attr('src', $this.attr('src').replace(pc, lpc));
-      }else if(windowWidth >= replaceWidth) {
-        // ウィンドウサイズが765px以上であれば_spを_pcに置換する。
-        $this.attr('src', $this.attr('src').replace(lpc, pc));
-        $this.attr('src', $this.attr('src').replace(sp, pc));
-
-      // ウィンドウサイズが765px未満であれば_pcを_spに置換する。
-      } else {
-        $this.attr('src', $this.attr('src').replace(pc, sp));
-      }
-    });
-  }
-  imageSwitch();
-
-  // 動的なリサイズは操作後0.1秒経ってから処理を実行する。
-  let resizeTimer;
-  $(window).on('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      imageSwitch();
-    }, 100);
-  });
-});
 </script>
