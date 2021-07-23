@@ -1,36 +1,35 @@
-<% provide(:class_text, 'club_new') %>
-<% provide(:button_text, '登録') %>
+<% provide(:button_text, '編集') %>
 
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
 
     <div class="modal-header">
-      <h5 class="modal-title">新しいマイクラブを登録</h5>
+      <h5 class="modal-title">クラブを編集</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
 
     <div class="modal-body">
-      <%= form_with(model: @club, local: true) do |f| %>
+      <%= form_with(model: @club, url: club_path, local: true, method: :patch) do |f| %>
         <div class="form-group row">
           <%= f.label :yarn_count_string, required: true, class: "col-2 col-form-label" %>
           <span class="badge badge-danger club-form-badge-height">必須</span>
           <div class="col-3">
             <%= f.select :yarn_count_string,
                          [['W', 'W'], ['U', 'U'], ['I', 'I'], ['PW', 'PW'], ['AW', 'AW'], ['SW', 'SW'], ['LW', 'LW'], ['CP', 'CP'], ['PT', 'PT']],
-                         { selected: 'W' },
+                         { selected: "#{@club.yarn_count_string}" },
                          { class: "form-control" }
             %>
           </div>
           <div class="col-3">
             <%= f.select :yarn_count_number,
                          [['0', 0], ['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9], ['10', 10], ['11', 11], ['12', 12], ['13', 13]],
-                         { include_blank: true, selected: 1 },
+                         { include_blank: true, selected: "#{@club.yarn_count_number}" },
                          { class: "form-control" }
             %>
           </div>
-          <small class="form-text text-muted">　（例）W1</small>
+            <small class="form-text text-muted">（例）W1、U３、AW</small>
         </div>
         <div class="form-group">
           <%= f.label :detail, class: "control-label" %>
@@ -47,19 +46,18 @@
         </div>
         <div class="form-group">
           <%= f.label :weight %><span class="badge badge-danger">必須</span>
-
           <%= f.number_field :weight, class: "form-control", placeholder: '（例）315', required: true, min: 0 %>
         </div>
         <div class="form-group row">
           <%= f.label :balance_string, class: "col-2 col-form-label" %>
-          <div class="col-5">
+          <div class="col-3">
             <%= f.select :balance_string,
                          [['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F']],
                          { include_blank: true },
                          { class: "form-control" }
             %>
           </div>
-          <div class="col-5">
+          <div class="col-3">
             <%= f.number_field :balance_number, class: "form-control", placeholder: '0.0', step: '0.1', min: 0.0, max: 9.9 %>
           </div>
           <small class="form-text text-muted">　（例）D1</small>

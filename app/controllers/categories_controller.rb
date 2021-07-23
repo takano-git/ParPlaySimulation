@@ -31,8 +31,10 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to categories_path, flash: { success: "【#{@category.name}】を削除しました。" }
+    ActiveRecord::Base.transaction do
+      @category.destroy!
+      redirect_to categories_path, flash: { success: "【#{@category.name}】を削除しました。" }
+    end
   rescue ActiveRecord::InvalidForeignKey
     redirect_to categories_path, flash: { danger: "【#{@category.name}】は投稿情報へ使用されています。削除できません。" }
   end

@@ -81,7 +81,7 @@
 /* ヘッダー */
 
 #header {
- background-color: #224444;
+  background-color: #224444;
 }
 
 .header-logo {
@@ -184,6 +184,26 @@ footer {
   width: 30%;
 }
 
+/* 削除フラグカラー */
+.bg-delete {
+  background-color: #BBBBBB;
+}
+
+.bg-select {
+  background-color: #8FEBE5;
+}
+
+.arrow-padding {
+  padding-top: 12rem;
+}
+
+.padding-15 {
+  padding: 15px;
+}
+
+.club-form-badge-height {
+max-height: 18px !important;
+}
 /*------------------------------------
 - COLOR brand
 ------------------------------------*/

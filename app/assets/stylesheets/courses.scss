@@ -1,13 +1,13 @@
 .container-course {
   @extend .container-fluid;
-  max-width: 576px;
+  max-width: 992px;
   padding: 2rem;
 }
 
 .form-group-course-btn {
   display: inline-block;
   margin-top: 5px;
-  letter-spacing: 10px;
+  // letter-spacing: 10px;
 }
 
 .course-form {
@@ -32,6 +32,24 @@
   width: 20%;
 }
 
+.map-name {
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.hole-map-group {
+  margin-bottom: 8px;
+}
+
+.fa-camera {
+  color: #fff;
+}
+
+.fa-camera:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
 /* パー入力ラジオボタン */
 
 input[type="radio"] {
@@ -43,4 +61,49 @@ input[type="radio"] + label img {
 }
 input[type="radio"]:checked + label img {
   opacity:1;
+}
+
+/* ホール画像入力js */
+
+.clear-text {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.hole-image-default {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  object-fit: none;
+  margin: 0 5px 0 5px;
+}
+
+.hole-image {
+  position: relative;
+  left: 0px;
+  width: 70px;
+  height: 70px;
+  /* object-fit: contain; */
+  /* object-fit: fill; */
+  object-fit: none;
+  margin: 0 5px 0 5px;
+}
+
+.remove {
+  color: #dc3545;
+  font-size: large;
+  text-shadow:1px 0 0 #fff,0 1px 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff;
+  position: relative;
+  margin: 0 0 -23px 55px;
+  width: 20px;
+  z-index: 11;
+}
+
+.hole-name {
+  color: #224444;
+  text-shadow:1px 0 0 #fff,0 1px 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff;
+  margin: 0 0 -23px -45px;
+  position: relative;
+  z-index: 10;
 }
