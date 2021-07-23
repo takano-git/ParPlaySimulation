@@ -13,31 +13,59 @@
         - if @cards_info.present?
           - @cards_info.each do |card|
             .container
-              .creditcard-info.col-6.offset-3
-                %p.creditcard-info__membership_number
-                -# = "会員番号："
-                -# = User.find_by(payment_id: @card.id).membership_number
-                -# = User.find_by(payment_id: card.id).membership_number
-                %p.creditcard-info__company
-                = "カード会社："
-                -# = image_tag "creditcards/#{@card_image}",width:'34',height:'20', alt:'master-card'
-                - case card.brand
-                - when "Visa"
-                  = image_tag "creditcards/visa.svg",width:'34',height:'20', alt:'visa-card'
-                - when "MasterCard"
-                  = image_tag "creditcards/master-card.svg",width:'34',height:'20', alt:'master-card'
-                %p
-                %p.creditcard-info__number
-                  = "カード番号："
-                  -# = "**** **** **** " + @card_info.last4 #クレジットカードの下４桁を表示
-                  = "**** **** **** " + card.last4 #クレジットカードの下４桁を表示
-                %p.creditcard-info__period
-                  = "有効期限：" 
-                  - @exp_month = card.exp_month.to_s
-                  - @exp_year = card.exp_year.to_s.slice(2,3) 
-                  = @exp_month + " / " + @exp_year
-                  -# = button_to "削除する", card_path(@card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
-                  = button_to "削除する", card_path(card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
+              - if Card.find_by(card_id: card.id).default_card?
+                .default-creditcard-info.col-6.offset-3
+                  %p.creditcard-info__membership_number{ style: "text-align: center; padding-top: 5px; color: red;" }
+                    %b
+                      = "＜支払いカード＞"
+                  %p.creditcard-info__membership_number
+                  -# = "会員番号："
+                  -# = User.find_by(payment_id: @card.id).membership_number
+                  -# = User.find_by(payment_id: card.id).membership_number
+                  %p.creditcard-info__company
+                  = "カード会社："
+                  - case card.brand
+                  - when "Visa"
+                    = image_tag "creditcards/visa.svg",width:'34',height:'20', alt:'visa-card'
+                  - when "MasterCard"
+                    = image_tag "creditcards/master-card.svg",width:'34',height:'20', alt:'master-card'
+                  %p
+                  %p.creditcard-info__number
+                    = "カード番号："
+                    -# = "**** **** **** " + @card_info.last4 #クレジットカードの下４桁を表示
+                    = "**** **** **** " + card.last4 #クレジットカードの下４桁を表示
+                  %p.creditcard-info__period
+                    = "有効期限：" 
+                    - @exp_month = card.exp_month.to_s
+                    - @exp_year = card.exp_year.to_s.slice(2,3) 
+                    = @exp_month + " / " + @exp_year
+                    -# = button_to "削除する", card_path(@card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
+                    = button_to "削除する", card_path(card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
+              - else
+                .creditcard-info.col-6.offset-3
+                  %p.creditcard-info__membership_number
+                  -# = "会員番号："
+                  -# = User.find_by(payment_id: @card.id).membership_number
+                  -# = User.find_by(payment_id: card.id).membership_number
+                  %p.creditcard-info__company
+                  = "カード会社："
+                  - case card.brand
+                  - when "Visa"
+                    = image_tag "creditcards/visa.svg",width:'34',height:'20', alt:'visa-card'
+                  - when "MasterCard"
+                    = image_tag "creditcards/master-card.svg",width:'34',height:'20', alt:'master-card'
+                  %p
+                  %p.creditcard-info__number
+                    = "カード番号："
+                    -# = "**** **** **** " + @card_info.last4 #クレジットカードの下４桁を表示
+                    = "**** **** **** " + card.last4 #クレジットカードの下４桁を表示
+                  %p.creditcard-info__period
+                    = "有効期限：" 
+                    - @exp_month = card.exp_month.to_s
+                    - @exp_year = card.exp_year.to_s.slice(2,3) 
+                    = @exp_month + " / " + @exp_year
+                    -# = button_to "削除する", card_path(@card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
+                    = button_to "削除する", card_path(card), method: :delete, class:"btn btn-sm btn-danger creditcard-info__delete"
         -# - else
         .new-card.col-6.offset-3.text-center
           = link_to new_card_path, data: {"turbolinks" => false}, class:"new-card-btn btn btn-info" do

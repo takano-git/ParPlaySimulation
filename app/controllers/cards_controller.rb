@@ -20,30 +20,12 @@ class CardsController < ApplicationController
       @customer = Payjp::Customer.retrieve(@card.customer_id)
       # PAY.JPの顧客情報から、デフォルトで使うクレジットカードを取得する。
       # @card_info = customer.cards.retrieve(customer.default_card)
-      @cards = @customer.cards.all
       @cards_info = @customer.cards.all
       # クレジットカード情報から表示させたい情報を定義する。
-      # クレジットカードの画像を表示するために、カード会社を取得
-      # @card_brand = @card_info.brand
       # クレジットカードの有効期限を取得
       # @exp_month = @card_info.exp_month.to_s
       # @exp_year = @card_info.exp_year.to_s.slice(2,3) 
 
-      # クレジットカード会社を取得したので、カード会社の画像をviewに表示させるため、ファイルを指定する。
-      # case @card_brand
-      # when "Visa"
-      #   @card_image = "visa.svg"
-      # when "JCB"
-      #   @card_image = "jcb.svg"
-      # when "MasterCard"
-      #   @card_image = "master-card.svg"
-      # when "American Express"
-      #   @card_image = "american_express.svg"
-      # when "Diners Club"
-      #   @card_image = "dinersclub.svg"
-      # when "Discover"
-      #   @card_image = "discover.svg"
-      # end
     end
   end
 
@@ -65,31 +47,28 @@ class CardsController < ApplicationController
 
   # POST /cards or /cards.json
   def create
-    # pj_customer = Payjp::Customer.retrieve(current_user.customer_id)
-    # pj_card = pj_customer.cards.create(
-    #             card: params["payjp-token"]
-    #           )
     Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
     if params['payjp-token'].blank?
-      # debugger
       # トークンが取得出来てなければループ
       flash[:danger] = 'カード情報を登録できませんでした。'
       redirect_to action: "new"
     else
-      user_id = current_user.id
-      # 登録済みのカードが存在するか確認する。
-
-      # 登録済みのカードが存在した場合
+      #--- 登録済みのカードが存在するか確認する。 ---#
+      # 登録済みのカードが存在した場合（カードの追加）
       if  Card.where(user_id: current_user.id).present?
-        default_card = Card.find_by(user_id: current_user.id, default_card: true)
+        # default_card = Card.find_by(user_id: current_user.id, default_card: true)
         # params['payjp-token']（response.id）からcustomerを作成
-        customer = Payjp::Customer.retrieve(default_card.customer_id)
+      #  customer = Payjp::Customer.retrieve(default_card.customer_id)
+        pj_customer = Payjp::Customer.retrieve(current_user.customer_id)
         # metadata: {user_id: current_user.id}
+        pj_card = pj_customer.cards.create(card: params["payjp-token"])
+        @default_card = Card.find_by(default_card: true)
+        @default_card.update(default_card: false)
         @card = Card.new(
-          user_id: user_id,
-          customer_id: customer.id,
-          card_id: customer.default_card,
-          default_card: false
+          user_id: current_user.id,
+          customer_id: pj_customer.id,
+          card_id: pj_card.id,
+          default_card: true
         )
         if @card.save
           flash[:success] = '新規カードを登録しました.'
@@ -98,17 +77,17 @@ class CardsController < ApplicationController
           flash[:danger] = '新規カードを登録できませんでした。'
           redirect_to action: "new"
         end
-      
-      # 登録済みのカードが存在しなかった場合
+     
+      # 登録済みのカードが存在しなかった場合（新規作成）
       else
         # params['payjp-token']（response.id）からcustomerを作成
         customer = Payjp::Customer.create(
           card: params['payjp-token']
         # metadata: {user_id: current_user.id}
         )
-        # debugger
+        debugger
         @card = Card.new(
-          user_id: user_id,
+          user_id: current_user.id,
           customer_id: customer.id,
           card_id: customer.default_card,
           default_card: true
@@ -151,10 +130,12 @@ class CardsController < ApplicationController
     # PAY.JPの秘密鍵をセットして、PAY.JPから情報をする。
     Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
     # PAY.JPの顧客情報を取得
+
     customer = Payjp::Customer.retrieve(@card.customer_id)
-    customer.delete # PAY.JPの顧客情報を削除
+    # customer.delete # PAY.JPの顧客情報を削除
+    debugger
     if @card.destroy # App上でもクレジットカードを削除
-      current_user.update(payment_id: nil, membership_number: nil, subscription_id: nil, premium: false)
+      current_user.update(payment_id: nil, customer_id: nil, membership_number: nil, subscription_id: nil, premium: false)
       flash[:success] = 'カード情報を削除しました。'
       redirect_to action: "index"
     else
@@ -179,30 +160,44 @@ class CardsController < ApplicationController
       params.fetch(:card, {})
     end
 
+    # 支払い情報の作成
     def pay
       # card = Card.where(user_id: current_user.id).last
       card = Card.find_by(user_id: current_user.id, default_card: true)
       # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+      debugger
       subscription = Payjp::Subscription.create(
         :customer => card.customer_id,
         :plan => plan, # planアクションで定義した情報を呼び出す
         metadata: {current_id: current_user.id}
       )
       # Userテーブルのsubscription_idに値を持たせ、premiumカラムをtrueにして、current_user情報をアップデート
-      membership_number = "PSP" + sprintf("%05d", current_user.id)
-      current_user.update(payment_id: card.id, membership_number: membership_number, subscription_id: subscription.id, premium: true)
+      # membership_number = "PSP" + sprintf("%05d", current_user.id)
+      max = User.where(premium: true).maximum(:membership_number)
+      if max.nil?
+        membership_number = 1
+      else
+        membership_number = max + 1
+      end
+      current_user.update(payment_id: card.id, customer_id: card.customer_id, membership_number: membership_number, subscription_id: subscription.id, premium: true)
     end
   
-    # 定期課金プラン
+    # 定期課金プランの作成
     def plan
-      Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
-      Payjp::Plan.create(
-        :name => "Par Play Simulation",
-        :amount => 980,
-        :interval => 'month',
-        :currency => 'jpy',
-        # :trial_days => 30,
-      )
+      # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+      # Payjp::Plan.all
+      # debugger
+      # if params['payjp-token'].blank?
+      #   debugger
+        pj_plan = Payjp::Plan.create(
+          :name => "Par Play Simulation",
+          :amount => 980,
+          :interval => 'month',
+          :currency => 'jpy',
+          # :trial_days => 30,
+        )
+        debugger
+      # end
     end
 
 end
