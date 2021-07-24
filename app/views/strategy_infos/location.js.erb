@@ -1,10 +1,9 @@
 $("#main").html("<%= j(render 'strategy_infos/index_render_files/main') %>");
+$("#main_map").html("<%= j(render 'strategy_infos/index_render_files/main_map') %>");
 $("#new_edit_btns").html("<%= j(render 'strategy_infos/index_render_files/new_edit_btns') %>");
 
-<%#  %>
-$("#<%=@hide_locations[0]%>").hide();
-$("#<%=@hide_locations[1]%>").hide();
-$("#map_<%= @strategy_info.location_name.downcase %>").show();
+
+<% if @strategy_info.present? %>
 
   <%# let location_val = $(< %= @strategy_info.location_name.downcase).attr('id'); %>
   $('.location_btn').removeClass('l_selected');
@@ -13,13 +12,35 @@ $("#map_<%= @strategy_info.location_name.downcase %>").show();
   <%# //   $(this).attr('href', $(this).attr('href') + "?追加したいパラメータ"); %>
   <%# // ホールボタンのurl中のlocation_name(R,B,L)情報の書き換え %>
   $('.strategy_hole_btn').attr('href',function(){
-    if($(this).attr('href').match('location=r')) {
-      return $(this).attr('href').replace('location=r', 'location='+'<%= @strategy_info.location_name.downcase %>');
+    if($(this).attr('href').match('location_name=R')) {
+      return $(this).attr('href').replace('location_name=R', 'location_name='+'<%= @strategy_info.location_name %>');
     };
-    if($(this).attr('href').match('location=b')) {
-      return $(this).attr('href').replace('location=b', 'location='+'<%= @strategy_info.location_name.downcase %>');
+    if($(this).attr('href').match('location_name=B')) {
+      return $(this).attr('href').replace('location_name=B', 'location_name='+'<%= @strategy_info.location_name %>');
     };
-    if($(this).attr('href').match('location=l')) {
-      return $(this).attr('href').replace('location=l', 'location='+'<%= @strategy_info.location_name.downcase %>');
+    if($(this).attr('href').match('location_name=L')) {
+      return $(this).attr('href').replace('location_name=L', 'location_name='+'<%= @strategy_info.location_name %>');
     };
   });
+
+  <% if @strategy_info.photo_target_x.present? %>
+    document.getElementById("photo_pin_target").style.left = (Number('<%= @strategy_info.photo_target_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    document.getElementById("photo_pin_target").style.top = (Number('<%= @strategy_info.photo_target_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  <% end %>
+  <% if @strategy_info.photo_point_x.present? %>
+    document.getElementById("photo_pin_point").style.left = (Number('<%= @strategy_info.photo_point_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    document.getElementById("photo_pin_point").style.top = (Number('<%= @strategy_info.photo_point_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  <% end %>
+  <% if @strategy_info.map_target_x.present? %>
+    document.getElementById("map_pin_target").style.left = (Number('<%= @strategy_info.map_target_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    document.getElementById("map_pin_target").style.top = (Number('<%= @strategy_info.map_target_y %>') / Number('<%= @strategy_info.map_size_y %>'))*100 + "%";
+  <% end %>
+  <% if @strategy_info.map_point_x.present? %>
+    document.getElementById("map_pin_point").style.left = (Number('<%= @strategy_info.map_point_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    document.getElementById("map_pin_point").style.top = (Number('<%= @strategy_info.map_point_y %>') / Number('<%= @strategy_info.map_size_y %>'))*100 + "%";
+  <% end %>
+  <% if @strategy_info.map_shoot_x.present? %>
+    document.getElementById("map_pin_shoot").style.left = (Number('<%= @strategy_info.map_shoot_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    document.getElementById("map_pin_shoot").style.top = (Number('<%= @strategy_info.map_shoot_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  <% end %>
+<% end %>

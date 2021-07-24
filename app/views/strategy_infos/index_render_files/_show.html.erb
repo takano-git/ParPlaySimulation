@@ -1,62 +1,34 @@
-<div id="show_photo_area" class="strategy_main_center_photo">
-  <div id="strategy_photo">
-    <div class="strategy_photo_img">
-      <% if @photo_presence %>
-        <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
-      <% elsif @strategy_info_admin != nil %>
-        <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid" %>
-      <% else %>
-        <div class="photo_blank">
-          <p>攻略情報の登録がありません</p>
-        </div>
-      <% end %>
-    </div>
-    <div class="show_photo_pin">
-      <% if @strategy_info.photo_target_x.present? %>
-        <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="show_pin js-image-switch">
-      <% end %>
-      <% if @strategy_info.photo_point_x.present? %>
-        <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="show_pin js-image-switch">
-      <% end %>
+<% if @strategy_info.blank? %>
+  <div class="strategy_none">
+    <p>攻略情報がありません。</p>
+  </div>
+<% else %>
+  <div id="show_photo_area" class="strategy_main_center_photo">
+    <div id="strategy_photo">
+      <div class="strategy_photo_img">
+        <% if @photo_presence %>
+          <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
+        <% elsif @strategy_info_admin != nil %>
+          <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid" %>
+        <% else %>
+          <div class="photo_blank">
+            <p>攻略写真の登録がありません</p>
+          </div>
+        <% end %>
+      </div>
+      <div class="show_photo_pin">
+        <% if @strategy_info.photo_target_x.present? %>
+          <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="show_pin js-image-switch">
+        <% end %>
+        <% if @strategy_info.photo_point_x.present? %>
+          <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="show_pin js-image-switch">
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
-<div class="strategy_main_center_comment">
-  <% if @strategy_info.present? %>
-    <%= @strategy_info.comment %>
-  <% end %>
-</div>
-< % byebug%>
-<style>
-  
-</style>
-<script>
-$(document).bind('turbolinks:load ajaxComplete',function() {
-  // document.addEventListener("turbolinks:load", function() {
-  // $(document).ready(
-
-    // const setPin = (function() {
-      // 写真
-    // const photo = document.getElementById("show_photo_area");
-    // const photo_x = photo.clientWidth;
-    // const photo_y = photo.clientHeight;
-    // const b_photo_x = Number('<%= @strategy_info.photo_size_x %>');
-    // const b_photo_y = Number('<%= @strategy_info.photo_size_y %>');
-    // 写真、狙い目のピン
-    // const photo_pin_target = document.getElementById("photo_pin_target");
-    // const photo_target_style_x = Number('<%= @strategy_info.photo_target_x %>');
-    // const photo_target_style_y = Number('<%= @strategy_info.photo_target_y %>');
-    // document.getElementById("photo_pin_target").style.left = (Number('<%= @strategy_info.photo_target_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
-    // document.getElementById("photo_pin_target").style.top = (Number('<%= @strategy_info.photo_target_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
-    // 写真、ポイントのピン
-    // const photo_pin_point = document.getElementById("photo_pin_point");
-    // const photo_point_style_x = Number('<%= @strategy_info.photo_point_x %>');
-    // const photo_point_style_y = Number('<%= @strategy_info.photo_point_y %>');
-    // photo_pin_point.style.left = (photo_point_style_x / b_photo_x)*100 + "%";
-    // photo_pin_point.style.top = (photo_point_style_y / b_photo_y)*100 + "%";
-  // })();
-  // setPin();
-    // );
-});
-
-</script>
+  <div class="strategy_main_center_comment">
+    <% if @strategy_info.present? %>
+      <%= @strategy_info.comment %>
+    <% end %>
+  </div>
+<% end %>

@@ -3,10 +3,6 @@ class StrategyInfosController < ApplicationController
   before_action :premium_user, only: %i(index new create edit update)
 
   def index
-    # new,editから飛んできた場合の処理(before_action)
-    # 新規登録、編集した攻略情報のcourse,hole,shot,location_nameの攻略情報を表示
-
-    # -----------------------------------
     @golfclub = Golfclub.find(params[:golfclub_id])
     @golfclub_id = @golfclub.id
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
@@ -48,13 +44,10 @@ class StrategyInfosController < ApplicationController
   
   # 攻略情報ページ。ホールボタンクリック時のAjaxアクション
   def main
-    # byebug
     @hole = Hole.find(params[:hole_id])
-    location_colums = ["map_r","map_b","map_l"]
-    @hide_locations = location_colums - ["map_"+params[:location]]
     @strategy_infos = StrategyInfo.where(
       golfclub_id: params[:golfclub_id], course_id: params[:course_id], 
-      hole_id: params[:hole_id], location_name: params[:location].upcase
+      hole_id: params[:hole_id], location_name: params[:location_name]
     ).order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
@@ -71,24 +64,12 @@ class StrategyInfosController < ApplicationController
 
   # 攻略情報ページ。ロケーション（R,B,G）ボタンクリック時のAjaxアクション
   def location
-    location_colums = ["map_r","map_b","map_l"]
-    @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
     # renderの切り替えはstrategy_infos/index_render_files/main
-    # 1つのホール情報とホールの攻略情報があればよい
-    # マップの表示切替はjsで設定してある。
     @hole = Hole.find(params[:hole_id])
     @strategy_infos = StrategyInfo.where(hole_id: params[:hole_id], location_name: params[:location_name]).order(:id)
-    if @strategy_infos.blank?
-      # エラーメッセージ＆redirect
-
-    else
-
-    end
     @strategy_info = @strategy_infos.first
     # @strategy_infoがblankの時、攻略情報が存在しないview表記(_show.html.erb)
-    # 全てのrender時に攻略情報が存在するかどうかチェックし_showのレンダー
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
-    # byebug
     # 攻略情報があるとき
     if @strategy_info.present?
       # 登録情報はあるが、写真がない場合の処理

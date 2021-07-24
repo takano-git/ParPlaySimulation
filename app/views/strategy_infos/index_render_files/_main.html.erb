@@ -1,15 +1,15 @@
 
-<div class="strategy_main">
+<div class="strategy_main row">
 
-  <%# ホールボタンでのみ切り替わる  col-md-1.5%>
+  <%# ホールボタンでのみ切り替わる  col-md-1%>
   <div class="strategy_main_status">
       Hole<%= @hole.hole_number %><br>
       Par<%= @hole.number_of_pars %>
   </div>
-<%#  col-md-8.5 %>
+<%#  col-md-9 %>
   <div class="strategy_main_center">
     <div id="show">
-      <%= render 'strategy_infos/index_render_files/show', strategy_info: @strategy_info, strategy_info_admin: @strategy_info_admin %>
+      <%= render 'strategy_infos/index_render_files/show' %>
     </div>
     <%# アコーディオン未設定 %>
     <div class="shot_bar row">
@@ -24,255 +24,12 @@
         </div>
       <% end %>
     </div><br>
-<div class="center">
-  <select name="sources" id="sources" class="custom-select sources" placeholder="Source Type">
-    <option value="profile">Profile</option>
-    <option value="word">Word</option>
-    <option value="hashtag">Hashtag</option>
-  </select>
-</div>
 
   </div>
-<%# @strategy_infoがない場合 %>
-<%# ------------------------------------------- %>
-
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
-  <div class="main_right">
-  <div id="strategy_main_map" class="">
-    <div id="map_area">
-      <% if @hole.map_r.attached?%>
-        <%= image_tag @hole.map_r.variant(resize:'134x330'), id: "map_r", class: "main_map img-fluid" %>
-      <% else %>
-        <p>マップ情報がありません</p>
-      <% end%>
-      <% if @hole.map_b.attached?%>
-        <%= image_tag @hole.map_b.variant(resize:'134x330'), id: "map_b", class: "main_map img-fluid" %>
-      <% else %>
-        <p>マップ情報がありません</p>
-      <% end%>
-      <% if @hole.map_l.attached?%>
-        <%= image_tag @hole.map_l.variant(resize:'134x330'), id: "map_l", class: "main_map img-fluid" %>
-      <% else %>
-        <p>マップ情報がありません</p>
-      <% end%>
-    </div>
-    <%# ピン %>
-    <div class="map_pin">
-      <% if @strategy_info.map_target_x.present? %>
-        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="main_map_pin js-image-switch">
-      <% end %>
-      <% if @strategy_info.map_point_x.present? %>
-        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="main_map_pin js-image-switch">
-      <% end %>
-      <% if @strategy_info.map_shoot_x.present? %>
-        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="main_map_pin js-image-switch">
-      <% end %>
-    </div>
-  </div>
+  <div id="main_map">
+    <%= render 'strategy_infos/index_render_files/main_map' %>
   </div>
 
 </div>
-< % byebug %>
-<style>
-#map_pin_target {
-  left: <%= @strategy_info.map_target_x %>px;
-  top: <%= @strategy_info.map_target_y %>px;
-}
-#map_pin_point {
-  left: <%= @strategy_info.map_point_x %>px;
-  top: <%= @strategy_info.map_point_y %>px;
-}
-#map_pin_shoot {
-  left: <%= @strategy_info.map_shoot_x %>px;
-  top: <%= @strategy_info.map_shoot_y %>px;
-}
-</style>
-<script>
-$('.shot_btn').on('click', function () {
-  $('.shot_btn').removeClass('s_selected');
-  $(this).addClass('s_selected');
-});
-// ----------------------------------------
-$(document).bind('turbolinks:load ajaxComplete',function() {
-  
-  // console.log("ピン％化map");
-  // マップ
-  const map = document.getElementById("strategy_main_map");
-  const map_x = map.clientWidth;
-  const map_y = map.clientHeight;
-  const b_map_x = Number('<%= @strategy_info.map_size_x %>');
-  const b_map_y = Number('<%= @strategy_info.map_size_y %>');
-  // マップ、狙い目のピン
-  const map_pin_target = document.getElementById("map_pin_target");
-  const map_target_style_x = Number('<%= @strategy_info.map_target_x %>');
-  const map_target_style_y = Number('<%= @strategy_info.map_target_y %>');
-  map_pin_target.style.left = (map_target_style_x / b_map_x)*100 + "%";
-  map_pin_target.style.top = (map_target_style_y / b_map_y)*100 + "%";
-  // マップ、ポイントのピン
-  const map_pin_point = document.getElementById("map_pin_point");
-  const map_point_style_x = Number('<%= @strategy_info.map_point_x %>');
-  const map_point_style_y = Number('<%= @strategy_info.map_point_y %>');
-  map_pin_point.style.left = (map_point_style_x / b_map_x)*100 + "%";
-  map_pin_point.style.top = (map_point_style_y / b_map_y)*100 + "%";
-  // マップ、撮影地点のピン
-  const map_pin_shoot = document.getElementById("map_pin_shoot");
-  const map_shoot_style_x = Number('<%= @strategy_info.map_shoot_x %>');
-  const map_shoot_style_y = Number('<%= @strategy_info.map_shoot_y %>');
-  map_pin_shoot.style.left = (map_shoot_style_x / b_map_x)*100 + "%";
-  map_pin_shoot.style.top = (map_shoot_style_y / b_map_y)*100 + "%";
-});
-</script>
 
-
-<%# ----- %>
-<style>
-
-/** Custom Select **/
-.custom-select-wrapper {
-  position: relative;
-  display: inline-block;
-  user-select: none;
-}
-
-  .custom-select-wrapper select {
-    display: none;
-  }
-  .custom-select {
-    position: relative;
-    display: inline-block;
-    width: 110px;
-    padding: 0 84px 0 22px;
-  }
-    .custom-select-trigger {
-      position: absolute;
-      left: 0;
-      display: block;
-      width: 110px;
-      padding: 6px 74px 6px 22px;
-      /* font-size: 22px; */
-      font-weight: 300;
-      color: #fff;
-      /* line-height: 60px; */
-      background: #224444;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-      .custom-select-trigger:after {
-        position: absolute;
-        display: block;
-        content: '';
-        width: 10px; height: 10px;
-        top: 50%; right: 10px;
-        margin-top: -3px;
-        border-bottom: 1px solid #fff;
-        border-right: 1px solid #fff;
-        transform: rotate(45deg) translateY(-50%);
-        transition: all .4s ease-in-out;
-        transform-origin: 50% 0;
-      }
-      .custom-select.opened .custom-select-trigger:after {
-        margin-top: 3px;
-        transform: rotate(-135deg) translateY(-50%);
-      }
-  .custom-options {
-    position: absolute;
-    display: block;
-    top: 100%; left: 0; right: 0;
-    min-width: 100%;
-    margin: 15px 0;
-    border: 1px solid #b5b5b5;
-    border-radius: 4px;
-    box-sizing: border-box;
-    box-shadow: 0 2px 1px rgba(0,0,0,.07);
-    background: #fff;
-    transition: all .4s ease-in-out;
-    
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-15px);
-  }
-  .custom-select.opened .custom-options {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: translateY(0);
-  }
-    .custom-options:before {
-      position: absolute;
-      display: block;
-      content: '';
-      bottom: 100%; right: 25px;
-      width: 7px; height: 7px;
-      margin-bottom: -4px;
-      border-top: 1px solid #b5b5b5;
-      border-left: 1px solid #b5b5b5;
-      background: #fff;
-      transform: rotate(45deg);
-      transition: all .4s ease-in-out;
-    }
-    .option-hover:before {
-      background: #f9f9f9;
-    }
-    .custom-option {
-      position: relative;
-      display: block;
-      padding: 0 22px;
-      border-bottom: 1px solid #b5b5b5;
-      font-size: 18px;
-      font-weight: 600;
-      color: #b5b5b5;
-      line-height: 47px;
-      cursor: pointer;
-      transition: all .4s ease-in-out;
-    }
-    .custom-option:first-of-type {
-      border-radius: 4px 4px 0 0;
-    }
-    .custom-option:last-of-type {
-      border-bottom: 0;
-      border-radius: 0 0 4px 4px;
-    }
-    .custom-option:hover,
-    .custom-option.selection {
-      background: #f9f9f9;
-    }
-</style>
-
-<script>
-$(".custom-select").each(function() {
-  var classes = $(this).attr("class"),
-      id      = $(this).attr("id"),
-      name    = $(this).attr("name");
-  var template =  '<div class="' + classes + '">';
-      template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
-      template += '<div class="custom-options">';
-      $(this).find("option").each(function() {
-        template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
-      });
-  template += '</div></div>';
-  
-  $(this).wrap('<div class="custom-select-wrapper"></div>');
-  $(this).hide();
-  $(this).after(template);
-});
-$(".custom-option:first-of-type").hover(function() {
-  $(this).parents(".custom-options").addClass("option-hover");
-}, function() {
-  $(this).parents(".custom-options").removeClass("option-hover");
-});
-$(".custom-select-trigger").on("click", function() {
-  $('html').one('click',function() {
-    $(".custom-select").removeClass("opened");
-  });
-  $(this).parents(".custom-select").toggleClass("opened");
-  event.stopPropagation();
-});
-$(".custom-option").on("click", function() {
-  $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
-  $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
-  $(this).addClass("selection");
-  $(this).parents(".custom-select").removeClass("opened");
-  $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
-});
-</script>
