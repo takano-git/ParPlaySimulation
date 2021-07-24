@@ -27,7 +27,7 @@
                   <td>
                     <div style="min-height: 100px; min-width: 50px">
                       <% if hole.map_r.attached? %>
-                        <%= image_tag hole.map_r.variant(resize:'75') %>
+                        <%= image_tag cdn_ready_blob_path(hole.map_r), width: '75px', height: 'auto' %>
                       <% else %>
                         <%= image_tag '/noimage.png', width: '75', height: 'auto' %>
                       <% end %>
@@ -36,7 +36,7 @@
                   <td>
                     <div style="min-height: 100px; min-width: 50px">
                       <% if hole.map_b.attached? %>
-                        <%= image_tag hole.map_b.variant(resize:'75') %>
+                        <%= image_tag cdn_ready_blob_path(hole.map_b), width: '75px', height: 'auto' %>
                       <% else %>
                         <%= image_tag '/noimage.png', width: '75', height: 'auto' %>
                       <% end %>
@@ -45,8 +45,7 @@
                   <td>
                     <div style="min-height: 100px; min-width: 50px">
                       <% if hole.map_l.attached? %>
-                        <%= image_tag hole.map_l.variant(resize:'75') %>
-                        <%# <= image_tag rails_representation_path hole.map_l.variant(resize:'300x300') > %>
+                        <%= image_tag cdn_ready_blob_path(hole.map_l), width: '75px', height: 'auto' %>
                       <% else %>
                         <%= image_tag '/noimage.png', width: '75', height: 'auto', style: "object-fit: cover;" %>
                       <% end %>
