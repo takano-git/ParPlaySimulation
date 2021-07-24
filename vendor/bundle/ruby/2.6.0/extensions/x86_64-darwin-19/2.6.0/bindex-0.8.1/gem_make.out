@@ -1,0 +1,15 @@
+current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210725-46931-buwgqr.rb extconf.rb
+creating Makefile
+
+current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" clean
+
+current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR="
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.bundle
+
+current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20210725-46931-zuljzb/skiptrace/internal
