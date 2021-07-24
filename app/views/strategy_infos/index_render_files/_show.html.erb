@@ -26,27 +26,37 @@
     <%= @strategy_info.comment %>
   <% end %>
 </div>
-
+< % byebug%>
 <style>
-  #photo_pin_target {
-    left: <%= @strategy_info.photo_target_x %>px;
-    top: <%= @strategy_info.photo_target_y %>px;
-  }
+  
 </style>
 <script>
-  let photo = document.getElementById("show_photo_area");
-  let photo_x = photo.clientWidth;
-  let photo_y = photo.clientHeight;
-  let b_photo_x = Number('<%= @strategy_info.photo_size_x %>');
-  let b_photo_y = Number('<%= @strategy_info.photo_size_y %>');
-  let photo_pin_target = document.getElementById("photo_pin_target");
-  let photo_target_style_x = Number('<%= @strategy_info.photo_target_x %>');
-  let photo_target_style_y = Number('<%= @strategy_info.photo_target_y %>');
-  // photo_pin_target.style.left = (photo_target_style_x * b_photo_x)/photo_x + "px";
-  // photo_pin_target.style.top = (photo_target_style_y * b_photo_y)/photo_y + "px";
-  photo_pin_target.style.left = (photo_target_style_x / b_photo_x)*100 + "%";
-  photo_pin_target.style.top = (photo_target_style_y / b_photo_y)*100 + "%";
+$(document).bind('turbolinks:load ajaxComplete',function() {
+  // document.addEventListener("turbolinks:load", function() {
+  // $(document).ready(
 
-  let photo_pin_point = document.getElementById("photo_pin_point");
+    // const setPin = (function() {
+      // 写真
+    // const photo = document.getElementById("show_photo_area");
+    // const photo_x = photo.clientWidth;
+    // const photo_y = photo.clientHeight;
+    // const b_photo_x = Number('<%= @strategy_info.photo_size_x %>');
+    // const b_photo_y = Number('<%= @strategy_info.photo_size_y %>');
+    // 写真、狙い目のピン
+    // const photo_pin_target = document.getElementById("photo_pin_target");
+    // const photo_target_style_x = Number('<%= @strategy_info.photo_target_x %>');
+    // const photo_target_style_y = Number('<%= @strategy_info.photo_target_y %>');
+    // document.getElementById("photo_pin_target").style.left = (Number('<%= @strategy_info.photo_target_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    // document.getElementById("photo_pin_target").style.top = (Number('<%= @strategy_info.photo_target_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+    // 写真、ポイントのピン
+    // const photo_pin_point = document.getElementById("photo_pin_point");
+    // const photo_point_style_x = Number('<%= @strategy_info.photo_point_x %>');
+    // const photo_point_style_y = Number('<%= @strategy_info.photo_point_y %>');
+    // photo_pin_point.style.left = (photo_point_style_x / b_photo_x)*100 + "%";
+    // photo_pin_point.style.top = (photo_point_style_y / b_photo_y)*100 + "%";
+  // })();
+  // setPin();
+    // );
+});
 
 </script>

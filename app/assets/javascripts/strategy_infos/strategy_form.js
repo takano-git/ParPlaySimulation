@@ -28,7 +28,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_rect = map.getBoundingClientRect();
-    let map_target_x = (x - map_rect.left)+width/2-6;
+    let map_target_x = (x - map_rect.left)-width/2-3;
     let map_target_y = (y - map_rect.top)-height/2-4;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     map_pin_target.style.left = map_target_x + "px";
@@ -79,7 +79,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_point_rect = map.getBoundingClientRect();
-    let map_point_x = (x - map_point_rect.left)+width/2-6;
+    let map_point_x = (x - map_point_rect.left)-width/2-3;
     let map_point_y = (y - map_point_rect.top)-height/2-4;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     map_pin_point.style.left = map_point_x + "px";
@@ -114,7 +114,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_shoot_rect = map.getBoundingClientRect();
-    let map_shoot_x = (x - map_shoot_rect.left)+width/2-6;
+    let map_shoot_x = (x - map_shoot_rect.left)-width/2-3;
     let map_shoot_y = (y - map_shoot_rect.top)-height/2-4;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     map_pin_shoot.style.left = map_shoot_x + "px";

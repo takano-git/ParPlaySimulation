@@ -132,15 +132,30 @@ $brand_t1: #224444;
   max-width: 80%;
 }
 
-#strategy_main_map img {
-  max-width: 80%;
+#strategy_main_map {
+  position: relative;
+  max-width: 100%;
 }
 // photo, pin
 // #show_photo_area {
 // }
 
+#map_area {
+
+}
+.main_map {
+
+  &_pin {
+    position: absolute;
+    // top: 100%;
+    // left: 100%;
+  }
+}
+
 .show_pin {
   position: absolute;
+  // top: 100%;
+  // left: 100%;
 }
 
 .strategy_main_center_comment {
@@ -191,6 +206,7 @@ $brand_t1: #224444;
 
 #strategy_map {
   position: relative;
+  display: inline-block;
 }
 .map_pin {
   &_target {

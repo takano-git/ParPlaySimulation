@@ -3,3 +3,18 @@ $("#new_edit_btns").html("<%= j(render 'strategy_infos/index_render_files/new_ed
 
 $("#<%=@hide_locations[0]%>").hide();
 $("#<%=@hide_locations[1]%>").hide();
+
+<% if @strategy_info.photo_target_x.present? %>
+document.getElementById("photo_pin_target").style.left = (Number('<%= @strategy_info.photo_target_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+document.getElementById("photo_pin_target").style.top = (Number('<%= @strategy_info.photo_target_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+<% end %>
+<% if @strategy_info.photo_point_x.present? %>
+document.getElementById("photo_pin_point").style.left = (Number('<%= @strategy_info.photo_point_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+document.getElementById("photo_pin_point").style.top = (Number('<%= @strategy_info.photo_point_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+<% end %>
+<% if @strategy_info.photo_target_x.present? %>
+<% end %>
+<% if @strategy_info.photo_target_x.present? %>
+<% end %>
+<% if @strategy_info.photo_target_x.present? %>
+<% end %>

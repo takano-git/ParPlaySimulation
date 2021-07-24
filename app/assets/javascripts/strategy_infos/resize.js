@@ -6,12 +6,12 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     const photo_size_y = document.getElementById('photo_area').clientHeight;
     document.getElementById('photo_size_x').value = photo_size_x;
     document.getElementById('photo_size_y').value = photo_size_y;
+    //　初期map_size
+    const map_size_x = document.getElementById('map_area').clientWidth;
+    const map_size_y = document.getElementById('map_area').clientHeight;
+    document.getElementById('map_size_x').value = map_size_x;
+    document.getElementById('map_size_y').value = map_size_y;
   };
-  //　初期map_size
-  const map_size_x = document.getElementById('strategy_map').clientWidth;
-  const map_size_y = document.getElementById('strategy_map').clientHeight;
-  document.getElementById('map_size_x').value = map_size_x;
-  document.getElementById('map_size_y').value = map_size_y;
   // }
 
   // window.onload = function() {

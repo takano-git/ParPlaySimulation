@@ -37,46 +37,95 @@
 <%# ------------------------------------------- %>
 
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
+  <div class="main_right">
   <div id="strategy_main_map" class="">
-    <% if @hole.map_r.attached?%>
-      <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
-    <% else %>
-      <p>マップ情報がありません</p>
-    <% end%>
-    <% if @hole.map_b.attached?%>
-      <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
-    <% else %>
-      <p>マップ情報がありません</p>
-    <% end%>
-    <% if @hole.map_l.attached?%>
-      <%= image_tag @hole.map_l.variant(resize:'134x430'), id: "map_l", class: "img-fluid" %>
-    <% else %>
-      <p>マップ情報がありません</p>
-    <% end%>
+    <div id="map_area">
+      <% if @hole.map_r.attached?%>
+        <%= image_tag @hole.map_r.variant(resize:'134x330'), id: "map_r", class: "main_map img-fluid" %>
+      <% else %>
+        <p>マップ情報がありません</p>
+      <% end%>
+      <% if @hole.map_b.attached?%>
+        <%= image_tag @hole.map_b.variant(resize:'134x330'), id: "map_b", class: "main_map img-fluid" %>
+      <% else %>
+        <p>マップ情報がありません</p>
+      <% end%>
+      <% if @hole.map_l.attached?%>
+        <%= image_tag @hole.map_l.variant(resize:'134x330'), id: "map_l", class: "main_map img-fluid" %>
+      <% else %>
+        <p>マップ情報がありません</p>
+      <% end%>
+    </div>
     <%# ピン %>
-    <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
-      <img src="strage/photo_1.png" id="pin" width="26px"> %>
+    <div class="map_pin">
+      <% if @strategy_info.map_target_x.present? %>
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="main_map_pin js-image-switch">
+      <% end %>
+      <% if @strategy_info.map_point_x.present? %>
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="main_map_pin js-image-switch">
+      <% end %>
+      <% if @strategy_info.map_shoot_x.present? %>
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="main_map_pin js-image-switch">
+      <% end %>
+    </div>
+  </div>
   </div>
 
 </div>
-
+< % byebug %>
+<style>
+#map_pin_target {
+  left: <%= @strategy_info.map_target_x %>px;
+  top: <%= @strategy_info.map_target_y %>px;
+}
+#map_pin_point {
+  left: <%= @strategy_info.map_point_x %>px;
+  top: <%= @strategy_info.map_point_y %>px;
+}
+#map_pin_shoot {
+  left: <%= @strategy_info.map_shoot_x %>px;
+  top: <%= @strategy_info.map_shoot_y %>px;
+}
+</style>
 <script>
 $('.shot_btn').on('click', function () {
   $('.shot_btn').removeClass('s_selected');
   $(this).addClass('s_selected');
 });
-
+// ----------------------------------------
+$(document).bind('turbolinks:load ajaxComplete',function() {
+  
+  // console.log("ピン％化map");
+  // マップ
+  const map = document.getElementById("strategy_main_map");
+  const map_x = map.clientWidth;
+  const map_y = map.clientHeight;
+  const b_map_x = Number('<%= @strategy_info.map_size_x %>');
+  const b_map_y = Number('<%= @strategy_info.map_size_y %>');
+  // マップ、狙い目のピン
+  const map_pin_target = document.getElementById("map_pin_target");
+  const map_target_style_x = Number('<%= @strategy_info.map_target_x %>');
+  const map_target_style_y = Number('<%= @strategy_info.map_target_y %>');
+  map_pin_target.style.left = (map_target_style_x / b_map_x)*100 + "%";
+  map_pin_target.style.top = (map_target_style_y / b_map_y)*100 + "%";
+  // マップ、ポイントのピン
+  const map_pin_point = document.getElementById("map_pin_point");
+  const map_point_style_x = Number('<%= @strategy_info.map_point_x %>');
+  const map_point_style_y = Number('<%= @strategy_info.map_point_y %>');
+  map_pin_point.style.left = (map_point_style_x / b_map_x)*100 + "%";
+  map_pin_point.style.top = (map_point_style_y / b_map_y)*100 + "%";
+  // マップ、撮影地点のピン
+  const map_pin_shoot = document.getElementById("map_pin_shoot");
+  const map_shoot_style_x = Number('<%= @strategy_info.map_shoot_x %>');
+  const map_shoot_style_y = Number('<%= @strategy_info.map_shoot_y %>');
+  map_pin_shoot.style.left = (map_shoot_style_x / b_map_x)*100 + "%";
+  map_pin_shoot.style.top = (map_shoot_style_y / b_map_y)*100 + "%";
+});
 </script>
 
 
 <%# ----- %>
 <style>
-.center {
-  /* position: absolute;
-  display: inline-block;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%); */
-}
 
 /** Custom Select **/
 .custom-select-wrapper {
