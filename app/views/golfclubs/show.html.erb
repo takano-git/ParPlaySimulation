@@ -30,7 +30,7 @@
       <tr>
         <td colspan="2">
           <% if @golfclub.photo.attached? %>
-            <%= image_tag @golfclub.photo.variant(resize:'500x500') %>
+            <%= image_tag cdn_ready_blob_path(@golfclub.photo), width: '500px', height: 'auto' %>
           <% else %>
             画像登録無し
           <% end %>

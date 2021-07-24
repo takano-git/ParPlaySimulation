@@ -54,12 +54,12 @@
                 <div class="hole-name">R</div>
                 <%= hole_fields.file_field :map_r, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_r", style: "display: none;"%>
                 <div>
-                  <% if @course.holes.find(hole_fields.object.id).map_r.attached? %>
-                    <%= image_tag @course.holes.find(hole_fields.object.id).map_r, class: "hole-image-default" %>
+                  <% if hole_map_r(@course, hole_fields).attached? %>
+                    <%= image_tag cdn_ready_blob_path(hole_map_r(@course, hole_fields)), class: "hole-image-default" %>
                   <% else %>
                     <img src="/noimage.png" class="hole-image-default">
                   <% end %>
-                  <img src="<%= @course.holes.find(hole_fields.object.id).map_r %>" id=<%= "preview_#{hole_fields.index + 1}_r" %> class="hole-image clear-text">
+                  <img src="<%= hole_map_r(@course, hole_fields) %>" id=<%= "preview_#{hole_fields.index + 1}_r" %> class="hole-image clear-text">
                 </div>
               <% end %>
             </div>
@@ -86,12 +86,12 @@
                 <div class="hole-name">B</div>
                 <%= hole_fields.file_field :map_b, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_b", style: "display: none;" %>
                 <div>
-                  <% if @course.holes.find(hole_fields.object.id).map_b.attached? %>
-                    <%= image_tag @course.holes.find(hole_fields.object.id).map_b, class: "hole-image-default" %>
+                  <% if hole_map_b(@course, hole_fields).attached? %>
+                    <%= image_tag cdn_ready_blob_path(hole_map_b(@course, hole_fields)), class: "hole-image-default" %>
                   <% else %>
                     <img src="/noimage.png" class="hole-image-default">
                   <% end %>
-                  <img src="<%= @course.holes.find(hole_fields.object.id).map_b %>" id=<%= "preview_#{hole_fields.index + 1}_b" %> class="hole-image clear-text">
+                  <img src="<%= hole_map_b(@course, hole_fields) %>" id=<%= "preview_#{hole_fields.index + 1}_b" %> class="hole-image clear-text">
                 </div>
               <% end %>
             </div>
@@ -118,12 +118,12 @@
                 <div class="hole-name">L</div>
                 <%= hole_fields.file_field :map_l, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_l", style: "display: none;" %>
                 <div>
-                  <% if @course.holes.find(hole_fields.object.id).map_l.attached? %>
-                    <%= image_tag @course.holes.find(hole_fields.object.id).map_l, class: "hole-image-default" %>
+                  <% if hole_map_l(@course, hole_fields).attached? %>
+                    <%= image_tag cdn_ready_blob_path(hole_map_l(@course, hole_fields)), class: "hole-image-default" %>
                   <% else %>
                     <img src="/noimage.png" class="hole-image-default">
                   <% end %>
-                  <img src="<%= @course.holes.find(hole_fields.object.id).map_l %>" id=<%= "preview_#{hole_fields.index + 1}_l" %> class="hole-image clear-text">
+                  <img src="<%= hole_map_l(@course, hole_fields) %>" id=<%= "preview_#{hole_fields.index + 1}_l" %> class="hole-image clear-text">
                 </div>
               <% end %>
             </div>

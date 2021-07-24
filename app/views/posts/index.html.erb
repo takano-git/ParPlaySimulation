@@ -21,8 +21,8 @@
       <article class="wrap">
         <figure class="figure-box">
           <% if post.photo.attached? %>
-            <%= link_to post.photo, "data-lightbox": "lightbox-group", "data-title": "(#{Category.find(post.category_id).name}) #{post.title}", remote: true do %>
-              <%= image_tag post.photo.variant(resize:'300x300'), class: "figure-item" %>
+            <%= link_to cdn_ready_blob_path(post.photo), "data-lightbox": "lightbox-group", "data-title": "(#{Category.find(post.category_id).name}) #{post.title}", remote: true do %>
+              <%= image_tag cdn_ready_blob_path(post.photo), width: '300px', height: 'auto' %>
             <% end %>
           <% else %>
             <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">

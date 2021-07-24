@@ -55,7 +55,7 @@ Rails.application.routes.draw do
       end
     end
     # 投稿情報
-    resources :posts
+    resources :posts, except: %i(show)
   end
 
   # ゴルフ場検索（地域）
