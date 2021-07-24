@@ -38,9 +38,10 @@ class GolfclubsController < ApplicationController
 
   def destroy
     ActiveRecord::Base.transaction do
-      @golfclub.photo.purge if @golfclub.photo.attached?
-      @golfclub.destroy!
-      redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を削除しました。" }
+      if @golfclub.destroy!
+        @golfclub.photo.purge if @golfclub.photo.attached?
+        redirect_to golfclubs_url, flash: { success: "#{@golfclub.name}を削除しました。" }
+      end
     end
   rescue ActiveRecord::InvalidForeignKey
     redirect_to golfclubs_url, flash: { danger: "【#{@golfclub.name}】は攻略、投稿情報へ使用されています。削除できません。" }

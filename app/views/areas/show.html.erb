@@ -32,7 +32,7 @@
         <div class="row no-gutters">
           <div class="col-md-6">
             <% if golfclub.photo.attached? %>
-              <%= image_tag golfclub.photo.variant(resize:'350x350') %>
+              <%= image_tag cdn_ready_blob_path(golfclub.photo), width: '350px', height: 'auto' %>
             <% else %>
               <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image">
                 <title>Placeholder</title>
