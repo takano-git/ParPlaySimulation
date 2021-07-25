@@ -16,13 +16,10 @@
       <%= render "strategy_infos/registration_edit_render_files/edit" %>
     <% end %>
   </div>
-  
-  <%# 管理者の場合はゴルフクラブ一覧に戻るボタンも表示 %>
-  <%# ---------------- %>
-  <div class="to_index">
-    <%= link_to ">攻略ページ", golfclub_strategy_infos_path, data: {"turbolinks" => false}, class:""%>
-  </div>
+</div>
 
+<div class="to_index">
+  <%= link_to ">攻略ページ", golfclub_strategy_infos_path, class: "to_index_link", data: {"turbolinks" => false} %>
 </div>
 
 <%= javascript_include_tag "strategy_infos/select_ajax" %>
