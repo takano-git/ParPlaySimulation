@@ -1,18 +1,18 @@
 
 <div class="strategy_main">
 
-  <%# ホールボタンでのみ切り替わる  col-md-1.5%>
+  <%# ホールボタンでのみ切り替わる  col-md-1%>
   <div class="strategy_main_status">
       Hole<%= @hole.hole_number %><br>
       Par<%= @hole.number_of_pars %>
   </div>
-<%#  col-md-8.5 %>
+<%#  col-md-9 %>
   <div class="strategy_main_center">
     <div id="show">
-      <%= render 'strategy_infos/index_render_files/show', strategy_info: @strategy_info %>
+      <%= render 'strategy_infos/index_render_files/show' %>
     </div>
-    <%# アコーディオン未設定 %>
-    <div class="shot_bar row">
+    <%# アコーディオン未設定 , selected: @location_name%>
+    <div class="shot_bar">
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
           <% shots[1].each.with_index(1) do |strategy, i| %>
@@ -25,28 +25,11 @@
       <% end %>
     </div><br>
 
-
-
   </div>
-  <%# @strategy_infoがない場合 %>
-<%# ------------------------------------------- %>
-
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
-  <div id="strategy_main_map" class="">
-    <%= image_tag @hole.map_r.variant(resize:'134x430'), id: "map_r", class: "img-fluid" %>
-    <%= image_tag @hole.map_b.variant(resize:'134x430'), id: "map_b", class: "img-fluid" %>
-    <%= image_tag @hole.map_l.variant(resize:'134x430'), id: "map_l", class: "img-fluid" %>
-    <%# ピン %>
-    <%# <img src="strage/map_1.png" id="map" width="150px" style="margin-left: 400px"><br>
-      <img src="strage/photo_1.png" id="pin" width="26px"> %>
+  <div id="main_map">
+    <%= render 'strategy_infos/index_render_files/main_map' %>
   </div>
 
 </div>
 
-<script>
-$('.shot_btn').on('click', function () {
-  $('.shot_btn').removeClass('s_selected');
-  $(this).addClass('s_selected');
-});
-
-</script>

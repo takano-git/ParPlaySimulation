@@ -1,5 +1,5 @@
 // アップロードする画像ファイル表示
-jQuery(document).bind('turbolinks:load ajaxComplete',function() {
+$(document).bind('turbolinks:load ajaxComplete',function() {
   const photo_prev_src = document.getElementById('photo_prev').getAttribute('src');
   $('#admin_photo').val(photo_prev_src);
   const photo_area = $('#photo_area');
