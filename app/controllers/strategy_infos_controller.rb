@@ -12,6 +12,10 @@ class StrategyInfosController < ApplicationController
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
+    # @shot_tee_options = @strategy_shots["tee"].map {
+    #   |c| [ c.id, c.shot_id, data: { show_path: golfclub_strategy_infos_path(c.id) }]
+    # }
+    # byebug
     # 攻略情報があるとき
     if @strategy_info.present?
       # 登録情報はあるが、写真がない場合の処理

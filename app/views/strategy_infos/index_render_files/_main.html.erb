@@ -11,7 +11,7 @@
     <div id="show">
       <%= render 'strategy_infos/index_render_files/show' %>
     </div>
-    <%# アコーディオン未設定 %>
+    <%# アコーディオン未設定 , selected: @location_name%>
     <div class="shot_bar">
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
