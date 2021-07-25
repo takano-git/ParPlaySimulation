@@ -1,9 +1,150 @@
 <%= render 'layouts/flash_messages' %>
 
 <div class="container-course">
-  <h4><%= @golfclub.name %> ・ コース情報修正</h4>
-  
+  <h5><%= @golfclub.name %> ・ コース情報編集</h5>
+
   <%= form_with model: @course, url: golfclub_course_path(@golfclub, @course), local: true, method: :patch do |course| %>
-    <%= render 'form', course: course %>
+    <div class="row">
+      <div class="form-group col col-lg-6 pl-0">
+        <%= course.label :name %>
+        <%= course.text_field :name, placeholder: "20文字以内", required: true, maxlength: "20", class: "form-control" %>
+        
+        <div class="form-group-course-btn">
+          <input type="button" id="hole_btn" value="ホール番号切替" class="btn btn-sm btn-brand">
+          <%= course.submit submit_name, data: { disable_with: '送信中' }, class: "btn btn-sm btn-primary" %>
+          <%= link_to '前画面に戻る', golfclub_path(@golfclub), class: "btn btn-sm btn-secondary" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-cols-md-1 row-cols-lg-3">
+      <%= course.fields_for :holes do |hole_fields| %>
+        <div class="card border-brand" style="margin-bottom: 7px;">
+          <div class="form-control">
+            <%= hole_fields.label :hole_number %>
+            <%= hole_fields.number_field :hole_number,
+              id: "hole_number_field_#{hole_fields.index + 1}",
+              hole_type: "OUT",
+              style: "border: none;",
+              readonly: true
+            %>
+          </div>
+        
+          <div class="form-control">
+            <%= hole_fields.label :number_of_pars %>
+            <% @pars.each do |par| %>
+              &nbsp;
+              <%= hole_fields.label :pars, par %>
+              <%= hole_fields.radio_button :number_of_pars, par, value: "ball_blue.jpeg" %>
+              <label for=<%= "course_holes_attributes_#{hole_fields.index}_number_of_pars_#{par}" %>>
+                <img src="/ball_blue.jpeg" with="20" height="20">
+              </label>
+            <% end %>
+          </div>
+
+          <div class="">
+            <%= hole_fields.hidden_field :golfclub_id, value: @golfclub.id %>
+          </div>
+          
+          <div class="hole-group">
+            <!-- R画像フォーム -->
+            <div class="form-group-hole">
+              <div id="hole_remove_<%= hole_fields.index + 1 %>_r" class="remove">×</div>
+              <%= hole_fields.label :map_r, for: "hole_image_#{hole_fields.index + 1}_r" do %>
+                <div class="hole-name">R</div>
+                <%= hole_fields.file_field :map_r, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_r", style: "display: none;"%>
+                <div>
+                  <% if hole_map_r(@course, hole_fields).attached? %>
+                    <%= image_tag cdn_ready_blob_path(hole_map_r(@course, hole_fields)), class: "hole-image-default" %>
+                  <% else %>
+                    <img src="/noimage.png" class="hole-image-default">
+                  <% end %>
+                  <img src="<%= hole_map_r(@course, hole_fields) %>" id=<%= "preview_#{hole_fields.index + 1}_r" %> class="hole-image clear-text">
+                </div>
+              <% end %>
+            </div>
+            
+            <script>
+              $("#hole_image_<%= hole_fields.index + 1 %>_r").on('change', function (e) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                  $("#preview_<%= hole_fields.index + 1 %>_r").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+              });
+
+              document.querySelector("#hole_remove_<%= hole_fields.index + 1 %>_r").addEventListener('click', function(){
+                document.querySelector("#preview_<%= hole_fields.index + 1 %>_r").setAttribute('src', '');
+                document.querySelector("#hole_image_<%= hole_fields.index + 1 %>_r").value = '';
+              });
+            </script>
+
+            <!-- B画像フォーム -->
+            <div class="form-group-hole">
+              <div id="hole_remove_<%= hole_fields.index + 1 %>_b" class="remove">×</div>
+              <%= hole_fields.label :map_b, for: "hole_image_#{hole_fields.index + 1}_b" do %>
+                <div class="hole-name">B</div>
+                <%= hole_fields.file_field :map_b, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_b", style: "display: none;" %>
+                <div>
+                  <% if hole_map_b(@course, hole_fields).attached? %>
+                    <%= image_tag cdn_ready_blob_path(hole_map_b(@course, hole_fields)), class: "hole-image-default" %>
+                  <% else %>
+                    <img src="/noimage.png" class="hole-image-default">
+                  <% end %>
+                  <img src="<%= hole_map_b(@course, hole_fields) %>" id=<%= "preview_#{hole_fields.index + 1}_b" %> class="hole-image clear-text">
+                </div>
+              <% end %>
+            </div>
+            
+            <script>
+              $("#hole_image_<%= hole_fields.index + 1 %>_b").on('change', function (e) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                  $("#preview_<%= hole_fields.index + 1 %>_b").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+              });
+
+              document.querySelector("#hole_remove_<%= hole_fields.index + 1 %>_b").addEventListener('click', function(){
+                document.querySelector("#preview_<%= hole_fields.index + 1 %>_b").setAttribute('src', '');
+                document.querySelector("#hole_image_<%= hole_fields.index + 1 %>_b").value = '';
+              });
+            </script>
+
+            <!-- L画像フォーム -->
+            <div class="form-group-hole">
+              <div id="hole_remove_<%= hole_fields.index + 1 %>_l" class="remove">×</div>
+              <%= hole_fields.label :map_l, for: "hole_image_#{hole_fields.index + 1}_l" do %>
+                <div class="hole-name">L</div>
+                <%= hole_fields.file_field :map_l, accept: "image/png, image/jpg, image/jpeg", id: "hole_image_#{hole_fields.index + 1}_l", style: "display: none;" %>
+                <div>
+                  <% if hole_map_l(@course, hole_fields).attached? %>
+                    <%= image_tag cdn_ready_blob_path(hole_map_l(@course, hole_fields)), class: "hole-image-default" %>
+                  <% else %>
+                    <img src="/noimage.png" class="hole-image-default">
+                  <% end %>
+                  <img src="<%= hole_map_l(@course, hole_fields) %>" id=<%= "preview_#{hole_fields.index + 1}_l" %> class="hole-image clear-text">
+                </div>
+              <% end %>
+            </div>
+
+            <script>
+              $("#hole_image_<%= hole_fields.index + 1 %>_l").on('change', function (e) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                  $("#preview_<%= hole_fields.index + 1 %>_l").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+              });
+
+              document.querySelector("#hole_remove_<%= hole_fields.index + 1 %>_l").addEventListener('click', function(){
+                document.querySelector("#preview_<%= hole_fields.index + 1 %>_l").setAttribute('src', '');
+                document.querySelector("#hole_image_<%= hole_fields.index + 1 %>_l").value = '';
+              });
+            </script>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>

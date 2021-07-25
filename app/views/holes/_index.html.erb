@@ -1,0 +1,74 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="w-100">
+        <%= @golfclub.name %>【<%= @course.name %>コース】登録ホール画像
+      </h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="container-hole">
+        <% @course.holes.each do |hole| %>
+          <div class="card border-0">
+            <table class="table table-bordered card-columns">
+              <thead>
+                <tr>
+                  <th colspan="3" class="card-header">
+                    ホール<%= hole.hole_number %>&emsp;/&emsp;パー<%= hole.number_of_pars %>
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="min-height: 100px; min-width: 50px">
+                      <% if hole.map_r.attached? %>
+                        <%= image_tag cdn_ready_blob_path(hole.map_r), width: '75px', height: 'auto' %>
+                      <% else %>
+                        <%= image_tag '/noimage.png', width: '75', height: 'auto' %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="min-height: 100px; min-width: 50px">
+                      <% if hole.map_b.attached? %>
+                        <%= image_tag cdn_ready_blob_path(hole.map_b), width: '75px', height: 'auto' %>
+                      <% else %>
+                        <%= image_tag '/noimage.png', width: '75', height: 'auto' %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="min-height: 100px; min-width: 50px">
+                      <% if hole.map_l.attached? %>
+                        <%= image_tag cdn_ready_blob_path(hole.map_l), width: '75px', height: 'auto' %>
+                      <% else %>
+                        <%= image_tag '/noimage.png', width: '75', height: 'auto', style: "object-fit: cover;" %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.aaa{
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+}
+</style>

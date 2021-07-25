@@ -1,0 +1,15 @@
+.container-hole {
+  @extend .container-fluid;
+  max-width: 576px;
+  padding: 2rem;
+}
+
+.form-group-hole {
+  display: inline-block;
+  margin-bottom: 1px;
+}
+
+.hole-group {
+  text-align: center;
+  margin: 5px 0 5px 0;
+}

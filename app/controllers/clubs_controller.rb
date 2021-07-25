@@ -2,21 +2,22 @@ class ClubsController < ApplicationController
   before_action :authenticate_user! # ログインしているユーザーのみ許可
   before_action :set_user # current_userを@userにセット
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
-  before_action :set_clubs , only: %i[ index select chart ]
+  before_action :set_clubs , only: %i[ index select ]
+  before_action :premium_user # 有料会員のみ
 
-
+  # ゴルフクラブ一覧表示画面（マイクラブ一覧）
   def index
   end
 
-  # クラブセッティングに加えるselectページ
+  # クラブセッティングに加えるselectページ表示機能
   def select
     # 長い順にクラブセッティングに選ばれたクラブを並び替え
-    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
+    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
   end
 
-  # ドロップアンドドラッグしクラブセッティングに加える機能
-  def add
-    @club = Club.find(params[:selected_club])
+  # 選択ボタンを押しクラブセッティングに加える機能
+  def add_buttom
+    @club = Club.find(params[:id])
     selected_clubs = current_user.clubs.where(selected: true).count
     
     if selected_clubs >= 14
@@ -27,13 +28,11 @@ class ClubsController < ApplicationController
     else
       @club.selected = true
       if @club.save
-        #head 201
         flash[:success] = 'クラブセッティングを１本追加しました。'
-        hash = {id: @club.id, detail: @club.detail}
-        require 'json'
-        render :json => hash.to_json
+        redirect_to clubs_select_user_path(@user)
       else
-        head 500
+        flash[:danger] = 'クラブセッティング追加に失敗しました。'
+        redirect_to clubs_select_user_path(@user)        
       end
     end
   end
@@ -49,21 +48,14 @@ class ClubsController < ApplicationController
     end
   end
 
+  # ゴルフクラブ新規登録画面
   def new
     @club = Club.new
   end
 
+  # ゴルフクラブ新規登録機能
   def create
     @club= Club.new(club_params)
-
-    # ユーザー毎のゴルフクラブのカウンターを計算し@club.counterに代入
-      # ゴルフクラブ登録が初めてなら
-    if current_user.clubs.count == 0
-      @club.counter = 1
-      # ゴルフクラブ登録が1本以上あれば
-    elsif current_user.clubs.count > 0
-      @club.counter = current_user.clubs.all.pluck(:counter).max + 1
-    end
 
     if @club.save
       flash[:success] = '新しいマイクラブを登録しました。'
@@ -74,12 +66,28 @@ class ClubsController < ApplicationController
     end
   end
 
-  # ゴルフクラブチャート表示
+  # ゴルフクラブ編集画面
+  def edit
+    @club = Club.find_by(user_id: current_user, id: params[:id])
+  end
+
+  # ゴルフクラブ更新
+  def update
+    @club = Club.find_by(user_id: current_user, id: params[:id])
+
+    if @club.update(club_params)
+      redirect_to clubs_url(@user), flash: { success: "ゴルフクラブ【#{@club.yarn_count_string}#{@club.yarn_count_number}】を編集しました。" }
+    else
+      redirect_to clubs_url(@user), flash: { danger: @club.errors.full_messages.join }
+    end
+  end
+
+  # ゴルフクラブチャート表示ページ
   def chart
     largo_weight_data = [] # 配列[[長さ, 重さ],[長さ, 重さ], ...]
     scatterdata = [] # 散布図表示用データ配列
   
-    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :ASC)
+    @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
     largo_weight_data = @selected_clubs.pluck(:largo, :weight)
 
     largo_weight_data.each do |data|
@@ -91,10 +99,10 @@ class ClubsController < ApplicationController
   # ゴルフクラブ論理削除
   def logical_deletion
     club = Club.find(params[:id])
-    if club.deleted_at == nil
-     club.deleted_at = Time.now
+    if club.delete_flg.blank?
+     club.delete_flg = true
     else
-      club.deleted_at = nil
+      club.delete_flg = nil
     end
 
     if club.save
@@ -109,11 +117,10 @@ class ClubsController < ApplicationController
   private
 
     def club_params
-      params.require(:club).permit(:yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :deleted_at)
+      params.require(:club).permit(:id, :yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :delete_flg)
     end
 
     def set_clubs
-      # @clubs = Club.where(user_id: current_user)
-      @clubs = current_user.clubs.all
+      @clubs = current_user.clubs.all.order(largo: :DESC)
     end
 end

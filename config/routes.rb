@@ -20,9 +20,10 @@ Rails.application.routes.draw do
       get 'clubs/chart'
       get 'clubs/select'
       post 'clubs/add'
+      post 'clubs/add_buttom'
       post 'clubs/take'
       post 'clubs/logical_deletion'
-      resources :clubs, except: %i(show)
+      resources :clubs, except: %i(show destroy)
     end
   end
 
@@ -36,7 +37,7 @@ Rails.application.routes.draw do
   # ゴルフ場
   resources :golfclubs do
     # ゴルフコース情報
-    resources :courses, except: %i(index show) do
+    resources :courses, except: %i(index) do
       # ゴルフホール情報
       resources :holes
     end
@@ -54,7 +55,7 @@ Rails.application.routes.draw do
       end
     end
     # 投稿情報
-    resources :posts
+    resources :posts, except: %i(show)
   end
 
   # ゴルフ場検索（地域）
