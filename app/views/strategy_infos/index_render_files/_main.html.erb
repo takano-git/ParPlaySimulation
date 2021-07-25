@@ -12,7 +12,7 @@
       <%= render 'strategy_infos/index_render_files/show' %>
     </div>
     <%# アコーディオン未設定 %>
-    <div class="shot_bar row">
+    <div class="shot_bar">
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
           <% shots[1].each.with_index(1) do |strategy, i| %>
