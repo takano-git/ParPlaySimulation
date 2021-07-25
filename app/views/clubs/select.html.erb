@@ -4,7 +4,7 @@
   <!-- SelectedUser一覧をリスト表示 -->
   <div class="text-right ">
     <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-outline-brand my-3" %>
-    <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-brand my-3 disabled" %>
+    <button class= "btn btn-brand my-3">セッティング</button>
     <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-outline-brand my-3" %>
   </div>
 
@@ -35,7 +35,7 @@
               <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
               <td><%= club.detail %></td>
             <% if club.selected %>
-              <td><button class="btn btn-brand disabled">選択中</button></td>
+              <td><button class="btn btn-brand">選択中</button></td>
             <% else %>
               <td><%= link_to '選択', clubs_add_buttom_user_path(club.id), :method => :post, class: "btn btn-outline-brand item-buttom" %></td>  
             <% end %>
