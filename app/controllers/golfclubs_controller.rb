@@ -5,6 +5,8 @@ class GolfclubsController < ApplicationController
   def index
     @q = Golfclub.ransack(params[:q])
     @golfclubs = @q.result(distinct: true).order(:id)
+    @areas = Area.all.index_by(&:id)
+    @courses = Course.all.group_by(&:golfclub_id)
   end
 
   def show
