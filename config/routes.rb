@@ -4,7 +4,13 @@ Rails.application.routes.draw do
   root 'homes#index'
 
   # 機能紹介
-  get 'about', to: 'homes#about'
+  # get 'about', to: 'homes#about'
+  get 'guests_function', to: 'homes#guests_function' # ゲストユーザーの機能
+  get 'general_users_function', to: 'homes#general_users_function' # ログインユーザーの機能
+  get 'premium_users_function', to: 'homes#premium_users_function' # 有料会員の機能
+  get 'about_membership_registration', to: 'homes#about_membership_registration' # 有料会員の登録方法について
+  get 'about_membership_withdrawal', to: 'homes#about_membership_withdrawal' # 有料会員の退会方法について
+  get 'inquiry', to: 'homes#inquiry' # お問い合わせはこちら
 
   # ユーザー
   devise_for :users,

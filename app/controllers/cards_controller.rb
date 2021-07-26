@@ -165,7 +165,6 @@ class CardsController < ApplicationController
       # card = Card.where(user_id: current_user.id).last
       card = Card.find_by(user_id: current_user.id, default_card: true)
       # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
-      debugger
       subscription = Payjp::Subscription.create(
         :customer => card.customer_id,
         :plan => plan, # planアクションで定義した情報を呼び出す
@@ -186,17 +185,15 @@ class CardsController < ApplicationController
     def plan
       # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
       # Payjp::Plan.all
-      # debugger
       # if params['payjp-token'].blank?
-      #   debugger
-        pj_plan = Payjp::Plan.create(
+        Payjp::Plan.create(
+        # pj_plan = Payjp::Plan.create(
           :name => "Par Play Simulation",
           :amount => 980,
           :interval => 'month',
           :currency => 'jpy',
           # :trial_days => 30,
         )
-        debugger
       # end
     end
 
