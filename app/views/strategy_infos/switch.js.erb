@@ -1,11 +1,11 @@
 <% if @new_or_edit && @strategy_info_admin.present? %>
 <%# < % byebug % > %>
   <%# "ユーザーのデータなし(new)、かつ管理者のデータあり" %>
-  $("#registration_edit_renders").html("A<%= j(render 'strategy_infos/registration_edit_render_files/new') %>");
+  $("#registration_edit_renders").html("<%= j(render 'strategy_infos/registration_edit_render_files/new') %>");
 <% elsif @new_or_edit %>
   <%# "ユーザーのデータなし(new)" %>
-  $("#registration_edit_renders").html("B<%= j(render 'strategy_infos/registration_edit_render_files/brand_new') %>");
+  $("#registration_edit_renders").html("<%= j(render 'strategy_infos/registration_edit_render_files/brand_new') %>");
 <% else %>
   <%# "ユーザーのデータあり(edit)" %>
-  $("#registration_edit_renders").html("C<%= j(render 'strategy_infos/registration_edit_render_files/edit') %>");
+  $("#registration_edit_renders").html("<%= j(render 'strategy_infos/registration_edit_render_files/edit') %>");
 <% end %>

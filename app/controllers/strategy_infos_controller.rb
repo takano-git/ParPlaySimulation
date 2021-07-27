@@ -100,23 +100,23 @@ class StrategyInfosController < ApplicationController
   end
 
   # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
-  def form_map
-    location_colums = ["map_r","map_b","map_l"]
-    @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
-    if params[:hole_data].blank?
-      course_id = params[:course_data][:course][:course_id]
-      @holes = Hole.where(course_id: course_id).order(:id)
-      @hole = @holes.first
-      @hole_options = @holes.order(:id).map { 
-        |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-      }
-    else
-      @hole = Hole.find(params[:hole_data][:hole][:hole_id])
-    end
-  end
+  # def form_map
+  #   location_colums = ["map_r","map_b","map_l"]
+  #   @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
+  #   if params[:hole_data].blank?
+  #     course_id = params[:course_data][:course][:course_id]
+  #     @holes = Hole.where(course_id: course_id).order(:id)
+  #     @hole = @holes.first
+  #     @hole_options = @holes.order(:id).map { 
+  #       |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
+  #     }
+  #   else
+  #     @hole = Hole.find(params[:hole_data][:hole][:hole_id])
+  #   end
+  # end
 
   def registration_edit
-    # コース、ホールが登録されていなかったらリダイレクト
+    # コースが登録されていなかったらリダイレクト
 
 
 
@@ -153,9 +153,11 @@ class StrategyInfosController < ApplicationController
       @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, location_name: params[:location_name],
                                                 shot_id: params[:shot_id]).first
       @new_or_edit = @strategy_info.blank?
-      # ログインユーザー登録情報画ない場合権利者のものを探す
-      @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: params[:location_name],
-                                                shot_id: params[:shot_id]).first if @new_or_edit
+      # ログインユーザー登録情報がない場合とphotoの登録がない場合権利者のものを探す
+      if @new_or_edit || !@strategy_info.photo.attached?
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: params[:location_name],
+                                                  shot_id: params[:shot_id]).first
+      end
       @strategy_info = StrategyInfo.new if @new_or_edit
       # byebug
     end
@@ -236,14 +238,12 @@ class StrategyInfosController < ApplicationController
   end
 
   def create
-    # byebug
     @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
       flash[:success] = "攻略情報を登録しました。"
     else
       flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
     end
-    redirect_to action: :registration_edit
   end
 
   def edit
@@ -251,14 +251,15 @@ class StrategyInfosController < ApplicationController
   end
 
   def update
-    # byebug
     @strategy_info = StrategyInfo.find(params[:id])
     if @strategy_info.update(strategy_info_params)
-      flash[:success] = "攻略情報を編集しました。"
-      redirect_to action: :registration_edit
+      respond_to do |format|
+        format.js { flash.now[:success] = "攻略情報を編集しました。" }
+      end
     else
-      flash[:danger] = "編集に失敗しました。"
-      redirect_to action: :registration_edit
+      respond_to do |format|
+        format.js { flash.now[:danger] = "編集に失敗しました。" }
+      end
     end
   end
 

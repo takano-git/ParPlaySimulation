@@ -95,14 +95,12 @@ $brand_t1: #224444;
 
 .strategy_none {
   background-color: #ccc;
-  width: 451px;
-  height: 230px;
+  max-width: 100%;
 }
 
 .map_none {
   background-color: #ccc;
-  width: 303px;
-  height: 107px;
+  max-width: 100%;
 }
 
 .strategy_main {
@@ -132,20 +130,22 @@ $brand_t1: #224444;
 }
 
 .strategy_main_center {
-  margin-right: -50px;
+  // margin-right: -50px;
 }
 
 #show {
+  margin-right: 20px;
   padding: 0.38em;
 }
 
 #show_photo_area {
-  max-width: 80%;
+  // max-width: 80%;
 }
 
 #strategy_main_map {
   position: relative;
   max-width: 100%;
+  margin-top: 15px;
 }
 // photo, pin
 // #show_photo_area {
@@ -155,7 +155,7 @@ $brand_t1: #224444;
 
 }
 .main_map {
-
+  padding: 0.38em;
   &_pin {
     position: absolute;
     // top: 100%;

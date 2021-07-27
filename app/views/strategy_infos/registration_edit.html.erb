@@ -1,3 +1,7 @@
+<div id="flash_messages">
+  <%= render 'layouts/flash_messages' %>
+</div>
+
 <div id="container" class="container">
   <div id="golfclub__name_area">
     <%= @golfclub.name %><br>
@@ -6,13 +10,10 @@
   <%# newかeditかでrennder分け %>
   <div id="registration_edit_renders">
     <% if @new_or_edit && @strategy_info_admin.present? %>
-      <%= "ユーザーのデータなし(new)、かつ管理者のデータあり" %>
       <%= render "strategy_infos/registration_edit_render_files/new" %>
     <% elsif @new_or_edit %>
-      <%= "ユーザーのデータなし(new)" %>
       <%= render "strategy_infos/registration_edit_render_files/brand_new" %>
     <% else %>
-      <%= "ユーザーのデータあり(edit)" %>
       <%= render "strategy_infos/registration_edit_render_files/edit" %>
     <% end %>
   </div>
