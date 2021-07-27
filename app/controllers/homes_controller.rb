@@ -1,7 +1,9 @@
 class HomesController < ApplicationController
-
   def index
   end
+
+  # def about
+  # end
 
   def guests_function
   end
