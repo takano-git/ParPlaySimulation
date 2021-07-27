@@ -10,7 +10,7 @@ class AreasController < ApplicationController
   def show
     # @areas = Area.all.order(:id).group_by(&:district)
     @area = Area.find(params[:id])
-    @golfclubs = Golfclub.where(area_id: @area.id).order(:id)
+    @golfclubs = Golfclub.where(area_id: @area.id, closed: false).order(:id)
     @golfclubs_citys = Golfclub.all.pluck(:area_id).uniq.sort
   end
 

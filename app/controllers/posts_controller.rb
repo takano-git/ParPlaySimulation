@@ -50,7 +50,7 @@ class PostsController < ApplicationController
     end
 
     def set_golfclub
-      @golfclub = Golfclub.find(params[:golfclub_id])
+      @golfclub = Golfclub.where(closed: false).find(params[:golfclub_id])
     end
 
     def set_post

@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
     t.string "name", default: "", null: false
     t.string "home_page_url"
     t.string "strategy_video"
+    t.boolean "closed", default: false, null: false
     t.integer "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -115,21 +116,13 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "selected_clubs", force: :cascade do |t|
-    t.integer "club_id", null: false
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_selected_clubs_on_user_id"
-  end
-
   create_table "strategy_infos", force: :cascade do |t|
     t.integer "user_id"
     t.integer "golfclub_id"
     t.integer "course_id"
     t.integer "hole_id"
     t.integer "shot_id"
-    t.string "location_name"
+    t.integer "location_name"
     t.text "comment"
     t.integer "photo_target_x"
     t.integer "photo_target_y"

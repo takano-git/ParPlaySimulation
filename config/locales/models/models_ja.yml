@@ -35,6 +35,7 @@ ja:
         prefecture: 県名
         home_page_url: サイトURL
         strategy_video: YouTube動画URL
+        closed: 閉鎖
         photo: ゴルフ場画像
         created_at: 作成日
         updated_at: 更新日
