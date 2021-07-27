@@ -175,7 +175,7 @@ $brand_t1: #224444;
   box-shadow: 0 2px 3px 0 #ddd;
   font-size: 100%;
   padding: 2px;
-  margin-right: 150px;
+  // margin-right: 150px;
 }
 
 
@@ -206,10 +206,10 @@ $brand_t1: #224444;
     border-color: $brand_t1;
   }
   &_select {
-    appearance: none;
-    border-radius: 0;
-    border: none;
-    outline: none;
+    // appearance: none;
+    // border-radius: 0;
+    // border: none;
+    // outline: none;
   }
 }
 

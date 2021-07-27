@@ -1,7 +1,7 @@
 
 <div class="create_strategy_info row">
 
-  <div class="strategy_info_form col-sm-8">
+  <div class="strategy_info_form col-sm-7">
 
     <%= form_with url: golfclub_strategy_info_path(@golfclub, @strategy_info), method: :put, remote: true do |f| %>
       <%# ユーザーid %>
@@ -64,11 +64,11 @@
     
   </div>
 
-  <div class=" col-sm-2">
+  <div class=" col-sm-1">
     
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-3">
     <div id="strategy_map" class="">
       <div id="map_area">
         <%# < %= render 'strategy_infos/form_map', hole: @hole % > %>

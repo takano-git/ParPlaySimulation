@@ -9,6 +9,8 @@ $(document).bind('turbolinks:load ajaxComplete',function() {
     //  find_img 画像表示部分
     const find_img = $("#photo_selected");
     const fileRdr = new FileReader();
+    const btn_Wrapp = $(".upload-btn-wrapper");
+    btn_Wrapp.hide();
     // find_imgがあればimgを消去
     if(find_img.length) {
       find_img.remove();
@@ -18,6 +20,7 @@ $(document).bind('turbolinks:load ajaxComplete',function() {
     //　filepropがない場合、@strategy_info_admin.photo表示
     if( $("#f_strategy_photo").prop('files')[0] === undefined ){
       $('#photo_prev').show();
+      btn_Wrapp.show();
     } else {
       $('#photo_prev').hide();
       photo_area.append(img);
