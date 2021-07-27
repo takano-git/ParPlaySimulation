@@ -85,7 +85,7 @@ class CardsController < ApplicationController
           card: params['payjp-token']
         # metadata: {user_id: current_user.id}
         )
-        debugger
+        # debugger
         @card = Card.new(
           user_id: current_user.id,
           customer_id: customer.id,
@@ -133,7 +133,7 @@ class CardsController < ApplicationController
 
     customer = Payjp::Customer.retrieve(@card.customer_id)
     # customer.delete # PAY.JPの顧客情報を削除
-    debugger
+    # debugger
     if @card.destroy # App上でもクレジットカードを削除
       current_user.update(payment_id: nil, customer_id: nil, membership_number: nil, subscription_id: nil, premium: false)
       flash[:success] = 'カード情報を削除しました。'
