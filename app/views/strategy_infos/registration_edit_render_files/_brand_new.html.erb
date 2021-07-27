@@ -6,15 +6,13 @@
     <%= form_with(url: golfclub_strategy_infos_path, remote: true) do |f| %>
       <%# ユーザーid %>
       <%= f.hidden_field :user_id, value: current_user.id, class: "form-control" %>
-      コース名:
+      <p class= "golfclub_column">コース名:</p>
       <%= f.select :course_id, @course_options, class: "form-control" %>
-      Hole No:
+      <p class= "golfclub_column">Hole No:</p>
       <%= f.select :hole_id, @hole_options, class: "form-control" %>
-      shot:
-      <%# <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
+      <p class= "golfclub_column">shot:</p>
       <%= f.select :shot_id, StrategyInfo.shot_ids.keys, class: "form-control" %>
-      <%# ティグラウンド %>
-      <%# <br> %>
+      <p class= "golfclub_column">ティグラウンド:</p>
       <%= f.select :location_name, StrategyInfo.location_names.keys, selected: @location_name, class: "form-control" %>
       <br>
       <%# 画像up %>

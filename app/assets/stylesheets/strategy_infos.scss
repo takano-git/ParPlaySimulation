@@ -118,7 +118,7 @@ $brand_t1: #224444;
 
 .strategy_main_status {
   color: white;
-  background-color: #224444;
+  background-color: $brand_t1;
   height: 45px;
   max-width: 70px;
   min-width: 70px;
@@ -194,6 +194,24 @@ $brand_t1: #224444;
 // .create_strategy_info {
 //   display: flex;
 // }
+
+.golfclub_column {
+  display: inline-block;
+  color: $brand_t1;
+  font-weight:bold;
+  margin: 8px 0 7px 4px;
+  &_top {
+    padding: 2px 4px;
+    border: solid 1px;
+    border-color: $brand_t1;
+  }
+  &_select {
+    appearance: none;
+    border-radius: 0;
+    border: none;
+    outline: none;
+  }
+}
 
 .shot_btn {
   border-color: $brand_t1;

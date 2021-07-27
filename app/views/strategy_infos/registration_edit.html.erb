@@ -4,8 +4,8 @@
 
 <div id="container" class="container">
   <div id="golfclub__name_area">
-    <%= @golfclub.name %><br>
-    <%= @area.prefecture %>
+    <p class= "golfclub_column golfclub_column_top">ゴルフ場名：<%= @golfclub.name %></p>
+    <p class= "golfclub_column golfclub_column_top">県名：<%= @area.prefecture %></p>
   </div>
   <%# newかeditかでrennder分け %>
   <div id="registration_edit_renders">
