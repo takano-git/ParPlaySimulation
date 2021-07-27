@@ -14,7 +14,7 @@
       <%= f.select :shot_id, StrategyInfo.shot_ids.keys, selected: @strategy_info_admin.shot_id, class: "form-control" %>
       <p class= "golfclub_column">ティグラウンド:</p>
       <%= f.select :location_name, StrategyInfo.location_names.keys, selected: @strategy_info_admin.location_name, class: "form-control" %>
-      <br>
+      
       <%# 画像up %>
       <div id="strategy_photo">
         <div id="photo_area">
@@ -28,7 +28,6 @@
       <%= f.file_field :photo, id: "f_strategy_photo", class: "form-control-file",
                                 accept: "image/png, image/jpg, image/jpeg" %>
       <%= f.hidden_field :admin_photo, value: @strategy_info_admin.photo, id: "admin_photo" %>
-      <br>
       <%= f.label :コメント, class: "" %>
       <%= f.text_field :comment, value: @strategy_info_admin.comment, class: "form-control" %>
       <%# location_name %>
@@ -53,8 +52,7 @@
         <%= f.hidden_field :map_size_x, value: @strategy_info_admin.map_size_x, id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: @strategy_info_admin.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
-      <br>
-      <%= f.submit "攻略情報登録", class: "btn btn-primary btn-block" %>
+      <%= f.submit "攻略情報登録", class: "btn btn-brand btn-block" %>
     <% end %>
     
   </div>

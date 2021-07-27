@@ -1,4 +1,4 @@
-
+< % byebug %>
 <div class="create_strategy_info row">
 
   <div class="strategy_info_form col-sm-7">
@@ -15,7 +15,7 @@
       <%= f.select :shot_id, StrategyInfo.shot_ids.keys, selected: @strategy_info.shot_id, class: "form-control" %>
       <p class= "golfclub_column">ティグラウンド:</p>
       <%= f.select :location_name, StrategyInfo.location_names.keys, selected: @strategy_info.location_name, class: "form-control" %>
-      <br>
+      
       <%# 画像up %>
       <div id="strategy_photo">
         <div id="photo_area">
@@ -33,7 +33,6 @@
       <%= f.file_field :photo, id: "f_strategy_photo", class: "form-control-file",
                                 accept: "image/png, image/jpg, image/jpeg" %>
       <%= f.hidden_field :admin_photo, value: @strategy_info.photo, id: "admin_photo" %>
-      <br>
       <%= f.label :コメント, class: "" %>
       <%= f.text_field :comment, value: @strategy_info.comment,  class: "form-control" %>
       <%# location_name %>
@@ -58,8 +57,13 @@
         <%= f.hidden_field :map_size_x, value: @strategy_info.map_size_x, id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: @strategy_info.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
-      <br>
-      <%= f.submit "攻略情報更新", class: "btn btn-primary btn-block" %>
+      <%= f.submit "攻略情報更新", class: "btn btn-brand btn-block" %>
+      <%= link_to '削除', golfclub_strategy_info_path(id: @strategy_info.id), class: "btn btn-danger", method: :delete, remote: true,
+                  data: { confirm: "削除してよろしいですか？",
+                          cancel: 'キャンセル',
+                          commit: '削除する'
+                        }, title: '削除確認'
+              %>
     <% end %>
     
   </div>

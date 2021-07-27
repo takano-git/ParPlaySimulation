@@ -185,6 +185,7 @@ class StrategyInfosController < ApplicationController
       @hole = Hole.where(course_id: @course_id).first
       @hole_id = @hole.id
     end
+    @shot_id = params[:shot_id]
     # ホールのマップが登録されてなかった時の処理
 
     # byebug
@@ -211,6 +212,8 @@ class StrategyInfosController < ApplicationController
     end
     @strategy_info = StrategyInfo.new if @new_or_edit
     @location_name = params[:location_name] if @new_or_edit
+    # 管理者の場合、@strategy_infoも@strategy_info_adminもないとき
+
     # byebug
   end
 
@@ -265,8 +268,18 @@ class StrategyInfosController < ApplicationController
 
   def destroy
     @strategy_info = StrategyInfo.find(params[:id])
-    @strategy_info.photo.perge if @strategy_info.photo.attached? 
-    @strategy_info.destroy
+    ActiveRecord::Base.transaction do
+      if @strategy_info.destroy!
+        @strategy_info.photo.purge if @strategy_info.photo.attached?
+        respond_to do |format|
+          format.js { flash.now[:success] = "削除しました。" }
+        end
+      end
+    end
+    rescue ActiveRecord::InvalidForeignKey
+      respond_to do |format|
+        format.js { flash.now[:danger] = "。削除できません。" }
+      end
   end
 
   private
