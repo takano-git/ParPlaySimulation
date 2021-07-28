@@ -1,13 +1,29 @@
 <footer>
   <div class="container-fluid">
-    <div class="d-flex justify-content-center justify-content-md-end">
-      <div>
-        <%# <div class="pt-5"><img src="https://qr-official.line.me/sid/M/201bjxfe.png" style="width:120px; height:120px"></div> %>
-        <div class="pt-1"><img src="https://qr-official.line.me/sid/M/201bjxfe.png" style="width:120px; height:120px"></div>
-        <div class="mb-5 mb-md-0">LINE友達登録は<br>こちら</div>
+    <div class="footer">
+      <ul>
+        <li><%= link_to 'ゲストユーザーの機能', guests_function_path, remote: true %></li>
+        <li><%= link_to 'ログイン方法とログインユーザーの機能', general_users_function_path, remote: true %></li>
+        <li><%= link_to '有料会員の機能', premium_users_function_path, remote: true %></li>
+        <li><%= link_to '有料会員の登録方法と料金について', about_membership_registration_path, remote: true %></li>
+        <li><%= link_to '有料会員の退会方法について', about_membership_withdrawal_path, remote: true %></li>
+        <li><%= link_to 'お問い合わせはこちら', inquiry_path, remote: true %></li>
+      </ul>
+      <div class="d-flex justify-content-center justify-content-md-end">
+        <div>
+          <div class="pt-1"><img src="https://qr-official.line.me/sid/M/201bjxfe.png" style="width:120px; height:120px"></div>
+          <div class="mb-5 mb-md-0">LINE友達登録は<br>こちら</div>
+        </div>
       </div>
-    
     </div>
   </div>
   <div class="copy-right pt-md-4">Copyright © 2021 ParPlaySimulation</div>
 </footer>
+
+<!--モーダルウインドウ表示-->
+<div id="guests-function" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="general-users-function" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="premium-users-function" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="about-membership-registration" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="about-membership-withdrawal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="inquiry" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

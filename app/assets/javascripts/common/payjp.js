@@ -1,5 +1,5 @@
 // function main() {
-  console.log("payjp.js start");
+  // console.log("payjp.js start");
   document.addEventListener(
     "DOMContentLoaded", e => {
       // "token_submit"というidをもつhtmlがあるページか？つまりカード作成ページかを判定
