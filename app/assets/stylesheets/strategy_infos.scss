@@ -229,6 +229,7 @@ $brand_t1: #224444;
   height:auto;
   max-width:100%;
   max-height:80%;
+  // padding-right: 20%;
 }
 
 // 全てのピンに
@@ -239,6 +240,7 @@ $brand_t1: #224444;
 #strategy_map {
   position: relative;
   display: inline-block;
+  margin-top: 55px;
 }
 .map_pin {
   &_target {
@@ -300,6 +302,7 @@ $brand_t1: #224444;
   overflow: hidden;
   display: inline-block;
   width: 100%;
+  margin-top: -23px;
 
     &:before {
       content: "";

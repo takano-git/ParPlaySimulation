@@ -30,10 +30,8 @@
           <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin js-image-switch">
         </div>
       </div>
-      <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
-      <%# --------------------- %>
-      <%= f.label :コメント, class: "label-#{yield(:class_text)}" %>
-      <%= f.text_field :comment, class: "form-control" %>
+      <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %>
+      <%= f.text_field :comment, placeholder: "コメント入力", class: "form-control" %>
       <%# location_name %>
       <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
       <%# photoピン座標 %>
@@ -54,7 +52,6 @@
       <%# mapサイズ %>
       <%= f.hidden_field :map_size_x, value: "0", id: 'map_size_x', class: "form-control" %>
       <%= f.hidden_field :map_size_y, value: "0", id: 'map_size_y', class: "form-control" %>
-      <br>
       <%= f.submit "攻略情報登録", class: "btn btn-brand btn-block" %>
     <% end %>
   </div>
