@@ -1,5 +1,5 @@
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/nio4r-2.5.7/ext/nio4r
-/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210725-46931-v4y4j6.rb extconf.rb
+/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210728-62122-136w57k.rb extconf.rb
 checking for unistd.h... yes
 checking for linux/aio_abi.h... no
 checking for linux/io_uring.h... no
@@ -247,4 +247,4 @@ linking shared-object nio4r_ext.bundle
 
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/nio4r-2.5.7/ext/nio4r
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 nio4r_ext.bundle ./.gem.20210725-46931-18m9431
+/usr/bin/install -c -m 0755 nio4r_ext.bundle ./.gem.20210728-62122-1bqpge3

@@ -1,5 +1,5 @@
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.4.2/ext/sqlite3
-/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210725-46931-vcm9t7.rb extconf.rb
+/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210728-62122-1oe4bho.rb extconf.rb
 checking for sqlite3.h... yes
 checking for pthread_create() in -lpthread... yes
 checking for -ldl... yes
@@ -57,4 +57,4 @@ linking shared-object sqlite3/sqlite3_native.bundle
 
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.4.2/ext/sqlite3
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20210725-46931-1e11eqz/sqlite3
+/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20210728-62122-o948gf/sqlite3

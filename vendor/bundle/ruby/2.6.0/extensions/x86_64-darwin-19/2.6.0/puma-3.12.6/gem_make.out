@@ -1,5 +1,5 @@
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/puma-3.12.6/ext/puma_http11
-/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210725-46931-z96l48.rb extconf.rb
+/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210728-62122-vqfqao.rb extconf.rb
 checking for BIO_read() in -lcrypto... yes
 checking for SSL_CTX_new() in -lssl... yes
 checking for openssl/bio.h... yes
@@ -31,4 +31,4 @@ linking shared-object puma/puma_http11.bundle
 
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/puma-3.12.6/ext/puma_http11
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 puma_http11.bundle ./.gem.20210725-46931-vyffca/puma
+/usr/bin/install -c -m 0755 puma_http11.bundle ./.gem.20210728-62122-1ruor5y/puma

@@ -1,5 +1,5 @@
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/unf_ext-0.0.7.7/ext/unf_ext
-/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210725-46931-ao2zsj.rb extconf.rb
+/Users/TOSHI/.rbenv/versions/2.6.7/bin/ruby -I /Users/TOSHI/.rbenv/versions/2.6.7/lib/ruby/2.6.0 -r ./siteconf20210728-62122-x0i1pf.rb extconf.rb
 checking for -lstdc++... yes
 creating Makefile
 
@@ -35,4 +35,4 @@ linking shared-object unf_ext.bundle
 
 current directory: /Users/TOSHI/Par-Play-Simulation/vendor/bundle/ruby/2.6.0/gems/unf_ext-0.0.7.7/ext/unf_ext
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20210725-46931-a9yfmb
+/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20210728-62122-psv8mz
