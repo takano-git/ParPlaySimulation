@@ -108,7 +108,7 @@ class ClubsController < ApplicationController
     if club.save
       redirect_to clubs_url(@user)
       flash[:success] = 'ゴルフクラブを変更しました。'
-      UserMailer.with(user: @user).card_expired_mail.deliver_now
+      # UserMailer.with(user: @user).card_expired_mail.deliver_now
     else
       flash[:danger] = 'ゴルフクラブの変更に失敗しました。'
       redirect_to clubs_url(@user)
