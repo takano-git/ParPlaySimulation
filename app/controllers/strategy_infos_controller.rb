@@ -11,6 +11,7 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
+    @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
     # @shot_tee_options = @strategy_shots["tee"].map {
     #   |c| [ c.id, c.shot_id, data: { show_path: golfclub_strategy_infos_path(c.id) }]
@@ -32,9 +33,10 @@ class StrategyInfosController < ApplicationController
     @course_id = params[:course_id]
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id]).order(:id)
     @hole = @holes.first
-    @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id]).order(:id)
+    @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id).group_by(&:shot_id)
+    @location_name = "R"
     # 攻略情報があるとき
     if @strategy_info.present?
       # 登録情報はあるが、写真がない場合の処理
@@ -55,6 +57,7 @@ class StrategyInfosController < ApplicationController
     ).order(:id)
     @strategy_info = @strategy_infos.first
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
+    @location_name = params[:location_name]
     # 攻略情報があるとき
     if @strategy_info.present?
       # 登録情報はあるが、写真がない場合の処理
@@ -74,6 +77,7 @@ class StrategyInfosController < ApplicationController
     @strategy_info = @strategy_infos.first
     # @strategy_infoがblankの時、攻略情報が存在しないview表記(_show.html.erb)
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id).group_by(&:shot_id)
+    @location_name = params[:location_name]
     # 攻略情報があるとき
     if @strategy_info.present?
       # 登録情報はあるが、写真がない場合の処理

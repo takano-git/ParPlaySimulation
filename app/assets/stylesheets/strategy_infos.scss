@@ -11,8 +11,8 @@ $brand_t1: #224444;
 
 .strategy_cource_bar {
   // display: flex;
-  margin-top: 18px;
-  margin-bottom: 15px;
+  margin-top: 13px;
+  margin-bottom: 10px;
   // margin-left: 130px;
   margin-left: 80px;
 
@@ -24,6 +24,10 @@ $brand_t1: #224444;
 .strategy_course_btn {
   border-color: $brand_t1;
   width: 60px;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 
 .c_selected {
@@ -37,12 +41,18 @@ $brand_t1: #224444;
 
 .strategy_hole_bar {
   // margin-left: 150px;
-  margin-left: 100px;
+  // margin-left: 100px;
+  margin-left: 90px;
+  margin-right: 90px;
 }
 
 .strategy_hole_btn {
   border-color: $brand_t1;
   width: 40px;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 
 .h_selected {
@@ -57,6 +67,10 @@ $brand_t1: #224444;
 .location_btn {
   border-color: $brand_t1;
   width: 40px;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 
 .l_selected {
@@ -68,17 +82,21 @@ $brand_t1: #224444;
   }
 }
 
-// .shot_bar {
-//   margin-left: 0px;
-// }
+.shot_bar {
+  margin-left: 0.9px;
+}
 
 
-// .shot_btn {
+.shot_btn {
 //   border-color: $brand_t1;
 //   width: 80px;
 //   margin-top: 3px;
 //   margin-right: 3px;
-// }
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
+}
 
 .s_selected {
   color: white;
@@ -202,7 +220,7 @@ $brand_t1: #224444;
 .golfclub_column {
   display: inline-block;
   color: $brand_t1;
-  font-weight:bold;
+  font-weight: bold;
   margin: 8px 0 7px 4px;
   &_top {
     padding: 2px 4px;
@@ -242,6 +260,7 @@ $brand_t1: #224444;
   display: inline-block;
   margin-top: 55px;
 }
+
 .map_pin {
   &_target {
     z-index: 20;
@@ -256,8 +275,18 @@ $brand_t1: #224444;
   }
 }
 
+.pins_description {
+  border: solid 1px;
+  border-color: $brand_t1;
+  border-radius: 0.5rem;
+  max-width: 85%;
+  margin-top: 5px;
+}
+
+
 #strategy_photo {
   position: relative;
+  max-width: 700px;
 }
 .photo_pin {
   &_target {
@@ -265,6 +294,18 @@ $brand_t1: #224444;
   }
   &_point {
     z-index: 15;
+  }
+}
+
+// 
+.strategy_update-destroy {
+  display: flex;
+  flex-wrap: wrap;
+  &_btn_left {
+    width: 78%;
+  }
+  &_btn_right {
+    width: 22%;
   }
 }
 

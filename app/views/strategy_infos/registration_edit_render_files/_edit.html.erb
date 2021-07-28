@@ -56,7 +56,21 @@
         <%= f.hidden_field :map_size_x, value: @strategy_info.map_size_x, id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: @strategy_info.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
-      <%= f.submit "攻略情報更新", class: "btn btn-brand btn-block" %>
+      <div class="strategy_update-destroy">
+        <div class="strategy_update-destroy_btn_left">
+          <%= f.submit "攻略情報更新", class: "btn btn-brand btn-block" %>
+        </div>
+        <div class="strategy_update-destroy_btn_right">
+          <% if @strategy_info.present? && (@strategy_info.user_id == current_user.id || current_user.admin?) %>
+            <%= link_to '削除', golfclub_strategy_info_path(id: @strategy_info.id), class: "btn btn-danger btn-block", 
+                                method: :delete, remote: true,
+                                data: { confirm: "削除してよろしいですか？",
+                                        cancel: 'キャンセル',
+                                        commit: '削除する' }, 
+                                title: '削除確認' %>
+          <% end %>
+        </div>
+      </div>
     <% end %>
     
   </div>
@@ -76,7 +90,6 @@
         <% else %>
           <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid regedit_map" %>
         <% end %>
-
       </div>
       <div class="map_pin">
         <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
@@ -86,20 +99,18 @@
 
     </div>
     <div class="pins_description">
-      <ul>
-        <li>
-          <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="js-image-switch">
-          狙い目
-        </li>
-        <li>
-          <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="js-image-switch">
-          目印
-        </li>
-        <li>
-          <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="js-image-switch">
-          撮影地点
-        </li>
-      </ul>
+      <div class="pins_description_content golfclub_column">
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="js-image-switch">
+        :狙い目
+      </div>
+      <div class="pins_description_content golfclub_column">
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="js-image-switch">
+        :目印
+      </div>
+      <div class="pins_description_content golfclub_column">
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="js-image-switch">
+        :撮影地点
+      </div>
     </div>
   </div>
 

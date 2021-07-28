@@ -12,7 +12,7 @@
       <%= render 'strategy_infos/index_render_files/show' %>
     </div>
     <%# アコーディオン未設定 , selected: @location_name%>
-    <div class="shot_bar">
+    <div class="shot_bar row">
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
           <% shots[1].each.with_index(1) do |strategy, i| %>
@@ -24,14 +24,6 @@
         </div>
       <% end %>
     </div><br>
-    <% if @strategy_info.present? && (@strategy_info.user_id == current_user.id || current_user.admin?) %>
-<%= link_to '削除', golfclub_strategy_info_path(id: @strategy_info.id), class: "btn btn-danger", method: :delete, remote: true,
-                  data: { confirm: "削除してよろしいですか？",
-                          cancel: 'キャンセル',
-                          commit: '削除する'
-                        }, title: '削除確認'
-              %>
-    <% end %>
   </div>
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
   <div id="main_map">
