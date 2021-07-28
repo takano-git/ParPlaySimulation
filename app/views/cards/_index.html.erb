@@ -1,0 +1,40 @@
+<%= render 'layouts/flash_messages' %>
+
+<div class="container">
+  <div class="mb-5">
+    <%= form_with url: cards_path, local: true do |f| %>
+      <script
+        type="text/javascript"
+        src="https://checkout.pay.jp/"
+        class="payjp-button"
+        data-payjp=""
+        data-key="pk_test_e2b5e884b0680ac67ca97467"
+        data-submit-text="上記のカードを登録する"
+        data-text="カードを新規に追加"
+      ></script>
+    <% end %>
+  </div>
+
+  
+  <% @cards.each do |card| %>
+    <% if @customer.default_card == card.id %>
+      <div class="card text-white bg-primary" style="width: 18rem;">
+        <div class="card-body">
+          <h5><%= card.brand %></h5>
+          <h5 class="card-title">**** **** **** <%= card.last4 %></h5>
+          <p class="card-text">
+            支払いカードに設定済み
+          </p>
+        </div>
+      </div>
+    <% else %>
+      <div class="card <%= "text-white bg-primary" if @customer.default_card == card.id %>" style="width: 18rem;">
+        <div class="card-body">
+          <h5><%= card.brand %></h5>
+          <h5 class="card-title">**** **** **** <%= card.last4 %></h5>
+          <%= link_to "支払いカードに設定", users_card_path(card.metadata.card_id), method: :patch, data: {confirm: "カードを支払いカードに設定します"}, class:"btn btn-primary mt-2" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
