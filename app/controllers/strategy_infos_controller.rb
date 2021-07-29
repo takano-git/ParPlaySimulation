@@ -216,32 +216,11 @@ class StrategyInfosController < ApplicationController
     end
     @strategy_info = StrategyInfo.new if @new_or_edit
     @location_name = params[:location_name] if @new_or_edit
-    # 管理者の場合、@strategy_infoも@strategy_info_adminもないとき
 
     # byebug
   end
 
   def new
-    # どのviewから飛んできたかどうかで場合分け？
-    # ゴルフクラブIDはどちらからでも取れている。
-    # →indexページで選択されている、course_id, hole_id, shot_id, location_name, 座標カラムを渡す。 
-    # byebug
-    @strategy_info_admiin = StrategyInfo.find(params[:id]) if params[:id].present?
-    # viewでstrategy_info_indexの有無で表示切替
-
-    @golfclub = Golfclub.find(params[:golfclub_id])
-    @area = Area.find(@golfclub.area_id)
-
-    @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
-    @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
-      |c| [c.name, c.id, data: { children_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-    }
-    @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
-    @hole = @holes.first
-    @strategy_info = StrategyInfo.new
-    @hole_options = @holes.order(:id).map { 
-      |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-    }
   end
 
   def create
@@ -254,7 +233,6 @@ class StrategyInfosController < ApplicationController
   end
 
   def edit
-    @strategy_info = StrategyInfo.find(params[:id])
   end
 
   def update
@@ -274,6 +252,20 @@ class StrategyInfosController < ApplicationController
     @strategy_info = StrategyInfo.find(params[:id])
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
+        @courses = Course.where(golfclub_id: @strategy_info.golfclub_id).order(:id)
+        @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+          |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+        }
+        @course_id = @strategy_info.course_id
+        @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
+        @hole_options = @holes.map { 
+          |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+        }
+        @hole_id = @strategy_info.hole_id
+        @hole = @holes.find(@hole_id)
+        @shot_id = @strategy_info.shot_id
+        @location_name = @strategy_info.location_name
+        @new_or_edit = true
         @strategy_info.photo.purge if @strategy_info.photo.attached?
         respond_to do |format|
           format.js { flash.now[:success] = "削除しました。" }

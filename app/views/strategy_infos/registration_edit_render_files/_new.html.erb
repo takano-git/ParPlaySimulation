@@ -29,8 +29,6 @@
                                 accept: "image/png, image/jpg, image/jpeg" %>
       <%= f.hidden_field :admin_photo, value: @strategy_info_admin.photo, id: "admin_photo" %>
       <%= f.text_field :comment, value: @strategy_info_admin.comment, placeholder: "コメント入力", class: "form-control" %>
-      <%# location_name %>
-      <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
       <div class="coordinate">
         <%# photoピン座標 %>
         <%= f.hidden_field :photo_target_x, value: @strategy_info_admin.photo_target_x, class: "form-control" %>
