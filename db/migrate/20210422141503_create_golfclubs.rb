@@ -4,6 +4,7 @@ class CreateGolfclubs < ActiveRecord::Migration[5.2]
       t.string :name, default: "", null: false
       t.string :home_page_url
       t.string :strategy_video
+      t.boolean :closed, default: false, null: false
       t.references :area, foreign_key: true
 
       t.timestamps

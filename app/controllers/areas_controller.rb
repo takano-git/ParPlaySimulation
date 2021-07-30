@@ -4,14 +4,14 @@ class AreasController < ApplicationController
 
   def index
     @golfclub = Golfclub.first
-    @golfclubs_citys = Golfclub.all.pluck(:area_id).uniq.sort
+    @golfclubs_citys = Golfclub.where(closed: false).pluck(:area_id).uniq.sort
   end
 
   def show
     # @areas = Area.all.order(:id).group_by(&:district)
     @area = Area.find(params[:id])
-    @golfclubs = Golfclub.where(area_id: @area.id).order(:id)
-    @golfclubs_citys = Golfclub.all.pluck(:area_id).uniq.sort
+    @golfclubs = Golfclub.where(area_id: @area.id, closed: false).order(:id)
+    @golfclubs_citys = Golfclub.where(closed: false).pluck(:area_id).uniq.sort
   end
 
   def edit

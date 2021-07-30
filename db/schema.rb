@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
     t.string "name", default: "", null: false
     t.string "home_page_url"
     t.string "strategy_video"
+    t.boolean "closed", default: false, null: false
     t.integer "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
