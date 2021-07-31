@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_063351) do
+ActiveRecord::Schema.define(version: 2021_07_30_160102) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,10 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
   create_table "cards", force: :cascade do |t|
     t.string "card_id", default: "", null: false
     t.string "customer_id", default: "", null: false
+    t.string "brand", default: "", null: false
+    t.integer "exp_month"
+    t.integer "exp_year"
+    t.string "last4", default: "", null: false
     t.boolean "default_card", default: false
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -101,6 +105,13 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_holes_on_course_id"
     t.index ["golfclub_id"], name: "index_holes_on_golfclub_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "plan_id", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|
