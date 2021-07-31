@@ -3,7 +3,7 @@
   <div class="text-right ">
     <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-outline-brand my-3" %>
     <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-outline-brand my-3" %>
-    <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-brand my-3 disabled" %>
+    <button class= "btn btn-brand my-3">グラフ</button>
   </div>
 
   <h4 class="mt-4">ゴルフクラブの重さと長さの推移表</h4>
@@ -12,7 +12,7 @@
     <div class="col-4">
       <div class="table-responsive">
         <table class="table table-sm table-hover">
-          <thead class="thead-dark">
+          <thead class="bg-brand text-white">
             <tr>
               <th scope="col">番手</th>
               <th scope="col">ロフト</th>
@@ -48,7 +48,7 @@
     <div class="col-lg-10 offset-lg-1 col-xl-8 offset-lg-2">
       <div class="table-responsive">
         <table class="table table-sm table-hover table-bordered">
-          <thead class="thead-dark">
+          <thead class="bg-brand text-white">
             <tr>
               <th scope="col">番手</th>
               <th scope="col" class="text-center">名称</th>
