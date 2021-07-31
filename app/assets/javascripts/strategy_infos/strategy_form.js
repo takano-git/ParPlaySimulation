@@ -1,12 +1,5 @@
-
-// document.addEventListener("turbolinks:load", function() {
-
-
 $(document).bind('turbolinks:load ajaxComplete', function() {
-// -----
-// window.onload = function() {
-  // function() {
-  console.log("pinのscript")
+
   // ここからピンの移動
   const map_pin_target = document.getElementById("map_pin_target");
   const map_pin_point = document.getElementById("map_pin_point");
@@ -28,7 +21,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_rect = map.getBoundingClientRect();
-    let map_target_x = (x - map_rect.left)+width/2-6;
+    let map_target_x = (x - map_rect.left)+width/2-4;
     let map_target_y = (y - map_rect.top)-height/2-4;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     map_pin_target.style.left = map_target_x + "px";
@@ -36,13 +29,6 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // const
     document.getElementById('map_target_x').value = map_target_x;
     document.getElementById('map_target_y').value = map_target_y;
-    // --
-    // pin.onmouseup = function(event){
-      //   console.log("離れたぞ！");
-      //   // document.removeEventListener("mousemove",onMouseMove,true);
-      //   document.removeEventListener("mousemove", onMouseMove, false);
-      // }
-      // --
   }
   // マウスが離れたとき
   map_pin_target.onmouseup = function(event){
@@ -54,15 +40,8 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
   map_pin_target.onmousedown = function(event){
     document.addEventListener("mousemove", pinMove, true)
   }
-  // pin.onmousedown = function(event){
-  //   document.addEventListener("mousemove", {
-    //     argumentPin: pin,
-    //     handleEvent: onMouseMove,
-    //   }, true);
-  // }
   
   
-  // 
   // 2.regedit_map_pin_point
   const MapPinPointMove = function onMouseMove(event){
     // let map_pin_point = document.getElementById("map_pin_point");
@@ -79,7 +58,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_point_rect = map.getBoundingClientRect();
-    let map_point_x = (x - map_point_rect.left)+width/2-6;
+    let map_point_x = (x - map_point_rect.left)+width/2-4;
     let map_point_y = (y - map_point_rect.top)-height/2-4;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     map_pin_point.style.left = map_point_x + "px";
@@ -114,7 +93,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_shoot_rect = map.getBoundingClientRect();
-    let map_shoot_x = (x - map_shoot_rect.left)+width/2-6;
+    let map_shoot_x = (x - map_shoot_rect.left)+width/2-4;
     let map_shoot_y = (y - map_shoot_rect.top)-height/2-4;
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     map_pin_shoot.style.left = map_shoot_x + "px";
@@ -139,7 +118,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     photo_pin_target.ondragstart = function(e){
       return false;
     }
-    // photo_pin_target要素、対windowのx,y座標
+    // photo_pin_target要素、対windowのx,
     let x = event.clientX;
     let y = event.clientY;
     // photo_pin_target要素自身のx,y座標
@@ -148,7 +127,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // photo取得
     let prev_display = document.getElementById('photo_prev');
     let prev_display_css = getComputedStyle(prev_display).display;
-      // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+    // 管理者のphotoかユーザーのphoto、どちらが表示されているか
     let photo = ""
     if (prev_display_css !== "none"){
       photo = document.querySelector('#photo_prev');
@@ -161,6 +140,9 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
     photo_pin_target.style.left = photo_target_x + "px";
     photo_pin_target.style.top = photo_target_y + "px";
+    // photo_pin_target.style.left = (photo_target_x/photo.offsetWidth)*100 + "%";
+    // photo_pin_target.style.top = (photo_target_y/photo.offsetHeight)*100 + "%";
+    // 
     // const
     document.getElementById('photo_target_x').value = photo_target_x;
     document.getElementById('photo_target_y').value = photo_target_y;
@@ -171,7 +153,6 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
   photo_pin_target.onmouseup = function(event){
     document.removeEventListener("mousemove",PhotoPinTargetMove, true);
   }
-  
   
   
   // 5.photo_pin_point
@@ -187,7 +168,6 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     // photo_pin_point要素自身のx,y座標
     let width = photo_pin_point.offsetWidth;
     let height = photo_pin_point.offsetHeight;
-    // photo取得
     // photo取得
     let prev_display = document.getElementById('photo_prev');
     let prev_display_css = getComputedStyle(prev_display).display;
@@ -214,13 +194,5 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
   }
   photo_pin_point.onmouseup = function(event){
     document.removeEventListener("mousemove",PhotoPinPointMove, true);
-  }  
-  
-  
-  
-  
-  
-// }
-// }
-// })
+  }
 });

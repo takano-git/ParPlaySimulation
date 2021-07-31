@@ -157,6 +157,30 @@ footer {
   background: #224444;
   color: #fff;
   text-align: center;
+  display: inline-block;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  // flex-wrap: wrap;
+  padding: 1px 5px;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.footer ul {
+  list-style-type: none;
+  padding: 5px 5px;
+}
+
+.footer li {
+  margin-bottom: 8px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
 }
 
  /* footerとコンテンツの重なりを防ぐスペース */

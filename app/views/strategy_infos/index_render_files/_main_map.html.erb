@@ -1,0 +1,50 @@
+<div id="strategy_main_map" class="">
+  <% if @strategy_info.present? %>
+    <div id="map_area">
+      <% if @strategy_info.location_name == "R" %>
+        <% if @hole.map_r.attached?%>
+          <%= image_tag @hole.map_r.variant(resize:'134x330'), id: "map_r", class: "main_map img-fluid" %>
+        <% else %>
+          <div class="map_none">
+            <p>マップ情報がありません</p>
+          </div>
+        <% end%>
+      <% elsif @strategy_info.location_name == "B" %>
+        <% if @hole.map_b.attached?%>
+          <%= image_tag @hole.map_b.variant(resize:'134x330'), id: "map_b", class: "main_map img-fluid" %>
+        <% else %>
+          <div class="map_none">
+            <p>マップ情報がありません</p>
+          </div>
+        <% end%>
+      <% else %>
+        <% if @hole.map_l.attached?%>
+          <%= image_tag @hole.map_l.variant(resize:'134x330'), id: "map_l", class: "main_map img-fluid" %>
+        <% else %>
+          <div class="map_none">
+            <p>マップ情報がありません</p>
+          </div>
+        <% end%>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="map_none">
+      <p>マップ情報がありません</p>
+    </div>
+  <% end %>
+  <%# ピン %>
+  <div class="map_pin">
+    <% if @strategy_info.blank? %>
+    <% else %>
+      <% if @strategy_info.map_target_x.present? %>
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="main_map_pin js-image-switch">
+      <% end %>
+      <% if @strategy_info.map_point_x.present? %>
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="main_map_pin js-image-switch">
+      <% end %>
+      <% if @strategy_info.map_shoot_x.present? %>
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="main_map_pin js-image-switch">
+      <% end %>
+    <% end %>
+  </div>
+</div>

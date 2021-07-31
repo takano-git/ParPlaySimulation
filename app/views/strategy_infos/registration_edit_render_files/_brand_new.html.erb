@@ -29,8 +29,8 @@
             <h3 id="file_name"></h3>
           </div> %>
           <div class="photo_pin">
-            <img src="/strategy_infos/pin/target.png" id="photo_pin_target", class="pin">
-            <img src="/strategy_infos/pin/point.png" id="photo_pin_point", class="pin">
+            <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="pin js-image-switch">
+            <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin js-image-switch">
           </div>
         </div>
         <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %><br>
@@ -78,23 +78,23 @@
         <% end %>
       </div>
       <div class="map_pin">
-        <img src="/strategy_infos/pin/target.png" id="pin", class="pin">
-        <img src="/strategy_infos/pin/point.png" id="map_pin_point", class="pin">
-        <img src="/strategy_infos/pin/shoot.png" id="map_pin_shoot", class="pin">
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
       </div>
 
       <div class="pins_description">
         <ul>
           <li>
-            <img src="/strategy_infos/pin/target.png">
+            <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="js-image-switch">
             狙い目
           </li>
           <li>
-            <img src="/strategy_infos/pin/point.png">
+            <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="js-image-switch">
             目印
           </li>
           <li>
-            <img src="/strategy_infos/pin/shoot.png">
+            <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="js-image-switch">
             撮影地点
           </li>
         </ul>
