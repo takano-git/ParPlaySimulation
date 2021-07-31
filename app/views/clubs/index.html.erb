@@ -3,7 +3,7 @@
 
   <div class="text-right padding-15">
     <%= link_to "登録", new_club_path(current_user), remote: true, class: "btn btn-outline-brand my-3" %>
-    <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-brand my-3 disabled" %>
+    <button class= "btn btn-brand my-3">マイクラブ</button>
     <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-outline-brand my-3" %>
     <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-outline-brand my-3" %>
   </div>
@@ -14,7 +14,7 @@
   <div class="padding-15">
   <div class="table-responsive">
     <table class="table">
-      <thead class="thead-dark">
+      <thead class="bg-brand text-white">
         <tr>
           <th scope="col">No.</th>
           <th scope="col">番手</th>
@@ -54,12 +54,12 @@
               <% if club.delete_flg %>
                 <%= link_to '戻す', clubs_logical_deletion_user_path(club, params: { club: { id: club.id, delete_flg: club.delete_flg } }),
                                   :method => :post,
-                                  class: "btn btn-outline-brand"
+                                  class: "btn btn-outline-danger"
                 %>
               <% else %>
                 <%= link_to '削除', clubs_logical_deletion_user_path(club, params: { club: { id: club.id, delete_flg: club.delete_flg } }),
                                   :method => :post,
-                                  class: "btn btn-outline-brand",
+                                  class: "btn btn-danger",
                       data: { confirm: "「番手：#{club.yarn_count_string}#{club.yarn_count_number}」　「名称：#{club.detail}」 を削除してよろしいですか？",
                               cancel: 'キャンセル',
                               commit: '削除する'

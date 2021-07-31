@@ -178,10 +178,21 @@
   }
 }
 
-// .creditcard-info {
-//   p {
-//     margin-top: 1rem;
-//     margin-bottom: 1rem;
-//     padding:40px;
-//   }
-// }
+.default-creditcard-info {
+  background:rgba(71, 216, 241, 0.5);
+  color: black;
+  border: #979797 solid 1px;
+  margin-bottom: 1rem;
+}
+
+.creditcard-info {
+  // p {
+  //   margin-top: 1rem;
+  //   margin-bottom: 1rem;
+  //   padding:40px;
+  // }
+  background-color:#FFFFFF;
+  color: black;
+  border: #979797 solid 1px;
+  margin-bottom: 1rem;
+}

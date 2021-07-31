@@ -10,7 +10,7 @@ class GolfclubsController < ApplicationController
   end
 
   def show
-    @courses = @golfclub.courses
+    @courses = @golfclub.courses.order(:id)
   end
 
   def new
@@ -56,6 +56,6 @@ class GolfclubsController < ApplicationController
     end
 
     def golfclub_params
-      params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, :photo)
+      params.require(:golfclub).permit(:name, :home_page_url, :strategy_video, :area_id, :closed, :photo)
     end
 end
