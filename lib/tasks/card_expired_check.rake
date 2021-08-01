@@ -11,13 +11,16 @@ namespace :card_expired_check do
     UserMailer.card_expired_mail(user).deliver # 本番では削除
 
     # 本番で使用
-
-    # users = User.all # 本番ではクレジットカード有効期限が間近のuserを取ってくる
+    # puts "タスクを始めます。"
     # users = User.joins(:cards).where(cards: {default_card: true, exp_month: Date.current.mon, exp_year: Date.current.year })
     # if users != nil
     #   users.each do |user|
     #     UserMailer.card_expired_mail(user).deliver
     #   end
+    #     puts "今月の期限間近のユーザーにメールを送りました。"
+    #   else
+    #     puts "今月は期限間近のユーザーはいません。"
     # end
+
   end
 end
