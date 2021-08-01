@@ -35,6 +35,12 @@
           <%= link_to 'ゴルフ場検索', areas_path, class: 'nav-link' %>
         </li>
 
+        <% if user_signed_in? && current_user.admin? %>
+          <li class="nav-item">
+            <%= link_to 'ユーザー一覧', users_index_path, class: 'nav-link' %>
+          </li>
+        <% end %>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <% if user_signed_in? %>
