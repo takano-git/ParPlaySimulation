@@ -1,4 +1,5 @@
 <div id="container" class="container">
+  <h4 class="mt-4">ゴルフ場登録編集画面</h4>
   <div id="golfclub__name_area">
     <%= @golfclub.name %><br>
     <%= @area.prefecture %>
@@ -19,7 +20,7 @@
 </div>
 
 <div class="to_index">
-  <%= link_to ">攻略ページ", golfclub_strategy_infos_path, class: "to_index_link", data: {"turbolinks" => false} %>
+  <%= link_to ">攻略ページ　", golfclub_strategy_infos_path, class: "to_index_link", data: {"turbolinks" => false} %>
 </div>
 
 <%= javascript_include_tag "strategy_infos/select_ajax" %>
