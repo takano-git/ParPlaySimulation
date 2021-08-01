@@ -112,9 +112,22 @@ class CardsController < ApplicationController
     customer = Payjp::Customer.retrieve(current_user.customer_id)
     customer.default_card = @card.card_id
     customer.save
-    @default_card = current_user.cards.find_by(default_card: true)
-    @default_card.update(default_card: false)
+    default_card = current_user.cards.find_by(default_card: true)
+    if default_card != nil
+      default_card.update(default_card: false)
+    end
     @card.update(default_card: true)
+    if current_user.premium?
+      current_user.update(payment_id: @card.id)
+    else
+      max = User.where(premium: true).maximum(:membership_number)
+      if max.nil?
+        membership_number = 1
+      else
+        membership_number = max + 1
+      end
+      current_user.update(payment_id: @card.id, customer_id: @card.customer_id, membership_number: membership_number, premium: true)
+    end
     flash[:success] = "支払いカードを変更しました。"
     redirect_to action: "index"
     # todo 例外処理
@@ -127,21 +140,21 @@ class CardsController < ApplicationController
     # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
     # 削除するカードがデフォルトカードだったら、PAY.JPの支払い情報（定期課金）とカード情報を削除して、
     # ユーザーを会員から退会させる。
+    customer = Payjp::Customer.retrieve(@card.customer_id)
+    card = customer.cards.retrieve(@card.card_id)
+    card.delete
     if @card.default_card?
-      # customer = Payjp::Customer.retrieve(@card.customer_id)
-      subscription = Payjp::Subscription.retrieve(current_user.subscription_id)
-      subscription.delete
-      card = customer.cards.retrieve(@card.card_id)
-      card.delete
       # current_user.update(payment_id: nil, customer_id: nil, membership_number: nil, subscription_id: nil, premium: false)
       current_user.update(payment_id: nil, membership_number: nil, premium: false)
     end
     # App上でもクレジットカードを削除する。
     if @card.destroy
-      # カードが存在しなくなったら、PAY.JPの顧客情報を削除する。
+      # カードが存在しなくなったら、PAY.JPの顧客情報と支払い情報を削除して、ユーザー情報を更新する。
       if Card.where(user_id: current_user.id).blank?
         customer = Payjp::Customer.retrieve(@card.customer_id)
         customer.delete
+        # subscription = Payjp::Subscription.retrieve(current_user.subscription_id)
+        # subscription.delete
         current_user.update(customer_id: nil, subscription_id: nil)
       end
       flash[:success] = 'カード情報を削除しました。'
