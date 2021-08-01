@@ -47,6 +47,9 @@ gem 'font-awesome-sass'
 # 検索機能
 gem 'ransack'
 
+# ページネーション
+gem 'kaminari'
+
 # グラフ機能
 gem 'chart-js-rails', '~> 0.1.4'
 
