@@ -1,19 +1,74 @@
 <div class="row">
-  <div class="col-md-8 offset-md-2">
+  <div class="col-md-10 offset-md-1">
     <h5>会員一覧</h5>
+
+    <%= search_form_for @q do |f| %>
+      <div class="user-search-flexbox">
+        <div class="user-search-premium">
+          <div class="user-search-flexbox-item">
+            <%= f.select :premium_eq, options_for_select([['プレミアム条件', ''],['プレミアム会員', true], ['通常会員', false],]), {}, { class: "form-control form-control-sm" } %>
+          </div>
+        </div>
+
+        <div class="user-search-name">
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :membership_number_cont, placeholder: "メンバーID", class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :name_cont, placeholder: "名前", class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :nickname_cont, placeholder: "ニックネーム", class: "form-control form-control-sm" %>
+          </div>
+        </div>
+
+        <div class="user-search-address">
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :email_cont, placeholder: "メールアドレス", class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :phone_number_cont, placeholder: "電話番号", class: "form-control form-control-sm" %>
+          </div>
+        </div>
+
+        <div class="user-search-created">
+          <div class="user-search-flexbox-item">
+            <label class="col-form-label">作成日</label>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.date_field :created_at_gteq, placeholder: "作成日", class: "form-control form-control-sm" %>
+          </div>
+          〜
+          <div class="user-search-flexbox-item">
+            <%= f.date_field :created_at_lteq_end_of_day, placeholder: "作成日", class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="product-search-flexbox-item">
+            <%= button_tag type: 'submit', class: "btn btn-brand btn-sm" do %>
+              <i class="fas fa-search"></i>
+            <% end %>
+            <%= link_to 'リセット', users_path, class: "btn btn-sm btn-secondary" if params[:q].present? %>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
     <table class="table table-bordered table-sm">
       <thead class="bg-brand text-center" style="color: #fff;">
-        <tr>
-          <th>ID</th>
-          <th><%= User.human_attribute_name :membership_number %></th>
-          <th><%= User.human_attribute_name :premium %></th>
-          <th><%= User.human_attribute_name :name %></th>
-          <th><%= User.human_attribute_name :nickname %></th>
-          <th><%= User.human_attribute_name :flying_distance %></th>
-          <th><%= User.human_attribute_name :email %></th>
-          <th><%= User.human_attribute_name :phone_number %></th>
-          <th><%= User.human_attribute_name :created_at %></th>
+        <tr class="user-table-header">
+          <th><%= sort_link @q, :id, 'ID' %></th>
+          <th><%= sort_link @q, :membership_number %></th>
+          <th><%= sort_link @q, :premium %></th>
+          <th><%= sort_link @q, :name %></th>
+          <th><%= sort_link @q, :nickname %></th>
+          <th><%= sort_link @q, :flying_distance %></th>
+          <th><%= sort_link @q, :email %></th>
+          <th><%= sort_link @q, :phone_number %></th>
+          <th><%= sort_link @q, :created_at %></th>
         </tr>
       </thead>
 
