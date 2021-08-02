@@ -6,8 +6,8 @@
       <thead class="bg-brand text-center" style="color: #fff;">
         <tr>
           <th>ID</th>
-          <th><%= User.human_attribute_name :membership_number %></th>
           <th><%= User.human_attribute_name :premium %></th>
+          <th><%= User.human_attribute_name :membership_number %></th>
           <th><%= User.human_attribute_name :name %></th>
           <th><%= User.human_attribute_name :nickname %></th>
           <th><%= User.human_attribute_name :flying_distance %></th>
@@ -21,8 +21,9 @@
         <% @users.each do |user| %>
           <tr>
             <td class="text-center"><%= user.id %></td>
-            <td><%= user.membership_number %></td>
             <td class="text-center"><%= premium_check(user) %></td>
+            <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number != nil %>
+            <td><%= membership_number %></td>
             <td><%= user.name %></td>
             <td><%= user.nickname %></td>
             <td><%= user.flying_distance %></td>
