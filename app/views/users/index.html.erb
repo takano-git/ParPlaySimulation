@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8 offset-md-2 mt-5">
+  <div class="col-md-10 offset-md-1 mt-5">
     <h4>会員一覧</h4>
 
     <%= search_form_for @q do |f| %>
@@ -76,8 +76,9 @@
         <% @users.each do |user| %>
           <tr>
             <td class="text-center"><%= user.id %></td>
-            <td><%= user.membership_number %></td>
             <td class="text-center"><%= premium_check(user) %></td>
+            <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number != nil %>
+            <td><%= membership_number %></td>
             <td><%= user.name %></td>
             <td><%= user.nickname %></td>
             <td><%= user.flying_distance %></td>
