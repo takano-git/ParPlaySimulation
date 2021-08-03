@@ -64,16 +64,13 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "Par-Play-Simulation_#{Rails.env}"
 
-  config.action_mailer.perform_caching = false
-
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
+  config.action_mailer.default_url_options = { protocol: 'https', host: 'https://obscure-oasis-47387.herokuapp.com/' }
 
   if Rails.application.credentials.gmail.present?
     mail_address = Rails.application.credentials.gmail[:address]
     password = Rails.application.credentials.gmail[:password]
   else
-    mail_address = 'admin@example.com'
+    mail_address = 'parplaysimulation@gmail.com'
     password = 'password'
   end
 
@@ -87,6 +84,12 @@ Rails.application.configure do
       password: password,
       authentication: "plain"
   }
+
+  config.action_mailer.perform_caching = false
+
+  # Ignore bad email addresses and do not raise email delivery errors.
+  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
+
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
