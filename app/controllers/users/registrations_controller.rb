@@ -49,15 +49,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
       flash[:notice] = 'アカウントの変更に成功しました。'
       redirect_to areas_path
     else
-      lash[:danger] = 'アカウントの変更に失敗しました。' + user.errors.full_messages.join("<br>")
-      redirect_to edit_user_registration
+      flash[:danger] = 'アカウントの変更に失敗しました。' + user.errors.full_messages.join("<br>")
+      redirect_to edit_user_registration_path
     end
   end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    user = User.find(current_user.id)
+    if current_user.cards.size != 0
+      flash[:notice] = 'カード情報が登録されています。カード情報を削除して下さい。'
+      redirect_to edit_user_registration_path
+    else
+      if user.destroy
+        flash[:notice] = 'アカウントの削除に成功しました。'
+        redirect_to root_path
+      else
+        flash[:notice] = 'アカウントの削除に失敗しました。'
+        redirect_to edit_user_registration_path
+      end
+    end
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
