@@ -3,89 +3,92 @@
 <div class="container-golfclub">
   <h4>コース編集・ホール登録</h4>
   
-  <table class="table table-bordered">
-    <tbody>
-      <tr>
-        <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :name %></th>
-        <td><%= @golfclub.name %></td>
-      </tr>
-      <tr>
-        <th class="golfclub-table-header">
-          <%= Area.human_attribute_name :district %> / 
-          <%= Area.human_attribute_name :prefecture %>
-        </th>
-        <td>
-          <%= Area.find(@golfclub.area_id).district %> / 
-          <%= Area.find(@golfclub.area_id).prefecture %>
-        </td>
-      </tr>
-      <tr>
-        <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :home_page_url %></th>
-        <td><%= @golfclub.home_page_url %></td>
-      </tr>
-      <tr>
-        <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :strategy_video %></th>
-        <td><%= @golfclub.strategy_video %></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <% if @golfclub.photo.attached? %>
-            <%= image_tag cdn_ready_blob_path(@golfclub.photo), width: '500px', height: 'auto' %>
-          <% else %>
-            画像登録無し
-          <% end %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="course-form">
-    <%= link_to 'コース追加', new_golfclub_course_path(@golfclub),
-                            class: "btn btn-sm btn-primary" %>
-    <%= link_to '一覧に戻る', golfclubs_path, class: "btn btn-sm btn-secondary" %>
-  </div>
-
-  <% @courses.each do |course| %>
+  <div class="golfclubs-table">
     <table class="table table-bordered">
       <tbody>
         <tr>
-          <th colspan="10" class="course-name-field bg-brand">
-            <%= course.name %>&emsp;
-            <%= link_to "", golfclub_course_holes_path(@golfclub, course), remote: true, class: "fas fa-camera" %>
+          <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :name %></th>
+          <td><%= @golfclub.name %></td>
+        </tr>
+        <tr>
+          <th class="golfclub-table-header">
+            <%= Area.human_attribute_name :district %> / 
+            <%= Area.human_attribute_name :prefecture %>
           </th>
+          <td>
+            <%= Area.find(@golfclub.area_id).district %> / 
+            <%= Area.find(@golfclub.area_id).prefecture %>
+          </td>
         </tr>
-
         <tr>
-          <th class="course-table-header"><%= Hole.human_attribute_name :hole_number %></th>
-          <% course.holes.each do |hole| %>
-            <td class="text-center"><%= hole.hole_number %></td>
-          <% end %>
+          <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :home_page_url %></th>
+          <td><%= @golfclub.home_page_url %></td>
         </tr>
-
         <tr>
-          <th class="course-table-header"><%= Hole.human_attribute_name :number_of_pars %></th>
-          <% course.holes.each do |hole| %>
-            <td class="text-center"><%= hole.number_of_pars %></td>
-          <% end %>
+          <th class="golfclub-table-header"><%= Golfclub.human_attribute_name :strategy_video %></th>
+          <td><%= @golfclub.strategy_video %></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <% if @golfclub.photo.attached? %>
+              <%= image_tag cdn_ready_blob_path(@golfclub.photo), width: '500px', height: 'auto' %>
+            <% else %>
+              画像登録無し
+            <% end %>
+          </td>
         </tr>
       </tbody>
     </table>
-    <div class="course-form" style="float: right;">
-      <%= link_to '編集', edit_golfclub_course_path(@golfclub, course),
-                          class: "fas fa-edit" %>
-      &emsp;
-      <!--
-      <%= link_to '削除', golfclub_course_path(@golfclub, course),
-                          method: :delete,
-                          remote: true,
-                          class: "fas fa-times-circle",
-                          data: { confirm: "#{course.name}を削除してよろしいですか？",
-                                  cancel: 'キャンセル',
-                                  commit: '削除する'
-                                } %> -->
-      <%= link_to '削除', golfclub_course_path(@golfclub, course), remote: true, class: "fas fa-times-circle" %>
+    
+
+    <div class="course-form">
+      <%= link_to 'コース追加', new_golfclub_course_path(@golfclub),
+                              class: "btn btn-sm btn-primary" %>
+      <%= link_to '一覧に戻る', golfclubs_path, class: "btn btn-sm btn-secondary" %>
     </div>
-  <% end %>
+
+    <% @courses.each do |course| %>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th colspan="10" class="course-name-field bg-brand">
+              <%= course.name %>&emsp;
+              <%= link_to "", golfclub_course_holes_path(@golfclub, course), remote: true, class: "fas fa-camera" %>
+            </th>
+          </tr>
+
+          <tr>
+            <th class="course-table-header"><%= Hole.human_attribute_name :hole_number %></th>
+            <% course.holes.each do |hole| %>
+              <td class="text-center"><%= hole.hole_number %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <th class="course-table-header"><%= Hole.human_attribute_name :number_of_pars %></th>
+            <% course.holes.each do |hole| %>
+              <td class="text-center"><%= hole.number_of_pars %></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+      <div class="course-form" style="float: right;">
+        <%= link_to '編集', edit_golfclub_course_path(@golfclub, course),
+                            class: "fas fa-edit" %>
+        &emsp;
+        <!--
+        <%= link_to '削除', golfclub_course_path(@golfclub, course),
+                            method: :delete,
+                            remote: true,
+                            class: "fas fa-times-circle",
+                            data: { confirm: "#{course.name}を削除してよろしいですか？",
+                                    cancel: 'キャンセル',
+                                    commit: '削除する'
+                                  } %> -->
+        <%= link_to '削除', golfclub_course_path(@golfclub, course), remote: true, class: "fas fa-times-circle" %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <div id="new-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

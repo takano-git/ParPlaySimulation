@@ -34,3 +34,8 @@
 .user-search-flexbox-item {
   margin-bottom: 5px;
 }
+
+.users-table {
+  overflow: auto; /* 横スクロールバーを表示 */
+  white-space: nowrap; /* セル内にあるテキストの折り返しを禁止 */
+}

@@ -36,15 +36,15 @@
 
         <div class="user-search-created">
           <div class="user-search-flexbox-item">
-            <label class="col-form-label">作成日</label>
+            <label class="col-form-label">登録日</label>
           </div>
 
           <div class="user-search-flexbox-item">
-            <%= f.date_field :created_at_gteq, placeholder: "作成日", class: "form-control form-control-sm" %>
+            <%= f.date_field :created_at_gteq, class: "form-control form-control-sm" %>
           </div>
           〜
           <div class="user-search-flexbox-item">
-            <%= f.date_field :created_at_lteq_end_of_day, placeholder: "作成日", class: "form-control form-control-sm" %>
+            <%= f.date_field :created_at_lteq_end_of_day, class: "form-control form-control-sm" %>
           </div>
 
           <div class="product-search-flexbox-item">
@@ -57,38 +57,40 @@
       </div>
     <% end %>
 
-    <table class="table table-bordered table-sm">
-      <thead class="bg-brand text-center" style="color: #fff;">
-        <tr class="user-table-header">
-          <th><%= sort_link @q, :id, 'ID' %></th>
-          <th><%= sort_link @q, :membership_number %></th>
-          <th><%= sort_link @q, :premium %></th>
-          <th><%= sort_link @q, :name %></th>
-          <th><%= sort_link @q, :nickname %></th>
-          <th><%= sort_link @q, :flying_distance %></th>
-          <th><%= sort_link @q, :email %></th>
-          <th><%= sort_link @q, :phone_number %></th>
-          <th><%= sort_link @q, :created_at %></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @users.each do |user| %>
-          <tr>
-            <td class="text-center"><%= user.id %></td>
-            <td class="text-center"><%= premium_check(user) %></td>
-            <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number != nil %>
-            <td><%= membership_number %></td>
-            <td><%= user.name %></td>
-            <td><%= user.nickname %></td>
-            <td><%= user.flying_distance %></td>
-            <td><%= user.email %></td>
-            <td><%= user.phone_number %></td>
-            <td><%= user.created_at.strftime("%Y/%m/%d") %></td>
+    <div class="users-table">
+      <table class="table table-bordered table-sm">
+        <thead class="bg-brand text-center" style="color: #fff;">
+          <tr class="user-table-header">
+            <th><%= sort_link @q, :id, 'ID' %></th>
+            <th><%= sort_link @q, :premium %></th>
+            <th><%= sort_link @q, :membership_number %></th>
+            <th><%= sort_link @q, :name %></th>
+            <th><%= sort_link @q, :nickname %></th>
+            <th><%= sort_link @q, :flying_distance %></th>
+            <th><%= sort_link @q, :email %></th>
+            <th><%= sort_link @q, :phone_number %></th>
+            <th><%= sort_link @q, :created_at %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td class="text-center"><%= user.id %></td>
+              <td class="text-center"><%= premium_check(user) %></td>
+              <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number != nil %>
+              <td><%= membership_number %></td>
+              <td><%= user.name %></td>
+              <td><%= user.nickname %></td>
+              <td><%= user.flying_distance %></td>
+              <td><%= user.email %></td>
+              <td><%= user.phone_number %></td>
+              <td><%= user.created_at.strftime("%Y/%m/%d") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
     <%= paginate(@users) %>
   </div>
 </div>
