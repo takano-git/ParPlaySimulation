@@ -130,8 +130,6 @@ class CardsController < ApplicationController
     end
     flash[:success] = "支払いカードを変更しました。"
     redirect_to action: "index"
-    # todo 例外処理
-    # rescue
   end
 
   # カードの削除処理

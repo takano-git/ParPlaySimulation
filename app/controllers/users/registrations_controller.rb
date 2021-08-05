@@ -58,16 +58,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def destroy
     user = User.find(current_user.id)
     if current_user.cards.size != 0
-      flash[:notice] = 'カード情報が登録されています。カード情報を削除して下さい。'
-      redirect_to edit_user_registration_path
+      customer = Payjp::Customer.retrieve(@card.customer_id)
+      customer.delete
+      current_user.crards.destroy
+    end
+    if user.destroy
+      flash[:notice] = 'アカウントの削除に成功しました。'
+      redirect_to root_path
     else
-      if user.destroy
-        flash[:notice] = 'アカウントの削除に成功しました。'
-        redirect_to root_path
-      else
-        flash[:notice] = 'アカウントの削除に失敗しました。'
-        redirect_to edit_user_registration_path
-      end
+      flash[:danger] = 'アカウントの削除に失敗しました。'
+      redirect_to edit_user_registration_path
     end
   end
 
