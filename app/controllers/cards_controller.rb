@@ -46,15 +46,13 @@ class CardsController < ApplicationController
       flash[:danger] = 'カード情報を登録できませんでした。'
       redirect_to action: "new"
     else
-      #--- ここですでにPayjpのCard情報は、作成されている。---#
-      #--- 登録済みのカードが存在するか確認する。 ---#
-      #--- 登録済みのカードが存在した場合（カードの追加）---#
+      #--- 登録済みのカードが存在するか確認し、登録済みのカードが存在した場合（カードの追加）---#
       if  Card.where(user_id: current_user.id).present?
         # PayjpのCustomer情報を取得する。
         pj_customer = Payjp::Customer.retrieve(current_user.customer_id)
         # Payjpの新しいカード情報を作成する。
         pj_card = pj_customer.cards.create(card: params["payjp-token"])
-        # 新しく登録したカード情報で、Cardモデルのデフォルトカードを作成する。
+        # App上でもカード情報を作成する。
         card = Card.new(
           user_id: current_user.id,
           customer_id: pj_customer.id,
@@ -63,7 +61,6 @@ class CardsController < ApplicationController
           exp_month: pj_card.exp_month,
           exp_year: pj_card.exp_year,
           last4: pj_card.last4,
-          # default_card: true
         )
         if card.save
           flash[:success] = '新規カードを登録しました.'
@@ -74,14 +71,14 @@ class CardsController < ApplicationController
         end
       #--- 登録済みのカードが存在しなかった場合（新規作成）---#
       else
-        # params['payjp-token']（response.id）からPayjpのCustomerを作成する。
+        # params['payjp-token']（response.id）で、PAY.JPのCustomer情報を作成する。
         pj_customer = Payjp::Customer.create(
           card: params['payjp-token'],
           metadata: {user_id: current_user.id}
         )
-        # 上記で作成したPayjpのCustomerを読み込む（customer_idを取得するため）。
+        # 上記で作成したPayjpのcustomerのcard情報を読み込む（card情報を取得するため）。
         pj_card = pj_customer.cards.data.find.first
-        # Cardモデルに新規のカード情報を作成する。
+        # App上のCardモデルに新規のカード情報を作成する。
         card = Card.new(
           user_id: current_user.id,
           customer_id: pj_customer.id,
@@ -107,16 +104,18 @@ class CardsController < ApplicationController
 
   # 支払いカード変更
   def update
-    # PAY.JPの秘密鍵をセットして、PAY.JPから情報を取得する。
-    # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+    # PAY.JPのCustomer情報を呼び出して、支払いカードを変更する。
     customer = Payjp::Customer.retrieve(current_user.customer_id)
     customer.default_card = @card.card_id
     customer.save
+    # App上に支払いカードが存在する場合、支払いカードでなくす。
     default_card = current_user.cards.find_by(default_card: true)
     if default_card != nil
       default_card.update(default_card: false)
     end
+    # App上に新しい支払いカードを作成する。
     @card.update(default_card: true)
+    # ユーザーが会員かどうか確認して、会員の場合は支払いカードを更新。会員でない場合は、会員情報を設定する。
     if current_user.premium?
       current_user.update(payment_id: @card.id)
     else
@@ -130,26 +129,21 @@ class CardsController < ApplicationController
     end
     flash[:success] = "支払いカードを変更しました。"
     redirect_to action: "index"
-    # todo 例外処理
-    # rescue
   end
 
-  # カードの削除処理
+  # カード情報の削除処理
   def destroy
-    # PAY.JPの秘密鍵をセットして、PAY.JPから情報を取得する。
-    # Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
-    # 削除するカードがデフォルトカードだったら、PAY.JPの支払い情報（定期課金）とカード情報を削除して、
-    # ユーザーを会員から退会させる。
+    # PAY.JPのカード情報を削除する。
     customer = Payjp::Customer.retrieve(@card.customer_id)
     card = customer.cards.retrieve(@card.card_id)
     card.delete
+    # 削除するカードがデフォルトカードだったら、ユーザーを会員から退会させる。
     if @card.default_card?
-      # current_user.update(payment_id: nil, customer_id: nil, membership_number: nil, subscription_id: nil, premium: false)
       current_user.update(payment_id: nil, membership_number: nil, premium: false)
     end
     # App上でもクレジットカードを削除する。
     if @card.destroy
-      # カードが存在しなくなったら、PAY.JPの顧客情報と支払い情報を削除して、ユーザー情報を更新する。
+      # カードが存在しなくなったら、PAY.JPの顧客情報を削除（支払い情報も連動して削除される）して、ユーザー情報を更新する。
       if Card.where(user_id: current_user.id).blank?
         customer = Payjp::Customer.retrieve(@card.customer_id)
         customer.delete
@@ -177,25 +171,22 @@ class CardsController < ApplicationController
       @card = current_user.cards.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
-    def card_params
-      params.fetch(:card, {})
-    end
-
     # 支払い情報の作成
     def pay
-      card = Card.find_by(user_id: current_user.id, default_card: true)
+      # App上で支払いカードの情報を取得する。
+      card = current_user.cards.find_by(default_card: true)
+      # Pay.jpのSubscription（課金情報）を作成する。
       subscription = Payjp::Subscription.create(
         :customer => card.customer_id,
         # planアクションで定義した情報をセットする。
         :plan => plan,
         metadata: {current_id: current_user.id}
       )
-      # Planテーブルが存在しなかった場合、Planテーブルを作成する。
+      # App上にPlanテーブルが存在しなかった場合、Planテーブルを作成する。
       if Plan.first == nil
         Plan.create(name: "スタンダードプラン", plan_id: subscription.plan.id)
       end
-      # Userテーブルをアップデートする。
+      # App上のユーザー情報の会員情報をアップデートする。
       # membership_number = "PSP" + sprintf("%05d", current_user.id)
       max = User.where(premium: true).maximum(:membership_number)
       if max.nil?
