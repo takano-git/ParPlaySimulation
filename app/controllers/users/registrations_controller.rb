@@ -57,11 +57,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
     user = User.find(current_user.id)
+    # PAY.JPのCustomer情報を削除する（カード情報、課金情報も連動して削除される）。
     if current_user.cards.size != 0
-      customer = Payjp::Customer.retrieve(@card.customer_id)
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
       customer.delete
-      current_user.crards.destroy
     end
+    # App上でもユーザー情報を削除する（カード情報も連動して削除される）。
     if user.destroy
       flash[:notice] = 'アカウントの削除に成功しました。'
       redirect_to root_path
