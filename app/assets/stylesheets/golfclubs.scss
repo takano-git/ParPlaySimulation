@@ -1,6 +1,6 @@
 .container-golfclub {
   @extend .container-fluid;
-  max-width: 576px;
+  max-width: 768px;
   padding: 2rem;
 }
 
@@ -36,4 +36,13 @@
 
 .golfclub-search-form {
   margin-bottom: 5px;
+}
+
+.golfclub-table-header a {
+  color: #fff;
+}
+
+.golfclubs-table {
+  overflow: auto; /* 横スクロールバーを表示 */
+  white-space: nowrap; /* セル内にあるテキストの折り返しを禁止 */
 }

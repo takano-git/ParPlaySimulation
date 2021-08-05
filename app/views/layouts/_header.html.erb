@@ -12,12 +12,6 @@
       <ul class="navbar-nav mr-auto"></ul>
       <ul class="navbar-nav">
 
-        <% if user_signed_in? && current_user.admin? %>
-          <li class="nav-item">
-            <%= link_to 'ゴルフ場一覧', golfclubs_path, class: 'nav-link' %>
-          </li>
-        <% end %>
-
         <% if user_signed_in? && current_user.premium? %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,8 +30,15 @@
         </li>
 
         <% if user_signed_in? && current_user.admin? %>
-          <li class="nav-item">
-            <%= link_to 'ユーザー一覧', users_index_path, class: 'nav-link' %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              管理メニュー
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <%= link_to 'ゴルフ場一覧', golfclubs_path, class: 'dropdown-item' %>
+              <%= link_to 'ユーザー一覧', users_path, class: 'dropdown-item' %>
+              <%= link_to '投稿カテゴリ一覧', categories_path, class: 'dropdown-item' %>
+            </div>
           </li>
         <% end %>
 
