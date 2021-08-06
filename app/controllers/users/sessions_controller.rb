@@ -10,11 +10,16 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    # super
     if user = User.find_by(email: params[:user][:email])
       if user.valid_password?(params[:user][:password])
-        sign_in user
-        flash[:notice] = "ログインに成功しました。"
+        if user.delete_flag?
+          flash[:danger] = "このユーザーは削除済です。"
+          redirect_to root_path
+          return
+        else
+          sign_in user
+          flash[:notice] = "ログインに成功しました。"
+        end
         if user.admin?
           redirect_to golfclubs_path
         else
