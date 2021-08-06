@@ -82,22 +82,6 @@ $brand_t1: #224444;
   }
 }
 
-.shot_bar {
-  margin-left: 0.9px;
-}
-
-
-.shot_btn {
-//   border-color: $brand_t1;
-//   width: 80px;
-//   margin-top: 3px;
-//   margin-right: 3px;
-  &:hover {
-    background-color: $brand_t1;
-    color: white;
-  }
-}
-
 .s_selected {
   color: white;
   background-color: $brand_t1;
@@ -204,12 +188,23 @@ $brand_t1: #224444;
 
 // shot_bar
 .shot_bar {
+  display: flex;
   padding: 0.38em;
 }
-
 .shot_btns {
-  // display: flex;
-  // flex-flow: column;
+  display: flex;
+  margin-right: 4px;
+}
+
+.shot_btn {
+  border-color: $brand_t1;
+  width: 80px;
+  margin-top: 3px;
+  margin-right: 0;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 // -----------------------------
 // 攻略情報新規作成、更新ページ
@@ -233,13 +228,6 @@ $brand_t1: #224444;
     // border: none;
     // outline: none;
   }
-}
-
-.shot_btn {
-  border-color: $brand_t1;
-  width: 80px;
-  margin-top: 3px;
-  margin-right: 3px;
 }
 
 .strategy_img {

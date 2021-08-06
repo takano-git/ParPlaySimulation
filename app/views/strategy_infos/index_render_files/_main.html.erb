@@ -12,17 +12,35 @@
       <%= render 'strategy_infos/index_render_files/show' %>
     </div>
     <%# アコーディオン未設定 , selected: @location_name%>
-    <div class="shot_bar row">
+    <div id="shot_bar" class="shot_bar">
       <% @strategy_shots.each_with_index do |shots, n| %>
         <div id="<%= shots[0] %>_btns" class="shot_btns">
-          <% shots[1].each.with_index(1) do |strategy, i| %>
-            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: strategy[:id]),
-                remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 && i == 1 %>
-            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: strategy[:id]),
-                remote: :true, class: "btn btn-sm shot_btn" if n != 0 || i != 1 %>
-          <% end %>
+        <%# < % byebug% > %>
+          <div class="representative">
+            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+                remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 %>
+            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+                remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
+          </div>
+          <div class="gmenu">
+            <div class="shot_list" ontouchstart=””>
+              <%= "一覧" %>
+              <%# <a href="#">メニューA</a> %>
+              <ul>
+                <% shots[1].each.with_index(1) do |shot, i| %>
+                  <li class="shot_list">
+                    <a href="#">
+                      <%= shots[0] %>
+                      <%= shots[0] + i if i == 0 %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
         </div>
       <% end %>
+      <p>投稿者：<%=%></p>
     </div><br>
   </div>
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
@@ -32,3 +50,112 @@
 
 </div>
 
+<style>
+.tee_btns {
+  /* display: none; */
+  z-index: 100;
+}
+
+
+/*  */
+
+/* メニュー */
+.gmenu {
+  margin: 0;
+  padding: 0;
+  background-color: #224444;
+}
+ 
+.gmenu > .shot_list {
+  display: inline-block;
+  padding: 5px;
+  font-weight: bold;
+  color: white;
+}
+.gmenu > .shot_list a {
+  color: white;
+}
+ 
+/* サブメニュー */
+.gmenu ul {
+  display: none;
+  /* opacity: 0; */
+}
+ 
+.gmenu > .shot_list:hover ul {
+  display: block;
+  /* opacity: 1; */
+  height: auto;
+  position: absolute;
+  background-color: #224444;
+  padding: 5px;
+  margin-left: -5px;
+}
+.gmenu ul > .shot_list {
+  display: block;
+  padding: 5px;
+  color: white;
+}
+ 
+.gmenu .shot_list:hover {
+  background-color: #224444;
+}
+
+
+/* フッターメニュー 上に開く */
+#footerrnav .gmenu > li {
+  position: relative;
+}
+#footerrnav .gmenu > li:hover ul {
+  bottom: 34px;
+  white-space: nowrap;
+}
+#shot_bar .gmenu > .shot_list {
+  position: relative;
+}
+#shot_bar .gmenu > .shot_list:hover ul {
+  bottom: 18px;
+  white-space: nowrap;
+}
+</style>
+
+<script>
+$('.shot_btn').on('click', function () {
+  $('.shot_btn').removeClass('s_selected');
+  $(this).addClass('s_selected');
+});
+</script>
+
+
+
+
+
+<script>
+$(function() {
+    $(".divbutton").click(function() {
+        $(".height").slideToggle();
+    });
+});
+</script>
+    
+<style>
+.divbutton{
+    background: #3fb952;
+    color: #FFF;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+}
+.height{
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #333;
+    background: #f2f2f2;
+    display:none;
+}
+</style>
+<div class="divbutton">ボタン</div>
+<div class="height">
+    <img src="https://csshtml.work/wp-content/uploads/1.jpg" alt="">
+</div>
