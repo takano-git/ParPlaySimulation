@@ -13,6 +13,7 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
   # validates :name, presence: true
+  validates :membership_number, length: { maximum: 5 }
          
 protected
 

@@ -44,6 +44,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
 
       t.string :subscription_id
       t.boolean :premium, default: false
+      t.boolean :delete_flag, default: false
 
       t.timestamps null: false
     end
