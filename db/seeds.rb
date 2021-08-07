@@ -19,7 +19,7 @@ n = i + 1
 name_number = n.to_s.tr('0-9a-zA-Z','０-９ａ-ｚＡ-Ｚ')
 User.create!(name: "サンプルユーザー#{name_number}",
     nickname: "サンプル#{n}",
-    # membership_number: "PSP0000#{n}",
+    membership_number: 0,
     email: "sample#{n}@gmail.com",
     password: "password#{n}",
     phone_number: "012-1234-5678",
@@ -33,7 +33,7 @@ puts "サンプルユーザー作成！"
 
 User.create!(name: "会員1",
   nickname: "会員1",
-  membership_number: "PPS01000",
+  membership_number: 1,
   email: "k-sample@gmail.com",
   password: "password",
   password_confirmation: "password",

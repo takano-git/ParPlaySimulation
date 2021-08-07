@@ -3,6 +3,7 @@
 </div>
 
 <div id="container" class="container">
+  <!--<h4 class="mt-4">攻略情報編集画面</h4>-->
   <div id="golfclub__name_area">
     <p class= "golfclub_column golfclub_column_top">ゴルフ場名：<%= @golfclub.name %></p>
     <p class= "golfclub_column golfclub_column_top">県名：<%= @area.prefecture %></p>
@@ -20,7 +21,7 @@
 </div>
 
 <div class="to_index">
-  <%= link_to ">攻略ページ", golfclub_strategy_infos_path, class: "to_index_link", data: {"turbolinks" => false} %>
+  <%= link_to ">攻略ページ　", golfclub_strategy_infos_path, class: "to_index_link", data: {"turbolinks" => false} %>
 </div>
 
 <%= javascript_include_tag "strategy_infos/select_ajax" %>

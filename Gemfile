@@ -47,6 +47,9 @@ gem 'font-awesome-sass'
 # 検索機能
 gem 'ransack'
 
+# ページネーション
+gem 'kaminari'
+
 # グラフ機能
 gem 'chart-js-rails', '~> 0.1.4'
 
@@ -69,7 +72,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
 end
 
 group :production do

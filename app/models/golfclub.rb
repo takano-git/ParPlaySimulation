@@ -11,6 +11,7 @@ class Golfclub < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   validates :home_page_url, format: { with: VALID_URL_REGEX }
   validates :strategy_video, format: { with: VALID_VIDEO_REGEX }, allow_blank: true
+  validates :closed, inclusion: {in: [true, false]}
   validates :photo, content_type: { in: [:png, :jpg, :ipeg], message: 'のファイル形式が違います' },
                     size: { less_than_or_equal_to: 10.megabytes, message: 'の容量は10MB以内にしてください' }
 end

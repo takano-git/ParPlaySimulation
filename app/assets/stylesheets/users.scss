@@ -1,0 +1,41 @@
+.user-table-header a {
+  color: #fff;
+}
+
+.user-search-flexbox {
+  display:flex;
+  flex-flow: column;
+}
+
+.user-search-premium {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.user-search-name {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.user-search-address {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.user-search-created {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px 5px;
+}
+
+.user-search-flexbox-item {
+  margin-bottom: 5px;
+}
+
+.users-table {
+  overflow: auto; /* 横スクロールバーを表示 */
+  white-space: nowrap; /* セル内にあるテキストの折り返しを禁止 */
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_063351) do
+ActiveRecord::Schema.define(version: 2021_07_30_160102) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -41,8 +41,13 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer "card_id", null: false
+    t.string "card_id", default: "", null: false
     t.string "customer_id", default: "", null: false
+    t.string "brand", default: "", null: false
+    t.integer "exp_month"
+    t.integer "exp_year"
+    t.string "last4", default: "", null: false
+    t.boolean "default_card", default: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -85,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
     t.string "name", default: "", null: false
     t.string "home_page_url"
     t.string "strategy_video"
+    t.boolean "closed", default: false, null: false
     t.integer "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,6 +106,13 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_holes_on_course_id"
     t.index ["golfclub_id"], name: "index_holes_on_golfclub_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "plan_id", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|
@@ -148,13 +161,14 @@ ActiveRecord::Schema.define(version: 2021_07_06_063351) do
   create_table "users", force: :cascade do |t|
     t.string "name", default: "匿名さん", null: false
     t.string "nickname", default: "匿名さん", null: false
-    t.string "membership_number"
+    t.integer "membership_number"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "phone_number", default: "000-0000-0000", null: false
     t.integer "flying_distance"
     t.boolean "admin", default: false
     t.integer "payment_id"
+    t.string "customer_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

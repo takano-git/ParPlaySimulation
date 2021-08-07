@@ -17,14 +17,17 @@
         <div id="<%= shots[0] %>_btns" class="shot_btns">
         <%# < % byebug% > %>
           <div class="representative">
-            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
-                remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 %>
+            <% if n == 0 %>
+            <%= link_to "#" do %>
+            < %= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]), remote: :true, class: "btn btn-sm shot_btn s_selected" do %>
+            <% end %>
+            <% end %>
             <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
                 remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
           </div>
           <div class="gmenu">
             <div class="shot_list" ontouchstart=””>
-              <%= "一覧" %>
+              <%= "1" %>
               <%# <a href="#">メニューA</a> %>
               <ul>
                 <% shots[1].each.with_index(1) do |shot, i| %>
@@ -40,7 +43,7 @@
           </div>
         </div>
       <% end %>
-      <p>投稿者：<%=%></p>
+      <p>投稿者：<%= @poster %></p>
     </div><br>
   </div>
   <%# 表示切り替え(.show();,.hide(); col-md-2%>

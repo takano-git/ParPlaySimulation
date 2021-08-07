@@ -7,6 +7,7 @@
 @import "cards";
 @import "areas";
 @import "strategy_infos";
+@import "users";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 
@@ -100,6 +101,26 @@ img {
   color: white;
 }
 
+/* ページネーション */
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #224444;
+  border-color: #224444;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color:#224444;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
 /* デバッグウインドウ */
 
 .debug_dump {
@@ -157,6 +178,30 @@ footer {
   background: #224444;
   color: #fff;
   text-align: center;
+  display: inline-block;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  // flex-wrap: wrap;
+  padding: 1px 5px;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.footer ul {
+  list-style-type: none;
+  padding: 5px 5px;
+}
+
+.footer li {
+  margin-bottom: 8px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
 }
 
  /* footerとコンテンツの重なりを防ぐスペース */
@@ -194,7 +239,7 @@ footer {
 }
 
 .arrow-padding {
-  padding-top: 12rem;
+  padding-top: 10rem;
 }
 
 .padding-15 {

@@ -16,4 +16,10 @@ module UsersHelper
   #   end
   #   html.html_safe
   # end
+
+  def premium_check(user)
+    if user.premium?
+      content_tag(:span, "&#9733;".html_safe, style: "color: #dab300;")
+    end
+  end
 end

@@ -4,19 +4,19 @@
   <!-- SelectedUser一覧をリスト表示 -->
   <div class="text-right ">
     <%= link_to "マイクラブ", clubs_path(current_user), class: "btn btn-outline-brand my-3" %>
-    <%= link_to "セッティング", clubs_select_user_path(current_user), class: "btn btn-brand my-3 disabled" %>
+    <button class= "btn btn-brand my-3">セッティング</button>
     <%= link_to "グラフ", clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: "btn btn-outline-brand my-3" %>
   </div>
 
-  <div class="row">
+  <div class="row no-gutters">
     <div class="col-5">
       <!-- Club一覧をリスト表示 -->
-      <h2 class="float-left">マイクラブ一覧</h2>
+      <h4 class="float-center">マイクラブ一覧</h4>
 
       <% row_num_club = 1 %>
       <div class="table-responsive">
         <table id="list" class=" table table-sm table-bordered mb-5">
-          <thead class="thead-dark">
+          <thead class="bg-brand text-white">
             <tr>
               <th>No.</th>
               <th>番手</th>
@@ -32,10 +32,10 @@
             <% end %>
               <th><%= row_num_club %></th>
               <% row_num_club = row_num_club + 1 %>            
-              <td><%= club.yarn_count_string %><%=club.yarn_count_number %></td>
+              <td><%= club.yarn_count_string %><%=club.yarn_count_number %>　</td>
               <td><%= club.detail %></td>
             <% if club.selected %>
-              <td><button class="btn btn-brand disabled">選択中</button></td>
+              <td><button class="btn btn-brand">選択中</button></td>
             <% else %>
               <td><%= link_to '選択', clubs_add_buttom_user_path(club.id), :method => :post, class: "btn btn-outline-brand item-buttom" %></td>  
             <% end %>
@@ -45,14 +45,14 @@
       </div>
     </div>
     <div class="col-2">
-      <div><%= image_tag 'arrow.png', :class=>"img-fluid arrow-padding", :alt => '右矢印の画像' %></div>
+      <div class="p-4"><%= image_tag 'arrow.png', :class=>"img-fluid arrow-padding", :alt => '右矢印の画像' %></div>
     </div>
     <div class="col-5">
-      <h2 class="float-left">クラブセッティング</h2>
+      <h4>クラブセッティング</h4>
       <% row_num_selected = 1 %>
       <div class="table-responsive">
         <table class="table table-bordered table-sm">
-          <thead class="thead-dark">
+          <thead class="bg-brand text-white">
             <tr>
               <th>No.</th>
               <th>番手</th>
@@ -65,7 +65,7 @@
             <tr>
               <th><%= row_num_selected %></th>
               <% row_num_selected = row_num_selected + 1 %>
-              <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %></td>
+              <td><%= selected_club.yarn_count_string %><%=selected_club.yarn_count_number %>　</td>
               <td><%= selected_club.detail %></td>
               <td>
                 <%= link_to '外す', clubs_take_user_path(selected_club), :method => :post, class: "btn btn-outline-brand" %>
