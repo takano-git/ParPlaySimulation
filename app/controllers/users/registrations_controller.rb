@@ -61,6 +61,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if current_user.cards.size != 0
       customer = Payjp::Customer.retrieve(current_user.customer_id)
       customer.delete
+      # App上でもカード情報を削除する。
+      current_user.cards.destroy_all
     end
     # App上でもユーザー情報を削除する（カード情報も連動して削除される）。
     if user.update(delete_flag: true)
