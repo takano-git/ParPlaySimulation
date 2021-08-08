@@ -3,44 +3,62 @@
 
 User.create!(name: "管理者",
   nickname: "えぐさん",
-  membership_number: "PPS00000",
+  membership_number: 0,
   email: "admin@gmail.com",
   password: "password",
   password_confirmation: "password",
   phone_number: "012-0000-0000",
   flying_distance: 240,
   admin: true,
-  premium: true)
+  premium: true
+)
 
 puts "管理者作成！"
 
-9.times do |i|
-n = i + 1 
-name_number = n.to_s.tr('0-9a-zA-Z','０-９ａ-ｚＡ-Ｚ')
-User.create!(name: "サンプルユーザー#{name_number}",
-    nickname: "サンプル#{n}",
+19.times do |i|
+  n = i + 1 
+  name_number = n.to_s.tr('0-9a-zA-Z','０-９ａ-ｚＡ-Ｚ')
+  User.create!(name: "サンプルユーザー#{name_number}",
+    nickname: "ニックネーム#{name_number}",
     membership_number: 0,
     email: "sample#{n}@gmail.com",
     password: "password#{n}",
+    password_confirmation: "password#{n}",
     phone_number: "012-1234-5678",
-    flying_distance: 200,
-    password_confirmation: "password#{n}")
+    flying_distance: 200
+  )
 end
+
+User.create!(name: "サンプルユーザー２０",
+  nickname: "ニックネーム２０",
+  membership_number: 0,
+  email: "sample20@gmail.com",
+  password: "password20",
+  password_confirmation: "password20",
+  phone_number: "090-1111-1111",
+  flying_distance: 220,
+  delete_flag: true
+)
 
 puts "サンプルユーザー作成！"
 
 # ユーザーサンプルデーター作成
 
-User.create!(name: "会員1",
-  nickname: "会員1",
-  membership_number: 1,
-  email: "k-sample@gmail.com",
-  password: "password",
-  password_confirmation: "password",
-  phone_number: "012-0000-1000",
-  flying_distance: 240,
-  admin: false,
-  premium: true)
+20.times do |i|
+  n = i + 1 
+  name_number = n.to_s.tr('0-9a-zA-Z','０-９ａ-ｚＡ-Ｚ')
+  User.create!(name: "会員#{name_number}",
+    nickname: "会員ニックネーム#{name_number}",
+    membership_number: n,
+    email: "k-sample#{n}@gmail.com",
+    password: "password#{n}",
+    password_confirmation: "password#{n}",
+    phone_number: "012-1234-5678",
+    flying_distance: 240,
+    admin: false,
+    premium: true
+  )
+end
 
 puts "会員作成！"
 

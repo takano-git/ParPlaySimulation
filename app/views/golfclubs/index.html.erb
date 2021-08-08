@@ -7,12 +7,14 @@
     <%= search_form_for @q, url: golfclubs_path do |f| %>
       <div class="row">
         <div class="input-group col-8">
-          <%= f.search_field :name_cont, placeholder: "ゴルフ場検索", class: "form-control form-control-sm" %>
+          <%= f.search_field :name_cont, placeholder: "ゴルフ場名検索", class: "form-control form-control-sm" %>
           <span class="input-group-append">
             <%= button_tag type: 'submit', class: "btn btn-brand btn-sm" do %>
               <i class="fas fa-search"></i>
             <% end %>
           </span>
+          &nbsp;
+          <%= link_to 'リセット', golfclubs_path, class: "btn btn-sm btn-secondary" if params[:q].present? %>
         </div>
 
         <div class="col-4 ml-auto text-right">
@@ -22,60 +24,63 @@
     <% end %>
   </div>
 
-  <table class="table table-bordered border-danger table-sm">
-    <thead>
-      <tr class="text-center bg-brand" style="color: white;">
-        <th><%= Golfclub.human_attribute_name :name %></th>
-        <th>地域</th>
-        <th>コース数</th>
-        <th>攻略情報</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-
-    <% @golfclubs.each do |golfclub| %> 
-      <tbody>
-        <tr class="<%= golfclub_open_bg_color(golfclub) %>">
-          <td>
-            <%= golfclub.name %>
-            &nbsp;
-            <%= link_to "", edit_golfclub_path(golfclub), remote: true, class: "fas fa-edit", style: "color: #224444;" %>
-          </td>
-
-          <td>
-            <%= @areas[golfclub.area_id][:district] %> / 
-            <%= @areas[golfclub.area_id][:prefecture] %>
-          </td>
-
-          <td class="text-center">
-            <%= course_count(golfclub, @courses) %>
-            &nbsp;
-            <%= link_to "", golfclub_path(golfclub), class: "fas fa-edit" %>
-          </td>
-
-          <td class="text-center">
-            <%= link_to "登録編集", registration_edit_golfclub_strategy_infos_path(golfclub), class: "fas fa-edit", data: {"turbolinks" => false} %>
-          </td>
-
-          <td>
-            <%= golfclub_open(golfclub) %>
-          </td>
-
-          <td class="text-center">
-            <%= link_to "", golfclub_path(golfclub), 
-                      class: "fas fa-times-circle",
-                      method: :delete,
-                      remote: true,
-                      data: { confirm: "#{golfclub.name}を削除してよろしいですか？",
-                              cancel: 'キャンセル',
-                              commit: '削除する'
-                            }, title: '削除確認' %>
-          </td>
+  <div class="golfclubs-table">
+    <table class="table table-bordered border-danger table-sm">
+      <thead>
+        <tr class="golfclub-table-header text-center bg-brand" style="color: white;">
+          <th><%= sort_link @q, :name %></th>
+          <th><%= sort_link @q, :area_id, '地域' %></th>
+          <th>コース数</th>
+          <th>攻略情報</th>
+          <th></th>
+          <th></th>
         </tr>
-      </tbody>
-    <% end %>
-  </table>
+      </thead>
+
+      <% @golfclubs.each do |golfclub| %> 
+        <tbody>
+          <tr class="<%= golfclub_open_bg_color(golfclub) %>">
+            <td>
+              <%= golfclub.name %>
+              &nbsp;
+              <%= link_to "", edit_golfclub_path(golfclub), remote: true, class: "fas fa-edit", style: "color: #224444;" %>
+            </td>
+
+            <td>
+              <%= @areas[golfclub.area_id][:district] %> / 
+              <%= @areas[golfclub.area_id][:prefecture] %>
+            </td>
+
+            <td class="text-center">
+              <%= course_count(golfclub, @courses) %>
+              &nbsp;
+              <%= link_to "", golfclub_path(golfclub), class: "fas fa-edit" %>
+            </td>
+
+            <td class="text-center">
+              <%= link_to "登録編集", registration_edit_golfclub_strategy_infos_path(golfclub), class: "fas fa-edit", data: {"turbolinks" => false} %>
+            </td>
+
+            <td>
+              <%= golfclub_open(golfclub) %>
+            </td>
+
+            <td class="text-center">
+              <%= link_to "", golfclub_path(golfclub), 
+                        class: "fas fa-times-circle",
+                        method: :delete,
+                        remote: true,
+                        data: { confirm: "#{golfclub.name}を削除してよろしいですか？",
+                                cancel: 'キャンセル',
+                                commit: '削除する'
+                              }, title: '削除確認' %>
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+  <%= paginate(@golfclubs) %>
 </div>
 
 <div id="new-golfclub" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

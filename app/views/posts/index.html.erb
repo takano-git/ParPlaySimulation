@@ -1,5 +1,5 @@
 <%= render 'layouts/flash_messages' %>
-<h4><%= @golfclub.name %>の投稿一覧</h4>
+<h4 class="mt-4"><%= @golfclub.name %>の投稿一覧</h4>
 
 <div class="container" data-turbolinks="false">
   <%= link_to '新規投稿', new_golfclub_post_path, remote: true, class: "btn btn-sm btn-primary" %>

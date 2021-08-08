@@ -1,38 +1,122 @@
 <div class="row">
-  <div class="col-md-10 offset-md-1 mt-5">
-    <h4>会員一覧</h4>
+  <div class="container-user-index">
+    <h4>ユーザー一覧</h4>
 
-    <table class="table table-bordered table-sm">
-      <thead class="bg-brand text-center" style="color: #fff;">
-        <tr>
-          <th>ID</th>
-          <th><%= User.human_attribute_name :premium %></th>
-          <th><%= User.human_attribute_name :membership_number %></th>
-          <th><%= User.human_attribute_name :name %></th>
-          <th><%= User.human_attribute_name :nickname %></th>
-          <th><%= User.human_attribute_name :flying_distance %></th>
-          <th><%= User.human_attribute_name :email %></th>
-          <th><%= User.human_attribute_name :phone_number %></th>
-          <th><%= User.human_attribute_name :created_at %></th>
-        </tr>
-      </thead>
+    <%= search_form_for @q do |f| %>
+      <div class="user-search-flexbox">
+        <div class="user-search-premium">
+          <div class="user-search-flexbox-item">
+            <%= f.select :premium_eq, options_for_select([['プレミアム条件', ''],['プレミアム会員', true], ['通常会員', false],]), {}, { class: "form-control form-control-sm" } %>
+          </div>
+        </div>
 
-      <tbody>
-        <% @users.each do |user| %>
-          <tr>
-            <td class="text-center"><%= user.id %></td>
-            <td class="text-center"><%= premium_check(user) %></td>
-            <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number != nil %>
-            <td><%= membership_number %></td>
-            <td><%= user.name %></td>
-            <td><%= user.nickname %></td>
-            <td><%= user.flying_distance %></td>
-            <td><%= user.email %></td>
-            <td><%= user.phone_number %></td>
-            <td><%= user.created_at.strftime("%Y/%m/%d") %></td>
+        <div class="user-search-name">
+          <div class="user-search-flexbox-item">
+            <%= f.number_field :membership_number_eq, placeholder: "会員番号（番号のみ）", min: 1, step: 1, class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :name_cont, placeholder: "名前", class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :nickname_cont, placeholder: "ニックネーム", class: "form-control form-control-sm" %>
+          </div>
+        </div>
+
+        <div class="user-search-address">
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :email_cont, placeholder: "メールアドレス", class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.search_field :phone_number_cont, placeholder: "電話番号", class: "form-control form-control-sm" %>
+          </div>
+        </div>
+
+        <div class="user-search-created">
+          <div class="user-search-flexbox-item">
+            <label class="col-form-label">登録日</label>
+          </div>
+
+          <div class="user-search-flexbox-item">
+            <%= f.date_field :created_at_gteq, class: "form-control form-control-sm" %>
+          </div>
+          〜
+          <div class="user-search-flexbox-item">
+            <%= f.date_field :created_at_lteq_end_of_day, class: "form-control form-control-sm" %>
+          </div>
+
+          <div class="product-search-flexbox-item">
+            <%= button_tag type: 'submit', class: "btn btn-brand btn-sm" do %>
+              <i class="fas fa-search"></i>
+            <% end %>
+            <%= link_to 'リセット', users_path, class: "btn btn-sm btn-secondary" if params[:q].present? %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="users-table">
+      <table class="table table-bordered table-sm">
+        <thead class="bg-brand text-center" style="color: #fff;">
+          <tr class="user-table-header">
+            <th><%= sort_link @q, :id, 'No.' %></th>
+            <th><%= sort_link @q, :premium, '会員' %></th>
+            <th><%= sort_link @q, :membership_number, '会員番号' %></th>
+            <th><%= sort_link @q, :name %></th>
+            <th><%= sort_link @q, :nickname %></th>
+            <th><%= sort_link @q, :flying_distance %></th>
+            <th><%= sort_link @q, :email %></th>
+            <th><%= sort_link @q, :phone_number %></th>
+            <th><%= sort_link @q, :created_at %></th>
+            <th><%= sort_link @q, :delete_flag, '削除' %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @users.each do |user| %>
+            <% if user.delete_flag? %>
+              <tr style="background-color: gray;">
+                <td class="text-center"><%= number = user.id - 1 %></td>
+                <td class="text-center"><%= premium_check(user) %></td>
+                <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number.to_i >= 1 %>
+                <td class="text-center"><%= membership_number %></td>
+                <td><%= user.name %></td>
+                <td><%= user.nickname %></td>
+                <td class="text-center"><%= user.flying_distance %></td>
+                <td><%= user.email %></td>
+                <td><%= user.phone_number %></td>
+                <td class="text-center"><%= user.created_at.strftime("%Y/%m/%d") %></td>
+                <% if user.delete_flag? %>
+                  <td class="text-center"><%= "削除済" %></td>
+                <% else %>
+                  <td><%= "" %></td>
+                <% end %>
+              </tr>
+            <% else %>
+              <tr>
+                <td class="text-center"><%= number = user.id - 1 %></td>
+                <td class="text-center"><%= premium_check(user) %></td>
+                <% membership_number = "PSP" + sprintf("%05d", user.membership_number) if user.membership_number.to_i >= 1 %>
+                <td class="text-center"><%= membership_number %></td>
+                <td><%= user.name %></td>
+                <td><%= user.nickname %></td>
+                <td class="text-center"><%= user.flying_distance %></td>
+                <td><%= user.email %></td>
+                <td><%= user.phone_number %></td>
+                <td class="text-center"><%= user.created_at.strftime("%Y/%m/%d") %></td>
+                <% if user.delete_flag? %>
+                  <td class="text-center"><%= "削除済" %></td>
+                <% else %>
+                  <td><%= "" %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate(@users) %>
   </div>
 </div>
