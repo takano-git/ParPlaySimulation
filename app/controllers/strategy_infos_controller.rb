@@ -9,15 +9,15 @@ class StrategyInfosController < ApplicationController
     @course_id = @courses.first.id
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
     @hole = @holes.first
+    # @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
+    # @strategy_info = @strategy_infos.first
+    # ログインユーザーがTeeの攻略情報を持っていた場合
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
+    # byebug
     @strategy_info = @strategy_infos.first
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
     @poster = User.find(@strategy_info.user_id).nickname
-    # byebug
-    # @shot_tee_options = @strategy_shots["tee"].map {
-    #   |c| [ c.id, c.shot_id, data: { show_path: golfclub_strategy_infos_path(c.id) }]
-    # }
     # byebug
     # 攻略情報があるとき
     if @strategy_info.present?
@@ -28,6 +28,7 @@ class StrategyInfosController < ApplicationController
           shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
       end
     end
+    # byebug
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -96,6 +97,7 @@ class StrategyInfosController < ApplicationController
 
   # 攻略情報ページ。shotボタンクリック時のAjaxアクション
   def show
+    # byebug
     @strategy_info = StrategyInfo.find(params[:id])
     @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき

@@ -185,6 +185,10 @@ $brand_t1: #224444;
 }
 
 
+// 
+.strategy_footer {
+  display: flex;
+}
 
 // shot_bar
 .shot_bar {
@@ -199,7 +203,7 @@ $brand_t1: #224444;
 .shot_btn {
   border-color: $brand_t1;
   width: 80px;
-  margin-top: 3px;
+  // margin-top: 3px;
   margin-right: 0;
   &:hover {
     background-color: $brand_t1;

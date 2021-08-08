@@ -12,39 +12,29 @@
       <%= render 'strategy_infos/index_render_files/show' %>
     </div>
     <%# アコーディオン未設定 , selected: @location_name%>
-    <div id="shot_bar" class="shot_bar">
-      <% @strategy_shots.each_with_index do |shots, n| %>
-        <div id="<%= shots[0] %>_btns" class="shot_btns">
-        <%# < % byebug% > %>
-          <div class="representative">
-            <% if n == 0 %>
-            <%= link_to "#" do %>
-            < %= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]), remote: :true, class: "btn btn-sm shot_btn s_selected" do %>
-            <% end %>
-            <% end %>
-            <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
-                remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
-          </div>
-          <div class="gmenu">
+    <div class="strategy_footer">
+      <div id="shot_bar" class="shot_bar">
+        <% @strategy_shots.each_with_index do |shots, n| %>
+          <div id="<%= shots[0] %>_btns" class="shot_btns">
+          <%# < % byebug% > %>
+            <div class="representative">
+              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+                  remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 %>
+              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+                  remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
+            </div>
             <div class="shot_list" ontouchstart=””>
-              <%= "1" %>
-              <%# <a href="#">メニューA</a> %>
-              <ul>
+              <select id="<%= shots[0] %>_id" class="shot_select">
                 <% shots[1].each.with_index(1) do |shot, i| %>
-                  <li class="shot_list">
-                    <a href="#">
-                      <%= shots[0] %>
-                      <%= shots[0] + i if i == 0 %>
-                    </a>
-                  </li>
+                  <option value="" data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
                 <% end %>
-              </ul>
+              </select>
             </div>
           </div>
-        </div>
-      <% end %>
-      <p>投稿者：<%= @poster %></p>
-    </div><br>
+        <% end %>
+      </div><br>
+      
+    </div>
   </div>
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
   <div id="main_map">
@@ -54,72 +44,18 @@
 </div>
 
 <style>
-.tee_btns {
-  /* display: none; */
-  z-index: 100;
+.representative {
+  display: flex;
 }
-
-
-/*  */
-
-/* メニュー */
-.gmenu {
+.shot_select, option{
+  /* background: #224444;
+  color: white; */
+  color: #224444;
   margin: 0;
-  padding: 0;
-  background-color: #224444;
-}
- 
-.gmenu > .shot_list {
-  display: inline-block;
-  padding: 5px;
-  font-weight: bold;
-  color: white;
-}
-.gmenu > .shot_list a {
-  color: white;
-}
- 
-/* サブメニュー */
-.gmenu ul {
-  display: none;
-  /* opacity: 0; */
-}
- 
-.gmenu > .shot_list:hover ul {
-  display: block;
-  /* opacity: 1; */
-  height: auto;
-  position: absolute;
-  background-color: #224444;
-  padding: 5px;
-  margin-left: -5px;
-}
-.gmenu ul > .shot_list {
-  display: block;
-  padding: 5px;
-  color: white;
-}
- 
-.gmenu .shot_list:hover {
-  background-color: #224444;
+  padding: 2.8px 0.5px;
 }
 
 
-/* フッターメニュー 上に開く */
-#footerrnav .gmenu > li {
-  position: relative;
-}
-#footerrnav .gmenu > li:hover ul {
-  bottom: 34px;
-  white-space: nowrap;
-}
-#shot_bar .gmenu > .shot_list {
-  position: relative;
-}
-#shot_bar .gmenu > .shot_list:hover ul {
-  bottom: 18px;
-  white-space: nowrap;
-}
 </style>
 
 <script>
@@ -127,38 +63,37 @@ $('.shot_btn').on('click', function () {
   $('.shot_btn').removeClass('s_selected');
   $(this).addClass('s_selected');
 });
-</script>
 
+// console.log("イベント前");
+// $(親要素).on('change', '子要素' )...
+jQuery(document).bind('turbolinks:load', function() {
+  $('#tee_id, #2nd_id, #3rd_id, #green_id').change(function() {
+    console.log("イベント発火！！")
+    // 選択した攻略情報のパス取得
+    let shotPath = $(this).find('option:selected').data().shotPath;
+    console.log(shotPath);
+    console.log($(this));
+    // ボタンの書き換え
+    let this_id = $(this).attr('id');
+    let shot_name = this_id.slice(0, -3);
+    console.log(shot_name);
+    
+    selected_select = '#' + shot_name + '_btns';
+    console.log(selected_select);
+    console.log($('.representative', selected_select));
 
+    // shotボタンのパスを選択された番号の持つパスに書き換え
+    $('.shot_btn', selected_select).attr("href", shotPath);
+    // 選択状態のクラス削除、付与
+    $('.shot_btn').removeClass('s_selected');
+    $('.shot_btn', selected_select).addClass('s_selected');
 
-
-
-<script>
-$(function() {
-    $(".divbutton").click(function() {
-        $(".height").slideToggle();
+    
+    $.ajax({
+      url: shotPath,
+      type: "GET",
     });
+  });
+
 });
 </script>
-    
-<style>
-.divbutton{
-    background: #3fb952;
-    color: #FFF;
-    padding: 10px;
-    display: inline-block;
-    margin: 10px;
-    cursor: pointer;
-}
-.height{
-    width: 200px;
-    padding: 10px;
-    border: 1px solid #333;
-    background: #f2f2f2;
-    display:none;
-}
-</style>
-<div class="divbutton">ボタン</div>
-<div class="height">
-    <img src="https://csshtml.work/wp-content/uploads/1.jpg" alt="">
-</div>
