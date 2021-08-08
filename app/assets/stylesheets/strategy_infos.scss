@@ -116,9 +116,9 @@ $brand_t1: #224444;
     display: flex;
     flex-flow: column;
   
-    &_photo img {
-      // padding: 0.38em;
-    }
+    // &_photo img {
+    //   // padding: 0.38em;
+    // }
   }
 }
 
@@ -135,18 +135,18 @@ $brand_t1: #224444;
   border-radius: 5px;
 }
 
-.strategy_main_center {
-  // margin-right: -50px;
-}
+// .strategy_main_center {
+//   // margin-right: -50px;
+// }
 
 #show {
   margin-right: 20px;
   padding: 0.38em;
 }
 
-#show_photo_area {
-  // max-width: 80%;
-}
+// #show_photo_area {
+//   // max-width: 80%;
+// }
 
 #strategy_main_map {
   position: relative;
@@ -157,9 +157,9 @@ $brand_t1: #224444;
 // #show_photo_area {
 // }
 
-#map_area {
+// #map_area {
 
-}
+// }
 .main_map {
   padding: 0.38em;
   &_pin {
@@ -226,12 +226,12 @@ $brand_t1: #224444;
     border: solid 1px;
     border-color: $brand_t1;
   }
-  &_select {
-    // appearance: none;
-    // border-radius: 0;
-    // border: none;
-    // outline: none;
-  }
+  // &_select {
+  //   // appearance: none;
+  //   // border-radius: 0;
+  //   // border: none;
+  //   // outline: none;
+  // }
 }
 
 .strategy_img {
