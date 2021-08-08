@@ -61,10 +61,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if current_user.cards.size != 0
       customer = Payjp::Customer.retrieve(current_user.customer_id)
       customer.delete
+      # App上でもカード情報を削除する。
+      current_user.cards.destroy_all
     end
     # App上でもユーザー情報を削除する（カード情報も連動して削除される）。
-    if user.destroy
-      flash[:notice] = 'アカウントの削除に成功しました。'
+    if user.update(delete_flag: true)
+      signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+      flash[:notice] = 'アカウントの削除に成功しました。' if signed_out
+      # yield if block_given?
+      # respond_to_on_destroy
       redirect_to root_path
     else
       flash[:danger] = 'アカウントの削除に失敗しました。'

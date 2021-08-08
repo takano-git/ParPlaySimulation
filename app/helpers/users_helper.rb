@@ -22,4 +22,5 @@ module UsersHelper
       content_tag(:span, "&#9733;".html_safe, style: "color: #dab300;")
     end
   end
+
 end

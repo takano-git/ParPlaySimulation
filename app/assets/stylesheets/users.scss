@@ -39,3 +39,9 @@
   overflow: auto; /* 横スクロールバーを表示 */
   white-space: nowrap; /* セル内にあるテキストの折り返しを禁止 */
 }
+
+.container-user-index {
+  @extend .container-fluid;
+  max-width: 1300px;
+  padding: 2rem;
+}

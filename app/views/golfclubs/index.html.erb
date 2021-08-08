@@ -7,7 +7,7 @@
     <%= search_form_for @q, url: golfclubs_path do |f| %>
       <div class="row">
         <div class="input-group col-8">
-          <%= f.search_field :name_cont, placeholder: "ゴルフ場検索", class: "form-control form-control-sm" %>
+          <%= f.search_field :name_cont, placeholder: "ゴルフ場名検索", class: "form-control form-control-sm" %>
           <span class="input-group-append">
             <%= button_tag type: 'submit', class: "btn btn-brand btn-sm" do %>
               <i class="fas fa-search"></i>

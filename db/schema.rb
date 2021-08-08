@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_160102) do
     t.datetime "remember_created_at"
     t.string "subscription_id"
     t.boolean "premium", default: false
+    t.boolean "delete_flag", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
