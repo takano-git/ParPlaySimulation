@@ -2,7 +2,9 @@
 <h4 class="mt-4"><%= @golfclub.name %>の投稿一覧</h4>
 
 <div class="container" data-turbolinks="false">
-  <%= link_to '新規投稿', new_golfclub_post_path, remote: true, class: "btn btn-sm btn-primary" %>
+  <div>
+    <%= link_to '新規投稿', new_golfclub_post_path, remote: true, class: "btn btn-sm btn-primary" %>
+  </div><br>
   <ul class="category-box">
     <li class="category-item"><%= link_to "全て", golfclub_posts_path, class: "btn btn-sm btn-outline-brand" %><li>
     <% @categories.each do |category| %>
