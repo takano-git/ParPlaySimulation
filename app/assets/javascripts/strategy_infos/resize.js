@@ -59,25 +59,25 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     let width = photo_pin_target.offsetWidth;
     let height = photo_pin_target.offsetHeight;
     // pin移動
-    if ( ap_size_x > (bp_size_y.value+1) || ap_size_x != bp_size_y.value) {
-      photo_pin_target.style.left = (ap_target_x + width/2) + "px";
-      photo_pin_target.style.top = (ap_target_y + height/2) + "px";
-    } else if (ap_size_x < (bp_size_y.value+1) || ap_size_x != bp_size_y.value) {
-      photo_pin_target.style.left = (ap_target_x - width/2) + "px";
-      photo_pin_target.style.top = (ap_target_y - height/2) + "px";
-    }else{
-    }
+    // if ( ap_size_x > (bp_size_y.value+1) || ap_size_x != bp_size_y.value) {
+    //   photo_pin_target.style.left = (ap_target_x + width/2) + "px";
+    //   photo_pin_target.style.top = (ap_target_y + height/2) + "px";
+    // } else if (ap_size_x < (bp_size_y.value+1) || ap_size_x != bp_size_y.value) {
+    //   photo_pin_target.style.left = (ap_target_x - width/2) + "px";
+    //   photo_pin_target.style.top = (ap_target_y - height/2) + "px";
+    // }else{
+    // }
     // photo_pin_target.style.left = ap_target_x + "px";
     // photo_pin_target.style.top = ap_target_y + "px";
     // photo_pin_target.style.top = ap_target_y + "px";
-    console.log("bp_target_x"+Number(bp_target_x.value));
-    console.log("bp_target_y"+Number(bp_target_y.value));
-    console.log("ap_size_x"+ap_size_x);
-    console.log("ap_size_y"+ap_size_y);
-    console.log("bp_size_x.value"+Number(bp_size_x.value));
-    console.log("bp_size_y.value"+Number(bp_size_y.value));
-    console.log("ap_target_x"+Math.round(ap_target_x));
-    console.log("ap_target_y"+Math.round(ap_target_y));
+    // console.log("bp_target_x"+Number(bp_target_x.value));
+    // console.log("bp_target_y"+Number(bp_target_y.value));
+    // console.log("ap_size_x"+ap_size_x);
+    // console.log("ap_size_y"+ap_size_y);
+    // console.log("bp_size_x.value"+Number(bp_size_x.value));
+    // console.log("bp_size_y.value"+Number(bp_size_y.value));
+    // console.log("ap_target_x"+Math.round(ap_target_x));
+    // console.log("ap_target_y"+Math.round(ap_target_y));
     // const fixPosition = function(x, y){
       
       // };

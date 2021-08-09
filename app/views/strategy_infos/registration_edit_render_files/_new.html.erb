@@ -1,108 +1,97 @@
-<%= render 'layouts/flash_messages' %>
 
-  <div class="create_strategy_info row">
+<div class="create_strategy_info row">
 
-    <div class="strategy_info_form col-sm-7">
+  <div class="strategy_info_form col-sm-7">
 
-      <%= form_with(url: golfclub_strategy_infos_path, local: true) do |f| %>
-        <%# ユーザーid %>
-        <%= f.hidden_field :user_id, value: current_user.id, class: "form-control" %>
-        コース名:
-        <%= f.select :course_id, @course_options, selected: @course_id, class: "form-control" %>
-        Hole No:
-        <%= f.select :hole_id, @hole_options, selected: @hole_id, class: "form-control" %>
-        shot:
-        <%# <%= f.label :shot_id, class: "label-#{yield(:class_text)}" %>
-        <%= f.select :shot_id, StrategyInfo.shot_ids.keys, selected: @strategy_info_admin.shot_id, class: "form-control" %>
-        <%# ティグラウンド %>
-        <%# <br> %>
-        <%= f.select :location_name, StrategyInfo.location_names.keys, selected: @strategy_info_admin.location_name, class: "form-control" %>
-        <br>
-        <%# 画像up %>
-        <div id="strategy_photo">
-          <div id="photo_area">
-            <%= image_tag @strategy_info_admin.photo, id: "photo_prev", class: "strategy_img strategy_photo" %>
-
-          </div>
-          <div class="photo_pin">
-            <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="pin js-image-switch">
-            <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin js-image-switch">
-          </div>
-        </div>
-        <%= f.file_field :photo, id: "f_strategy_photo", class: "form-control-file",
-                                 accept: "image/png, image/jpg, image/jpeg" %>
-        <%= f.hidden_field :admin_photo, value: @strategy_info_admin.photo, id: "admin_photo" %>
-        <br>
-        <%= f.label :コメント, class: "" %>
-        <%= f.text_field :comment, value: @strategy_info_admin.comment, class: "form-control" %>
-        <%# location_name %>
-        <%= f.hidden_field :location_name, value: "R", id: "hidden_location", class: "form-control" %>
-        <div class="coordinate">
-          <%# photoピン座標 %>
-          <%= f.hidden_field :photo_target_x, value: @strategy_info_admin.photo_target_x, class: "form-control" %>
-          <%= f.hidden_field :photo_target_y, value: @strategy_info_admin.photo_target_y, class: "form-control" %>
-          <%= f.hidden_field :photo_point_x, value: @strategy_info_admin.photo_point_x, class: "form-control" %>
-          <%= f.hidden_field :photo_point_y, value: @strategy_info_admin.photo_point_y, class: "form-control" %>
-          <%# photoサイズ %>
-          <%= f.hidden_field :photo_size_x, value: @strategy_info_admin.photo_size_x, id: 'photo_size_x', class: "form-control" %>
-          <%= f.hidden_field :photo_size_y, value: @strategy_info_admin.photo_size_y, id: 'photo_size_y', class: "form-control" %>
-          <%# mapピン座標 %>
-          <%= f.hidden_field :map_target_x, value: @strategy_info_admin.map_target_x, class: "form-control" %>
-          <%= f.hidden_field :map_target_y, value: @strategy_info_admin.map_target_y, class: "form-control" %>
-          <%= f.hidden_field :map_point_x, value: @strategy_info_admin.map_point_x, class: "form-control" %>
-          <%= f.hidden_field :map_point_y, value: @strategy_info_admin.map_point_y, class: "form-control" %>
-          <%= f.hidden_field :map_shoot_x, value: @strategy_info_admin.map_shoot_x, class: "form-control" %>
-          <%= f.hidden_field :map_shoot_y, value: @strategy_info_admin.map_shoot_y, class: "form-control" %>
-          <%# mapサイズ %>
-          <%= f.hidden_field :map_size_x, value: @strategy_info_admin.map_size_x, id: 'map_size_x', class: "form-control" %>
-          <%= f.hidden_field :map_size_y, value: @strategy_info_admin.map_size_y, id: 'map_size_y', class: "form-control" %>
-        </div>
-        <br>
-        <%= f.submit "攻略情報登録", class: "btn btn-primary btn-block" %>
-      <% end %>
+    <%= form_with(url: golfclub_strategy_infos_path, remote: true) do |f| %>
+      <%# ユーザーid %>
+      <%= f.hidden_field :user_id, value: current_user.id, class: "form-control" %>
+      <p class= "golfclub_column">コース名:</p>
+      <%= f.select :course_id, @course_options, selected: @course_id, class: "form-control" %>
+      <p class= "golfclub_column">Hole No:</p>
+      <%= f.select :hole_id, @hole_options, selected: @hole_id, class: "form-control" %>
+      <p class= "golfclub_column">shot:</p>
+      <%= f.select :shot_id, StrategyInfo.shot_ids.keys, selected: @strategy_info_admin.shot_id, class: "form-control" %>
+      <p class= "golfclub_column">ティグラウンド:</p>
+      <%= f.select :location_name, StrategyInfo.location_names.keys, selected: @strategy_info_admin.location_name, class: "form-control" %>
       
-    </div>
-
-    <div class=" col-sm-1">
-      
-    </div>
-
-    <div id="strategy_map" class=" col-sm-3">
-      <div class="map_area">
-        <%# < %= render 'strategy_infos/form_map', hole: @hole % > %>
-        <% if @strategy_info_admin.location_name == "R" %>
-          <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
-        <% elsif @strategy_info_admin.location_name == "B" %>
-          <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
-        <% else %>
-          <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
-        <% end %>
-
+      <%# 画像up %>
+      <div id="strategy_photo">
+        <div id="photo_area">
+          <%= image_tag @strategy_info_admin.photo, id: "photo_prev", class: "strategy_img strategy_photo" %>
+        </div>
+        <div class="photo_pin">
+          <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="pin js-image-switch">
+          <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin js-image-switch">
+        </div>
       </div>
-      <div class="map_pin">
-        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
-        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
-        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
+      <%= f.file_field :photo, id: "f_strategy_photo", class: "form-control-file",
+                                accept: "image/png, image/jpg, image/jpeg" %>
+      <%= f.hidden_field :admin_photo, value: @strategy_info_admin.photo, id: "admin_photo" %>
+      <%= f.text_field :comment, value: @strategy_info_admin.comment, placeholder: "コメント入力", class: "form-control" %>
+      <div class="coordinate">
+        <%# photoピン座標 %>
+        <%= f.hidden_field :photo_target_x, value: @strategy_info_admin.photo_target_x, class: "form-control" %>
+        <%= f.hidden_field :photo_target_y, value: @strategy_info_admin.photo_target_y, class: "form-control" %>
+        <%= f.hidden_field :photo_point_x, value: @strategy_info_admin.photo_point_x, class: "form-control" %>
+        <%= f.hidden_field :photo_point_y, value: @strategy_info_admin.photo_point_y, class: "form-control" %>
+        <%# photoサイズ %>
+        <%= f.hidden_field :photo_size_x, value: @strategy_info_admin.photo_size_x, id: 'photo_size_x', class: "form-control" %>
+        <%= f.hidden_field :photo_size_y, value: @strategy_info_admin.photo_size_y, id: 'photo_size_y', class: "form-control" %>
+        <%# mapピン座標 %>
+        <%= f.hidden_field :map_target_x, value: @strategy_info_admin.map_target_x, class: "form-control" %>
+        <%= f.hidden_field :map_target_y, value: @strategy_info_admin.map_target_y, class: "form-control" %>
+        <%= f.hidden_field :map_point_x, value: @strategy_info_admin.map_point_x, class: "form-control" %>
+        <%= f.hidden_field :map_point_y, value: @strategy_info_admin.map_point_y, class: "form-control" %>
+        <%= f.hidden_field :map_shoot_x, value: @strategy_info_admin.map_shoot_x, class: "form-control" %>
+        <%= f.hidden_field :map_shoot_y, value: @strategy_info_admin.map_shoot_y, class: "form-control" %>
+        <%# mapサイズ %>
+        <%= f.hidden_field :map_size_x, value: @strategy_info_admin.map_size_x, id: 'map_size_x', class: "form-control" %>
+        <%= f.hidden_field :map_size_y, value: @strategy_info_admin.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
-
-      <div class="pins_description">
-        <ul>
-          <li>
-            <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="js-image-switch">
-            狙い目
-          </li>
-          <li>
-            <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="js-image-switch">
-            目印
-          </li>
-          <li>
-            <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="js-image-switch">
-            撮影地点
-          </li>
-        </ul>
-      </div>
-    </div>
-
+      <%= f.submit "攻略情報登録", class: "btn btn-brand btn-block" %>
+    <% end %>
+    
   </div>
+
+  <div class=" col-sm-1">
+    
+  </div>
+
+  <div id="strategy_map" class=" col-sm-3">
+    <div class="map_area">
+      <%# < %= render 'strategy_infos/form_map', hole: @hole % > %>
+      <% if @strategy_info_admin.location_name == "R" %>
+        <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
+      <% elsif @strategy_info_admin.location_name == "B" %>
+        <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
+      <% else %>
+        <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
+      <% end %>
+
+    </div>
+    <div class="map_pin">
+      <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
+      <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
+      <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
+    </div>
+
+    <div class="pins_description">
+      <div class="pins_description_content golfclub_column">
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="js-image-switch">
+        :狙い目
+      </div>
+      <div class="pins_description_content golfclub_column">
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="js-image-switch">
+        :目印
+      </div>
+      <div class="pins_description_content golfclub_column">
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="js-image-switch">
+        :撮影地点
+      </div>
+    </div>
+  </div>
+
+</div>
 
 

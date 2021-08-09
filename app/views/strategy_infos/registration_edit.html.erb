@@ -1,19 +1,20 @@
+<div id="flash_messages">
+  <%= render 'layouts/flash_messages' %>
+</div>
+
 <div id="container" class="container">
   <!--<h4 class="mt-4">攻略情報編集画面</h4>-->
   <div id="golfclub__name_area">
-    <%= @golfclub.name %><br>
-    <%= @area.prefecture %>
+    <p class= "golfclub_column golfclub_column_top">ゴルフ場名：<%= @golfclub.name %></p>
+    <p class= "golfclub_column golfclub_column_top">県名：<%= @area.prefecture %></p>
   </div>
   <%# newかeditかでrennder分け %>
   <div id="registration_edit_renders">
     <% if @new_or_edit && @strategy_info_admin.present? %>
-      <%= "ユーザーのデータなし(new)、かつ管理者のデータあり" %>
       <%= render "strategy_infos/registration_edit_render_files/new" %>
     <% elsif @new_or_edit %>
-      <%= "ユーザーのデータなし(new)" %>
       <%= render "strategy_infos/registration_edit_render_files/brand_new" %>
     <% else %>
-      <%= "ユーザーのデータあり(edit)" %>
       <%= render "strategy_infos/registration_edit_render_files/edit" %>
     <% end %>
   </div>

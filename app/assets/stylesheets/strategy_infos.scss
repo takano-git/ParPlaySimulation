@@ -5,9 +5,13 @@
 $brand_t1: #224444;
 
 // 攻略情報ページ
+.strategy_golfclub_name {
+  margin: 0;
+}
+
 .strategy_cource_bar {
   // display: flex;
-  margin-top: 18px;
+  margin-top: 13px;
   margin-bottom: 10px;
   // margin-left: 130px;
   margin-left: 80px;
@@ -20,6 +24,10 @@ $brand_t1: #224444;
 .strategy_course_btn {
   border-color: $brand_t1;
   width: 60px;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 
 .c_selected {
@@ -33,12 +41,18 @@ $brand_t1: #224444;
 
 .strategy_hole_bar {
   // margin-left: 150px;
-  margin-left: 100px;
+  // margin-left: 100px;
+  margin-left: 90px;
+  margin-right: 90px;
 }
 
 .strategy_hole_btn {
   border-color: $brand_t1;
   width: 40px;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 
 .h_selected {
@@ -53,6 +67,10 @@ $brand_t1: #224444;
 .location_btn {
   border-color: $brand_t1;
   width: 40px;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 
 .l_selected {
@@ -63,18 +81,6 @@ $brand_t1: #224444;
     color: white;
   }
 }
-
-// .shot_bar {
-//   margin-left: 0px;
-// }
-
-
-// .shot_btn {
-//   border-color: $brand_t1;
-//   width: 80px;
-//   margin-top: 3px;
-//   margin-right: 3px;
-// }
 
 .s_selected {
   color: white;
@@ -95,14 +101,12 @@ $brand_t1: #224444;
 
 .strategy_none {
   background-color: #ccc;
-  width: 451px;
-  height: 230px;
+  max-width: 100%;
 }
 
 .map_none {
   background-color: #ccc;
-  width: 303px;
-  height: 107px;
+  max-width: 100%;
 }
 
 .strategy_main {
@@ -112,15 +116,15 @@ $brand_t1: #224444;
     display: flex;
     flex-flow: column;
   
-    &_photo img {
-      // padding: 0.38em;
-    }
+    // &_photo img {
+    //   // padding: 0.38em;
+    // }
   }
 }
 
 .strategy_main_status {
   color: white;
-  background-color: #224444;
+  background-color: $brand_t1;
   height: 45px;
   max-width: 70px;
   min-width: 70px;
@@ -131,31 +135,33 @@ $brand_t1: #224444;
   border-radius: 5px;
 }
 
-.strategy_main_center {
-  margin-right: -50px;
-}
+// .strategy_main_center {
+//   // margin-right: -50px;
+// }
 
 #show {
+  margin-right: 20px;
   padding: 0.38em;
 }
 
-#show_photo_area {
-  max-width: 80%;
-}
+// #show_photo_area {
+//   // max-width: 80%;
+// }
 
 #strategy_main_map {
   position: relative;
   max-width: 100%;
+  margin-top: 15px;
 }
 // photo, pin
 // #show_photo_area {
 // }
 
-#map_area {
+// #map_area {
 
-}
+// }
 .main_map {
-
+  padding: 0.38em;
   &_pin {
     position: absolute;
     // top: 100%;
@@ -175,19 +181,34 @@ $brand_t1: #224444;
   box-shadow: 0 2px 3px 0 #ddd;
   font-size: 100%;
   padding: 2px;
-  margin-right: 150px;
+  // margin-right: 150px;
 }
 
 
+// 
+.strategy_footer {
+  display: flex;
+}
 
 // shot_bar
 .shot_bar {
+  display: flex;
   padding: 0.38em;
 }
-
 .shot_btns {
-  // display: flex;
-  // flex-flow: column;
+  display: flex;
+  margin-right: 4px;
+}
+
+.shot_btn {
+  border-color: $brand_t1;
+  width: 80px;
+  // margin-top: 3px;
+  margin-right: 0;
+  &:hover {
+    background-color: $brand_t1;
+    color: white;
+  }
 }
 // -----------------------------
 // 攻略情報新規作成、更新ページ
@@ -195,11 +216,22 @@ $brand_t1: #224444;
 //   display: flex;
 // }
 
-.shot_btn {
-  border-color: $brand_t1;
-  width: 80px;
-  margin-top: 3px;
-  margin-right: 3px;
+.golfclub_column {
+  display: inline-block;
+  color: $brand_t1;
+  font-weight: bold;
+  margin: 8px 0 7px 4px;
+  &_top {
+    padding: 2px 4px;
+    border: solid 1px;
+    border-color: $brand_t1;
+  }
+  // &_select {
+  //   // appearance: none;
+  //   // border-radius: 0;
+  //   // border: none;
+  //   // outline: none;
+  // }
 }
 
 .strategy_img {
@@ -207,6 +239,7 @@ $brand_t1: #224444;
   height:auto;
   max-width:100%;
   max-height:80%;
+  // padding-right: 20%;
 }
 
 // 全てのピンに
@@ -217,7 +250,9 @@ $brand_t1: #224444;
 #strategy_map {
   position: relative;
   display: inline-block;
+  margin-top: 55px;
 }
+
 .map_pin {
   &_target {
     z-index: 20;
@@ -232,8 +267,18 @@ $brand_t1: #224444;
   }
 }
 
+.pins_description {
+  border: solid 1px;
+  border-color: $brand_t1;
+  border-radius: 0.5rem;
+  max-width: 85%;
+  margin-top: 5px;
+}
+
+
 #strategy_photo {
   position: relative;
+  max-width: 700px;
 }
 .photo_pin {
   &_target {
@@ -241,6 +286,18 @@ $brand_t1: #224444;
   }
   &_point {
     z-index: 15;
+  }
+}
+
+// 
+.strategy_update-destroy {
+  display: flex;
+  flex-wrap: wrap;
+  &_btn_left {
+    width: 78%;
+  }
+  &_btn_right {
+    width: 22%;
   }
 }
 
@@ -278,6 +335,7 @@ $brand_t1: #224444;
   overflow: hidden;
   display: inline-block;
   width: 100%;
+  margin-top: -23px;
 
     &:before {
       content: "";
