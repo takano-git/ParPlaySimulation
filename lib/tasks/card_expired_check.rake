@@ -2,6 +2,21 @@ namespace :card_expired_check do
   desc '登録したクレジットカードの中で、有効期限が間近のユーザーに通知メールを送る'
   task credit_card_expired_check: :environment do
 
+    beginning_of_month = Date.today.at_beginning_of_month # 月初の日付
+    today = Date.today # 今日の日付
+    
+    puts beginning_of_month # 月初の日付を出力
+    puts today # 今日の日付を出力
+
+    # 「今日は月初の日付と同じか?」
+    puts today.eql?(beginning_of_month)
+    
+    if Date.today.eql?(beginning_of_month)
+      puts '今日は月初です。カード有効期限が今月のユーザーに通知メールを送ります。'  
+    else
+      puts '今日は月初ではありませんので、カード有効期限が今月のユーザーへメール送信はありません。'
+    end
+
     # 本番では削除
     puts "タスクのテストです。" # 本番では削除
     user = User.find(2) # 本番では削除 Userモデルを参照する
