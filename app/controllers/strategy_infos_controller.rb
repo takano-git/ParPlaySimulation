@@ -9,16 +9,20 @@ class StrategyInfosController < ApplicationController
     @course_id = @courses.first.id
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
     @hole = @holes.first
-    # @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
-    # @strategy_info = @strategy_infos.first
-    # ログインユーザーがTeeの攻略情報を持っていた場合
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
+    # ログインユーザーが攻略情報を持っているかどうか
+    # unless @strategy_info = @strategy_infos.where(user_id: current_user.id).first
+      @strategy_info = @strategy_infos.first
+    # end
+    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+      @strategy_info = user_strat
+    end
     # byebug
-    @strategy_info = @strategy_infos.first
     @location_name = "R"
-    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
+    # ログインユーザーのshots
+    @user_shots = @strategy_infos.where(user_id: current_user.id)
     @poster = User.find(@strategy_info.user_id).nickname
-    # byebug
     # 攻略情報があるとき
     if @strategy_info.present?
       # 登録情報はあるが、写真がない場合の処理
@@ -38,8 +42,11 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
+    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+      @strategy_info = user_strat
+    end
     @location_name = "R"
-    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
@@ -60,8 +67,11 @@ class StrategyInfosController < ApplicationController
       hole_id: params[:hole_id], location_name: params[:location_name]
     ).order(:id)
     @strategy_info = @strategy_infos.first
+    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+      @strategy_info = user_strat
+    end
     @location_name = params[:location_name]
-    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
+    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
@@ -80,9 +90,12 @@ class StrategyInfosController < ApplicationController
     @hole = Hole.find(params[:hole_id])
     @strategy_infos = StrategyInfo.where(hole_id: params[:hole_id], location_name: params[:location_name]).order(:id)
     @strategy_info = @strategy_infos.first
+    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+      @strategy_info = user_strat
+    end
     # @strategy_infoがblankの時、攻略情報が存在しないview表記(_show.html.erb)
     @location_name = params[:location_name]
-    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
+    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
@@ -233,6 +246,10 @@ class StrategyInfosController < ApplicationController
 
   def create
     @strategy_info = StrategyInfo.new(strategy_info_params)
+    # すでにログインユーザーのデータがあるとき
+    #既に登録済みです。編集して下さい。 
+
+    # リダイレクト
     if @strategy_info.save
       flash[:success] = "攻略情報を登録しました。"
     else

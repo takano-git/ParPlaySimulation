@@ -16,24 +16,31 @@
       <div id="shot_bar" class="shot_bar">
         <% @strategy_shots.each_with_index do |shots, n| %>
           <div id="<%= shots[0] %>_btns" class="shot_btns">
-          <%# < % byebug% > %>
             <div class="representative">
-              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+              <%# ログインユーザーのデータがあればそれを %>
+              <% @default_number = shot_btns_default(shots, n) %>
+              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][@default_number][:id]),
                   remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 %>
-              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][@default_number][:id]),
                   remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
             </div>
             <div class="shot_list" ontouchstart=””>
               <select id="<%= shots[0] %>_id" class="shot_select">
                 <% shots[1].each.with_index(1) do |shot, i| %>
-                  <option value="" data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
+                  <% if shot[:user_id] == current_user.id %>
+                    <option value="" selected data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
+                  <% else %>
+                    <option value="" data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
+                  <% end %>
                 <% end %>
               </select>
             </div>
           </div>
         <% end %>
       </div><br>
-      
+      <div id="poster">
+        <%= render 'strategy_infos/index_render_files/poster' %>
+      </div>
     </div>
   </div>
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
