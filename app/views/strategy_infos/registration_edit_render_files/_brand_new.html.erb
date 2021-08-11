@@ -57,20 +57,22 @@
     
   </div>
 
-  <div id="strategy_map" class=" col-sm-3">
-    <div class="map_area">
-      <% if @location_name.blank? || @location_name == "R" %>
-        <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
-      <% elsif @location_name == "B" %>
-        <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
-      <% else %>
-        <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
-      <% end %>
-    </div>
-    <div class="map_pin">
-      <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
-      <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
-      <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
+  <div class="col-sm-3">
+    <div id="strategy_map" class="">
+      <div id="map_area">
+        <% if @location_name.blank? || @location_name == "R" %>
+          <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
+        <% elsif @location_name == "B" %>
+          <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
+        <% else %>
+          <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
+        <% end %>
+      </div>
+      <div class="map_pin">
+        <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
+      </div>
     </div>
 
     <div class="pins_description">

@@ -11,7 +11,6 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
-    # byebug
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     # ログインユーザーのshots
@@ -30,7 +29,6 @@ class StrategyInfosController < ApplicationController
           shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
       end
     end
-    # byebug
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -86,7 +84,6 @@ class StrategyInfosController < ApplicationController
 
   # 攻略情報ページ。ロケーション（R,B,G）ボタンクリック時のAjaxアクション
   def location
-    # renderの切り替えはstrategy_infos/index_render_files/main
     @hole = Hole.find(params[:hole_id])
     @strategy_infos = StrategyInfo.where(hole_id: params[:hole_id], location_name: params[:location_name]).order(:id)
     @strategy_info = @strategy_infos.first
@@ -109,9 +106,8 @@ class StrategyInfosController < ApplicationController
     end
   end
 
-  # 攻略情報ページ。shotボタンクリック時のAjaxアクション
+  # 攻略情報ページ。shotボタンクリック&セレクトボックス変更時のAjaxアクション
   def show
-    # byebug
     @strategy_info = StrategyInfo.find(params[:id])
     # 攻略情報があるとき
     if @strategy_info.present?
@@ -252,6 +248,21 @@ class StrategyInfosController < ApplicationController
 
     # リダイレクト
     if @strategy_info.save
+      # @golfclub = Golfclub.find(params[:golfclub_id])
+      # @courses = Course.where(golfclub_id: @strategy_info.golfclub_id).order(:id)
+      # @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+      #   |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+      # }
+      # @course_id = @strategy_info.course_id
+      # @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
+      # @hole_options = @holes.map { 
+      #   |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+      # }
+      # @hole_id = @strategy_info.hole_id
+      # @hole = @holes.find(@hole_id)
+      # @shot_id = @strategy_info.shot_id
+      # @location_name = @strategy_info.location_name
+      # @new_or_edit = false
       flash[:success] = "攻略情報を登録しました。"
     else
       flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
