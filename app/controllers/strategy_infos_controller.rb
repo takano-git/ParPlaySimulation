@@ -10,13 +10,7 @@ class StrategyInfosController < ApplicationController
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
-    # ログインユーザーが攻略情報を持っているかどうか
-    # unless @strategy_info = @strategy_infos.where(user_id: current_user.id).first
-      @strategy_info = @strategy_infos.first
-    # end
-    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
-      @strategy_info = user_strat
-    end
+    @strategy_info = @strategy_infos.first
     # byebug
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
@@ -25,6 +19,10 @@ class StrategyInfosController < ApplicationController
     @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -42,14 +40,15 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
-    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
-      @strategy_info = user_strat
-    end
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
-    @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -67,14 +66,15 @@ class StrategyInfosController < ApplicationController
       hole_id: params[:hole_id], location_name: params[:location_name]
     ).order(:id)
     @strategy_info = @strategy_infos.first
-    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
-      @strategy_info = user_strat
-    end
     @location_name = params[:location_name]
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
-    @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -90,15 +90,16 @@ class StrategyInfosController < ApplicationController
     @hole = Hole.find(params[:hole_id])
     @strategy_infos = StrategyInfo.where(hole_id: params[:hole_id], location_name: params[:location_name]).order(:id)
     @strategy_info = @strategy_infos.first
-    if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
-      @strategy_info = user_strat
-    end
     # @strategy_infoがblankの時、攻略情報が存在しないview表記(_show.html.erb)
     @location_name = params[:location_name]
     @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
-    @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -112,9 +113,9 @@ class StrategyInfosController < ApplicationController
   def show
     # byebug
     @strategy_info = StrategyInfo.find(params[:id])
-    @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
