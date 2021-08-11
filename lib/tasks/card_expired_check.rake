@@ -33,9 +33,9 @@ namespace :card_expired_check do
       users.each do |user|
         UserMailer.card_expired_mail(user).deliver
       end
-        puts "クレジットカードの有効期限が今年かつ今月のユーザーにメールを送りました。"
+        puts "クレジットカードの有効期限が、今年かつ今月のユーザーにメールを送りました。"
       else
-        puts "クレジットカードの有効期限が今年かつ今月のユーザーはいません。"
+        puts "クレジットカードの有効期限が、今年かつ今月のユーザーはいません。"
     end
 
   end
