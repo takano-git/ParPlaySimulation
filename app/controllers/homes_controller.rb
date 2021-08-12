@@ -22,5 +22,8 @@ class HomesController < ApplicationController
   
   def inquiry
   end
-  
+
+  def faq
+  end
+
 end
