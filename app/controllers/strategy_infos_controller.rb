@@ -15,6 +15,7 @@ class StrategyInfosController < ApplicationController
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     # ログインユーザーのshots
     @user_shots = @strategy_infos.where(user_id: current_user.id)
+    # @posterは投稿者のこと
     @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
@@ -120,23 +121,9 @@ class StrategyInfosController < ApplicationController
       end
     end
   end
+  # 攻略情報ページここまで
 
-  # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
-  # def form_map
-  #   location_colums = ["map_r","map_b","map_l"]
-  #   @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
-  #   if params[:hole_data].blank?
-  #     course_id = params[:course_data][:course][:course_id]
-  #     @holes = Hole.where(course_id: course_id).order(:id)
-  #     @hole = @holes.first
-  #     @hole_options = @holes.order(:id).map { 
-  #       |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-  #     }
-  #   else
-  #     @hole = Hole.find(params[:hole_data][:hole][:hole_id])
-  #   end
-  # end
-
+  # 登録編集ページ
   def registration_edit
     # コースが登録されていなかったらリダイレクト
 
@@ -187,7 +174,7 @@ class StrategyInfosController < ApplicationController
     # byebug
   end
 
-  # registration_editでのAjax
+  # 登録編集ページでのでのセレクトボックスAjax
   def switch
     @golfclub = Golfclub.find(params[:golfclub_id])
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
@@ -243,29 +230,37 @@ class StrategyInfosController < ApplicationController
 
   def create
     @strategy_info = StrategyInfo.new(strategy_info_params)
-    # すでにログインユーザーのデータがあるとき
-    #既に登録済みです。編集して下さい。 
-
-    # リダイレクト
     if @strategy_info.save
-      # @golfclub = Golfclub.find(params[:golfclub_id])
-      # @courses = Course.where(golfclub_id: @strategy_info.golfclub_id).order(:id)
-      # @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
-      #   |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
-      # }
-      # @course_id = @strategy_info.course_id
-      # @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
-      # @hole_options = @holes.map { 
-      #   |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
-      # }
-      # @hole_id = @strategy_info.hole_id
-      # @hole = @holes.find(@hole_id)
-      # @shot_id = @strategy_info.shot_id
-      # @location_name = @strategy_info.location_name
-      # @new_or_edit = false
-      flash[:success] = "攻略情報を登録しました。"
+      @golfclub = Golfclub.find(params[:golfclub_id])
+      @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+      @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+        |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+      @course_id = @strategy_info.course_id
+      @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
+      @hole_options = @holes.map { 
+        |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+      @hole_id = @strategy_info.hole_id
+      @hole = @holes.find(@hole_id)
+      @location_name = @strategy_info.location_name
+      @shot_id = @strategy_info.shot_id
+      @new_or_edit = false
+      # 自身の写真がないときの処理
+      @photo_present = @strategy_info.photo.attached?
+      unless @photo_present
+        # [編集]ログインユーザーの登録情報写真がない場合権利者レコードを探す
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
+          location_name: params[:location_name],
+          shot_id: params[:shot_id]).first unless current_user.admin?
+      end
+      respond_to do |format|
+        format.js { flash.now[:success] = "攻略情報を登録しました。" }
+      end
     else
-      flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
+      respond_to do |format|
+        format.js { flash.now[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe }
+      end
     end
   end
 

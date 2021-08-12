@@ -61,7 +61,6 @@
   <div class="col-sm-3">
     <div id="strategy_map" class="">
       <div id="map_area">
-        <%# < %= render 'strategy_infos/form_map', hole: @hole % > %>
         <% if @strategy_info_admin.location_name == "R" %>
           <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
         <% elsif @strategy_info_admin.location_name == "B" %>
