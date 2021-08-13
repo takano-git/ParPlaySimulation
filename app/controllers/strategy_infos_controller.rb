@@ -1,5 +1,6 @@
 class StrategyInfosController < ApplicationController
-  before_action :admin_user, only: %i(destroy)
+  # destroyが動かなくなるので調査中
+  # before_action :admin_user, only: %i(destroy)
   before_action :premium_user, only: %i(index new create edit update)
 
   def index
@@ -125,11 +126,6 @@ class StrategyInfosController < ApplicationController
 
   # 登録編集ページ
   def registration_edit
-    # コースが登録されていなかったらリダイレクト
-
-
-
-    # byebug
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
@@ -196,10 +192,21 @@ class StrategyInfosController < ApplicationController
     end
     @shot_id = params[:shot_id]
     # ホールのマップが登録されてなかった時の処理
+    # # byebug
+    # @map_present = @hole.map_r if params[:location_name] == "R"
+    # @map_present = @hole.map_b if params[:location_name] == "B"
+    # @map_present = @hole.map_l if params[:location_name] == "L"
+    # unless @map_present.attached?
+    #   respond_to do |format|
+    #     format.js { 
+    #       flash[:danger] = "#{@golfclub.name}の#{@courses.find(params[:course_id]).name}コース、#{@hole.hole_number}番ホール,
+    #                             ロケーション#{params[:location_name]}のマップは準備中です。しばらくお待ちください。" 
+    #     }
+    #   end
+    #   # byebug
+    #   # render "switch.js.erb" and return
+    # end
 
-    # byebug
-
-    # 
     # ここからログインユーザー登録情報の有無フラグ
     @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, 
                                         location_name: params[:location_name], shot_id: params[:shot_id]).first
@@ -281,6 +288,12 @@ class StrategyInfosController < ApplicationController
   end
 
   def destroy
+    # byebug
+    # 管理者のものは管理者のみ、会員のものは管理者と会員のみ削除可能
+    # 登録編集画面ではログインユーザー自身のものしか編集策上できない
+    # 管理者の時のみ、会員の情報も操作できるようにする必要がある
+
+
     @strategy_info = StrategyInfo.find(params[:id])
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
