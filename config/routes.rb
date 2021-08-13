@@ -59,7 +59,6 @@ Rails.application.routes.draw do
         # 登録編集ページ
         get :registration_edit
         get :switch
-        get :form_map # 削除予定
       end
     end
     # 投稿情報

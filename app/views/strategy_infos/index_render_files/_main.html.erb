@@ -16,24 +16,31 @@
       <div id="shot_bar" class="shot_bar">
         <% @strategy_shots.each_with_index do |shots, n| %>
           <div id="<%= shots[0] %>_btns" class="shot_btns">
-          <%# < % byebug% > %>
             <div class="representative">
-              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+              <%# ログインユーザーのデータがあればそれを %>
+              <% @default_number = shot_btns_default(shots, n) %>
+              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][@default_number][:id]),
                   remote: :true, class: "btn btn-sm shot_btn s_selected" if n == 0 %>
-              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][0][:id]),
+              <%= link_to "#{shots[0]}", golfclub_strategy_info_path(id: shots[1][@default_number][:id]),
                   remote: :true, class: "btn btn-sm shot_btn" if n != 0 %>
             </div>
             <div class="shot_list" ontouchstart=””>
               <select id="<%= shots[0] %>_id" class="shot_select">
                 <% shots[1].each.with_index(1) do |shot, i| %>
-                  <option value="" data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
+                  <% if shot[:user_id] == current_user.id %>
+                    <option value="" selected data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
+                  <% else %>
+                    <option value="" data-shot-path="<%= golfclub_strategy_info_path(id: shot[:id]) %>"><%= i %></option>
+                  <% end %>
                 <% end %>
               </select>
             </div>
           </div>
         <% end %>
-      </div><br>
-      
+      </div>
+      <div id="poster">
+        <%= render 'strategy_infos/index_render_files/poster' %>
+      </div>
     </div>
   </div>
   <%# 表示切り替え(.show();,.hide(); col-md-2%>
@@ -43,20 +50,6 @@
 
 </div>
 
-<style>
-.representative {
-  display: flex;
-}
-.shot_select, option{
-  /* background: #224444;
-  color: white; */
-  color: #224444;
-  margin: 0;
-  padding: 2.8px 0.5px;
-}
-
-
-</style>
 
 <script>
 $('.shot_btn').on('click', function () {
@@ -64,36 +57,31 @@ $('.shot_btn').on('click', function () {
   $(this).addClass('s_selected');
 });
 
-// console.log("イベント前");
-// $(親要素).on('change', '子要素' )...
-jQuery(document).bind('turbolinks:load', function() {
-  $('#tee_id, #2nd_id, #3rd_id, #green_id').change(function() {
-    console.log("イベント発火！！")
-    // 選択した攻略情報のパス取得
-    let shotPath = $(this).find('option:selected').data().shotPath;
-    console.log(shotPath);
-    console.log($(this));
-    // ボタンの書き換え
-    let this_id = $(this).attr('id');
-    let shot_name = this_id.slice(0, -3);
-    console.log(shot_name);
-    
-    selected_select = '#' + shot_name + '_btns';
-    console.log(selected_select);
-    console.log($('.representative', selected_select));
+// shot_barセレクトボックス
+$('#tee_id, #2nd_id, #3rd_id, #green_id').change(function() {
+  console.log("イベント発火！！")
+  // 選択した攻略情報のパス取得
+  let shotPath = $(this).find('option:selected').data().shotPath;
+  console.log(shotPath);
+  console.log($(this));
+  // ボタンの書き換え
+  let this_id = $(this).attr('id');
+  let shot_name = this_id.slice(0, -3);
+  console.log(shot_name);
+  
+  selected_select = '#' + shot_name + '_btns';
+  console.log(selected_select);
+  console.log($('.representative', selected_select));
 
-    // shotボタンのパスを選択された番号の持つパスに書き換え
-    $('.shot_btn', selected_select).attr("href", shotPath);
-    // 選択状態のクラス削除、付与
-    $('.shot_btn').removeClass('s_selected');
-    $('.shot_btn', selected_select).addClass('s_selected');
+  // shotボタンのパスを選択された番号の持つパスに書き換え
+  $('.shot_btn', selected_select).attr("href", shotPath);
+  // 選択状態のクラス削除、付与
+  $('.shot_btn').removeClass('s_selected');
+  $('.shot_btn', selected_select).addClass('s_selected');
 
-    
-    $.ajax({
-      url: shotPath,
-      type: "GET",
-    });
+  $.ajax({
+    url: shotPath,
+    type: "GET",
   });
-
 });
 </script>

@@ -8,7 +8,7 @@
           <p>マップ情報がありません</p>
           <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid" %>
         </div>
-      <% end%>
+      <% end %>
     <% elsif @location_name == "B" %>
       <% if @hole.map_b.attached?%>
         <%= image_tag @hole.map_b.variant(resize:'294x390'), id: "map_b", class: "main_map img-fluid" %>
@@ -17,7 +17,7 @@
           <p>マップ情報がありません</p>
           <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid" %>
         </div>
-      <% end%>
+      <% end %>
     <% else %>
       <% if @hole.map_l.attached?%>
         <%= image_tag @hole.map_l.variant(resize:'294x390'), id: "map_l", class: "main_map img-fluid" %>
@@ -26,7 +26,7 @@
           <p>マップ情報がありません</p>
           <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid" %>
         </div>
-      <% end%>
+      <% end %>
     <% end %>
   </div>
   <%# ピン %>

@@ -1,6 +1,7 @@
 class StrategyInfosController < ApplicationController
-  before_action :admin_user, only: %i(destroy)
-  before_action :premium_user, only: %i(index new create edit update)
+  # destroyが動かなくなるので調査中
+  # before_action :admin_user, only: %i(destroy)
+  before_action :premium_user, only: %i(index new create edit update registration_edit)
 
   def index
     @golfclub = Golfclub.find(params[:golfclub_id])
@@ -9,18 +10,20 @@ class StrategyInfosController < ApplicationController
     @course_id = @courses.first.id
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
     @hole = @holes.first
-    # @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
-    # @strategy_info = @strategy_infos.first
-    # ログインユーザーがTeeの攻略情報を持っていた場合
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R").order(:id)
-    # byebug
     @strategy_info = @strategy_infos.first
     @location_name = "R"
-    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
+    # ログインユーザーのshots
+    @user_shots = @strategy_infos.where(user_id: current_user.id)
+    # @posterは投稿者のこと
     @poster = User.find(@strategy_info.user_id).nickname
-    # byebug
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -28,7 +31,6 @@ class StrategyInfosController < ApplicationController
           shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
       end
     end
-    # byebug
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -39,10 +41,14 @@ class StrategyInfosController < ApplicationController
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id], location_name: "R").order(:id)
     @strategy_info = @strategy_infos.first
     @location_name = "R"
-    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
-    @poster = User.find(@strategy_info.user_id).nickname
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -61,10 +67,14 @@ class StrategyInfosController < ApplicationController
     ).order(:id)
     @strategy_info = @strategy_infos.first
     @location_name = params[:location_name]
-    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
-    @poster = User.find(@strategy_info.user_id).nickname
+    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -76,16 +86,19 @@ class StrategyInfosController < ApplicationController
 
   # 攻略情報ページ。ロケーション（R,B,G）ボタンクリック時のAjaxアクション
   def location
-    # renderの切り替えはstrategy_infos/index_render_files/main
     @hole = Hole.find(params[:hole_id])
     @strategy_infos = StrategyInfo.where(hole_id: params[:hole_id], location_name: params[:location_name]).order(:id)
     @strategy_info = @strategy_infos.first
     # @strategy_infoがblankの時、攻略情報が存在しないview表記(_show.html.erb)
     @location_name = params[:location_name]
-    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :created_at).order(:created_at).group_by(&:shot_id)
-    @poster = User.find(@strategy_info.user_id).nickname
+    @strategy_shots = @strategy_infos.where(hole_id: params[:hole_id]).select(:id, :shot_id, :user_id, :created_at).order(:created_at).group_by(&:shot_id)
     # 攻略情報があるとき
     if @strategy_info.present?
+      # ログインユーザーが攻略情報を持っていた場合
+      if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
+        @strategy_info = user_strat
+      end
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -95,13 +108,12 @@ class StrategyInfosController < ApplicationController
     end
   end
 
-  # 攻略情報ページ。shotボタンクリック時のAjaxアクション
+  # 攻略情報ページ。shotボタンクリック&セレクトボックス変更時のAjaxアクション
   def show
-    # byebug
     @strategy_info = StrategyInfo.find(params[:id])
-    @poster = User.find(@strategy_info.user_id).nickname
     # 攻略情報があるとき
     if @strategy_info.present?
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -110,29 +122,10 @@ class StrategyInfosController < ApplicationController
       end
     end
   end
+  # 攻略情報ページここまで
 
-  # 攻略情報新規作成ページ。コース,ホールそれぞれのselectボックス変更時のAjaxアクション
-  # def form_map
-  #   location_colums = ["map_r","map_b","map_l"]
-  #   @hide_locations = location_colums - ["map_"+params[:location_name].downcase]
-  #   if params[:hole_data].blank?
-  #     course_id = params[:course_data][:course][:course_id]
-  #     @holes = Hole.where(course_id: course_id).order(:id)
-  #     @hole = @holes.first
-  #     @hole_options = @holes.order(:id).map { 
-  #       |c| [c.hole_number, c.id, data: { hole_path: form_map_golfclub_strategy_infos_path(c.golfclub_id) }]
-  #     }
-  #   else
-  #     @hole = Hole.find(params[:hole_data][:hole][:hole_id])
-  #   end
-  # end
-
+  # 登録編集ページ
   def registration_edit
-    # コースが登録されていなかったらリダイレクト
-
-
-
-    # byebug
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
@@ -177,7 +170,7 @@ class StrategyInfosController < ApplicationController
     # byebug
   end
 
-  # registration_editでのAjax
+  # 登録編集ページでのでのセレクトボックスAjax
   def switch
     @golfclub = Golfclub.find(params[:golfclub_id])
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
@@ -199,10 +192,21 @@ class StrategyInfosController < ApplicationController
     end
     @shot_id = params[:shot_id]
     # ホールのマップが登録されてなかった時の処理
+    # # byebug
+    # @map_present = @hole.map_r if params[:location_name] == "R"
+    # @map_present = @hole.map_b if params[:location_name] == "B"
+    # @map_present = @hole.map_l if params[:location_name] == "L"
+    # unless @map_present.attached?
+    #   respond_to do |format|
+    #     format.js { 
+    #       flash[:danger] = "#{@golfclub.name}の#{@courses.find(params[:course_id]).name}コース、#{@hole.hole_number}番ホール,
+    #                             ロケーション#{params[:location_name]}のマップは準備中です。しばらくお待ちください。" 
+    #     }
+    #   end
+    #   # byebug
+    #   # render "switch.js.erb" and return
+    # end
 
-    # byebug
-
-    # 
     # ここからログインユーザー登録情報の有無フラグ
     @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, 
                                         location_name: params[:location_name], shot_id: params[:shot_id]).first
@@ -234,9 +238,36 @@ class StrategyInfosController < ApplicationController
   def create
     @strategy_info = StrategyInfo.new(strategy_info_params)
     if @strategy_info.save
-      flash[:success] = "攻略情報を登録しました。"
+      @golfclub = Golfclub.find(params[:golfclub_id])
+      @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+      @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+        |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+      @course_id = @strategy_info.course_id
+      @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
+      @hole_options = @holes.map { 
+        |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+      }
+      @hole_id = @strategy_info.hole_id
+      @hole = @holes.find(@hole_id)
+      @location_name = @strategy_info.location_name
+      @shot_id = @strategy_info.shot_id
+      @new_or_edit = false
+      # 自身の写真がないときの処理
+      @photo_present = @strategy_info.photo.attached?
+      unless @photo_present
+        # [編集]ログインユーザーの登録情報写真がない場合権利者レコードを探す
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id,
+          location_name: params[:location_name],
+          shot_id: params[:shot_id]).first unless current_user.admin?
+      end
+      respond_to do |format|
+        format.js { flash.now[:success] = "攻略情報を登録しました。" }
+      end
     else
-      flash[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe
+      respond_to do |format|
+        format.js { flash.now[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe }
+      end
     end
   end
 
@@ -257,6 +288,12 @@ class StrategyInfosController < ApplicationController
   end
 
   def destroy
+    # byebug
+    # 管理者のものは管理者のみ、会員のものは管理者と会員のみ削除可能
+    # 登録編集画面ではログインユーザー自身のものしか編集策上できない
+    # 管理者の時のみ、会員の情報も操作できるようにする必要がある
+
+
     @strategy_info = StrategyInfo.find(params[:id])
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
@@ -274,6 +311,8 @@ class StrategyInfosController < ApplicationController
         @shot_id = @strategy_info.shot_id
         @location_name = @strategy_info.location_name
         @new_or_edit = true
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: @location_name,
+                                              shot_id: @shot_id).first unless current_user.admin?
         @strategy_info.photo.purge if @strategy_info.photo.attached?
         respond_to do |format|
           format.js { flash.now[:success] = "削除しました。" }
@@ -282,7 +321,7 @@ class StrategyInfosController < ApplicationController
     end
     rescue ActiveRecord::InvalidForeignKey
       respond_to do |format|
-        format.js { flash.now[:danger] = "。削除できません。" }
+        format.js { flash.now[:danger] = "削除できません。" }
       end
   end
 
