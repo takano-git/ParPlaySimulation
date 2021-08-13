@@ -1,7 +1,7 @@
 class StrategyInfosController < ApplicationController
   # destroyが動かなくなるので調査中
   # before_action :admin_user, only: %i(destroy)
-  before_action :premium_user, only: %i(index new create edit update)
+  before_action :premium_user, only: %i(index new create edit update registration_edit)
 
   def index
     @golfclub = Golfclub.find(params[:golfclub_id])
@@ -311,6 +311,8 @@ class StrategyInfosController < ApplicationController
         @shot_id = @strategy_info.shot_id
         @location_name = @strategy_info.location_name
         @new_or_edit = true
+        @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: @location_name,
+                                              shot_id: @shot_id).first unless current_user.admin?
         @strategy_info.photo.purge if @strategy_info.photo.attached?
         respond_to do |format|
           format.js { flash.now[:success] = "削除しました。" }
@@ -319,7 +321,7 @@ class StrategyInfosController < ApplicationController
     end
     rescue ActiveRecord::InvalidForeignKey
       respond_to do |format|
-        format.js { flash.now[:danger] = "。削除できません。" }
+        format.js { flash.now[:danger] = "削除できません。" }
       end
   end
 
