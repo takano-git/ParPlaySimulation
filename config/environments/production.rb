@@ -64,7 +64,7 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "Par-Play-Simulation_#{Rails.env}"
 
-  config.action_mailer.default_url_options = { protocol: 'https', host: 'obscure-oasis-47387.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'obscure-oasis-47387.herokuapp.com' }
 
   if Rails.application.credentials.gmail.present?
     mail_address = Rails.application.credentials.gmail[:address]
@@ -76,13 +76,15 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
       enable_starttls_auto: true,
       address: "smtp.gmail.com",
+      domain: 'gmail.com',
       port: 587,
       user_name: mail_address,
       password: password,
-      authentication: "plain"
+      authentication: "login"
   }
 
   config.action_mailer.perform_caching = false

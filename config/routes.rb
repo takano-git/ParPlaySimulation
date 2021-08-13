@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'about_membership_registration', to: 'homes#about_membership_registration' # 有料会員の登録方法について
   get 'about_membership_withdrawal', to: 'homes#about_membership_withdrawal' # 有料会員の退会方法について
   get 'inquiry', to: 'homes#inquiry' # お問い合わせはこちら
+  get 'faq', to: 'homes#faq' # よくある質問
 
   # ユーザー
   devise_for :users,
