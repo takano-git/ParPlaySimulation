@@ -116,3 +116,38 @@
   </div>
 
 </div>
+
+<script>
+(function () {
+  if ('<%= @strategy_info.photo_target_x.present? %>') {
+    const photo_target = document.getElementById("photo_pin_target");
+    photo_target.style.position = "absolute";
+    photo_target.style.left = (Number('<%= @strategy_info.photo_target_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    photo_target.style.top = (Number('<%= @strategy_info.photo_target_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.photo_point_x.present? %>') {
+    const photo_point = document.getElementById("photo_pin_point");
+    photo_point.style.position = "absolute";
+    photo_point.style.left = (Number('<%= @strategy_info.photo_point_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    photo_point.style.top = (Number('<%= @strategy_info.photo_point_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.map_target_x.present? %>') {
+    const map_target = document.getElementById("map_pin_target");
+    map_target.style.position = "absolute";
+    map_target.style.left = (Number('<%= @strategy_info.map_target_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    map_target.style.top = (Number('<%= @strategy_info.map_target_y %>') / Number('<%= @strategy_info.map_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.map_point_x.present? %>') {
+    const map_point = document.getElementById("map_pin_point");
+    map_point.style.position = "absolute";
+    map_point.style.left = (Number('<%= @strategy_info.map_point_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    map_point.style.top = (Number('<%= @strategy_info.map_point_y %>') / Number('<%= @strategy_info.map_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.map_shoot_x.present? %>') {
+    const map_shoot = document.getElementById("map_pin_shoot");
+    map_shoot.style.position = "absolute";
+    map_shoot.style.left = (Number('<%= @strategy_info.map_shoot_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    map_shoot.style.top = (Number('<%= @strategy_info.map_shoot_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  };
+}());
+</script>
