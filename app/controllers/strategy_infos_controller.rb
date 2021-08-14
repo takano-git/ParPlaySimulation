@@ -2,10 +2,13 @@ class StrategyInfosController < ApplicationController
   before_action :admin_or_correct_user, only: %i(destroy)
   before_action :premium_user, only: %i(index new create edit update registration_edit)
 
+  # ここから攻略情報ページ関係
   def index
     @golfclub = Golfclub.find(params[:golfclub_id])
     @golfclub_id = @golfclub.id
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
+    # 1対多で良く用いられるようにコース取得時にホールも紐づけた方が良いのかもしれない。
+    # Course.where(golfclub_id: params[:golfclub_id]).order(:id).includes(:holes)
     @course_id = @courses.first.id
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
     @hole = @holes.first
@@ -126,7 +129,8 @@ class StrategyInfosController < ApplicationController
   end
   # 攻略情報ページここまで
 
-  # 登録編集ページ
+
+  # ここから登録編集ページ関係
   def registration_edit
     @golfclub = Golfclub.find(params[:golfclub_id])
     @area = Area.find(@golfclub.area_id)
@@ -301,6 +305,8 @@ class StrategyInfosController < ApplicationController
         format.js { flash.now[:danger] = "削除できません。" }
       end
   end
+  # 登録編集ページここまで
+
 
   private
 
