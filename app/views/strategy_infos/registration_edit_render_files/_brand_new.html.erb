@@ -61,11 +61,11 @@
     <div id="strategy_map" class="">
       <div id="map_area">
         <% if @location_name.blank? || @location_name == "R" %>
-          <% if @hole.map_r.attached?%>
+          <% if @hole.map_r.attached? %>
             <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map" %>
           <% else %>
             <div class="map_none">
-              <p>マップ情報がありません</p>
+              <p>マップ情報がありません。<br>しばらくお待ちください。</p>
               <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid" %>
             </div>
           <% end %>

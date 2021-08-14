@@ -1,11 +1,9 @@
 
-// console.log("イベント前");
 // $(親要素).on('change', '子要素' )...
 jQuery(document).bind('turbolinks:load ajaxComplete', function() {
-  const course_first = $('select#course_id').val();
-  console.log(course_first);
+
   $('#course_id, #hole_id, #shot_id, #location_name').change(function() {
-    // console.log("イベント発火！！")
+    const course_first = $('select#course_id').val();
     let switchPath = $('select#course_id').find('option:selected').data().childrenPath;
     let course_id = $('select#course_id').val();
     let hole_id = $('select#hole_id').val();
