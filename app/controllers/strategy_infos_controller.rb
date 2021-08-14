@@ -157,7 +157,7 @@ class StrategyInfosController < ApplicationController
       @hole_id = params[:hole_id]
       # ここからログインユーザー登録情報の有無フラグ
       @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, location_name: params[:location_name],
-                                                shot_id: params[:shot_id]).first
+                                          shot_id: params[:shot_id]).first
       @new_or_edit = @strategy_info.blank?
       # ログインユーザー登録情報がない場合とphotoの登録がない場合権利者のものを探す
       if @new_or_edit || !@strategy_info.photo.attached?
