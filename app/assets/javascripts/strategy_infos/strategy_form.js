@@ -1,7 +1,6 @@
 $(document).bind('turbolinks:load ajaxComplete', function() {
 
   // ここからピンの移動
-
   // 
   // map
   const map_pin_target = document.getElementById("map_pin_target");
@@ -27,12 +26,18 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     let map_rect = map.getBoundingClientRect();
     let map_target_x = (x - map_rect.left)-width/2-4;
     let map_target_y = (y - map_rect.top)-height/2-4;
-    // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
-    map_pin_target.style.left = map_target_x + "px";
-    map_pin_target.style.top = map_target_y + "px";
-    // const
+    // 値をhiddenのvalueに入れる
+    // map_pin_target.style.left = map_target_x + "px";
+    // map_pin_target.style.top = map_target_y + "px";
+    map_pin_target.style.left = (map_target_x/map.offsetWidth)*100 + "%";
+    map_pin_target.style.top = (map_target_y/map.offsetHeight)*100 + "%";
+    // hidden_fieldのvalue書き換え
+    // ピン座標の書き換え
     document.getElementById('map_target_x').value = map_target_x;
     document.getElementById('map_target_y').value = map_target_y;
+    // mapサイズの書き換え
+    document.getElementById('map_size_x').value = map.offsetWidth;
+    document.getElementById('map_size_y').value = map.offsetHeight;
     }
     // マウスが離れたとき
     map_pin_target.onmouseup = function(event){
@@ -66,13 +71,18 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       let map_point_rect = map.getBoundingClientRect();
       let map_point_x = (x - map_point_rect.left)-width/2-4;
       let map_point_y = (y - map_point_rect.top)-height/2-4;
-      // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
-      map_pin_point.style.left = map_point_x + "px";
-      map_pin_point.style.top = map_point_y + "px";
-      // const
+      // 値をhiddenのvalueに入れる
+      // map_pin_point.style.left = map_point_x + "px";
+      // map_pin_point.style.top = map_point_y + "px";
+      map_pin_point.style.left = (map_point_x/map.offsetWidth)*100 + "%";
+      map_pin_point.style.top = (map_point_y/map.offsetHeight)*100 + "%";
+      // hidden_fieldのvalue書き換え
+      // ピン座標の書き換え
       document.getElementById('map_point_x').value = map_point_x;
       document.getElementById('map_point_y').value = map_point_y;
-      // console.log("map要素から見たpin座標(x, y) = (" + map_point_x + "," + map_point_y + ")");
+      // mapサイズの書き換え
+      document.getElementById('map_size_x').value = map.offsetWidth;
+      document.getElementById('map_size_y').value = map.offsetHeight;
     }
     // let map_pin_point = document.getElementById("map_pin_point");
     map_pin_point.onmousedown = function(event){
@@ -103,14 +113,16 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       let map_shoot_rect = map.getBoundingClientRect();
       let map_shoot_x = (x - map_shoot_rect.left)-width/2-4;
       let map_shoot_y = (y - map_shoot_rect.top)-height/2-4;
-      // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
-      map_pin_shoot.style.left = map_shoot_x + "px";
-      map_pin_shoot.style.top = map_shoot_y + "px";
-      // const
+      // 値をhiddenのvalueに入れる
+      // map_pin_shoot.style.left = map_shoot_x + "px";
+      // map_pin_shoot.style.top = map_shoot_y + "px";
+      map_pin_shoot.style.left = (map_shoot_x/map.offsetWidth)*100 + "%";
+      map_pin_shoot.style.top = (map_shoot_y/map.offsetHeight)*100 + "%";
+      // hidden_fieldのvalue書き換え
+      // ピン座標の書き換え
       document.getElementById('map_shoot_x').value = map_shoot_x;
       document.getElementById('map_shoot_y').value = map_shoot_y;
-      
-      // photoサイズの書き換え
+      // mapサイズの書き換え
       document.getElementById('map_size_x').value = map.offsetWidth;
       document.getElementById('map_size_y').value = map.offsetHeight;
     }
@@ -203,7 +215,7 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       let photo_point_rect = photo.getBoundingClientRect();
       let photo_point_x = (x - photo_point_rect.left)-width/2-2;
       let photo_point_y = (y - photo_point_rect.top)-height/2-3;
-      // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
+      // 値をhiddenのvalueに入れる
       // photo_pin_point.style.left = photo_point_x + "px";
       // photo_pin_point.style.top = photo_point_y + "px";
       photo_pin_point.style.left = (photo_point_x/photo.offsetWidth)*100 + "%";
