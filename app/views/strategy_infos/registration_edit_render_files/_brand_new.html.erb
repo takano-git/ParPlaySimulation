@@ -32,20 +32,20 @@
       <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %>
       <%= f.text_area :comment, placeholder: "コメント入力(200文字以内で入力してください。)", class: "form-control" %>
       <%# photoピン座標 %>
-      <%= f.hidden_field :photo_target_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_target_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_point_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :photo_point_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :photo_target_x, value: "0", id: "photo_target_x", class: "form-control" %>
+      <%= f.hidden_field :photo_target_y, value: "0", id: "photo_target_y", class: "form-control" %>
+      <%= f.hidden_field :photo_point_x, value: "0", id: "photo_point_x", class: "form-control" %>
+      <%= f.hidden_field :photo_point_y, value: "0", id: "photo_point_y", class: "form-control" %>
       <%# photoサイズ %>
       <%= f.hidden_field :photo_size_x, value: "0", id: 'photo_size_x', class: "form-control" %>
       <%= f.hidden_field :photo_size_y, value: "0", id: 'photo_size_y', class: "form-control" %>
       <%# mapピン座標 %>
-      <%= f.hidden_field :map_target_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_target_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_point_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_point_y, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_shoot_x, value: "0", class: "form-control" %>
-      <%= f.hidden_field :map_shoot_y, value: "0", class: "form-control" %>
+      <%= f.hidden_field :map_target_x, value: "0", id: "map_target_x", class: "form-control" %>
+      <%= f.hidden_field :map_target_y, value: "0", id: "map_target_y", class: "form-control" %>
+      <%= f.hidden_field :map_point_x, value: "0", id: "map_point_x", class: "form-control" %>
+      <%= f.hidden_field :map_point_y, value: "0", id: "map_point_y", class: "form-control" %>
+      <%= f.hidden_field :map_shoot_x, value: "0", id: "map_shoot_x", class: "form-control" %>
+      <%= f.hidden_field :map_shoot_y, value: "0", id: "map_shoot_y", class: "form-control" %>
       <%# mapサイズ %>
       <%= f.hidden_field :map_size_x, value: "0", id: 'map_size_x', class: "form-control" %>
       <%= f.hidden_field :map_size_y, value: "0", id: 'map_size_y', class: "form-control" %>

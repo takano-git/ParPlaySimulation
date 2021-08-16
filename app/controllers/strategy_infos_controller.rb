@@ -7,8 +7,6 @@ class StrategyInfosController < ApplicationController
     @golfclub = Golfclub.find(params[:golfclub_id])
     @golfclub_id = @golfclub.id
     @courses = Course.where(golfclub_id: params[:golfclub_id]).order(:id)
-    # 1対多で良く用いられるようにコース取得時にホールも紐づけた方が良いのかもしれない。
-    # Course.where(golfclub_id: params[:golfclub_id]).order(:id).includes(:holes)
     @course_id = @courses.first.id
     @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @courses.first.id).order(:id)
     @hole = @holes.first
@@ -16,7 +14,7 @@ class StrategyInfosController < ApplicationController
                                   .order(:course_id, :hole_id, :shot_id, :created_at)
     @strategy_info = @strategy_infos.first
     @location_name = "R"
-    @strategy_shots = @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).group_by(&:shot_id)
+    @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).group_by(&:shot_id)
     # ログインユーザーのshots
     @user_shots = @strategy_infos.where(user_id: current_user.id)
     # 攻略情報があるとき

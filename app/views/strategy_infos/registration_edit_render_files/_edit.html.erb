@@ -35,20 +35,20 @@
       <%= f.text_area :comment, value: @strategy_info.comment, placeholder: "コメント入力(200文字以内で入力してください。)", class: "form-control" %>
       <div class="coordinate">
         <%# photoピン座標 %>
-        <%= f.hidden_field :photo_target_x, value: @strategy_info.photo_target_x, class: "form-control" %>
-        <%= f.hidden_field :photo_target_y, value: @strategy_info.photo_target_y, class: "form-control" %>
-        <%= f.hidden_field :photo_point_x, value: @strategy_info.photo_point_x, class: "form-control" %>
-        <%= f.hidden_field :photo_point_y, value: @strategy_info.photo_point_y, class: "form-control" %>
+        <%= f.hidden_field :photo_target_x, value: @strategy_info.photo_target_x, id: "photo_target_x", class: "form-control" %>
+        <%= f.hidden_field :photo_target_y, value: @strategy_info.photo_target_y, id: "photo_target_y", class: "form-control" %>
+        <%= f.hidden_field :photo_point_x, value: @strategy_info.photo_point_x, id: "photo_point_x", class: "form-control" %>
+        <%= f.hidden_field :photo_point_y, value: @strategy_info.photo_point_y, id: "photo_point_y", class: "form-control" %>
         <%# photoサイズ %>
         <%= f.hidden_field :photo_size_x, value: @strategy_info.photo_size_x, id: 'photo_size_x', class: "form-control" %>
         <%= f.hidden_field :photo_size_y, value: @strategy_info.photo_size_y, id: 'photo_size_y', class: "form-control" %>
         <%# mapピン座標 %>
-        <%= f.hidden_field :map_target_x, value: @strategy_info.map_target_x, class: "form-control" %>
-        <%= f.hidden_field :map_target_y, value: @strategy_info.map_target_y, class: "form-control" %>
-        <%= f.hidden_field :map_point_x, value: @strategy_info.map_point_x, class: "form-control" %>
-        <%= f.hidden_field :map_point_y, value: @strategy_info.map_point_y, class: "form-control" %>
-        <%= f.hidden_field :map_shoot_x, value: @strategy_info.map_shoot_x, class: "form-control" %>
-        <%= f.hidden_field :map_shoot_y, value: @strategy_info.map_shoot_y, class: "form-control" %>
+        <%= f.hidden_field :map_target_x, value: @strategy_info.map_target_x, id: "map_target_x", class: "form-control" %>
+        <%= f.hidden_field :map_target_y, value: @strategy_info.map_target_y, id: "map_target_y", class: "form-control" %>
+        <%= f.hidden_field :map_point_x, value: @strategy_info.map_point_x, id: "map_point_x", class: "form-control" %>
+        <%= f.hidden_field :map_point_y, value: @strategy_info.map_point_y, id: "map_point_y", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_x, value: @strategy_info.map_shoot_x, id: "map_shoot_x", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_y, value: @strategy_info.map_shoot_y, id: "map_shoot_y", class: "form-control" %>
         <%# mapサイズ %>
         <%= f.hidden_field :map_size_x, value: @strategy_info.map_size_x, id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: @strategy_info.map_size_y, id: 'map_size_y', class: "form-control" %>
