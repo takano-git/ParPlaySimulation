@@ -54,8 +54,8 @@
         <%= f.hidden_field :map_size_y, value: @strategy_info.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
       <div class="strategy_update-destroy">
-        <div class="strategy_update-destroy_btn_left">
-          <%= f.submit "攻略情報更新", class: "btn btn-brand btn-block" %>
+        <div id="strategy_submmit_btn" class="strategy_update-destroy_btn_left">
+          <%= f.submit "攻略情報更新", id: "", class: "btn btn-brand btn-block" %>
         </div>
         <div class="strategy_update-destroy_btn_right">
           <% if @strategy_info.present? && (@strategy_info.user_id == current_user.id || current_user.admin?) %>

@@ -163,16 +163,16 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       } else {
         photo = document.querySelector('#photo_selected');
       }
-      let photo_target_rect = photo.getBoundingClientRect();
-      let photo_target_x = (x - photo_target_rect.left)-width/2-2;
-      let photo_target_y = (y - photo_target_rect.top)-height/2-3;
+      let photo_rect = photo.getBoundingClientRect();
+      let photo_target_x = (x - photo_rect.left)-width/2-2;
+      let photo_target_y = (y - photo_rect.top)-height/2-3;
       // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
       // photo_pin_target.style.left = photo_target_x + "px";
       // photo_pin_target.style.top = photo_target_y + "px";
       photo_pin_target.style.left = (photo_target_x/photo.offsetWidth)*100 + "%";
       photo_pin_target.style.top = (photo_target_y/photo.offsetHeight)*100 + "%";
       // hidden_fieldのvalue書き換え
-      // ピン座標の書き換え
+      // targetピン座標の書き換え
       document.getElementById('photo_target_x').value = photo_target_x;
       document.getElementById('photo_target_y').value = photo_target_y;
       // photoサイズの書き換え

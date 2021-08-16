@@ -49,7 +49,7 @@
         <%= f.hidden_field :map_size_x, value: @strategy_info_admin.map_size_x, id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: @strategy_info_admin.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
-      <%= f.submit "攻略情報登録", class: "btn btn-brand btn-block" %>
+      <%= f.submit "攻略情報登録", id: "strategy_submmit_btn", class: "btn btn-brand btn-block" %>
     <% end %>
     
   </div>
