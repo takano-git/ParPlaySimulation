@@ -23,10 +23,10 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     // photoのピン
     const photo_pin_target = document.getElementById('photo_pin_target').getBoundingClientRect();
     const photo_pin_point = document.getElementById('photo_pin_point').getBoundingClientRect();
-    let photo_pin_target_x = photo_pin_target.top;
-    let photo_pin_target_y = photo_pin_target.left;
-    let photo_pin_point_x = photo_pin_point.top;
-    let photo_pin_point_y = photo_pin_point.left;
+    let photo_pin_target_x = photo_pin_target.left;
+    let photo_pin_target_y = photo_pin_target.top;
+    let photo_pin_point_x = photo_pin_point.left;
+    let photo_pin_point_y = photo_pin_point.top;
     // photo取得
     let prev_display = document.getElementById('photo_prev');
     let prev_display_css = getComputedStyle(prev_display).display;
@@ -48,12 +48,12 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     const map_pin_target = document.getElementById('map_pin_target').getBoundingClientRect();
     const map_pin_point = document.getElementById('map_pin_point').getBoundingClientRect();
     const map_pin_shoot = document.getElementById('map_pin_shoot').getBoundingClientRect();
-    let map_pin_target_x = map_pin_target.top;
-    let map_pin_target_y = map_pin_target.left;
-    let map_pin_point_x = map_pin_point.top;
-    let map_pin_point_y = map_pin_point.left;
-    let map_pin_shoot_x = map_pin_shoot.top;
-    let map_pin_shoot_y = map_pin_shoot.left;
+    let map_pin_target_x = map_pin_target.left;
+    let map_pin_target_y = map_pin_target.top;
+    let map_pin_point_x = map_pin_point.left;
+    let map_pin_point_y = map_pin_point.top;
+    let map_pin_shoot_x = map_pin_shoot.left;
+    let map_pin_shoot_y = map_pin_shoot.top;
     // map取得
     let map = document.querySelector('.regedit_map');
     let map_rect = map.getBoundingClientRect();
