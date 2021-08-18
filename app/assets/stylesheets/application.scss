@@ -406,3 +406,13 @@ button.bg-brand:focus {
 a.text-brand:hover, a.text-brand:focus {
   color: $brand_t2 !important;
 }
+
+.fas-strategy-btn {
+  color: #224444;
+  text-decoration: none;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  &:hover {
+    text-decoration: none;
+  }
+}

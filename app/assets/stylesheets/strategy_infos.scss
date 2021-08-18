@@ -135,9 +135,9 @@ $brand_t1: #224444;
   border-radius: 5px;
 }
 
-// .strategy_main_center {
-//   // margin-right: -50px;
-// }
+.strategy_main_center {
+  // margin-right: -50px;
+}
 
 #show {
   margin-right: 20px;
@@ -181,7 +181,7 @@ $brand_t1: #224444;
   box-shadow: 0 2px 3px 0 #ddd;
   font-size: 100%;
   padding: 2px;
-  // margin-right: 150px;
+  max-width: 700px;
 }
 
 
@@ -193,7 +193,9 @@ $brand_t1: #224444;
 // shot_bar
 .shot_bar {
   display: flex;
+  flex-wrap: wrap;
   padding: 0.38em;
+  margin: 0;
 }
 .shot_btns {
   display: flex;
@@ -210,6 +212,41 @@ $brand_t1: #224444;
     color: white;
   }
 }
+
+@media (max-width: 998px) {
+  /* 横幅が998px以下の場合に適用するスタイル */
+  .strategy_footer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: column;
+    margin: 0;
+   }
+}
+@media (min-width: 999px) {
+  /* 横幅が998px以上の場合に適用するスタイル */
+  .strategy_footer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+   }
+}
+
+.representative {
+  display: flex;
+ }
+
+.shot_select, option{
+ /* background: #224444;
+ color: white; */
+ color: #224444;
+ margin: 0;
+ padding: 2.8px 0.5px;
+}
+
+#poster {
+  margin-left: 10px;
+}
+
 // -----------------------------
 // 攻略情報新規作成、更新ページ
 // .create_strategy_info {

@@ -1,3 +1,7 @@
+<% if @new_or_edit == false %>
+  $("#registration_edit_renders").html("<%= j(render 'strategy_infos/registration_edit_render_files/edit') %>");
+<% end %>
+
 <% flash.each do |msg_type, msg| %>
   $('#flash_messages').html('<a href="#" class="close" data-dismiss="alert">×</a><%= msg %>');
   $('#flash_messages').addClass('alert alert-<%= msg_type %>');

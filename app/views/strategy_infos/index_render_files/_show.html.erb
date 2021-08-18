@@ -29,8 +29,6 @@
     </div>
   </div>
   <div class="strategy_main_center_comment mt-2">
-    <% if @strategy_info.present? %>
-      <%= @strategy_info.comment %>
-    <% end %>
+    <%= @strategy_info.comment if @strategy_info.present? %>
   </div>
 <% end %>
