@@ -11,3 +11,507 @@
 $(function(){
   setTimeout("$('.alert').fadeOut('slow')", 5000);
 });
+
+<%#  %>
+<%# select_ajax %>
+(function () {
+  const course_first = $('select#course_id').val();
+  $('#course_id, #hole_id, #shot_id, #location_name').change(function() {
+    let switchPath = $('select#course_id').find('option:selected').data().childrenPath;
+    let course_id = $('select#course_id').val();
+    let hole_id = $('select#hole_id').val();
+    let shot_id = $('select#shot_id').val();
+    let location_name = $('select#location_name').val();
+    
+    $.ajax({
+      url: switchPath,
+      type: "GET",
+      data: {
+        course_first: course_first,
+        course_id: course_id,
+        hole_id: hole_id,
+        shot_id: shot_id,
+        location_name: location_name,
+      },
+    });
+  });
+}());
+
+<%# preview %>
+(function () {
+  const photo_prev_src = document.getElementById('photo_prev').getAttribute('src');
+  $('#admin_photo').val(photo_prev_src);
+  const photo_area = $('#photo_area');
+    
+  $("#f_strategy_photo").on('change', function(){
+    const fileprop = $(this).prop('files')[0];
+    //  find_img 画像表示部分
+    const find_img = $("#photo_selected");
+    const fileRdr = new FileReader();
+    const btn_Wrapp = $(".upload-btn-wrapper");
+    btn_Wrapp.hide();
+    // find_imgがあればimgを消去
+    if(find_img.length) {
+      find_img.remove();
+    }
+    const img = '<img id="photo_selected", class="strategy_img strategy_photo">'
+    // .propメソッド―選択地取得('files'（ファイル名）取得)
+    //　filepropがない場合、@strategy_info_admin.photo表示
+    if( $("#f_strategy_photo").prop('files')[0] === undefined ){
+      $('#photo_prev').show();
+      btn_Wrapp.show();
+    } else {
+      $('#photo_prev').hide();
+      photo_area.append(img);
+      fileRdr.onload = function() {
+        photo_area.find('#photo_selected').attr('src', fileRdr.result);
+      }
+      fileRdr.readAsDataURL(fileprop);
+    };
+    // 画像サイズ取得
+    let photo_size_x = document.getElementById('photo_area').clientWidth;
+    let photo_size_y = document.getElementById('photo_area').clientHeight;
+    document.getElementById('photo_size_x').value = photo_size_x;
+    document.getElementById('photo_size_y').value = photo_size_y;
+    
+  });
+}());
+
+<%# ピンの移動 %>
+(function () {
+  // ここからピンの移動
+  // 
+  // map
+  const map_pin_target = document.getElementById("map_pin_target");
+  const map_pin_point = document.getElementById("map_pin_point");
+  const map_pin_shoot = document.getElementById("map_pin_shoot");
+  // 1.map_target_pin
+  //ドラッグ時の内容
+  (function () {
+    const pinMove = function onMouseMove(event){
+      // let pin = document.getElementById("pin");
+      map_pin_target.style.position = "absolute";
+      map_pin_target.ondragstart = function(e){
+      return false;
+    }
+    // pin要素、対windowのx,y座標
+    let x = event.clientX;
+    let y = event.clientY;
+    // pin要素自身のx,y座標
+    let width = map_pin_target.offsetWidth;
+    let height = map_pin_target.offsetHeight;
+    // map取得
+    let map = document.querySelector('.regedit_map');
+    let map_rect = map.getBoundingClientRect();
+    let map_target_x = (x - map_rect.left)-width/2-4;
+    let map_target_y = (y - map_rect.top)-height/2-4;
+    // 値をhiddenのvalueに入れる
+    // map_pin_target.style.left = map_target_x + "px";
+    // map_pin_target.style.top = map_target_y + "px";
+    map_pin_target.style.left = (map_target_x/map.offsetWidth)*100 + "%";
+    map_pin_target.style.top = (map_target_y/map.offsetHeight)*100 + "%";
+    // hidden_fieldのvalue書き換え
+    // ピン座標の書き換え
+    document.getElementById('map_target_x').value = map_target_x;
+    document.getElementById('map_target_y').value = map_target_y;
+    // mapサイズの書き換え
+    document.getElementById('map_size_x').value = map.offsetWidth;
+    document.getElementById('map_size_y').value = map.offsetHeight;
+    }
+    // マウスが離れたとき
+    map_pin_target.onmouseup = function(event){
+      // console.log("離れたぞ！");
+      document.removeEventListener("mousemove",pinMove, true);
+      // document.getElementById("pin").ondragleave = null;
+    }
+    //ピン上でマウスが押下されたとき　
+    map_pin_target.onmousedown = function(event){
+      document.addEventListener("mousemove", pinMove, true)
+    }
+  }());
+  
+  
+  // 2.regedit_map_pin_point
+  (function () {
+    const MapPinPointMove = function onMouseMove(event){
+      // let map_pin_point = document.getElementById("map_pin_point");
+      map_pin_point.style.position = "absolute";
+      map_pin_point.ondragstart = function(e){
+        return false;
+      }
+      // map_pin_point要素、対windowのx,y座標
+      let x = event.clientX;
+      let y = event.clientY;
+      // map_pin_point要素自身のx,y座標
+      let width = map_pin_point.offsetWidth;
+      let height = map_pin_point.offsetHeight;
+      // map取得
+      let map = document.querySelector('.regedit_map');
+      let map_point_rect = map.getBoundingClientRect();
+      let map_point_x = (x - map_point_rect.left)-width/2-4;
+      let map_point_y = (y - map_point_rect.top)-height/2-4;
+      // 値をhiddenのvalueに入れる
+      // map_pin_point.style.left = map_point_x + "px";
+      // map_pin_point.style.top = map_point_y + "px";
+      map_pin_point.style.left = (map_point_x/map.offsetWidth)*100 + "%";
+      map_pin_point.style.top = (map_point_y/map.offsetHeight)*100 + "%";
+      // hidden_fieldのvalue書き換え
+      // ピン座標の書き換え
+      document.getElementById('map_point_x').value = map_point_x;
+      document.getElementById('map_point_y').value = map_point_y;
+      // mapサイズの書き換え
+      document.getElementById('map_size_x').value = map.offsetWidth;
+      document.getElementById('map_size_y').value = map.offsetHeight;
+    }
+    // let map_pin_point = document.getElementById("map_pin_point");
+    map_pin_point.onmousedown = function(event){
+      document.addEventListener("mousemove", MapPinPointMove, true)
+    }
+    map_pin_point.onmouseup = function(event){
+      document.removeEventListener("mousemove",MapPinPointMove, true);
+    }
+  }());
+  
+  // 3.regedit_map_pin_shoot
+  // shoot_pin
+  (function () {
+    const MapPinShootMove = function onMouseMove(event){
+      // let map_pin_shoot = document.getElementById("map_pin_shoot");
+      map_pin_shoot.style.position = "absolute";
+      map_pin_shoot.ondragstart = function(e){
+        return false;
+      }
+      // map_pin_shoot要素、対windowのx,y座標
+      let x = event.clientX;
+      let y = event.clientY;
+      // map_pin_shoot要素自身のx,y座標
+      let width = map_pin_shoot.offsetWidth;
+      let height = map_pin_shoot.offsetHeight;
+      // map取得
+      let map = document.querySelector('.regedit_map');
+      let map_shoot_rect = map.getBoundingClientRect();
+      let map_shoot_x = (x - map_shoot_rect.left)-width/2-4;
+      let map_shoot_y = (y - map_shoot_rect.top)-height/2-4;
+      // 値をhiddenのvalueに入れる
+      // map_pin_shoot.style.left = map_shoot_x + "px";
+      // map_pin_shoot.style.top = map_shoot_y + "px";
+      map_pin_shoot.style.left = (map_shoot_x/map.offsetWidth)*100 + "%";
+      map_pin_shoot.style.top = (map_shoot_y/map.offsetHeight)*100 + "%";
+      // hidden_fieldのvalue書き換え
+      // ピン座標の書き換え
+      document.getElementById('map_shoot_x').value = map_shoot_x;
+      document.getElementById('map_shoot_y').value = map_shoot_y;
+      // mapサイズの書き換え
+      document.getElementById('map_size_x').value = map.offsetWidth;
+      document.getElementById('map_size_y').value = map.offsetHeight;
+    }
+    // let map_pin_shoot = document.getElementById("map_pin_shoot");
+    map_pin_shoot.onmousedown = function(event){
+      document.addEventListener("mousemove", MapPinShootMove, true)
+    }
+    map_pin_shoot.onmouseup = function(event){
+      document.removeEventListener("mousemove",MapPinShootMove, true);
+    }
+  }());
+  
+  
+  // 
+  // photo
+  // 4.photo_pin_target
+  (function () {
+    let photo_pin_target = document.getElementById("photo_pin_target");
+    const PhotoPinTargetMove = function onMouseMove(event){
+      photo_pin_target.style.position = "absolute";
+      photo_pin_target.ondragstart = function(e){
+        return false;
+      }
+      // photo_pin_target要素、対windowのx,
+      let x = event.clientX;
+      let y = event.clientY;
+      // photo_pin_target要素自身のx,y座標
+      let width = photo_pin_target.offsetWidth;
+      let height = photo_pin_target.offsetHeight;
+      // photo取得
+      let prev_display = document.getElementById('photo_prev');
+      let prev_display_css = getComputedStyle(prev_display).display;
+      // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+      let photo = ""
+      if (prev_display_css !== "none"){
+        photo = document.querySelector('#photo_prev');
+      } else {
+        photo = document.querySelector('#photo_selected');
+      }
+      let photo_target_rect = photo.getBoundingClientRect();
+      let photo_target_x = (x - photo_target_rect.left)-width/2-2;
+      let photo_target_y = (y - photo_target_rect.top)-height/2-3;
+      // ty-height/2-2とtx+width/2-6の値をhiddenのvalueに入れる
+      // photo_pin_target.style.left = photo_target_x + "px";
+      // photo_pin_target.style.top = photo_target_y + "px";
+      photo_pin_target.style.left = (photo_target_x/photo.offsetWidth)*100 + "%";
+      photo_pin_target.style.top = (photo_target_y/photo.offsetHeight)*100 + "%";
+      // hidden_fieldのvalue書き換え
+      // ピン座標の書き換え
+      document.getElementById('photo_target_x').value = photo_target_x;
+      document.getElementById('photo_target_y').value = photo_target_y;
+      // photoサイズの書き換え
+      document.getElementById('photo_size_x').value = photo.offsetWidth;
+      document.getElementById('photo_size_y').value = photo.offsetHeight;
+    }
+    photo_pin_target.onmousedown = function(event){
+      document.addEventListener("mousemove", PhotoPinTargetMove, true)
+    }
+    photo_pin_target.onmouseup = function(event){
+      document.removeEventListener("mousemove",PhotoPinTargetMove, true);
+    }
+  }());
+  
+  // 5.photo_pin_point
+  (function () {
+    let photo_pin_point = document.getElementById("photo_pin_point");
+    const PhotoPinPointMove = function onMouseMove(event){
+      photo_pin_point.style.position = "absolute";
+      photo_pin_point.ondragstart = function(e){
+        return false;
+      }
+      // photo_pin_point要素、対windowのx,y座標
+      let x = event.clientX;
+      let y = event.clientY;
+      // photo_pin_point要素自身のx,y座標
+      let width = photo_pin_point.offsetWidth;
+      let height = photo_pin_point.offsetHeight;
+      // photo取得
+      let prev_display = document.getElementById('photo_prev');
+      let prev_display_css = getComputedStyle(prev_display).display;
+        // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+      let photo = ""
+      if (prev_display_css !== "none"){
+        photo = document.querySelector('#photo_prev');
+      } else {
+        photo = document.querySelector('#photo_selected');
+      }
+      
+      let photo_point_rect = photo.getBoundingClientRect();
+      let photo_point_x = (x - photo_point_rect.left)-width/2-2;
+      let photo_point_y = (y - photo_point_rect.top)-height/2-3;
+      // 値をhiddenのvalueに入れる
+      // photo_pin_point.style.left = photo_point_x + "px";
+      // photo_pin_point.style.top = photo_point_y + "px";
+      photo_pin_point.style.left = (photo_point_x/photo.offsetWidth)*100 + "%";
+      photo_pin_point.style.top = (photo_point_y/photo.offsetHeight)*100 + "%";
+      // hidden_fieldのvalue書き換え
+      // ピン座標の書き換え
+      document.getElementById('photo_point_x').value = photo_point_x;
+      document.getElementById('photo_point_y').value = photo_point_y;
+      // photoサイズの書き換え
+      document.getElementById('photo_size_x').value = photo.offsetWidth;
+      document.getElementById('photo_size_y').value = photo.offsetHeight;
+    }
+    photo_pin_point.onmousedown = function(event){
+      document.addEventListener("mousemove", PhotoPinPointMove, true)
+    }
+    photo_pin_point.onmouseup = function(event){
+      document.removeEventListener("mousemove",PhotoPinPointMove, true);
+    }
+  }());
+}());
+
+<%# resize %>
+(function () {
+  <%# // window変更時のphoto_size,map_size取得 %>
+  window.addEventListener( 'resize', function() {
+    <%# // photoサイズ(ap(after_photo),bp(before_photo))
+    // offsetXやclientWidthでは小数点以下が切られる %>
+    const ap_size_x = document.getElementById('photo_area').getBoundingClientRect().width;
+    const ap_size_y = document.getElementById('photo_area').getBoundingClientRect().height;
+    const bp_size_x = document.getElementById('photo_size_x');
+    const bp_size_y = document.getElementById('photo_size_y');
+    <%# // mapサイズ %>
+    const am_size_x = document.getElementById('strategy_map').getBoundingClientRect().width;
+    const am_size_y = document.getElementById('strategy_map').getBoundingClientRect().height;
+    const bm_size_x = document.getElementById('map_size_x');
+    const bm_size_y = document.getElementById('map_size_y');
+
+    // photoのピン
+    const photo_pin_target = document.getElementById('photo_pin_target').getBoundingClientRect();
+    const photo_pin_point = document.getElementById('photo_pin_point').getBoundingClientRect();
+    let photo_pin_target_x = photo_pin_target.left;
+    let photo_pin_target_y = photo_pin_target.top;
+    let photo_pin_point_x = photo_pin_point.left;
+    let photo_pin_point_y = photo_pin_point.top;
+    // photo取得
+    let prev_display = document.getElementById('photo_prev');
+    let prev_display_css = getComputedStyle(prev_display).display;
+    // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+    let photo = ""
+    if (prev_display_css !== "none"){
+      photo = document.querySelector('#photo_prev');
+    } else {
+      photo = document.querySelector('#photo_selected');
+    }
+    let photo_rect = photo.getBoundingClientRect();
+    document.getElementById('photo_target_x').value = photo_pin_target_x - photo_rect.left;
+    document.getElementById('photo_target_y').value = photo_pin_target_y - photo_rect.top;
+    document.getElementById('photo_point_x').value = photo_pin_point_x - photo_rect.left;
+    document.getElementById('photo_point_y').value = photo_pin_point_y - photo_rect.top;
+
+
+    // mapのピン
+    const map_pin_target = document.getElementById('map_pin_target').getBoundingClientRect();
+    const map_pin_point = document.getElementById('map_pin_point').getBoundingClientRect();
+    const map_pin_shoot = document.getElementById('map_pin_shoot').getBoundingClientRect();
+    let map_pin_target_x = map_pin_target.left;
+    let map_pin_target_y = map_pin_target.top;
+    let map_pin_point_x = map_pin_point.left;
+    let map_pin_point_y = map_pin_point.top;
+    let map_pin_shoot_x = map_pin_shoot.left;
+    let map_pin_shoot_y = map_pin_shoot.top;
+    // map取得
+    let map = document.querySelector('.regedit_map');
+    let map_rect = map.getBoundingClientRect();
+    document.getElementById('map_target_x').value = map_pin_target_x - map_rect.left;
+    document.getElementById('map_target_y').value = map_pin_target_y - map_rect.top;
+    document.getElementById('map_point_x').value = map_pin_point_x - map_rect.left;
+    document.getElementById('map_point_y').value = map_pin_point_y - map_rect.top;
+    document.getElementById('map_shoot_x').value = map_pin_shoot_x - map_rect.left;
+    document.getElementById('map_shoot_y').value = map_pin_shoot_y - map_rect.top;
+    
+
+    <%# // 写真、マップ画像サイズのhidden_fieldのvalue書き換え %>
+    bp_size_x.value = ap_size_x;
+    bp_size_y.value = ap_size_y;
+    bm_size_x.value = am_size_x;
+    bm_size_y.value = am_size_y;
+    
+  }, false );
+}());
+
+
+<%# pin_resize %>
+(function () {
+  // 置換の対象とするclass属性。
+  const $elem = $('.js-image-switch');
+  // 置換の対象とするsrc属性の末尾の文字列。
+  const sp = '_sp.';
+  const pc = '_pc.';
+  const lpc = '_lpc.';
+  // 画像を切り替えるウィンドウサイズ。
+  const replaceWidth = 765;
+  const replaceWidthLpc = 991;
+
+  function imageSwitch() {
+    // ウィンドウサイズを取得する。
+    let windowWidth = parseInt(window.innerWidth);
+
+    // ページ内にあるすべての`.js-image-switch`に適応される。
+    $elem.each(function() {
+      let $this = $(this);
+      // ウィンドウサイズが991px以上であれば_pcを_lpcに置換する。
+      if(windowWidth >= replaceWidthLpc) {
+        $this.attr('src', $this.attr('src').replace(pc, lpc));
+        $this.attr('src', $this.attr('src').replace(sp, lpc));
+        // ウィンドウサイズが765px以上であれば_spを_pcに置換する。
+      }else if(windowWidth >= replaceWidth) {
+        $this.attr('src', $this.attr('src').replace(lpc, pc));
+        $this.attr('src', $this.attr('src').replace(sp, pc));
+
+      // ウィンドウサイズが765px未満であれば_pcを_spに置換する。
+      } else {
+        $this.attr('src', $this.attr('src').replace(pc, sp));
+        $this.attr('src', $this.attr('src').replace(lpc, sp));
+      };
+    });
+  };
+  imageSwitch();
+
+  // 動的なリサイズは操作後0.01秒経ってから処理を実行する。
+  let resizeTimer;
+  $(window).on('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      imageSwitch();
+    }, 10);
+  });
+}());
+
+(function () {
+  
+  // 要素を取得
+  const btnElement = document.getElementById("strategy_submmit_btn");
+  
+  // イベントを設定 ( addEventListener )
+  btnElement.addEventListener( "mousedown", action );
+  
+  // 処理を定義
+  const action = function() {
+    // 処理内容
+    // photoサイズ(ap(after_photo),bp(before_photo))
+    // offsetXやclientWidthでは小数点以下が切られる
+    const ap_size_x = document.getElementById('photo_area').getBoundingClientRect().width;
+    const ap_size_y = document.getElementById('photo_area').getBoundingClientRect().height;
+    // const ap_size_x = document.getElementById('photo_area').clientWidth;
+    // const ap_size_y = document.getElementById('photo_area').clientHeight;
+    const bp_size_x = document.getElementById('photo_size_x');
+    const bp_size_y = document.getElementById('photo_size_y');
+    // mapサイズ
+    const am_size_x = document.getElementById('strategy_map').getBoundingClientRect().width;
+    const am_size_y = document.getElementById('strategy_map').getBoundingClientRect().height;
+    const bm_size_x = document.getElementById('map_size_x');
+    const bm_size_y = document.getElementById('map_size_y');
+    
+    // pin位置(bp(before_photo),bm(before_map))取得
+    // const pin_target_x = document.getElementById('photo_target_x');
+    // const pin_target_y = document.getElementById('photo_target_y');
+    
+    // photoのピン
+    const photo_pin_target = document.getElementById('photo_pin_target').getBoundingClientRect();
+    const photo_pin_point = document.getElementById('photo_pin_point').getBoundingClientRect();
+    let photo_pin_target_x = photo_pin_target.left;
+    let photo_pin_target_y = photo_pin_target.top;
+    let photo_pin_point_x = photo_pin_point.left;
+    let photo_pin_point_y = photo_pin_point.top;
+    // photo取得
+    let prev_display = document.getElementById('photo_prev');
+    let prev_display_css = getComputedStyle(prev_display).display;
+    // 管理者のphotoかユーザーのphoto、どちらが表示されているか
+    let photo = ""
+    if (prev_display_css !== "none"){
+      photo = document.querySelector('#photo_prev');
+    } else {
+      photo = document.querySelector('#photo_selected');
+    }
+    let photo_rect = photo.getBoundingClientRect();
+    document.getElementById('photo_target_x').value = photo_pin_target_x - photo_rect.left;
+    document.getElementById('photo_target_y').value = photo_pin_target_y - photo_rect.top;
+    document.getElementById('photo_point_x').value = photo_pin_point_x - photo_rect.left;
+    document.getElementById('photo_point_y').value = photo_pin_point_y - photo_rect.top;
+
+
+    // mapのピン
+    const map_pin_target = document.getElementById('map_pin_target').getBoundingClientRect();
+    const map_pin_point = document.getElementById('map_pin_point').getBoundingClientRect();
+    const map_pin_shoot = document.getElementById('map_pin_shoot').getBoundingClientRect();
+    let map_pin_target_x = map_pin_target.left;
+    let map_pin_target_y = map_pin_target.top;
+    let map_pin_point_x = map_pin_point.left;
+    let map_pin_point_y = map_pin_point.top;
+    let map_pin_shoot_x = map_pin_shoot.left;
+    let map_pin_shoot_y = map_pin_shoot.top;
+    // map取得
+    let map = document.querySelector('.regedit_map');
+    let map_rect = map.getBoundingClientRect();
+    document.getElementById('map_target_x').value = map_pin_target_x - map_rect.left;
+    document.getElementById('map_target_y').value = map_pin_target_y - map_rect.top;
+    document.getElementById('map_point_x').value = map_pin_point_x - map_rect.left;
+    document.getElementById('map_point_y').value = map_pin_point_y - map_rect.top;
+    document.getElementById('map_shoot_x').value = map_pin_shoot_x - map_rect.left;
+    document.getElementById('map_shoot_y').value = map_pin_shoot_y - map_rect.top;
+    
+    
+    // 写真、マップ画像サイズのhidden_fieldのvalue書き換え
+    bp_size_x.value = ap_size_x;
+    bp_size_y.value = ap_size_y;
+    bm_size_x.value = am_size_x;
+    bm_size_y.value = am_size_y;
+  }
+  
+}());

@@ -4,7 +4,7 @@
   <%# < % byebug % > %>
     <%# "ユーザーのデータなし(new)、かつ管理者のデータあり" %>
     $("#registration_edit_renders").html("<%= j(render 'strategy_infos/registration_edit_render_files/new') %>");
-  <% elsif @new_or_edit && current_user.admin? %>
+  <% elsif @new_or_edit %>
     <%# "ユーザーのデータなし(new)" %>
     $("#registration_edit_renders").html("<%= j(render 'strategy_infos/registration_edit_render_files/brand_new') %>");
   <% else %>
@@ -13,8 +13,3 @@
   <% end %>
 
 <% end %>
-  <% flash.each do |msg_type, msg| %>
-    $('#flash_messages').html('<a href="#" class="close" data-dismiss="alert">×</a><%= msg %>');
-    $('#flash_messages').addClass('alert alert-<%= msg_type %>');
-    $('#flash_messages').show();
-  <% end %>
