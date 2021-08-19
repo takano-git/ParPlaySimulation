@@ -1,7 +1,9 @@
-jQuery(document).bind('turbolinks:load ajaxComplete', function() {
-
-  // window変更時のphoto_size,map_size取得
-  window.addEventListener( 'resize', function() {
+(function () {
+  
+  
+  // 処理を定義
+  const action = function() {
+    // 処理内容
     // photoサイズ(ap(after_photo),bp(before_photo))
     // offsetXやclientWidthでは小数点以下が切られる
     const ap_size_x = document.getElementById('photo_area').getBoundingClientRect().width;
@@ -19,7 +21,7 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     // pin位置(bp(before_photo),bm(before_map))取得
     // const pin_target_x = document.getElementById('photo_target_x');
     // const pin_target_y = document.getElementById('photo_target_y');
-
+    
     // photoのピン
     const photo_pin_target = document.getElementById('photo_pin_target').getBoundingClientRect();
     const photo_pin_point = document.getElementById('photo_pin_point').getBoundingClientRect();
@@ -64,16 +66,18 @@ jQuery(document).bind('turbolinks:load ajaxComplete', function() {
     document.getElementById('map_shoot_x').value = map_pin_shoot_x - map_rect.left;
     document.getElementById('map_shoot_y').value = map_pin_shoot_y - map_rect.top;
     
-
+    
     // 写真、マップ画像サイズのhidden_fieldのvalue書き換え
     bp_size_x.value = ap_size_x;
     bp_size_y.value = ap_size_y;
     bm_size_x.value = am_size_x;
     bm_size_y.value = am_size_y;
-    
-  }, false );
+  }
   
+  // 要素を取得
+  const btnElement = document.getElementById("strategy_submmit_btn");
   
-});
-    
-    
+  // イベントを設定 ( addEventListener )
+  btnElement.addEventListener( "mousedown", action );
+  
+}());

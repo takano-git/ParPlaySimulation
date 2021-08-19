@@ -19,9 +19,9 @@
       <div id="strategy_photo">
         <div id="photo_area">
           <% if @photo_present.present? && @photo_present %>
-            <%= image_tag @strategy_info.photo, id: "photo_prev", class: "strategy_img" %>
+            <%= image_tag @strategy_info.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img" %>
           <% else %>
-            <%= image_tag @strategy_info_admin.photo, id: "photo_prev", class: "strategy_img" %>
+            <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img" %>
           <% end %>
         </div>
         <div class="photo_pin">
@@ -35,27 +35,27 @@
       <%= f.text_area :comment, value: @strategy_info.comment, placeholder: "コメント入力(200文字以内で入力してください。)", class: "form-control" %>
       <div class="coordinate">
         <%# photoピン座標 %>
-        <%= f.hidden_field :photo_target_x, value: @strategy_info.photo_target_x, class: "form-control" %>
-        <%= f.hidden_field :photo_target_y, value: @strategy_info.photo_target_y, class: "form-control" %>
-        <%= f.hidden_field :photo_point_x, value: @strategy_info.photo_point_x, class: "form-control" %>
-        <%= f.hidden_field :photo_point_y, value: @strategy_info.photo_point_y, class: "form-control" %>
+        <%= f.hidden_field :photo_target_x, value: @strategy_info.photo_target_x, id: "photo_target_x", class: "form-control" %>
+        <%= f.hidden_field :photo_target_y, value: @strategy_info.photo_target_y, id: "photo_target_y", class: "form-control" %>
+        <%= f.hidden_field :photo_point_x, value: @strategy_info.photo_point_x, id: "photo_point_x", class: "form-control" %>
+        <%= f.hidden_field :photo_point_y, value: @strategy_info.photo_point_y, id: "photo_point_y", class: "form-control" %>
         <%# photoサイズ %>
         <%= f.hidden_field :photo_size_x, value: @strategy_info.photo_size_x, id: 'photo_size_x', class: "form-control" %>
         <%= f.hidden_field :photo_size_y, value: @strategy_info.photo_size_y, id: 'photo_size_y', class: "form-control" %>
         <%# mapピン座標 %>
-        <%= f.hidden_field :map_target_x, value: @strategy_info.map_target_x, class: "form-control" %>
-        <%= f.hidden_field :map_target_y, value: @strategy_info.map_target_y, class: "form-control" %>
-        <%= f.hidden_field :map_point_x, value: @strategy_info.map_point_x, class: "form-control" %>
-        <%= f.hidden_field :map_point_y, value: @strategy_info.map_point_y, class: "form-control" %>
-        <%= f.hidden_field :map_shoot_x, value: @strategy_info.map_shoot_x, class: "form-control" %>
-        <%= f.hidden_field :map_shoot_y, value: @strategy_info.map_shoot_y, class: "form-control" %>
+        <%= f.hidden_field :map_target_x, value: @strategy_info.map_target_x, id: "map_target_x", class: "form-control" %>
+        <%= f.hidden_field :map_target_y, value: @strategy_info.map_target_y, id: "map_target_y", class: "form-control" %>
+        <%= f.hidden_field :map_point_x, value: @strategy_info.map_point_x, id: "map_point_x", class: "form-control" %>
+        <%= f.hidden_field :map_point_y, value: @strategy_info.map_point_y, id: "map_point_y", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_x, value: @strategy_info.map_shoot_x, id: "map_shoot_x", class: "form-control" %>
+        <%= f.hidden_field :map_shoot_y, value: @strategy_info.map_shoot_y, id: "map_shoot_y", class: "form-control" %>
         <%# mapサイズ %>
         <%= f.hidden_field :map_size_x, value: @strategy_info.map_size_x, id: 'map_size_x', class: "form-control" %>
         <%= f.hidden_field :map_size_y, value: @strategy_info.map_size_y, id: 'map_size_y', class: "form-control" %>
       </div>
       <div class="strategy_update-destroy">
-        <div class="strategy_update-destroy_btn_left">
-          <%= f.submit "攻略情報更新", class: "btn btn-brand btn-block" %>
+        <div id="strategy_submmit_btn" class="strategy_update-destroy_btn_left">
+          <%= f.submit "攻略情報更新", id: "", class: "btn btn-brand btn-block" %>
         </div>
         <div class="strategy_update-destroy_btn_right">
           <% if @strategy_info.present? && (@strategy_info.user_id == current_user.id || current_user.admin?) %>
@@ -81,7 +81,7 @@
             <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid regedit_map" %>
           <% else %>
             <div class="map_none">
-              <p>マップ情報がありません</p>
+              <p>マップ情報がありません。<br>しばらくお待ちください。</p>
               <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid" %>
             </div>
           <% end %>
@@ -116,3 +116,38 @@
   </div>
 
 </div>
+
+<script>
+(function () {
+  if ('<%= @strategy_info.photo_target_x.present? %>') {
+    const photo_target = document.getElementById("photo_pin_target");
+    photo_target.style.position = "absolute";
+    photo_target.style.left = (Number('<%= @strategy_info.photo_target_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    photo_target.style.top = (Number('<%= @strategy_info.photo_target_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.photo_point_x.present? %>') {
+    const photo_point = document.getElementById("photo_pin_point");
+    photo_point.style.position = "absolute";
+    photo_point.style.left = (Number('<%= @strategy_info.photo_point_x %>') / Number('<%= @strategy_info.photo_size_x %>'))*100 + "%";
+    photo_point.style.top = (Number('<%= @strategy_info.photo_point_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.map_target_x.present? %>') {
+    const map_target = document.getElementById("map_pin_target");
+    map_target.style.position = "absolute";
+    map_target.style.left = (Number('<%= @strategy_info.map_target_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    map_target.style.top = (Number('<%= @strategy_info.map_target_y %>') / Number('<%= @strategy_info.map_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.map_point_x.present? %>') {
+    const map_point = document.getElementById("map_pin_point");
+    map_point.style.position = "absolute";
+    map_point.style.left = (Number('<%= @strategy_info.map_point_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    map_point.style.top = (Number('<%= @strategy_info.map_point_y %>') / Number('<%= @strategy_info.map_size_y %>'))*100 + "%";
+  };
+  if ('<%= @strategy_info.map_shoot_x.present? %>') {
+    const map_shoot = document.getElementById("map_pin_shoot");
+    map_shoot.style.position = "absolute";
+    map_shoot.style.left = (Number('<%= @strategy_info.map_shoot_x %>') / Number('<%= @strategy_info.map_size_x %>'))*100 + "%";
+    map_shoot.style.top = (Number('<%= @strategy_info.map_shoot_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
+  };
+}());
+</script>
