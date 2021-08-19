@@ -60,6 +60,8 @@ Rails.application.routes.draw do
         get :registration_edit
         get :switch
       end
+      # 管理者削除アクション
+      delete :admin_destroy
     end
     # 投稿情報
     resources :posts, except: %i(show)

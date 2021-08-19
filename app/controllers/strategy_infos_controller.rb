@@ -298,7 +298,7 @@ class StrategyInfosController < ApplicationController
         end
       end
     end
-  rescue ActiveRecord::InvalidForeignKey
+    rescue ActiveRecord::InvalidForeignKey
     respond_to do |format|
       format.js { flash.now[:danger] = "削除できません。" }
     end
@@ -307,6 +307,7 @@ class StrategyInfosController < ApplicationController
   
   def admin_destroy
     @strategy_info = StrategyInfo.find(params[:id])
+    redirect_to action: :index, flash: { danger: "管理者以外は他人の攻略情報を削除できません。" } unless current_user.admin
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
         @user = User.find(@strategy_info.user_id)
@@ -314,8 +315,8 @@ class StrategyInfosController < ApplicationController
         redirect_to action: :index, flash: { success: "#{@user.nickname}の攻略情報を削除しました。" }
       end
     end
-  rescue ActiveRecord::InvalidForeignKey
-    redirect_to action: :index,, flash: { danger: "削除できません。" }
+    rescue ActiveRecord::InvalidForeignKey
+    redirect_to action: :index, flash: { danger: "削除できません。" }
   end
 
 
