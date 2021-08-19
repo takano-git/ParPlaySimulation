@@ -114,6 +114,8 @@ class StrategyInfosController < ApplicationController
   # 攻略情報ページ。shotボタンクリック&セレクトボックス変更時のAjaxアクション
   def show
     @strategy_info = StrategyInfo.find(params[:id])
+    @hole = Hole.find(@strategy_info.hole_id)
+    @location_name = @strategy_info.location_name
     # 攻略情報があるとき
     if @strategy_info.present?
       @poster = User.find(@strategy_info.user_id).nickname

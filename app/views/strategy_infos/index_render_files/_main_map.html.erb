@@ -1,7 +1,7 @@
 <div id="strategy_main_map" class="">
   <div id="map_area">
     <% if @location_name == "R" %>
-      <% if @hole.map_r.attached?%>
+      <% if @hole.map_r.attached? %>
         <%= image_tag @hole.map_r.variant(resize:'294x390'), id: "map_r", class: "main_map img-fluid" %>
       <% else %>
         <div class="map_none">
@@ -10,7 +10,7 @@
         </div>
       <% end %>
     <% elsif @location_name == "B" %>
-      <% if @hole.map_b.attached?%>
+      <% if @hole.map_b.attached? %>
         <%= image_tag @hole.map_b.variant(resize:'294x390'), id: "map_b", class: "main_map img-fluid" %>
       <% else %>
         <div class="map_none">
@@ -19,7 +19,7 @@
         </div>
       <% end %>
     <% else %>
-      <% if @hole.map_l.attached?%>
+      <% if @hole.map_l.attached? %>
         <%= image_tag @hole.map_l.variant(resize:'294x390'), id: "map_l", class: "main_map img-fluid" %>
       <% else %>
         <div class="map_none">
