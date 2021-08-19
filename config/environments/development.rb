@@ -31,7 +31,7 @@ Rails.application.configure do
   # config.active_storage.service = :amazon
   # config.active_storage.service = :local (heroku push のためコメントアウト)
   # ローカルでseedエラーになるため、一旦戻す。
-  # config.active_storage.service = :local
+  config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
   # config.action_mailer.raise_delivery_errors = false
