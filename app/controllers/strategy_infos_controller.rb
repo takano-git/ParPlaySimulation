@@ -12,7 +12,8 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R")
                                   .order(:course_id, :hole_id, :shot_id, :created_at)
-    @strategy_info = @strategy_infos.first
+    # @strategy_info = @strategy_infos.first
+    @strategy_info = @strategy_infos.where(hole_id: @hole.id).first
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).group_by(&:shot_id)
     # ログインユーザーのshots
@@ -32,6 +33,7 @@ class StrategyInfosController < ApplicationController
           shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
       end
     end
+    # byebug
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -41,7 +43,8 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id], location_name: "R")
                                   .order(:course_id, :hole_id, :shot_id, :created_at)
-    @strategy_info = @strategy_infos.first
+    # @strategy_info = @strategy_infos.first
+    @strategy_info = @strategy_infos.where(hole_id: @hole.id).first
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).group_by(&:shot_id)
     # 攻略情報があるとき
@@ -308,17 +311,23 @@ class StrategyInfosController < ApplicationController
   # 登録編集ページここまで
   
   def admin_destroy
+    # byebug
     @strategy_info = StrategyInfo.find(params[:strategy_info_id])
-    redirect_to action: :index, flash: { danger: "管理者以外は他人の攻略情報を削除できません。" } unless current_user.admin
+    if !current_user.admin?
+      flash[:success] = 'クラブセッティングを１本追加しました。'
+      redirect_to action: :index, flash: { danger: "管理者以外は他人の攻略情報を削除できません。" }
+    end
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
         @user = User.find(@strategy_info.user_id)
         @strategy_info.photo.purge if @strategy_info.photo.attached?
-        redirect_to action: :index, flash: { success: "#{@user.nickname}の攻略情報を削除しました。" } and return
+        flash[:success] = "#{@user.nickname}の攻略情報を削除しました。" 
+        redirect_to action: :index
       end
     end
     rescue ActiveRecord::InvalidForeignKey
-    redirect_to action: :index, flash: { danger: "削除できません。" } and return
+    flash[:danger] = "削除できません。"
+    redirect_to action: :index
   end
 
 
