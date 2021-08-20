@@ -315,7 +315,7 @@ class StrategyInfosController < ApplicationController
       end
     end
   rescue ActiveRecord::InvalidForeignKey
-    redirect_to action: :index,, flash: { danger: "削除できません。" }
+    redirect_to action: :index, flash: { danger: "削除できません。" }
   end
 
 
