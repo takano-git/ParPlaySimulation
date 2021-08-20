@@ -23,6 +23,8 @@ class StrategyInfosController < ApplicationController
       if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
         @strategy_info = user_strat
       end
+      # @posterは投稿者のこと
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -30,8 +32,6 @@ class StrategyInfosController < ApplicationController
           shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
       end
     end
-    # @posterは投稿者のこと
-    @poster = User.find(@strategy_info.user_id).nickname
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -308,17 +308,17 @@ class StrategyInfosController < ApplicationController
   # 登録編集ページここまで
   
   def admin_destroy
-    @strategy_info = StrategyInfo.find(params[:id])
+    @strategy_info = StrategyInfo.find(params[:strategy_info_id])
     redirect_to action: :index, flash: { danger: "管理者以外は他人の攻略情報を削除できません。" } unless current_user.admin
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
         @user = User.find(@strategy_info.user_id)
         @strategy_info.photo.purge if @strategy_info.photo.attached?
-        redirect_to action: :index, flash: { success: "#{@user.nickname}の攻略情報を削除しました。" }
+        redirect_to action: :index, flash: { success: "#{@user.nickname}の攻略情報を削除しました。" } and return
       end
     end
     rescue ActiveRecord::InvalidForeignKey
-    redirect_to action: :index, flash: { danger: "削除できません。" }
+    redirect_to action: :index, flash: { danger: "削除できません。" } and return
   end
 
 
