@@ -13,6 +13,12 @@ class StrategyPhotosController < ApplicationController
     @users = User.find(user_ids).pluck(:id, :nickname)
   end
 
+  def all_photos
+  end
+
+  def course
+  end
+
   def destroy
     @strategy_info = StrategyInfo.find(params[:id])
     if !current_user.admin?

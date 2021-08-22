@@ -316,7 +316,8 @@ class StrategyInfosController < ApplicationController
     # byebug
     @strategy_info = StrategyInfo.find(params[:strategy_info_id])
     if !current_user.admin?
-      redirect_to action: :index, flash: { danger: "管理者以外は他人の攻略情報を削除できません。" }
+      flash[:danger] = "管理者以外は他人の攻略情報を削除できません。"
+      redirect_to action: :index
     end
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!

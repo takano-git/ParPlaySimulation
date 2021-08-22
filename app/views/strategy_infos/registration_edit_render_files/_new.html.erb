@@ -18,11 +18,11 @@
       <%# 画像up %>
       <div id="strategy_photo">
         <div id="photo_area">
-          <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img strategy_photo" %>
+          <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img" %>
         </div>
         <div class="photo_pin">
           <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="pin js-image-switch">
-          <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin js-image-switch">
+          <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="pin pin_point js-image-switch">
         </div>
       </div>
       <%= f.file_field :photo, id: "f_strategy_photo", class: "form-control-file",
@@ -78,8 +78,8 @@
       </div>
       <div class="map_pin">
         <img src="/strategy_infos/pin/target_lpc.png" id="map_pin_target", class="pin js-image-switch">
-        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin js-image-switch">
-        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin js-image-switch">
+        <img src="/strategy_infos/pin/point_lpc.png" id="map_pin_point", class="pin pin_point js-image-switch">
+        <img src="/strategy_infos/pin/shoot_lpc.png" id="map_pin_shoot", class="pin pin_shoot js-image-switch">
       </div>
     </div>
 
@@ -101,4 +101,15 @@
 
 </div>
 
-
+<style>
+.pin {
+  position: absolute;
+  bottom: 3px;
+}
+.pin_point {
+  left: 18px;
+}
+.pin_shoot {
+  left: 38px;
+}
+</style>
