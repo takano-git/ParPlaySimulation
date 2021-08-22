@@ -63,6 +63,8 @@ Rails.application.routes.draw do
       # 管理者削除アクション
       delete :admin_destroy
     end
+    # 攻略情報-写真一覧
+    resources :strategy_photos, only: %i(index destroy)
     # 投稿情報
     resources :posts, except: %i(show)
   end
