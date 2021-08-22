@@ -4,6 +4,10 @@ class StrategyPhotosController < ApplicationController
   def index
     @golfclub = Golfclub.find(params[:golfclub_id])
     @courses = Course.where(golfclub_id: params[:golfclub_id]).pluck(:id, :name)
+    @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
+      |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
+    }
+    # byebug
     @holes = Hole.where(golfclub_id: params[:golfclub_id]).pluck(:id, :hole_number)
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id]).page(params[:page]).per(36)
     .order(:course_id, :hole_id, :location_name, :shot_id)
@@ -11,9 +15,6 @@ class StrategyPhotosController < ApplicationController
     # byebug
     user_ids = @strategy_infos.pluck(:user_id).sort.uniq
     @users = User.find(user_ids).pluck(:id, :nickname)
-  end
-
-  def all_photos
   end
 
   def course

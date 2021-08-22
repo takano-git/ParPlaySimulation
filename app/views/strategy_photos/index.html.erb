@@ -13,11 +13,13 @@
       <%= link_to "全て ", "#",  class: "btn btn-brand",  data: {"turbolinks" => false} %>
     </div>
     <div class="strategy_infos_select">
-      <%= form_with url: "#", method: :patch, remote: true do |f| %>
-        <p class= "golfclub_column">コース名:</p>
-        <%# < %= f.select :course_id, @course_options, selected: @course_id, class: "form-control golfclub_column_select" % > %>
-        <%# < %= f.select :hole_id, @hole_options, selected: @hole_id, class: "form-control" % > %>
-      <% end %>
+      <p class= "golfclub_column">コース名:</p>
+      <select name="pets" id="pet-select">
+        <option selected disabled hidden style='display: none' value=''></option>
+        <% @course_options.each do |course|%>
+          <option value="<%= course[1] %>" data-children-path="<%= course[2] %>"><%= course[0] %></option>
+        <% end %>
+      </select>
     </div>
   </div>
 
@@ -49,3 +51,8 @@
   </div>
   <%= paginate(@strategy_infos) %>
 </div>
+
+
+<script>
+
+</script>

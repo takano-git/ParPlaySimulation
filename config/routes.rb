@@ -64,7 +64,12 @@ Rails.application.routes.draw do
       delete :admin_destroy
     end
     # 攻略情報-写真一覧
-    resources :strategy_photos, only: %i(index destroy)
+    resources :strategy_photos, only: %i(index destroy) do
+      collection do
+        get :course
+        get :pagenate
+      end
+    end
     # 投稿情報
     resources :posts, except: %i(show)
   end
