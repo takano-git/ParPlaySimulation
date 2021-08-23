@@ -8,6 +8,7 @@
 
 <% flash.each do |msg_type, msg| %>
   $('#flash_messages').html('<a href="#" class="close" data-dismiss="alert">×</a><%= msg %>');
+  $('#flash_messages').removeClass();
   $('#flash_messages').addClass('alert alert-<%= msg_type %>');
   $('#flash_messages').show();
 <% end %>
