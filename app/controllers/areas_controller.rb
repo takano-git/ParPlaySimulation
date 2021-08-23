@@ -3,7 +3,7 @@ class AreasController < ApplicationController
   before_action :set_areas_group_by_district, only: %i(index show)
 
   def index
-    @golfclub = Golfclub.first
+    @golfclub = Golfclub.where(closed: false).first
     @golfclubs_citys = Golfclub.where(closed: false).pluck(:area_id).uniq.sort
   end
 
