@@ -10,7 +10,7 @@
 
   <div class="strategy_infos_range row">
     <div class="all_golfclubs_strategy_info" style="margin-left: 13px;">
-      <%= link_to "全て ", "#",  class: "btn btn-brand",  data: {"turbolinks" => false} %>
+      <%= link_to "全て ", "#", remote: :true,  class: "btn btn-brand",  data: {"turbolinks" => false} %>
     </div>
     <div class="strategy_infos_select">
       <p class= "golfclub_column">コース名:</p>
@@ -23,36 +23,29 @@
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <% @strategy_infos.each do |strategy_info| %>
-      <%# <% if strategy_info.photo.attached? %> 
-        <div class="card" style="width: 280px;">
-          <%# <img class="card-img-top" src="./img/280x150.png" alt="カード画像"> %>
-          <%= image_tag strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
-          <div class="card-body">
-            <%# <h4 class="card-subtitle">コメント</h3> %>
-            <%# <p class="card-text">< %= strategy_info.comment % ></p> %>
-            <%= course_name = @courses.find{|arr| arr[0] == strategy_info.course_id }[1] %>
-            <%= hole_number = @holes.find{|arr| arr[0] == strategy_info.hole_id }[1] %>hole
-            <%= shot_name = strategy_info.shot_id %>
-            <%= location_name = strategy_info.location_name %>
-            <br>
-            ニックネーム：<%= user_name = @users.find{|arr| arr[0] == strategy_info.user_id }[1] %>
-            <br>
-            <%# <p class="card-text">< %= strategy_info.comment % ></p> %>
-            <a href="#" class="card-link"></a>
-            <%= link_to "削除", golfclub_strategy_photo_path(id: strategy_info.id, status: "#{course_name}" + " " +
-                "#{hole_number}" + " " + "#{shot_name}" + " " + "#{location_name}" + " " + "#{user_name}"), local: true,
-                method: :delete, class: "", data: {confirm: "削除してよろしいですか？", "turbolinks" => false} %>
-          </div>
-        </div>
-      <%# <% end %> 
-    <% end %>
+  <div id="strategy_photo_list">
+    <%= render 'strategy_photos/photo_list' %>
   </div>
+
   <%= paginate(@strategy_infos) %>
 </div>
 
 
 <script>
-
+(function () {
+  const course_first = $('select#course_id').val();
+  $('#course_id').change(function() {
+    let coursePath = $('select#course_id').find('option:selected').data().childrenPath;
+    let course_id = $('select#course_id').val();
+    
+    $.ajax({
+      url: coursePath,
+      type: "GET",
+      data: {
+        course_first: course_first,
+        course_id: course_id,
+      },
+    });
+  });
+}());
 </script>

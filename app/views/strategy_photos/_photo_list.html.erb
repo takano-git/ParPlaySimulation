@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+  <% @strategy_infos.each do |strategy_info| %>
+    <% if strategy_info.photo.attached? %>
+      <div class="card" style="width: 280px;">
+        <%= image_tag strategy_info.photo.variant(resize:'280x150'), class: "img-fluid" %>
+        <div class="card-body">
+          <%= course_name = @courses.find{|arr| arr[0] == strategy_info.course_id }[1] %>
+          <%= hole_number = @holes.find{|arr| arr[0] == strategy_info.hole_id }[1] %>hole
+          <%= shot_name = strategy_info.shot_id %>
+          <%= location_name = strategy_info.location_name %>
+          <br>
+          ニックネーム：<%= user_name = @users.find{|arr| arr[0] == strategy_info.user_id }[1] %>
+          <br>
+          <%# <p class="card-text">< %= strategy_info.comment % ></p> %>
+          <a href="#" class="card-link"></a>
+          <%= link_to "削除", golfclub_strategy_photo_path(id: strategy_info.id, status: "#{course_name}" + " " +
+              "#{hole_number}" + " " + "#{shot_name}" + " " + "#{location_name}" + " " + "#{user_name}"), local: true,
+              method: :delete, class: "", data: {confirm: "削除してよろしいですか？", "turbolinks" => false} %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

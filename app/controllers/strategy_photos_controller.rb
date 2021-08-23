@@ -7,12 +7,10 @@ class StrategyPhotosController < ApplicationController
     @course_options = Course.where(golfclub_id: params[:golfclub_id]).order(:id).map {
       |c| [c.name, c.id, data: { children_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
     }
-    # byebug
     @holes = Hole.where(golfclub_id: params[:golfclub_id]).pluck(:id, :hole_number)
-    @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id]).page(params[:page]).per(36)
-    .order(:course_id, :hole_id, :location_name, :shot_id)
-    # @users = @q.page(params[:page]).per(16).where(admin: false).order(:id)
-    # byebug
+    @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id]).with_attached_photo
+    .order(:course_id, :hole_id, :location_name, :shot_id).page(params[:page]).per(10)
+    # .page(params[:page]).per(36)
     user_ids = @strategy_infos.pluck(:user_id).sort.uniq
     @users = User.find(user_ids).pluck(:id, :nickname)
   end
