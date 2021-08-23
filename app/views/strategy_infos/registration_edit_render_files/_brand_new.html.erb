@@ -30,7 +30,7 @@
         </div>
       </div>
       <%= f.file_field :photo, required: true, id: "f_strategy_photo", class: "form-control-file", accept: "image/png, image/jpg, image/jpeg" %>
-      <%= f.text_area :comment, placeholder: "コメント入力(200文字以内で入力してください。)", class: "form-control" %>
+      <%= f.text_area :comment, required: true, maxlength: "200", placeholder: "コメント入力(200文字以内で入力してください。)", class: "form-control" %>
       <%# photoピン座標 %>
       <%= f.hidden_field :photo_target_x, value: "0", id: "photo_target_x", class: "form-control" %>
       <%= f.hidden_field :photo_target_y, value: "0", id: "photo_target_y", class: "form-control" %>
