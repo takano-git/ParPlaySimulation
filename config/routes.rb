@@ -67,7 +67,6 @@ Rails.application.routes.draw do
     resources :strategy_photos, only: %i(index destroy) do
       collection do
         get :course
-        get :pagenate
       end
     end
     # 投稿情報
