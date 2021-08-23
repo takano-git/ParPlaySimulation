@@ -1,0 +1,5 @@
+<%# < % byebug % > %>
+$("#strategy_photo_index").html("<%= j(render 'strategy_photos/index') %>");
+<% if params[:course_id].present? %>
+  $('#course_id').value = <%= params[:course_id] %>;
+<% end %>

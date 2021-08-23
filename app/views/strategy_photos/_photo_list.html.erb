@@ -15,9 +15,32 @@
           <a href="#" class="card-link"></a>
           <%= link_to "削除", golfclub_strategy_photo_path(id: strategy_info.id, status: "#{course_name}" + " " +
               "#{hole_number}" + " " + "#{shot_name}" + " " + "#{location_name}" + " " + "#{user_name}"), local: true,
-              method: :delete, class: "", data: {confirm: "削除してよろしいですか？", "turbolinks" => false} %>
+              method: :delete, class: "", data: {confirm: "削除してよろしいですか？", "turbolinks" => false}, style: "color: red;" %>
         </div>
       </div>
     <% end %>
   <% end %>
 </div>
+
+<script>
+(function () {
+  const course_first = $('select#course_id').val();
+  $('#course_id').change(function() {
+    let coursePath = $('select#course_id').find('option:selected').data().childrenPath;
+    let course_id = $('select#course_id').val();
+    console.log(coursePath);
+    console.log(course_id);
+    // .page-link のurlにコース情報を追加
+    
+    $.ajax({
+      // url: coursePath,
+      url: '<%= course_golfclub_strategy_photos_path(@golfclub) %>',
+      type: "GET",
+      data: {
+        course_id: course_id,
+      },
+    });
+
+  });
+}());
+</script>

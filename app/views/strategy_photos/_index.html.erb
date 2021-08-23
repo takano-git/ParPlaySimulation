@@ -1,0 +1,33 @@
+<div class="strategy_infos_range row">
+  <div class="all_golfclubs_strategy_info" style="margin-left: 13px;">
+    <%= link_to "全て ", golfclub_strategy_photos_path(@golfclub), remote: :true,id: "index_urrl", class: "btn btn-brand",  data: {"turbolinks" => false} %>
+  </div>
+  <div class="strategy_infos_select" style="margin: 0 18px 0 12px; ">
+    <p class= "golfclub_column">コース名:</p>
+    <select name="courses" id="course_id">
+      <% if @course_id %>
+        <%# コースが選択されている場合 %>
+        <% @course_options.each do |course| %>
+          <% if @course_id.to_i == course[1] %>
+            <option value="<%= course[1] %>" selected data-children-path="<%= course[2] %>"><%= course[0] %></option>
+          <% else %>
+            <option value="<%= course[1] %>" data-children-path="<%= course[2] %>"><%= course[0] %></option>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%# 通常時 %>
+        <option selected disabled hidden style='display: none' value=''></option>
+        <% @course_options.each do |course|%>
+          <option value="<%= course[1] %>" data-children-path="<%= course[2] %>"><%= course[0] %></option>
+        <% end %>
+      <% end %>
+    </select>
+  </div>
+  <%= paginate @strategy_infos, remote: true %>
+</div>
+
+<div id="strategy_photo_list">
+  <%= render 'strategy_photos/photo_list' %>
+</div>
+
+<%= paginate @strategy_infos, remote: true %>

@@ -29,18 +29,16 @@
 
 </div>
 
-<% if current_user.admin? %>
-  <div id="strategy_destroy_btn">
-    <%= render "strategy_infos/index_render_files/destroy_btn" %>
+<div class="strategy_infos_footer">
+  <% if current_user.admin? %>
+    <div id="strategy_destroy_btn">
+      <%= render "strategy_infos/index_render_files/destroy_btn" %>
+    </div>
+  <% end %>
+
+  <div id="new_edit_btns">
+    <%= render "strategy_infos/index_render_files/new_edit_btns" %>
   </div>
-<% end %>
-
-<div class="strategy_photos">
-  < %= render "strategy_infos/index_render_files/destroy_btn" %>
-</div>
-
-<div id="new_edit_btns">
-  <%= render "strategy_infos/index_render_files/new_edit_btns" %>
 </div>
 
 

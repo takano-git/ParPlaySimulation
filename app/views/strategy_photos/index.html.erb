@@ -8,44 +8,9 @@
     <h3>攻略写真一覧</h3>
   </div>
 
-  <div class="strategy_infos_range row">
-    <div class="all_golfclubs_strategy_info" style="margin-left: 13px;">
-      <%= link_to "全て ", "#", remote: :true,  class: "btn btn-brand",  data: {"turbolinks" => false} %>
-    </div>
-    <div class="strategy_infos_select">
-      <p class= "golfclub_column">コース名:</p>
-      <select name="pets" id="pet-select">
-        <option selected disabled hidden style='display: none' value=''></option>
-        <% @course_options.each do |course|%>
-          <option value="<%= course[1] %>" data-children-path="<%= course[2] %>"><%= course[0] %></option>
-        <% end %>
-      </select>
-    </div>
+  <div id="strategy_photo_index">
+    <%= render 'strategy_photos/index' %>
   </div>
-
-  <div id="strategy_photo_list">
-    <%= render 'strategy_photos/photo_list' %>
-  </div>
-
-  <%= paginate(@strategy_infos) %>
 </div>
 
 
-<script>
-(function () {
-  const course_first = $('select#course_id').val();
-  $('#course_id').change(function() {
-    let coursePath = $('select#course_id').find('option:selected').data().childrenPath;
-    let course_id = $('select#course_id').val();
-    
-    $.ajax({
-      url: coursePath,
-      type: "GET",
-      data: {
-        course_first: course_first,
-        course_id: course_id,
-      },
-    });
-  });
-}());
-</script>

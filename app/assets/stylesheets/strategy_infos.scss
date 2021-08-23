@@ -338,9 +338,21 @@ $brand_t1: #224444;
   }
 }
 
+
+// 攻略情報ページフッター（ページ全体のフッターの上部のメニュー）
+.strategy_infos_footer {
+  position: relative;
+  height: 1.3rem;
+}
+// 攻略情報ページ削除ボタン
+#strategy_destroy_btn {
+  position: absolute;
+  left: 0.7rem;
+}
 // 登録編集ページ遷移ボタン
 #new_edit_btns {
-  text-align: right;
+  position: absolute;
+  right: 0;
 }
 .new_edit_link {
   color: black;
