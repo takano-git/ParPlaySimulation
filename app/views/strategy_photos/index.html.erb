@@ -1,0 +1,16 @@
+<div class="container">
+  <div id="flash_messages">
+    <%= render 'layouts/flash_messages' %>
+  </div>  
+
+  <div class="strategy_photos_header">
+    <h3><%= @golfclub.name %></h3>
+    <h3>攻略写真一覧</h3>
+  </div>
+
+  <div id="strategy_photo_index">
+    <%= render 'strategy_photos/index' %>
+  </div>
+</div>
+
+
