@@ -70,10 +70,24 @@
               <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid", draggable: "false" %>
             </div>
           <% end %>
-        <% elsif @strategy_info_admin.location_name == "B" %>
-          <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map", draggable: "false" %>
+        <% elsif @location_name == "B" %>
+          <% if @hole.map_b.attached? %>
+            <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map", draggable: "false" %>
+          <% else %>
+            <div class="map_none">
+              <p>マップ情報がありません。<br>しばらくお待ちください。</p>
+              <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid", draggable: "false" %>
+            </div>
+          <% end %>
         <% else %>
-          <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map", draggable: "false" %>
+          <% if @hole.map_l.attached? %>
+            <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid strategy_img regedit_map", draggable: "false" %>
+          <% else %>
+            <div class="map_none">
+              <p>マップ情報がありません。<br>しばらくお待ちください。</p>
+              <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid", draggable: "false" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
       <div class="map_pin">
