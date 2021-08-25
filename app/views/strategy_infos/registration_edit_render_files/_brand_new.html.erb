@@ -66,7 +66,7 @@
           <% else %>
             <div class="map_none">
               <p>マップ情報がありません。<br>しばらくお待ちください。</p>
-              <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid" %>
+              <%= image_tag '/noimage.png', size: "294x390", class: "img-fluid", draggable: "false" %>
             </div>
           <% end %>
         <% elsif @location_name == "B" %>
