@@ -19,9 +19,9 @@
       <div id="strategy_photo">
         <div id="photo_area">
           <% if @photo_present.present? && @photo_present %>
-            <%= image_tag @strategy_info.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img" %>
+            <%= image_tag @strategy_info.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img", draggable: "false" %>
           <% else %>
-            <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img" %>
+            <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), id: "photo_prev", class: "strategy_img", draggable: "false" %>
           <% end %>
         </div>
         <div class="photo_pin">
@@ -78,7 +78,7 @@
       <div id="map_area">
         <% if @strategy_info.location_name == "R" %>
           <% if @hole.map_r.attached?%>
-            <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid regedit_map" %>
+            <%= image_tag @hole.map_r.variant(resize:'108x386'), class: "img-fluid regedit_map", draggable: "false" %>
           <% else %>
             <div class="map_none">
               <p>マップ情報がありません。<br>しばらくお待ちください。</p>
@@ -86,9 +86,9 @@
             </div>
           <% end %>
         <% elsif @strategy_info.location_name == "B" %>
-            <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid regedit_map" %>
+            <%= image_tag @hole.map_b.variant(resize:'108x386'), class: "img-fluid regedit_map", draggable: "false" %>
         <% else %>
-            <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid regedit_map" %>
+            <%= image_tag @hole.map_l.variant(resize:'108x386'), class: "img-fluid regedit_map", draggable: "false" %>
         <% end %>
       </div>
       <div class="map_pin">
