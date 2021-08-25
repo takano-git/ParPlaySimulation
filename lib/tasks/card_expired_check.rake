@@ -18,14 +18,6 @@ namespace :card_expired_check do
       puts '今日は月初ではありませんので、カード有効期限が今月のユーザーへメール送信はありません。'
     end
 
-    # 本番では削除
-    # puts "タスクのテストです。" # 本番では削除
-    # user = User.find(2) # 本番では削除 Userモデルを参照する
-    # puts user # 本番では削除
-    # user.email = 'p.aaattt25@gmail.com' # 本番では削除
-    # puts user.email # 本番では削除
-    # UserMailer.card_expired_mail(user).deliver # 本番では削除
-
     # 本番で使用
     puts "タスクを始めます。"
     users = User.joins(:cards).where(cards: {default_card: true, exp_month: Date.current.mon, exp_year: Date.current.year })
