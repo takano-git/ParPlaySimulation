@@ -60,6 +60,15 @@ Rails.application.routes.draw do
         get :registration_edit
         get :switch
       end
+      # 管理者削除アクション
+      delete :admin_destroy
+    end
+    # 攻略情報-写真一覧
+    resources :strategy_photos, only: %i(index destroy) do
+      collection do
+        get :course
+        get :pagenate
+      end
     end
     # 投稿情報
     resources :posts, except: %i(show)

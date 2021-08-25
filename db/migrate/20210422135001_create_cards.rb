@@ -7,7 +7,7 @@ class CreateCards < ActiveRecord::Migration[5.2]
       t.integer :exp_month
       t.integer :exp_year
       t.string :last4, default: "", null: false
-      t.boolean :default_card, default: false
+      t.boolean :default_card, default: false, null: false
       t.references :user, foreign_key: true
 
       t.timestamps

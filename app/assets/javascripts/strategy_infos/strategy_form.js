@@ -22,7 +22,8 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
     let width = map_pin_target.offsetWidth;
     let height = map_pin_target.offsetHeight;
     // map取得
-    let map = document.querySelector('.regedit_map');
+    // let map = document.querySelector('.regedit_map');
+    let map = document.querySelector('#map_area');
     let map_rect = map.getBoundingClientRect();
     let map_target_x = (x - map_rect.left)-width/2-4;
     let map_target_y = (y - map_rect.top)-height/2-4;
@@ -67,7 +68,8 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       let width = map_pin_point.offsetWidth;
       let height = map_pin_point.offsetHeight;
       // map取得
-      let map = document.querySelector('.regedit_map');
+      // let map = document.querySelector('.regedit_map');
+      let map = document.querySelector('#map_area');
       let map_point_rect = map.getBoundingClientRect();
       let map_point_x = (x - map_point_rect.left)-width/2-4;
       let map_point_y = (y - map_point_rect.top)-height/2-4;
@@ -109,7 +111,8 @@ $(document).bind('turbolinks:load ajaxComplete', function() {
       let width = map_pin_shoot.offsetWidth;
       let height = map_pin_shoot.offsetHeight;
       // map取得
-      let map = document.querySelector('.regedit_map');
+      // let map = document.querySelector('.regedit_map');
+      let map = document.querySelector('#map_area');
       let map_shoot_rect = map.getBoundingClientRect();
       let map_shoot_x = (x - map_shoot_rect.left)-width/2-4;
       let map_shoot_y = (y - map_shoot_rect.top)-height/2-4;

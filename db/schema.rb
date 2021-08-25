@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_160102) do
     t.integer "exp_month"
     t.integer "exp_year"
     t.string "last4", default: "", null: false
-    t.boolean "default_card", default: false
+    t.boolean "default_card", default: false, null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_160102) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "selected", default: false, null: false
-    t.boolean "delete_flg"
+    t.boolean "delete_flg", default: false, null: false
     t.index ["user_id"], name: "index_clubs_on_user_id"
   end
 

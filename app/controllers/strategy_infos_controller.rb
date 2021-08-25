@@ -12,7 +12,8 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], location_name: "R")
                                   .order(:course_id, :hole_id, :shot_id, :created_at)
-    @strategy_info = @strategy_infos.first
+    # @strategy_info = @strategy_infos.first
+    @strategy_info = @strategy_infos.where(hole_id: @hole.id).first
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).group_by(&:shot_id)
     # ログインユーザーのshots
@@ -23,6 +24,8 @@ class StrategyInfosController < ApplicationController
       if user_strat = @strategy_infos.where(shot_id: @strategy_info.shot_id, user_id: current_user.id).first
         @strategy_info = user_strat
       end
+      # @posterは投稿者のこと
+      @poster = User.find(@strategy_info.user_id).nickname
       # 登録情報はあるが、写真がない場合の処理
       @photo_presence = @strategy_info.photo.attached?
       unless @photo_presence
@@ -30,8 +33,7 @@ class StrategyInfosController < ApplicationController
           shot_id: @strategy_info.shot_id, location_name: @strategy_info.location_name).first
       end
     end
-    # @posterは投稿者のこと
-    @poster = User.find(@strategy_info.user_id).nickname
+    # byebug
   end
 
   # 攻略情報ページ。コースボタンクリック時のAjaxアクション
@@ -41,7 +43,8 @@ class StrategyInfosController < ApplicationController
     @hole = @holes.first
     @strategy_infos = StrategyInfo.where(golfclub_id: params[:golfclub_id], course_id: params[:course_id], location_name: "R")
                                   .order(:course_id, :hole_id, :shot_id, :created_at)
-    @strategy_info = @strategy_infos.first
+    # @strategy_info = @strategy_infos.first
+    @strategy_info = @strategy_infos.where(hole_id: @hole.id).first
     @location_name = "R"
     @strategy_shots = @strategy_infos.where(hole_id: @hole.id).select(:id, :shot_id, :user_id, :created_at).group_by(&:shot_id)
     # 攻略情報があるとき
@@ -114,6 +117,8 @@ class StrategyInfosController < ApplicationController
   # 攻略情報ページ。shotボタンクリック&セレクトボックス変更時のAjaxアクション
   def show
     @strategy_info = StrategyInfo.find(params[:id])
+    @hole = Hole.find(@strategy_info.hole_id)
+    @location_name = @strategy_info.location_name
     # 攻略情報があるとき
     if @strategy_info.present?
       @poster = User.find(@strategy_info.user_id).nickname
@@ -126,8 +131,8 @@ class StrategyInfosController < ApplicationController
     end
   end
   # 攻略情報ページここまで
-
-
+  
+  
   # ここから登録編集ページ関係
   def registration_edit
     @golfclub = Golfclub.find(params[:golfclub_id])
@@ -146,11 +151,11 @@ class StrategyInfosController < ApplicationController
       # ここからログインユーザー登録情報の有無フラグ
       @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole.id,
                                                 location_name: "R", shot_id: "tee").first
-      @new_or_edit = @strategy_info.blank?
-      @strategy_info = StrategyInfo.new if @new_or_edit
-    else
-      # 攻略情報ページから来た場合
-      @course_id = params[:course_id]
+                                                @new_or_edit = @strategy_info.blank?
+                                                @strategy_info = StrategyInfo.new if @new_or_edit
+                                              else
+                                                # 攻略情報ページから来た場合
+                                                @course_id = params[:course_id]
       @holes = Hole.where(golfclub_id: params[:golfclub_id], course_id: @course_id).order(:id)
       @hole_options = @holes.map { 
         |c| [c.hole_number, c.id, data: { hole_path: switch_golfclub_strategy_infos_path(c.golfclub_id) }]
@@ -159,20 +164,21 @@ class StrategyInfosController < ApplicationController
       @hole_id = params[:hole_id]
       # ここからログインユーザー登録情報の有無フラグ
       @strategy_info = StrategyInfo.where(user_id: current_user.id, hole_id: @hole_id, location_name: params[:location_name],
-                                          shot_id: params[:shot_id]).first
+        shot_id: params[:shot_id]).first
       @new_or_edit = @strategy_info.blank?
       # ログインユーザー登録情報がない場合とphotoの登録がない場合権利者のものを探す
       if @new_or_edit || !@strategy_info.photo.attached?
         @strategy_info_admin = StrategyInfo.where(user_id: 1, hole_id: @hole_id, location_name: params[:location_name],
-                                                  shot_id: params[:shot_id]).first
-      end
-      @strategy_info = StrategyInfo.new if @new_or_edit
+          shot_id: params[:shot_id]).first
+        end
+        @strategy_info = StrategyInfo.new if @new_or_edit
       # byebug
     end
     @photo_present = @strategy_info.photo.attached? unless @new_or_edit
     # byebug
+    # byebug
   end
-
+  
   # 登録編集ページでのでのセレクトボックスAjax
   def switch
     @golfclub = Golfclub.find(params[:golfclub_id])
@@ -274,6 +280,7 @@ class StrategyInfosController < ApplicationController
 
   def destroy
     @strategy_info = StrategyInfo.find(params[:id])
+    byebug
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
         # @courses = Course.where(golfclub_id: @strategy_info.golfclub_id).order(:id)
@@ -298,7 +305,7 @@ class StrategyInfosController < ApplicationController
         end
       end
     end
-  rescue ActiveRecord::InvalidForeignKey
+    rescue ActiveRecord::InvalidForeignKey
     respond_to do |format|
       format.js { flash.now[:danger] = "削除できません。" }
     end
@@ -306,21 +313,23 @@ class StrategyInfosController < ApplicationController
   # 登録編集ページここまで
   
   def admin_destroy
-    @strategy_info = StrategyInfo.find(params[:id])
+    # byebug
+    @strategy_info = StrategyInfo.find(params[:strategy_info_id])
+    if !current_user.admin?
+      flash[:danger] = "管理者以外は他人の攻略情報を削除できません。"
+      redirect_to action: :index
+    end
     ActiveRecord::Base.transaction do
       if @strategy_info.destroy!
         @user = User.find(@strategy_info.user_id)
         @strategy_info.photo.purge if @strategy_info.photo.attached?
-        redirect_to action: :index, flash: { success: "#{@user.nickname}の攻略情報を削除しました。" }
+        flash[:success] = "#{@user.nickname}の攻略情報を削除しました。" 
+        redirect_to action: :index
       end
     end
-  rescue ActiveRecord::InvalidForeignKey
-    redirect_to action: :index, flash: { danger: "削除できません。" }
-  end
-
-
-  def photo_list
-
+    rescue ActiveRecord::InvalidForeignKey
+    flash[:danger] = "削除できません。"
+    redirect_to action: :index
   end
 
 

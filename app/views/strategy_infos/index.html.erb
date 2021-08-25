@@ -1,6 +1,8 @@
 <div id="container" class="container" data-turbolinks='false'>
 
-  <!--<h4 class="mt-4">攻略情報画面</h4>-->
+  <div id="flash_messages">
+    <%= render 'layouts/flash_messages' %>
+  </div>
 
   <%# 攻略ホールボタン %>
   <div class="strategy_cource_bar row">
@@ -27,16 +29,16 @@
 
 </div>
 
-<div class="strategy_destroy">
-  <%= render "strategy_infos/index_render_files/destroy_btn" %>
-</div>
+<div class="strategy_infos_footer">
+  <% if current_user.admin? %>
+    <div id="strategy_destroy_btn">
+      <%= render "strategy_infos/index_render_files/destroy_btn" %>
+    </div>
+  <% end %>
 
-<div class="strategy_photos">
-  
-</div>
-
-<div id="new_edit_btns">
-  <%= render "strategy_infos/index_render_files/new_edit_btns" %>
+  <div id="new_edit_btns">
+    <%= render "strategy_infos/index_render_files/new_edit_btns" %>
+  </div>
 </div>
 
 
@@ -46,6 +48,7 @@
     $(this).addClass('c_selected');
   });
 
+'<% if @strategy_info.present? %>'
 (function () {
   if ('<%= @strategy_info.photo_target_x.present? %>' && '<%= @strategy_info.photo_target_x != 0 %>') {
     const photo_target = document.getElementById("photo_pin_target");
@@ -73,5 +76,6 @@
     map_shoot.style.top = (Number('<%= @strategy_info.map_shoot_y %>') / Number('<%= @strategy_info.photo_size_y %>'))*100 + "%";
   };
 }());
+'<% end %>'
 </script>
 <%= javascript_include_tag "strategy_infos/pin_resize" %>
