@@ -273,7 +273,7 @@ class StrategyInfosController < ApplicationController
       end
     else
       respond_to do |format|
-        format.js { flash.now[:danger] = "編集に失敗しました。" }
+        format.js { flash.now[:danger] = @strategy_info.errors.full_messages.join("<br>").html_safe }
       end
     end
   end

@@ -1,29 +1,29 @@
 <% if @strategy_info.blank? %>
   <div class="strategy_none">
     <p>攻略情報がありません。</p>
-    <%= image_tag '/noimage.png', size: "400x300", class: "img-fluid" %>
+    <%= image_tag '/noimage.png', size: "400x300", class: "img-fluid", draggable: "false" %>
   </div>
 <% else %>
   <div id="show_photo_area" class="strategy_main_center_photo">
     <div id="strategy_photo">
       <div class="strategy_photo_img">
         <% if @photo_presence %>
-          <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid" %>
+          <%= image_tag @strategy_info.photo.variant(resize:'751x500'), class: "img-fluid", draggable: "false" %>
         <% elsif @strategy_info_admin != nil %>
-          <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid" %>
+          <%= image_tag @strategy_info_admin.photo.variant(resize:'751x500'), class: "img-fluid", draggable: "false" %>
         <% else %>
           <div class="photo_blank">
             <p>攻略写真の登録がありません。</p>
-            <%= image_tag '/noimage.png', size: "400x300", class: "img-fluid" %>
+            <%= image_tag '/noimage.png', size: "400x300", class: "img-fluid", draggable: "false" %>
           </div>
         <% end %>
       </div>
       <div class="show_photo_pin">
         <% if @strategy_info.photo_target_x.present? && @strategy_info.photo_target_x != 0 %>
-          <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="show_pin js-image-switch">
+          <img src="/strategy_infos/pin/target_lpc.png" id="photo_pin_target", class="show_pin js-image-switch" draggable= "false">
         <% end %>
         <% if @strategy_info.photo_point_x.present? && @strategy_info.photo_point_x != 0 %>
-          <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="show_pin js-image-switch">
+          <img src="/strategy_infos/pin/point_lpc.png" id="photo_pin_point", class="show_pin js-image-switch" draggable= "false">
         <% end %>
       </div>
     </div>
