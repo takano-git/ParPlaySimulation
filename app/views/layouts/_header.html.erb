@@ -19,8 +19,8 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <%= link_to 'グラフ', clubs_chart_user_path(current_user), data: {"turbolinks" => false}, class: 'dropdown-item' %>
-              <%= link_to 'マイクラブ一覧', clubs_path(current_user), class: 'dropdown-item' %>
-              <%= link_to 'クラブセッティング', clubs_select_user_path(current_user), class: 'dropdown-item' %>
+              <%= link_to 'マイクラブ', clubs_path(current_user), class: 'dropdown-item' %>
+              <%= link_to 'セッティング', clubs_select_user_path(current_user), class: 'dropdown-item' %>
             </div>
           </li>
         <% end %>
