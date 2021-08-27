@@ -1,4 +1,7 @@
 class StrategyInfo < ApplicationRecord
+  belongs_to :user
+  belongs_to :golfclub
+  belongs_to :course
   belongs_to :hole
 
   has_one_attached :photo
