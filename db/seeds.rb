@@ -7,7 +7,7 @@ User.create!(name: "管理者",
   email: "admin@gmail.com",
   password: "password",
   password_confirmation: "password",
-  phone_number: "012-0000-0000",
+  phone_number: "000-0000-0000",
   flying_distance: 240,
   admin: true,
   premium: true
