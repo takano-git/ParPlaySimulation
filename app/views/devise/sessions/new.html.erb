@@ -48,7 +48,9 @@
   <%= render 'devise/shared/links' %>
 
   <div class="form-group">
-    <%= link_to 'Googleログイン', user_google_oauth2_omniauth_authorize_path, method: :post, class: 'btn btn-block btn-danger' %>
+    <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn google-login-btn', method: :post do %>
+      <%= image_tag 'google_icon-icons.com_62736.png', class:"google-login-img"%> Googleでログイン
+    <% end %>
   </div>
 
 </div>
