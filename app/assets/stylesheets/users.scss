@@ -45,3 +45,19 @@
   max-width: 1300px;
   padding: 2rem;
 }
+
+// googlr-login
+.google-login-img {
+  height: 16px;
+  width: 16px;
+}
+.google-login-btn {
+  display: inline-block;
+  margin-top: 0;
+  border: 2px solid;
+  border-color: #BAD3FF;
+  width: 100%;
+  &:hover {
+    box-shadow: 0 0 3px;
+  }
+}
