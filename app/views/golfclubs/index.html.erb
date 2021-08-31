@@ -6,7 +6,7 @@
   <div class="golfclub-search-form">
     <%= search_form_for @q, url: golfclubs_path do |f| %>
       <div class="row">
-        <div class="input-group col-8">
+        <div class="input-group col-5">
           <%= f.search_field :name_cont, placeholder: "ゴルフ場名検索", class: "form-control form-control-sm" %>
           <span class="input-group-append">
             <%= button_tag type: 'submit', class: "btn btn-brand btn-sm" do %>
@@ -32,8 +32,8 @@
           <th><%= sort_link @q, :area_id, '地域' %></th>
           <th>コース数</th>
           <th>攻略情報</th>
-          <th></th>
-          <th></th>
+          <th>営業</th>
+          <th>削除</th>
         </tr>
       </thead>
 
@@ -65,7 +65,7 @@
               <%= link_to "写真", golfclub_strategy_photos_path(golfclub), class: "fas-strategy-btn" %>
             </td>
 
-            <td>
+            <td class="text-center">
               <%= golfclub_open(golfclub) %>
             </td>
 
