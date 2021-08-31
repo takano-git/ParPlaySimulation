@@ -4,8 +4,9 @@ class ClubsController < ApplicationController
   before_action :correct_user # アクセスしたユーザーが現在ログインしているユーザーか確認する。
   before_action :set_clubs , only: %i[ index select ]
   before_action :premium_user # 有料会員のみ
+  before_action :check_setting_clubs , only: %i[ add_form ] # セッティングが14本より多くチェックされていたらリダイレクト
 
-  # ゴルフクラブ一覧表示画面（マイクラブ一覧）
+  # マイクラブ一覧
   def index
   end
 
@@ -17,59 +18,17 @@ class ClubsController < ApplicationController
 
   # クラブセッティングに加える機能
   def add_form
-    @club = Club.find(params[:id])
-    selected_clubs = current_user.clubs.where(selected: true).count
-    
-    # setting = []
-    # clubs_params.each do |id, item|
-    #   if item == 1
-    #     setting.push(item.to_s)
-    #   end
-    # end
-
-    # if setting.count > 14
-    #   flash[:danger] = 'クラブセッティングは14本までです。'
-    #   redirect_to clubs_select_user_path(@user)
-    # end
-
-
-
-    
-      ActiveRecord::Base.transaction do # トランザクションを開始します。
-        clubs_params.each do |id, item|
-          club = Club.find(id)
-          club.update_attributes!(item)
-        end
+    ActiveRecord::Base.transaction do # トランザクションを開始します。
+      clubs_params.each do |id, item|
+        club = Club.find(id)
+        club.update_attributes!(item)
       end
-      flash[:success] = "クラブセッティングを更新しました。"
-      redirect_to clubs_select_user_path(@user)
-    rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-      flash[:danger] = "無効な入力があった為、クラブセッティングの更新をキャンセルしました。"
-      redirect_to clubs_select_user_path(@user)
-    
-
-    # clubs_params.each do |id, item|
-    #   club = Club.find(id)
-    #   club.update_attributes!(item)
-    # end
-    # flash[:success] = 'クラブセッティングを更新しました。'
-    # redirect_to clubs_select_user_path(@user)
-
-    # if selected_clubs >= 14
-    #   flash[:danger] = 'クラブセッティングは14本までです。'
-    #   redirect_to clubs_select_user_path(@user)
-    # elsif @club.selected == true
-    #   redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}はすでにクラブセッティングに入っています。" }
-    # else
-    #   @club.selected = true
-    #   if @club.save
-    #     flash[:success] = 'クラブセッティングを１本追加しました。'
-    #     redirect_to clubs_select_user_path(@user)
-    #   else
-    #     flash[:danger] = 'クラブセッティング追加に失敗しました。'
-    #     redirect_to clubs_select_user_path(@user)        
-    #   end
-    # end
+    end
+    flash[:success] = "クラブセッティングを更新しました。"
+    redirect_to clubs_select_user_path(@user)
+  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+    flash[:danger] = "無効な入力があった為、クラブセッティングの更新をキャンセルしました。"
+    redirect_to clubs_select_user_path(@user)
   end
 
   # セッティングから外す機能
@@ -161,4 +120,20 @@ class ClubsController < ApplicationController
     def set_clubs
       @clubs = current_user.clubs.all.order(largo: :DESC)
     end
+
+    # ゴルフクラブセッティングが14本より多くチェックされていたらリダイレクト
+    def check_setting_clubs
+      selected_club_ids = []
+      clubs_params.each do |id, item|
+        if item[:selected] == "1"
+          id = id.to_s
+          selected_club_ids.push(id)
+        end
+      end
+      if selected_club_ids.count > 14
+        flash[:danger] = "クラブセッティングは14本までです。"
+        redirect_to clubs_select_user_path(@user)
+      end
+    end
+
 end
