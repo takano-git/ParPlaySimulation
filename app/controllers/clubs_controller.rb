@@ -15,26 +15,61 @@ class ClubsController < ApplicationController
     @selected_clubs = current_user.clubs.where(selected: true).order(largo: :DESC)
   end
 
-  # 選択ボタンを押しクラブセッティングに加える機能
-  def add_buttom
+  # クラブセッティングに加える機能
+  def add_form
     @club = Club.find(params[:id])
     selected_clubs = current_user.clubs.where(selected: true).count
     
-    if selected_clubs >= 14
-      flash[:danger] = 'クラブセッティングは14本までです。'
-      redirect_to clubs_select_user_path(@user)
-    elsif @club.selected == true
-      redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}はすでにクラブセッティングに入っています。" }
-    else
-      @club.selected = true
-      if @club.save
-        flash[:success] = 'クラブセッティングを１本追加しました。'
-        redirect_to clubs_select_user_path(@user)
-      else
-        flash[:danger] = 'クラブセッティング追加に失敗しました。'
-        redirect_to clubs_select_user_path(@user)        
+    # setting = []
+    # clubs_params.each do |id, item|
+    #   if item == 1
+    #     setting.push(item.to_s)
+    #   end
+    # end
+
+    # if setting.count > 14
+    #   flash[:danger] = 'クラブセッティングは14本までです。'
+    #   redirect_to clubs_select_user_path(@user)
+    # end
+
+
+
+    
+      ActiveRecord::Base.transaction do # トランザクションを開始します。
+        clubs_params.each do |id, item|
+          club = Club.find(id)
+          club.update_attributes!(item)
+        end
       end
-    end
+      flash[:success] = "クラブセッティングを更新しました。"
+      redirect_to clubs_select_user_path(@user)
+    rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+      flash[:danger] = "無効な入力があった為、クラブセッティングの更新をキャンセルしました。"
+      redirect_to clubs_select_user_path(@user)
+    
+
+    # clubs_params.each do |id, item|
+    #   club = Club.find(id)
+    #   club.update_attributes!(item)
+    # end
+    # flash[:success] = 'クラブセッティングを更新しました。'
+    # redirect_to clubs_select_user_path(@user)
+
+    # if selected_clubs >= 14
+    #   flash[:danger] = 'クラブセッティングは14本までです。'
+    #   redirect_to clubs_select_user_path(@user)
+    # elsif @club.selected == true
+    #   redirect_to clubs_select_user_path(@user), flash: { danger: "#{@club.yarn_count_string}#{@club.yarn_count_number}はすでにクラブセッティングに入っています。" }
+    # else
+    #   @club.selected = true
+    #   if @club.save
+    #     flash[:success] = 'クラブセッティングを１本追加しました。'
+    #     redirect_to clubs_select_user_path(@user)
+    #   else
+    #     flash[:danger] = 'クラブセッティング追加に失敗しました。'
+    #     redirect_to clubs_select_user_path(@user)        
+    #   end
+    # end
   end
 
   # セッティングから外す機能
@@ -115,6 +150,9 @@ class ClubsController < ApplicationController
   end
 
   private
+    def clubs_params
+      params.require(:user).permit(clubs: [:selected, :id])[:clubs]
+    end
 
     def club_params
       params.require(:club).permit(:id, :yarn_count_string, :yarn_count_number, :detail, :loft, :largo, :weight, :balance_string, :balance_number, :frequency, :user_id, :selected, :delete_flg)

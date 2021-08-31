@@ -9,46 +9,58 @@
   </div>
 
   <div class="row no-gutters">
+
     <div class="col-5">
       <!-- Club一覧をリスト表示 -->
       <h4 class="float-center">マイクラブ一覧</h4>
-
-      <% row_num_club = 1 %>
-      <div class="table-responsive">
-        <table id="list" class=" table table-sm table-bordered mb-5">
-          <thead class="bg-brand text-white">
-            <tr>
-              <th>No.</th>
-              <th>番手</th>
-              <th>詳細</th>
-              <th>　　</th>
-            </tr>
-          </thead>
-          <% Array(@clubs).each do |club| %>
-            <% if club.delete_flg %>
-              <tr class="item bg-delete" id="<%= club.id %>">
-            <% else %>
-              <tr class="item" id="<%= club.id %>">
-            <% end %>
-              <th><%= row_num_club %></th>
-              <% row_num_club = row_num_club + 1 %>            
-              <td><%= club.yarn_count_string %><%=club.yarn_count_number %>　</td>
-              <td><%= club.detail %></td>
-            <% if club.selected %>
-              <td><button class="btn btn-brand">選択中</button></td>
-            <% else %>
-              <td><%= link_to '選択', clubs_add_buttom_user_path(club.id), :method => :post, class: "btn btn-outline-brand item-buttom" %></td>  
-            <% end %>
+      <%= form_with(model: @user, url: clubs_add_form_user_path, local: true, method: :post) do |f| %>
+        <% row_num_club = 1 %>
+        <div class="table-responsive">
+          <table id="list" class=" table table-sm table-bordered">
+            <thead class="bg-brand text-white">
+              <tr>
+                <th>No.</th>
+                <th>番手</th>
+                <th>名称</th>
+                <th>　　</th>
               </tr>
-          <% end %>
-        </table>
-      </div>
+            </thead>
+
+            <% @clubs.each do |club| %>
+              <%= f.fields_for "clubs[]", club do |clb| %>
+                <% if club.delete_flg %>
+                  <tr class="item bg-delete" id="<%= club.id %>">
+                <% else %>
+                  <tr class="item" id="<%= club.id %>">
+                <% end %>
+                <th><%= row_num_club %></th>
+                <% row_num_club = row_num_club + 1 %>            
+                <td><%= club.yarn_count_string %><%=club.yarn_count_number %>　</td>
+                <td><%= club.detail %></td>
+                <% if club.selected %>
+                  <td><button class="btn btn-brand">選択中</button></td>
+                <% else %>
+                  <td><%= clb.check_box :selected %></td>
+                <% end %>
+                  </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
+        
+        <div class="center">
+          <%= f.submit "クラブセッティング決定", class: "btn btn-brand mb-5" %>
+        </div>
+      <% end%>
     </div>
-    <div class="col-2">
+
+    <div class="col-1">
       <div class="p-4"><%= image_tag 'arrow.png', :class=>"img-fluid arrow-padding", :alt => '右矢印の画像' %></div>
     </div>
-    <div class="col-5">
+
+    <div class="col-6">
       <h4>クラブセッティング</h4>
+
       <% row_num_selected = 1 %>
       <div class="table-responsive">
         <table class="table table-bordered table-sm">
@@ -72,9 +84,10 @@
               </td>
             </tr>
           <% end %>
-          <tr>
+          
         </table>
-      </div>
-    </div>
-  </div>
-</div>
+      </div><%# <div class="table-responsive"> %>
+    </div><%# <div class="col-6"> %>
+
+  </div><%# <div class="row no-gutters"> %>
+</div><%# <div class="container-fluid"> %>
